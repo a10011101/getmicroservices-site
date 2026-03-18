@@ -13,12 +13,12 @@
       --bg: #0a0b14;
       --bg2: #0f1120;
       --bg3: #141629;
-      --accent: #6c63ff;
-      --accent2: #4f46e5;
-      --grad: linear-gradient(135deg, #6c63ff 0%, #3b82f6 100%);
+      --accent: #00bcd4;
+      --accent2: #0097a7;
+      --grad: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
       --text: #f0f1f8;
       --muted: #8b8fa8;
-      --border: rgba(108,99,255,0.2);
+      --border: rgba(0,188,212,0.2);
       --card: rgba(255,255,255,0.04);
       --radius: 16px;
     }
@@ -42,7 +42,7 @@
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
     }
-    .logo { font-size: 1.25rem; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .logo img { height: 40px; width: auto; display: block; }
     .nav-links { display: flex; gap: 32px; list-style: none; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); }
@@ -69,7 +69,7 @@
       display: inline-flex; align-items: center; gap: 8px;
       background: rgba(108,99,255,0.12); border: 1px solid var(--border);
       padding: 8px 18px; border-radius: 50px;
-      font-size: 0.82rem; font-weight: 600; color: #a5b4fc;
+      font-size: 0.82rem; font-weight: 600; color: #80deea;
       margin-bottom: 28px; letter-spacing: 0.03em;
     }
     .badge::before { content: '⚡'; }
@@ -282,7 +282,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="logo">GetMicroservices</div>
+  <div class="logo"><img src="logo.jpg" alt="GetMicroservices" /></div>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#how">How It Works</a></li>
@@ -625,7 +625,7 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <div class="logo">GetMicroservices</div>
+      <div class="logo"><img src="logo.jpg" alt="GetMicroservices" /></div>
       <p>Fast, affordable automation and microservices for businesses that want to scale without hiring a dev team.</p>
     </div>
     <div class="footer-col">
