@@ -93,6 +93,21 @@
       --border-bright: #a8a493;
     }
 
+    [data-theme="dark"] {
+      --bg: #1a170f;
+      --bg2: #1f1c13;
+      --bg3: #252018;
+      --fg: #eceae5;
+      --muted: #9b9888;
+      --accent: #ee82cf;
+      --yellow: #f7d51d;
+      --blue: #209cee;
+      --blue-hover: #108de0;
+      --green: #92cc41;
+      --border: #3a3628;
+      --border-bright: #5a5540;
+    }
+
     html { scroll-behavior: smooth; }
 
     body {
@@ -148,6 +163,21 @@
     .nav-links a:hover { background: var(--blue-hover); text-decoration: underline; }
     .nav-links .nav-cta { background: var(--accent); border-color: var(--fg); color: #fff; }
     .nav-links .nav-cta:hover { background: #8c0052; }
+
+    /* ─── THEME TOGGLE ─── */
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--border-bright);
+      color: var(--fg);
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.55rem;
+      padding: 7px 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { border-color: var(--accent); background: rgba(128,128,128,0.1); }
 
     /* ─── HERO ─── */
     .hero {
@@ -498,6 +528,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo"><span>Get<span class="accent">Micro</span><span class="yellow">services</span></span></div>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀ LIGHT</button>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#how">Process</a></li>
@@ -862,6 +893,28 @@
 </footer>
 
 <script>
+  // Theme toggle
+  const themeBtn = document.getElementById('themeBtn');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  if (savedTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    themeBtn.textContent = '\u263e DARK';
+  } else {
+    themeBtn.textContent = '\u2600 LIGHT';
+  }
+  function toggleTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+      themeBtn.textContent = '\u2600 LIGHT';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+      themeBtn.textContent = '\u263e DARK';
+    }
+  }
+
   document.querySelectorAll('.faq-q').forEach(btn => {
     btn.addEventListener('click', () => {
       const item = btn.parentElement;
