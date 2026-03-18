@@ -135,6 +135,7 @@
       padding: 0 5%;
       display: flex; align-items: center; justify-content: space-between;
       gap: 20px;
+      position: sticky;
     }
     .nav-logo { padding: 10px 0; }
     .nav-logo span {
@@ -509,8 +510,44 @@
     @keyframes blink { 50% { opacity: 0; } }
 
     /* ─── RESPONSIVE ─── */
+    /* ─── HAMBURGER ─── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: 2px solid var(--border-bright);
+      padding: 8px 10px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .hamburger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--fg);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     @media (max-width: 768px) {
-      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        background: var(--bg);
+        border-bottom: 3px solid var(--yellow);
+        flex-direction: column;
+        padding: 16px 5%;
+        gap: 10px;
+        z-index: 99;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 0.55rem; }
       .why-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr 1fr; }
       .hero-stats { flex-direction: column; }
@@ -529,7 +566,10 @@
 <nav>
   <div class="nav-logo"><span>Get<span class="accent">Micro</span><span class="yellow">services</span></span></div>
   <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀ LIGHT</button>
-  <ul class="nav-links">
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#services">Services</a></li>
     <li><a href="#how">Process</a></li>
     <li><a href="#pricing">Pricing</a></li>
@@ -893,6 +933,21 @@
 </footer>
 
 <script>
+  // Hamburger menu
+  function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    const btn = document.getElementById('hamburger');
+    nav.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+  // Close menu on link click
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    });
+  });
+
   // Theme toggle
   const themeBtn = document.getElementById('themeBtn');
   const savedTheme = localStorage.getItem('theme') || 'light';
