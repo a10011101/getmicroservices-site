@@ -800,7 +800,7 @@
     <h2>Let's <span class="yellow">Talk</span></h2>
     <p class="section-sub">Tell us what you need. We'll get back to you within a few hours.</p>
   </div>
-  <form class="contact-form" onsubmit="handleForm(event)">
+  <form class="contact-form" onsubmit="handleForm(event)" id="contactForm">
     <input type="text" placeholder="> your_name" required />
     <input type="email" placeholder="> your_email" required />
     <select>
@@ -871,11 +871,31 @@
     });
   });
 
-  function handleForm(e) {
+  async function handleForm(e) {
     e.preventDefault();
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = '[ Sending... ]';
+    btn.disabled = true;
+
+    const data = {
+      name: form.querySelector('input[type="text"]').value,
+      email: form.querySelector('input[type="email"]').value,
+      service: form.querySelector('select').value,
+      message: form.querySelector('textarea').value
+    };
+
+    try {
+      await fetch('https://n8n.getmicroservices.co/webhook/contact-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    } catch(err) { /* silent fail — still show success to user */ }
+
     const msg = document.getElementById('form-msg');
     msg.style.display = 'block';
-    e.target.querySelectorAll('input, textarea, select, button').forEach(el => el.disabled = true);
+    form.querySelectorAll('input, textarea, select, button').forEach(el => el.disabled = true);
   }
 
   // Scroll reveal
