@@ -55,7 +55,15 @@
       gap: 20px;
     }
     .nav-logo { padding: 10px 0; }
-    .nav-logo img { height: 36px; width: auto; display: block; image-rendering: pixelated; }
+    .nav-logo span {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.65rem, 1.8vw, 0.95rem);
+      color: var(--fg);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+    .nav-logo span .accent { color: var(--accent); }
+    .nav-logo span .yellow { color: var(--yellow); }
     .nav-links { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; padding: 10px 0; }
     .nav-links a {
       color: var(--fg);
@@ -368,7 +376,16 @@
       padding: 56px 5% 32px;
     }
     .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-    .footer-brand img { height: 32px; width: auto; display: block; margin-bottom: 14px; }
+    .footer-brand .footer-logo {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      color: var(--fg);
+      display: block;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+    .footer-brand .footer-logo .accent { color: var(--accent); }
+    .footer-brand .footer-logo .yellow { color: var(--yellow); }
     .footer-brand p { color: var(--muted); font-size: 0.78rem; line-height: 1.7; max-width: 240px; }
     .footer-col h4 {
       font-family: 'Press Start 2P', cursive;
@@ -413,7 +430,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo"><img src="logo.jpg" alt="GetMicroservices" /></div>
+  <div class="nav-logo"><span>Get<span class="accent">Micro</span><span class="yellow">services</span></span></div>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#how">Process</a></li>
@@ -736,7 +753,7 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <img src="logo.jpg" alt="GetMicroservices" />
+      <span class="footer-logo">Get<span class="accent">Micro</span><span class="yellow">services</span></span>
       <p>Fast, affordable automation and microservices for businesses that want to scale without hiring a dev team.</p>
     </div>
     <div class="footer-col">
