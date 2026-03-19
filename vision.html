@@ -373,11 +373,11 @@
       <div id="termOutput"></div>
     </div>
     <div class="suggestions" id="suggestions">
+      <div class="sug" onclick="runDemo('build me an AI assistant')">build me an AI assistant</div>
+      <div class="sug" onclick="runDemo('qualify my leads with AI')">qualify my leads with AI</div>
       <div class="sug" onclick="runDemo('automate my invoicing')">automate my invoicing</div>
-      <div class="sug" onclick="runDemo('connect Shopify to Notion')">connect Shopify to Notion</div>
-      <div class="sug" onclick="runDemo('build a Telegram lead bot')">build a Telegram lead bot</div>
       <div class="sug" onclick="runDemo('auto-reply to Gmail')">auto-reply to Gmail</div>
-      <div class="sug" onclick="runDemo('sync CRM with spreadsheet')">sync CRM with spreadsheet</div>
+      <div class="sug" onclick="runDemo('monitor competitors')">monitor competitors</div>
     </div>
   </div>
 </section>
@@ -392,70 +392,85 @@
 
   <div class="flows">
 
+    <!-- FLOW 1: AI Personal Assistant -->
     <div class="flow-card">
-      <div class="flow-label">Lead capture pipeline — e-commerce client</div>
+      <div class="flow-label">AI personal assistant — founder, London</div>
       <div class="flow-nodes">
         <div class="flow-node">
-          <div class="node-box"><span class="node-icon">🌐</span><div><div class="node-name">Contact Form</div><div class="node-type">Webhook</div></div></div>
+          <div class="node-box"><span class="node-icon">📧</span><div><div class="node-name">Gmail + Telegram</div><div class="node-type">Multi-trigger</div></div></div>
         </div>
         <div class="flow-arrow">──▶</div>
         <div class="flow-node">
-          <div class="node-box"><span class="node-icon">⚙️</span><div><div class="node-name">Validate + Shape</div><div class="node-type">Code</div></div></div>
+          <div class="node-box"><span class="node-icon">🤖</span><div><div class="node-name">GPT-4o</div><div class="node-type">Read + Classify</div></div></div>
         </div>
         <div class="flow-arrow">──▶</div>
         <div class="flow-node">
-          <div class="node-box"><span class="node-icon">✈️</span><div><div class="node-name">Telegram Alert</div><div class="node-type">Notification</div></div></div>
+          <div class="node-box"><span class="node-icon">🔀</span><div><div class="node-name">Priority Router</div><div class="node-type">Switch</div></div></div>
         </div>
         <div class="flow-arrow">──▶</div>
         <div class="flow-node">
-          <div class="node-box"><span class="node-icon">📊</span><div><div class="node-name">Google Sheets</div><div class="node-type">Append row</div></div></div>
+          <div class="node-box"><span class="node-icon">📋</span><div><div class="node-name">Notion + Calendar</div><div class="node-type">Tasks + Events</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">☀️</span><div><div class="node-name">9AM Briefing</div><div class="node-type">Daily digest</div></div></div>
         </div>
       </div>
-      <div class="flow-result">↳ Every lead hits Telegram in &lt;2s and is logged with full context. Zero manual work.</div>
+      <div class="flow-result">↳ Every morning: agenda, top emails, Stripe revenue, priorities — in one Telegram message. Inbox stays at zero.</div>
     </div>
 
+    <!-- FLOW 2: AI Lead Qualification -->
     <div class="flow-card">
-      <div class="flow-label">Shopify order → fulfillment pipeline</div>
+      <div class="flow-label">AI lead qualification — B2B SaaS company</div>
       <div class="flow-nodes">
         <div class="flow-node">
-          <div class="node-box"><span class="node-icon">🛍️</span><div><div class="node-name">Shopify Order</div><div class="node-type">Trigger</div></div></div>
+          <div class="node-box"><span class="node-icon">📝</span><div><div class="node-name">Web Form</div><div class="node-type">Webhook</div></div></div>
         </div>
         <div class="flow-arrow">──▶</div>
         <div class="flow-node">
-          <div class="node-box"><span class="node-icon">🔀</span><div><div class="node-name">Route by SKU</div><div class="node-type">Switch</div></div></div>
+          <div class="node-box"><span class="node-icon">🔍</span><div><div class="node-name">Enrich Lead</div><div class="node-type">Apollo / Clearbit</div></div></div>
         </div>
         <div class="flow-arrow">──▶</div>
         <div class="flow-node">
-          <div class="node-box"><span class="node-icon">📦</span><div><div class="node-name">3PL API</div><div class="node-type">HTTP Request</div></div></div>
+          <div class="node-box"><span class="node-icon">🤖</span><div><div class="node-name">GPT-4o Score</div><div class="node-type">ICP match 0–100</div></div></div>
         </div>
         <div class="flow-arrow">──▶</div>
         <div class="flow-node">
-          <div class="node-box"><span class="node-icon">💬</span><div><div class="node-name">Customer SMS</div><div class="node-type">Twilio</div></div></div>
+          <div class="node-box"><span class="node-icon">🔀</span><div><div class="node-name">Route by Score</div><div class="node-type">Hot / Warm / Cold</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">⚡</span><div><div class="node-name">Instant Alert</div><div class="node-type">Slack + CRM</div></div></div>
         </div>
       </div>
-      <div class="flow-result">↳ Orders routed to correct warehouse, customer notified automatically. 3 FTEs replaced.</div>
+      <div class="flow-result">↳ Hot leads hit the sales rep's Slack in &lt;30s with full context. Cold leads enter nurture. No manual review.</div>
     </div>
 
+    <!-- FLOW 3: Invoice & Payment Automation -->
     <div class="flow-card">
-      <div class="flow-label">AI inbox triage — consulting firm</div>
+      <div class="flow-label">Invoice & payment automation — agency, 50+ clients</div>
       <div class="flow-nodes">
         <div class="flow-node">
-          <div class="node-box"><span class="node-icon">📧</span><div><div class="node-name">Gmail Inbox</div><div class="node-type">Trigger</div></div></div>
+          <div class="node-box"><span class="node-icon">💳</span><div><div class="node-name">Stripe Payment</div><div class="node-type">Trigger</div></div></div>
         </div>
         <div class="flow-arrow">──▶</div>
         <div class="flow-node">
-          <div class="node-box"><span class="node-icon">🤖</span><div><div class="node-name">GPT-4o</div><div class="node-type">Classify + Draft</div></div></div>
+          <div class="node-box"><span class="node-icon">📄</span><div><div class="node-name">Generate PDF</div><div class="node-type">Invoice builder</div></div></div>
         </div>
         <div class="flow-arrow">──▶</div>
         <div class="flow-node">
-          <div class="node-box"><span class="node-icon">🔀</span><div><div class="node-name">Priority Gate</div><div class="node-type">If/Else</div></div></div>
+          <div class="node-box"><span class="node-icon">📧</span><div><div class="node-name">Email Client</div><div class="node-type">Gmail + PDF</div></div></div>
         </div>
         <div class="flow-arrow">──▶</div>
         <div class="flow-node">
-          <div class="node-box"><span class="node-icon">📋</span><div><div class="node-name">Notion Task</div><div class="node-type">Create page</div></div></div>
+          <div class="node-box"><span class="node-icon">📊</span><div><div class="node-name">Sync Xero</div><div class="node-type">Accounting</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">💬</span><div><div class="node-name">Slack Summary</div><div class="node-type">EOD report</div></div></div>
         </div>
       </div>
-      <div class="flow-result">↳ High-priority emails auto-triaged and drafted. 80% of inbox handled without human eyes.</div>
+      <div class="flow-result">↳ Every payment triggers invoice, client email, accounting entry, and owner summary automatically. 4h/week saved.</div>
     </div>
 
   </div>
@@ -565,45 +580,50 @@ window.addEventListener('scroll', () => {
 
 // Terminal demo
 const demos = {
+  'build me an AI assistant': [
+    { type: 'out', text: 'analyzing request...', delay: 400 },
+    { type: 'out', text: '→ trigger: Gmail + Telegram (multi-source)', delay: 800, cls: 'blue' },
+    { type: 'out', text: '→ action: GPT-4o reads, classifies, drafts replies', delay: 1200, cls: 'blue' },
+    { type: 'out', text: '→ action: urgent items → instant Telegram alert', delay: 1600, cls: 'blue' },
+    { type: 'out', text: '→ action: tasks → Notion, meetings → Calendar', delay: 2000, cls: 'blue' },
+    { type: 'out', text: '→ action: 9AM daily briefing → Telegram', delay: 2400, cls: 'blue' },
+    { type: 'out', text: '✓ estimated build time: 5 days', delay: 3000, cls: 'green' },
+  ],
+  'qualify my leads with AI': [
+    { type: 'out', text: 'analyzing request...', delay: 400 },
+    { type: 'out', text: '→ trigger: form submission (webhook)', delay: 800, cls: 'blue' },
+    { type: 'out', text: '→ action: enrich via Apollo / Clearbit', delay: 1200, cls: 'blue' },
+    { type: 'out', text: '→ action: GPT-4o scores ICP fit 0–100', delay: 1600, cls: 'blue' },
+    { type: 'out', text: '→ action: hot (80+) → Slack + CRM instant alert', delay: 2000, cls: 'blue' },
+    { type: 'out', text: '→ action: cold → nurture sequence', delay: 2400, cls: 'blue' },
+    { type: 'out', text: '✓ estimated build time: 3 days', delay: 3000, cls: 'green' },
+  ],
   'automate my invoicing': [
     { type: 'out', text: 'analyzing request...', delay: 400 },
     { type: 'out', text: '→ trigger: Stripe payment.succeeded', delay: 800, cls: 'blue' },
-    { type: 'out', text: '→ action: generate PDF invoice (Puppeteer)', delay: 1200, cls: 'blue' },
-    { type: 'out', text: '→ action: send via Gmail + attach PDF', delay: 1600, cls: 'blue' },
-    { type: 'out', text: '→ action: log to Airtable', delay: 2000, cls: 'blue' },
-    { type: 'out', text: '✓ estimated build time: 3 days', delay: 2600, cls: 'green' },
-  ],
-  'connect Shopify to Notion': [
-    { type: 'out', text: 'analyzing request...', delay: 400 },
-    { type: 'out', text: '→ trigger: Shopify order.created webhook', delay: 800, cls: 'blue' },
-    { type: 'out', text: '→ action: create Notion page (Orders DB)', delay: 1200, cls: 'blue' },
-    { type: 'out', text: '→ action: tag by product category', delay: 1600, cls: 'blue' },
-    { type: 'out', text: '→ action: notify team in Slack', delay: 2000, cls: 'blue' },
-    { type: 'out', text: '✓ estimated build time: 2 days', delay: 2600, cls: 'green' },
-  ],
-  'build a Telegram lead bot': [
-    { type: 'out', text: 'analyzing request...', delay: 400 },
-    { type: 'out', text: '→ trigger: contact form webhook (POST)', delay: 800, cls: 'blue' },
-    { type: 'out', text: '→ action: validate + sanitize inputs', delay: 1200, cls: 'blue' },
-    { type: 'out', text: '→ action: Telegram notification → you', delay: 1600, cls: 'blue' },
-    { type: 'out', text: '→ action: append row → Google Sheets', delay: 2000, cls: 'blue' },
-    { type: 'out', text: '✓ already shipped. see above ↑', delay: 2600, cls: 'green' },
+    { type: 'out', text: '→ action: generate branded PDF invoice', delay: 1200, cls: 'blue' },
+    { type: 'out', text: '→ action: email client with PDF attached', delay: 1600, cls: 'blue' },
+    { type: 'out', text: '→ action: sync entry to Xero / QuickBooks', delay: 2000, cls: 'blue' },
+    { type: 'out', text: '→ action: EOD Slack summary to owner', delay: 2400, cls: 'blue' },
+    { type: 'out', text: '✓ estimated build time: 3 days', delay: 3000, cls: 'green' },
   ],
   'auto-reply to Gmail': [
     { type: 'out', text: 'analyzing request...', delay: 400 },
-    { type: 'out', text: '→ trigger: Gmail new message (IMAP poll)', delay: 800, cls: 'blue' },
-    { type: 'out', text: '→ action: GPT-4o classify intent + draft reply', delay: 1200, cls: 'blue' },
-    { type: 'out', text: '→ action: if urgent → Telegram alert', delay: 1600, cls: 'blue' },
-    { type: 'out', text: '→ action: send draft or auto-send', delay: 2000, cls: 'blue' },
-    { type: 'out', text: '✓ estimated build time: 4 days', delay: 2600, cls: 'green' },
+    { type: 'out', text: '→ trigger: Gmail new message', delay: 800, cls: 'blue' },
+    { type: 'out', text: '→ action: GPT-4o classifies intent + tone', delay: 1200, cls: 'blue' },
+    { type: 'out', text: '→ action: drafts reply in your voice', delay: 1600, cls: 'blue' },
+    { type: 'out', text: '→ action: urgent → Telegram alert with draft', delay: 2000, cls: 'blue' },
+    { type: 'out', text: '→ action: routine → auto-send', delay: 2400, cls: 'blue' },
+    { type: 'out', text: '✓ estimated build time: 4 days', delay: 3000, cls: 'green' },
   ],
-  'sync CRM with spreadsheet': [
+  'monitor competitors': [
     { type: 'out', text: 'analyzing request...', delay: 400 },
-    { type: 'out', text: '→ trigger: schedule (every 15 min)', delay: 800, cls: 'blue' },
-    { type: 'out', text: '→ action: fetch new/updated CRM contacts', delay: 1200, cls: 'blue' },
-    { type: 'out', text: '→ action: diff against sheet state', delay: 1600, cls: 'blue' },
-    { type: 'out', text: '→ action: upsert changed rows only', delay: 2000, cls: 'blue' },
-    { type: 'out', text: '✓ estimated build time: 2 days', delay: 2600, cls: 'green' },
+    { type: 'out', text: '→ trigger: schedule (daily, 7AM)', delay: 800, cls: 'blue' },
+    { type: 'out', text: '→ action: scrape competitor pricing + content', delay: 1200, cls: 'blue' },
+    { type: 'out', text: '→ action: GPT-4o diffs vs last week', delay: 1600, cls: 'blue' },
+    { type: 'out', text: '→ action: significant change → instant alert', delay: 2000, cls: 'blue' },
+    { type: 'out', text: '→ action: weekly digest report → email', delay: 2400, cls: 'blue' },
+    { type: 'out', text: '✓ estimated build time: 4 days', delay: 3000, cls: 'green' },
   ],
 };
 
@@ -650,7 +670,7 @@ async function runDemo(query) {
 }
 
 // Auto-run first demo on load
-setTimeout(() => runDemo('build a Telegram lead bot'), 800);
+setTimeout(() => runDemo('build me an AI assistant'), 800);
 
 // Contact form
 function sendMsg(e) {
