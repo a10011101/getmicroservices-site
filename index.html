@@ -994,16 +994,20 @@
     };
 
     try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
       await fetch('https://n8n.getmicroservices.co/webhook/contact-form', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        signal: controller.signal
       });
-    } catch(err) { /* silent fail — still show success to user */ }
+      clearTimeout(timeout);
+    } catch(err) { /* silent fail — still show success */ }
 
-    const msg = document.getElementById('form-msg');
-    msg.style.display = 'block';
-    form.querySelectorAll('input, textarea, select, button').forEach(el => el.disabled = true);
+    btn.textContent = '[ Sent! ]';
+    document.getElementById('form-msg').style.display = 'block';
+    form.querySelectorAll('input, textarea, select').forEach(el => el.disabled = true);
   }
 
   // Scroll reveal
