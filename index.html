@@ -872,9 +872,9 @@
     <p class="section-sub">Tell us what you need. We'll get back to you within a few hours.</p>
   </div>
   <form class="contact-form" onsubmit="handleForm(event)" id="contactForm">
-    <input type="text" placeholder="> your_name" required />
-    <input type="email" placeholder="> your_email" required />
-    <select>
+    <input type="text" name="name" placeholder="> your_name" required />
+    <input type="email" name="email" placeholder="> your_email" required />
+    <select name="service">
       <option value="">// what do you need?</option>
       <option>Business Automation</option>
       <option>AI / Telegram Bot</option>
@@ -883,7 +883,7 @@
       <option>MVP / Prototype</option>
       <option>Something else</option>
     </select>
-    <textarea rows="4" placeholder="> describe_your_project..." required></textarea>
+    <textarea rows="4" name="message" placeholder="> describe_your_project..." required></textarea>
     <button type="submit">[ Send Message → ]</button>
     <p id="form-msg">✓ Message sent! We'll be in touch within a few hours.</p>
   </form>
@@ -987,10 +987,10 @@
     btn.disabled = true;
 
     const data = {
-      name: form.querySelector('input[type="text"]').value,
-      email: form.querySelector('input[type="email"]').value,
-      service: form.querySelector('select').value,
-      message: form.querySelector('textarea').value
+      name: form.querySelector('[name="name"]').value,
+      email: form.querySelector('[name="email"]').value,
+      service: form.querySelector('[name="service"]').value,
+      message: form.querySelector('[name="message"]').value
     };
 
     try {
