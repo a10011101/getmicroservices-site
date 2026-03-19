@@ -352,8 +352,9 @@
 
     /* ─── PRICING ─── */
     #pricing { background: var(--bg2); }
-    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-    .pricing-card { padding: 36px 28px; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: stretch; }
+    .pricing-card { padding: 36px 28px; display: flex; flex-direction: column; }
+    .pricing-card .plan-features { flex: 1; }
     .pricing-card.featured { border-color: var(--accent); background: var(--bg3); }
     .featured-tag {
       display: inline-block;
