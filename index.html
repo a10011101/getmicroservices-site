@@ -170,13 +170,11 @@
       background: none;
       border: 2px solid var(--border-bright);
       color: var(--fg);
-      font-family: 'Press Start 2P', cursive;
-      font-size: 0.55rem;
-      padding: 7px 10px;
+      font-size: 1rem;
+      padding: 4px 8px;
       cursor: pointer;
       transition: border-color 0.2s, background 0.2s;
-      white-space: nowrap;
-      flex-shrink: 0;
+      line-height: 1;
     }
     .theme-toggle:hover { border-color: var(--accent); background: rgba(128,128,128,0.1); }
 
@@ -566,7 +564,6 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo"><span>Get<span class="accent">Micro</span><span class="yellow">services</span></span></div>
-  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀ LIGHT</button>
   <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -576,6 +573,7 @@
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact" class="nav-cta">Start Now</a></li>
+    <li><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀</button></li>
   </ul>
 </nav>
 
@@ -954,20 +952,20 @@
   const savedTheme = localStorage.getItem('theme') || 'light';
   if (savedTheme === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
-    themeBtn.textContent = '\u263e DARK';
+    themeBtn.textContent = '\u2600';
   } else {
-    themeBtn.textContent = '\u2600 LIGHT';
+    themeBtn.textContent = '\u263e';
   }
   function toggleTheme() {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     if (isDark) {
       document.documentElement.removeAttribute('data-theme');
       localStorage.setItem('theme', 'light');
-      themeBtn.textContent = '\u2600 LIGHT';
+      themeBtn.textContent = '\u263e';
     } else {
       document.documentElement.setAttribute('data-theme', 'dark');
       localStorage.setItem('theme', 'dark');
-      themeBtn.textContent = '\u263e DARK';
+      themeBtn.textContent = '\u2600';
     }
   }
 
