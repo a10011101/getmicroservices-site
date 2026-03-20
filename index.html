@@ -110,6 +110,17 @@
 
     html { scroll-behavior: smooth; }
 
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    input, textarea {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      user-select: text;
+    }
     body {
       font-family: 'Fira Code', 'JetBrains Mono', Monaco, Consolas, monospace;
       background: var(--bg);
