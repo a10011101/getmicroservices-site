@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>PicMark — App Preview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1c1c1e;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; font-family: -apple-system, 'SF Pro Display', sans-serif;
+  }
+
+  /* Phone shell */
+  .phone {
+    width: 393px;
+    background: #000;
+    border-radius: 54px;
+    padding: 14px;
+    box-shadow: 0 0 0 2px #3a3a3c, 0 40px 80px rgba(0,0,0,.8), inset 0 0 0 2px #1c1c1e;
+    position: relative;
+  }
+
+  .screen {
+    background: #f2f2f7;
+    border-radius: 44px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Status bar */
+  .status-bar {
+    background: #f2f2f7;
+    padding: 14px 28px 6px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .status-time { font-size: 15px; font-weight: 600; color: #000; }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  .status-icons svg { width: 16px; height: 16px; fill: #000; }
+
+  /* Dynamic island */
+  .island {
+    position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 34px;
+    background: #000; border-radius: 20px; z-index: 10;
+  }
+
+  /* Nav bar */
+  .nav-bar {
+    background: rgba(242,242,247,.9);
+    backdrop-filter: blur(20px);
+    border-bottom: .5px solid rgba(0,0,0,.1);
+    padding: 8px 20px 10px;
+    text-align: center;
+  }
+  .nav-title { font-size: 17px; font-weight: 600; color: #000; }
+
+  /* Content */
+  .content {
+    background: #f2f2f7;
+    padding: 20px 20px 40px;
+    display: flex; flex-direction: column; gap: 16px;
+    min-height: 740px;
+  }
+
+  /* Image preview area */
+  .img-preview {
+    background: #fff;
+    border-radius: 12px;
+    height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px dashed #c7c7cc;
+    flex-direction: column; gap: 8px;
+    position: relative; overflow: hidden;
+  }
+  .img-preview.has-image {
+    border: none;
+    background: #000;
+  }
+  .img-preview .placeholder-icon { font-size: 40px; opacity: .3; }
+  .img-preview .placeholder-text { font-size: 13px; color: #8e8e93; }
+
+  /* Fake image inside preview */
+  .fake-photo {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 40%, #f093fb 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 60px;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    background: #007aff;
+    color: #fff; border: none; border-radius: 12px;
+    padding: 14px; font-size: 17px; font-weight: 500;
+    cursor: pointer; text-align: center;
+    transition: opacity .15s;
+    font-family: inherit;
+  }
+  .btn-primary:active { opacity: .7; }
+
+  .btn-secondary {
+    background: #fff;
+    color: #007aff; border: none; border-radius: 12px;
+    padding: 14px; font-size: 17px; font-weight: 500;
+    cursor: pointer; text-align: center;
+    transition: opacity .15s;
+    font-family: inherit;
+  }
+
+  .btn-green {
+    background: #34c759;
+    color: #fff; border: none; border-radius: 12px;
+    padding: 14px; font-size: 17px; font-weight: 500;
+    cursor: pointer; text-align: center;
+    font-family: inherit;
+  }
+
+  .btn-red {
+    background: #fff;
+    color: #ff3b30; border: none; border-radius: 12px;
+    padding: 14px; font-size: 17px; font-weight: 500;
+    cursor: pointer; text-align: center;
+    font-family: inherit;
+  }
+
+  /* Text field */
+  .textfield-group {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .textfield {
+    width: 100%; padding: 14px 16px;
+    border: none; outline: none;
+    font-size: 17px; font-family: inherit;
+    color: #000; background: transparent;
+  }
+  .textfield::placeholder { color: #8e8e93; }
+
+  /* Result card */
+  .result-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .result-label { font-size: 12px; color: #8e8e93; font-weight: 500; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+  .result-value { font-size: 15px; color: #000; font-family: 'SF Mono', monospace; }
+  .result-badge {
+    display: inline-block; background: #34c75920; color: #34c759;
+    font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; margin-top: 6px;
+  }
+
+  /* Section label */
+  .section-label {
+    font-size: 13px; color: #8e8e93; font-weight: 500;
+    text-transform: uppercase; letter-spacing: .5px;
+    padding: 0 4px;
+  }
+
+  /* Home indicator */
+  .home-indicator {
+    background: #f2f2f7;
+    padding: 8px 0 20px;
+    display: flex; justify-content: center;
+  }
+  .home-bar {
+    width: 134px; height: 5px;
+    background: #000; border-radius: 3px; opacity: .2;
+  }
+
+  /* Interactive states */
+  .btn-primary.active { opacity: .75; }
+
+  /* Tabs */
+  .tab-bar {
+    background: rgba(242,242,247,.95);
+    border-top: .5px solid rgba(0,0,0,.15);
+    padding: 8px 0 0;
+    display: flex;
+  }
+  .tab {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding-bottom: 12px;
+    cursor: pointer;
+  }
+  .tab-icon { font-size: 22px; }
+  .tab-label { font-size: 10px; color: #8e8e93; }
+  .tab.active .tab-label { color: #007aff; }
+  .tab.active .tab-icon { filter: none; }
+
+  /* Watermark badge overlay */
+  .wm-badge {
+    position: absolute; bottom: 8px; right: 8px;
+    background: rgba(52,199,89,.9); color: #fff;
+    font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px;
+    backdrop-filter: blur(4px);
+  }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="screen">
+    <div class="island"></div>
+
+    <!-- Status bar -->
+    <div class="status-bar" style="padding-top:52px">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <svg viewBox="0 0 24 24"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3a4.237 4.237 0 00-6 0zm-4-4l2 2a7.074 7.074 0 0110 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <div class="nav-bar">
+      <div class="nav-title">PicMark</div>
+    </div>
+
+    <!-- App content -->
+    <div class="content" id="appContent">
+
+      <!-- Image preview -->
+      <div class="img-preview has-image" id="imgPreview">
+        <div class="fake-photo">🏔️</div>
+        <div class="wm-badge" id="wmBadge" style="display:none">✓ Fingerprinted</div>
+      </div>
+
+      <!-- Upload button -->
+      <button class="btn-secondary" onclick="uploadImg()">📁 Upload Image</button>
+
+      <!-- User ID field -->
+      <div class="textfield-group">
+        <input class="textfield" type="text" placeholder="User ID (e.g. john_doe_42)" id="userIdField" value="john_doe_42"/>
+      </div>
+
+      <!-- Embed -->
+      <button class="btn-primary" onclick="embedFingerprint()">🔏 Embed Fingerprint</button>
+
+      <!-- Result -->
+      <div class="result-card" id="resultCard" style="display:none">
+        <div class="result-label">Extracted Fingerprint</div>
+        <div class="result-value" id="resultValue">user:john_doe_42</div>
+        <div class="result-badge">✓ Match found</div>
+      </div>
+
+      <!-- Extract + Save -->
+      <button class="btn-secondary" onclick="extractFingerprint()">🔍 Extract Fingerprint</button>
+      <button class="btn-green" id="saveBtn" style="display:none" onclick="saveImg()">💾 Save Watermarked Image</button>
+
+    </div>
+
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <div class="tab active">
+        <div class="tab-icon">🖼️</div>
+        <div class="tab-label">Embed</div>
+      </div>
+      <div class="tab">
+        <div class="tab-icon">🔍</div>
+        <div class="tab-label">Extract</div>
+      </div>
+      <div class="tab">
+        <div class="tab-icon">📋</div>
+        <div class="tab-label">History</div>
+      </div>
+    </div>
+
+    <!-- Home indicator -->
+    <div class="home-indicator"><div class="home-bar"></div></div>
+  </div>
+</div>
+
+<script>
+function uploadImg() {
+  const preview = document.getElementById('imgPreview');
+  const photos = ['🏔️','🌊','🌆','🌸','🦋','🎨'];
+  const random = photos[Math.floor(Math.random() * photos.length)];
+  preview.querySelector('.fake-photo').textContent = random;
+  document.getElementById('wmBadge').style.display = 'none';
+}
+
+function embedFingerprint() {
+  const uid = document.getElementById('userIdField').value || 'anonymous';
+  const btn = event.target;
+  btn.textContent = '⏳ Embedding...';
+  btn.style.background = '#555';
+  setTimeout(() => {
+    btn.textContent = '✅ Fingerprint Embedded';
+    btn.style.background = '#34c759';
+    document.getElementById('wmBadge').style.display = 'block';
+    document.getElementById('saveBtn').style.display = 'block';
+    setTimeout(() => {
+      btn.textContent = '🔏 Embed Fingerprint';
+      btn.style.background = '#007aff';
+    }, 2000);
+  }, 900);
+}
+
+function extractFingerprint() {
+  const uid = document.getElementById('userIdField').value || 'anonymous';
+  const btn = event.target;
+  btn.textContent = '⏳ Scanning...';
+  setTimeout(() => {
+    btn.textContent = '🔍 Extract Fingerprint';
+    document.getElementById('resultValue').textContent = 'user:' + uid;
+    document.getElementById('resultCard').style.display = 'block';
+  }, 700);
+}
+
+function saveImg() {
+  const btn = event.target;
+  btn.textContent = '✅ Saved to Camera Roll';
+  setTimeout(() => { btn.textContent = '💾 Save Watermarked Image'; }, 2000);
+}
+</script>
+</body>
+</html>
