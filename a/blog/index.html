@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/"/>
+<title>Blog — getmicroservices</title>
+<meta name="description" content="Real projects, real problems, real solutions. No thought leadership."/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a; --bg2: #111; --bg3: #161616;
+    --border: #222; --fg: #e8e8e8; --dim: #666;
+    --accent: #00ff88; --accent2: #0088ff;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--sans); line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px; border-bottom: 1px solid transparent;
+    transition: border-color .3s, background .3s;
+  }
+  nav.scrolled { background: rgba(10,10,10,.95); border-color: var(--border); backdrop-filter: blur(12px); }
+  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); letter-spacing: -.5px; }
+  .nav-logo span { color: var(--dim); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--dim); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--fg); }
+  .nav-cta {
+    font-family: var(--mono); font-size: 12px; padding: 8px 18px;
+    border: 1px solid var(--accent); color: var(--accent);
+    background: transparent; cursor: pointer; transition: all .2s; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--bg); }
+
+  .page { max-width: 1100px; margin: 0 auto; padding: 140px 48px 80px; }
+
+  .eyebrow { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; opacity: .8; }
+  h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 700; letter-spacing: -2px; line-height: 1.1; margin-bottom: 12px; }
+  .lead { font-size: 16px; color: var(--dim); max-width: 480px; line-height: 1.7; margin-bottom: 64px; }
+
+  .posts { display: flex; flex-direction: column; gap: 2px; }
+  .post-card {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 32px 0; border-bottom: 1px solid var(--border);
+    text-decoration: none; color: inherit;
+    transition: padding-left .2s;
+    gap: 24px;
+  }
+  .post-card:hover { padding-left: 8px; }
+  .post-card:first-child { border-top: 1px solid var(--border); }
+  .post-left { flex: 1; }
+  .post-meta { font-family: var(--mono); font-size: 11px; color: var(--dim); margin-bottom: 10px; display: flex; gap: 16px; }
+  .post-title { font-size: 20px; font-weight: 700; letter-spacing: -.5px; margin-bottom: 8px; color: var(--fg); }
+  .post-excerpt { font-size: 14px; color: var(--dim); line-height: 1.6; }
+  .post-arrow { font-family: var(--mono); font-size: 18px; color: var(--dim); flex-shrink: 0; align-self: center; transition: color .2s; }
+  .post-card:hover .post-arrow { color: var(--accent); }
+  .post-tag {
+    display: inline-block; font-family: var(--mono); font-size: 10px;
+    color: var(--accent); border: 1px solid rgba(0,255,136,.3);
+    border-radius: 3px; padding: 2px 8px; margin-bottom: 10px;
+  }
+
+  .full-divider { border: none; border-top: 1px solid var(--border); }
+  footer {
+    border-top: 1px solid var(--border); padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .footer-logo { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .footer-right { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .page { padding: 100px 20px 60px; }
+    footer { padding: 32px 20px; flex-direction: column; gap: 12px; text-align: center; }
+    .post-card { flex-direction: column; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-logo">get<span>micro</span>services<span>.com</span></div>
+  <ul class="nav-links">
+    <li><a href="/a/">home</a></li>
+    <li><a href="/a/#flows">work</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/blog/" class="active">blog</a></li>
+    <li><a href="/a/about">about</a></li>
+  </ul>
+  <a href="/a/#contact" class="nav-cta">[ start project ]</a>
+</nav>
+
+<div class="page">
+  <div class="eyebrow">field notes</div>
+  <h1>Real builds.<br>Real results.</h1>
+  <p class="lead">Real projects, real problems, real solutions. No thought leadership.</p>
+
+  <div class="posts">
+    <a class="post-card" href="/a/blog/how-we-automated-a-booking-system-in-3-days">
+      <div class="post-left">
+        <div class="post-tag">case study</div>
+        <div class="post-meta">
+          <span>Mar 20, 2026</span>
+          <span>5 min read</span>
+        </div>
+        <div class="post-title">How We Automated a Spa's Booking System in 3 Days</div>
+        <div class="post-excerpt">A massage business was losing 3 hours a day to WhatsApp scheduling. Here's exactly what we built and how it works.</div>
+      </div>
+      <div class="post-arrow">→</div>
+    </a>
+  </div>
+</div>
+
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
+});
+</script>
+</body>
+</html>
