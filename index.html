@@ -633,7 +633,7 @@
     <h2>Everything You Need<br />to <span class="accent">Scale Faster</span></h2>
     <p class="section-sub">From automating repetitive tasks to building full custom systems — we deliver working software, not PowerPoints.</p>
   </div>
-  <div class="services-grid">
+  <div class="services-grid" id="services-grid">
     <div class="pixel-box service-card">
       <div class="service-tag">AUTOMATION</div>
       <h3>Business Automation</h3>
@@ -1048,5 +1048,28 @@
     observer.observe(el);
   });
 </script>
+
+<script>
+(function(){
+  var links = {
+    "Business Automation": "/services/business-automation",
+    "AI & Telegram Bots": "/services/ai-telegram-bots",
+    "API & Integrations": "/services/api-integrations",
+    "Microservices Architecture": "/services/microservices-architecture",
+    "Data Pipelines & Dashboards": "/services/data-pipelines",
+    "MVPs & Rapid Prototyping": "/services/mvp-prototyping"
+  };
+  document.querySelectorAll('.service-card').forEach(function(card) {
+    var h3 = card.querySelector('h3');
+    if (!h3) return;
+    var title = h3.textContent.trim();
+    if (links[title]) {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function() { window.location.href = links[title]; });
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

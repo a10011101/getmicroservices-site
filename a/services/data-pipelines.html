@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/services/data-pipelines"/>
+<title>Data Pipelines & Dashboards — getmicroservices</title>
+<meta name="description" content="Know your numbers without lifting a finger. Automated data collection, transformation, and real-time reporting. We build pipelines that pull from your sources and push to dashboards you can actually use."/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--accent2:#0088ff;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden; }
+  nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid transparent;transition:border-color .3s,background .3s; }
+  nav.scrolled { background:rgba(10,10,10,.95);border-color:var(--border);backdrop-filter:blur(12px); }
+  .nav-logo { font-family:var(--mono);font-size:14px;color:var(--accent);letter-spacing:-.5px; }
+  .nav-logo span { color:var(--dim); }
+  .nav-links { display:flex;gap:32px;list-style:none; }
+  .nav-links a { font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s; }
+  .nav-links a:hover,.nav-links a.active { color:var(--fg); }
+  .nav-cta { font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none; }
+  .nav-cta:hover { background:var(--accent);color:var(--bg); }
+  .page { max-width:1100px;margin:0 auto;padding:140px 48px 80px; }
+  .section { padding:64px 0;border-top:1px solid var(--border); }
+  .eyebrow { font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;opacity:.8; }
+  h1 { font-size:clamp(32px,5vw,56px);font-weight:700;letter-spacing:-2px;line-height:1.1;margin-bottom:16px; }
+  h2 { font-size:clamp(20px,3vw,30px);font-weight:700;letter-spacing:-1px;margin-bottom:20px; }
+  .lead { font-size:17px;color:var(--dim);max-width:560px;line-height:1.75;margin-bottom:0; }
+  .service-badge { display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px; }
+  .included-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px; }
+  .included-item { background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:18px 20px;display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--dim);transition:border-color .2s; }
+  .included-item:hover { border-color:#333; }
+  .included-item::before { content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0; }
+  .steps-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px; }
+  .step-card { background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;transition:border-color .3s,transform .2s; }
+  .step-card:hover { border-color:#333;transform:translateY(-3px); }
+  .step-num { font-family:var(--mono);font-size:28px;color:var(--accent);font-weight:700;margin-bottom:12px;line-height:1; }
+  .step-card h3 { font-size:16px;font-weight:700;margin-bottom:8px; }
+  .step-card p { font-size:14px;color:var(--dim);line-height:1.7; }
+  .usecase-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px; }
+  .usecase-card { background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:24px;transition:border-color .3s,transform .2s; }
+  .usecase-card:hover { border-color:#333;transform:translateY(-3px); }
+  .usecase-card h3 { font-size:16px;font-weight:700;margin-bottom:8px; }
+  .usecase-card p { font-size:14px;color:var(--dim);line-height:1.7; }
+  .stack-list { display:flex;flex-wrap:wrap;gap:10px;margin-top:8px; }
+  .stack-tag { font-family:var(--mono);font-size:12px;color:var(--dim);border:1px solid var(--border);border-radius:4px;padding:6px 14px;transition:color .2s,border-color .2s; }
+  .stack-tag:hover { color:var(--accent);border-color:var(--accent); }
+  .price-cta { background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:56px 40px;text-align:center; }
+  .price-amount { font-size:clamp(2rem,5vw,3.5rem);font-weight:700;letter-spacing:-2px;color:var(--fg);margin-bottom:8px; }
+  .price-amount span { font-size:16px;color:var(--dim);font-weight:400; }
+  .price-cta p { font-size:15px;color:var(--dim);max-width:420px;margin:0 auto 32px; }
+  .btn-cta { font-family:var(--mono);font-size:13px;padding:14px 32px;background:var(--accent);color:var(--bg);border:none;cursor:pointer;border-radius:4px;text-decoration:none;display:inline-block;transition:opacity .2s; }
+  .btn-cta:hover { opacity:.85; }
+  .full-divider { border:none;border-top:1px solid var(--border); }
+  footer { border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto; }
+  .footer-logo { font-family:var(--mono);font-size:13px;color:var(--accent); }
+  .footer-right { font-family:var(--mono);font-size:11px;color:var(--dim); }
+  @media (max-width:768px) { nav{padding:16px 20px;} .nav-links{display:none;} .page{padding:100px 20px 60px;} footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;} }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <div class="nav-logo">get<span>micro</span>services<span>.com</span></div>
+  <ul class="nav-links">
+    <li><a href="/a/" >home</a></li>
+    <li><a href="/a/#flows">work</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/blog/">blog</a></li>
+    <li><a href="/a/about">about</a></li>
+  </ul>
+  <a href="/a/#contact" class="nav-cta">[ start project ]</a>
+</nav>
+<div class="page">
+  <div class="section" style="border-top:none;padding-top:0;">
+    <div class="service-badge">DATA</div>
+    <h1>Data Pipelines & Dashboards</h1>
+    <p style="font-family:var(--mono);font-size:13px;color:var(--accent);margin-bottom:16px;">Know your numbers without lifting a finger.</p>
+    <p class="lead">Automated data collection, transformation, and real-time reporting. We build pipelines that pull from your sources and push to dashboards you can actually use.</p>
+  </div>
+  <div class="section">
+    <div class="eyebrow">deliverables</div>
+    <h2>What's Included</h2>
+    <div class="included-grid"><div class="included-item">Data source mapping</div>
+<div class="included-item">ETL pipeline build</div>
+<div class="included-item">Dashboard setup</div>
+<div class="included-item">Scheduled refresh</div>
+<div class="included-item">Alerts on anomalies</div>
+<div class="included-item">Full documentation</div></div>
+  </div>
+  <div class="section">
+    <div class="eyebrow">process</div>
+    <h2>How It Works</h2>
+    <div class="steps-grid"><div class="step-card"><div class="step-num">01</div><h3>Identify Sources and KPIs</h3><p>We map your data sources and define what numbers actually matter for your decisions.</p></div>
+<div class="step-card"><div class="step-num">02</div><h3>Build the Pipeline</h3><p>ETL pipeline built and deployed — pulling, transforming, and loading data on your schedule.</p></div>
+<div class="step-card"><div class="step-num">03</div><h3>Connect and Alert</h3><p>Dashboard connected, alerts configured. You get notified when something looks off.</p></div></div>
+  </div>
+  <div class="section">
+    <div class="eyebrow">examples</div>
+    <h2>Who Uses This</h2>
+    <div class="usecase-grid"><div class="usecase-card"><h3>Sales Reporting</h3><p>Revenue teams that manually export CRM data and build spreadsheet reports every Monday.</p></div>
+<div class="usecase-card"><h3>Operational Dashboards</h3><p>Ops managers who need real-time visibility into fulfilment, support tickets, or inventory.</p></div>
+<div class="usecase-card"><h3>Marketing Analytics</h3><p>Teams pulling data from Google Ads, Meta, and email platforms into one coherent view.</p></div>
+<div class="usecase-card"><h3>Financial Summaries</h3><p>Finance teams spending hours building monthly P&L summaries from multiple systems.</p></div></div>
+  </div>
+  <div class="section">
+    <div class="eyebrow">tech stack</div>
+    <h2>Tools We Use</h2>
+    <div class="stack-list"><span class="stack-tag">n8n</span>
+<span class="stack-tag">Python</span>
+<span class="stack-tag">PostgreSQL</span>
+<span class="stack-tag">Google Sheets</span>
+<span class="stack-tag">Looker Studio</span>
+<span class="stack-tag">Metabase</span>
+<span class="stack-tag">Airtable</span></div>
+  </div>
+  <div class="section">
+    <div class="price-cta">
+      <div class="price-amount">$499 <span>starting from</span></div>
+      <p>Fixed price. Full build. You own the code. See our full pricing breakdown.</p>
+      <a href="/a/#pricing" class="btn-cta">[ view pricing ]</a>
+    </div>
+  </div>
+</div>
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+<script>
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>40));
+</script>
+</body>
+</html>

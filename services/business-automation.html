@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9P3QLH1BY4');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Automation – GetMicroservices</title>
+  <meta name="description" content="Eliminate the manual work eating your week. We map your repetitive workflows and automate them end-to-end using n8n, Make, Zapier or custom scripts." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="canonical" href="https://getmicroservices.com/services/business-automation" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5f3ee; --bg2: #edeae2; --bg3: #e5e1d8;
+      --fg: #1a170f; --muted: #6b6757; --accent: #b5006a;
+      --yellow: #a07200; --blue: #0066cc; --blue-hover: #0052a3;
+      --green: #3a7a00; --border: #ccc9bc; --border-bright: #a8a493;
+    }
+    [data-theme="dark"] {
+      --bg: #1a170f; --bg2: #1f1c13; --bg3: #252018;
+      --fg: #eceae5; --muted: #9b9888; --accent: #ee82cf;
+      --yellow: #f7d51d; --blue: #209cee; --blue-hover: #108de0;
+      --green: #92cc41; --border: #3a3628; --border-bright: #5a5540;
+    }
+    html { scroll-behavior: smooth; }
+    * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
+    input, textarea { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--fg); font-size: 1rem; font-weight: 600; line-height: 1.6; overflow-x: hidden; }
+    body::after { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.015) 3px, rgba(0,0,0,0.015) 4px); pointer-events: none; z-index: 9999; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 3px solid var(--yellow); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .nav-logo { padding: 10px 0; }
+    .nav-logo span { font-family: 'Space Grotesk', sans-serif; font-size: clamp(0.65rem, 1.8vw, 0.95rem); color: var(--fg); letter-spacing: 0.02em; line-height: 1; }
+    .nav-logo span .accent { color: var(--accent); }
+    .nav-logo span .yellow { color: var(--yellow); }
+    .nav-links { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; padding: 10px 0; }
+    .nav-links a { color: #fff; text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 6px 12px; border: 3px solid var(--fg); background: var(--blue); display: inline-block; transition: background 0.15s; font-family: 'Space Grotesk', sans-serif; letter-spacing: 0; }
+    .nav-links a:hover { background: var(--blue-hover); text-decoration: underline; }
+    .nav-links .nav-cta { background: var(--accent); border-color: var(--fg); color: #fff; }
+    .nav-links .nav-cta:hover { background: #8c0052; }
+    .nav-links .nav-active { background: var(--yellow); color: var(--bg); border-color: var(--fg); }
+    .nav-links .nav-active:hover { background: #7d5900; }
+    .theme-toggle { background: none; border: 2px solid var(--border-bright); color: var(--fg); font-size: 1rem; padding: 4px 8px; cursor: pointer; transition: border-color 0.2s, background 0.2s; line-height: 1; }
+    .theme-toggle:hover { border-color: var(--accent); background: rgba(128,128,128,0.1); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: 2px solid var(--border-bright); padding: 8px 10px; cursor: pointer; flex-shrink: 0; }
+    .hamburger span { display: block; width: 20px; height: 2px; background: var(--fg); transition: transform 0.2s, opacity 0.2s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    section { padding: 80px 5%; border-bottom: 2px solid var(--border); }
+    .section-label { font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 14px; }
+    .section-label::before { content: '// '; color: var(--muted); }
+    h1, h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(0.9rem, 2.5vw, 1.4rem); line-height: 1.5; margin-bottom: 14px; }
+    h1 { font-size: clamp(1.1rem, 3vw, 1.8rem); }
+    h1 .accent, h2 .accent { color: var(--accent); }
+    h1 .yellow, h2 .yellow { color: var(--yellow); }
+    .section-sub { color: var(--muted); font-size: 0.9rem; max-width: 560px; line-height: 1.75; margin-bottom: 48px; }
+
+    .pixel-box { background: var(--bg2); border: 2px solid var(--border-bright); position: relative; transition: border-color 0.2s, transform 0.15s, box-shadow 0.15s; }
+    .pixel-box:hover { border-color: var(--accent); transform: translate(-3px,-3px); box-shadow: 4px 4px 0 var(--accent); }
+
+    .hero { padding: 80px 5% 60px; border-bottom: 2px solid var(--border); background: var(--bg2); }
+    .prompt { color: var(--accent); font-size: 0.85rem; margin-bottom: 10px; font-family: 'Fira Code', monospace; }
+    .prompt::before { content: '> '; color: var(--yellow); }
+    .hero-sub { color: var(--muted); font-size: 0.92rem; max-width: 600px; margin: 20px 0 0; line-height: 1.75; border-left: 3px solid var(--yellow); padding-left: 16px; }
+    .service-tag { display: inline-block; background: var(--yellow); color: var(--bg); font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; padding: 4px 8px; margin-bottom: 14px; }
+
+    /* INCLUDED */
+    #included { background: var(--bg); }
+    .included-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .included-list li { padding: 18px 22px; display: flex; align-items: flex-start; gap: 12px; }
+    .included-list li::before { content: '✓'; color: var(--green); font-family: 'Fira Code', monospace; font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+    .included-list li span { color: var(--fg); font-size: 0.85rem; line-height: 1.6; }
+
+    /* HOW IT WORKS */
+    #how { background: var(--bg2); }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .step { padding: 28px 24px; }
+    .step-num { font-family: 'Fira Code', monospace; font-size: 2rem; color: var(--yellow); font-weight: 700; margin-bottom: 10px; line-height: 1; }
+    .step h3 { font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; margin-bottom: 8px; color: var(--fg); }
+    .step p { color: var(--muted); font-size: 0.82rem; line-height: 1.7; }
+
+    /* USE CASES */
+    #usecases { background: var(--bg); }
+    .usecase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .usecase-card { padding: 24px 22px; }
+    .usecase-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; margin-bottom: 8px; color: var(--fg); }
+    .usecase-card p { color: var(--muted); font-size: 0.82rem; line-height: 1.7; }
+
+    /* TOOLS */
+    #tools { background: var(--bg2); }
+    .stack-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+    .stack-tag { font-family: 'Fira Code', monospace; font-size: 0.78rem; padding: 6px 14px; border: 2px solid var(--border-bright); color: var(--fg); background: var(--bg2); transition: border-color 0.2s, transform 0.15s, box-shadow 0.15s; }
+    .stack-tag:hover { border-color: var(--green); transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--green); }
+
+    /* PRICING CTA */
+    #pricing-cta { background: var(--bg3); text-align: center; }
+    .cta-box { border: 3px solid var(--yellow); padding: 64px 40px; max-width: 760px; margin: 0 auto; position: relative; }
+    .cta-box::before { content: '★ GET STARTED ★'; font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; color: var(--bg); background: var(--yellow); padding: 6px 14px; position: absolute; top: -16px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+    .cta-box h2 { margin-bottom: 16px; }
+    .cta-box p { color: var(--muted); font-size: 0.88rem; margin-bottom: 36px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .price-from { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+    .price-from span { font-size: 0.9rem; color: var(--muted); font-weight: 400; }
+
+    .btn-primary { background: var(--accent); color: var(--bg); border: 3px solid var(--fg); padding: 14px 28px; font-family: 'Space Grotesk', sans-serif; font-size: 0.82rem; text-decoration: none; display: inline-block; cursor: pointer; transition: background 0.15s, transform 0.1s; }
+    .btn-primary:hover { background: #8c0052; transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--fg); }
+
+    /* CONTACT */
+    #contact { background: var(--bg3); }
+    .center { text-align: center; }
+    .center .section-sub { margin-left: auto; margin-right: auto; }
+    .contact-form { max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .contact-form input, .contact-form select, .contact-form textarea { background: var(--bg); border: 2px solid var(--border-bright); color: var(--fg); padding: 14px 16px; font-size: 0.85rem; font-family: 'Fira Code', monospace; outline: none; transition: border-color 0.2s; }
+    .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { border-color: var(--accent); }
+    .contact-form select option { background: var(--bg); }
+    .contact-form textarea { resize: vertical; }
+    .contact-form button { background: var(--accent); color: var(--bg); border: 3px solid var(--fg); padding: 16px; font-family: 'Space Grotesk', sans-serif; font-size: 0.82rem; cursor: pointer; transition: background 0.15s, transform 0.1s; width: 100%; }
+    .contact-form button:hover { background: #8c0052; transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--fg); }
+    #form-msg { text-align: center; color: var(--green); display: none; font-weight: 700; padding: 12px; border: 2px solid var(--green); font-size: 0.8rem; }
+
+    footer { background: var(--bg); border-top: 3px solid var(--yellow); padding: 56px 5% 32px; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand .footer-logo { font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; color: var(--fg); display: block; margin-bottom: 14px; line-height: 1.6; }
+    .footer-brand .footer-logo .accent { color: var(--accent); }
+    .footer-brand .footer-logo .yellow { color: var(--yellow); }
+    .footer-brand p { color: var(--muted); font-size: 0.78rem; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; color: var(--yellow); letter-spacing: 0.08em; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--accent); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { color: var(--muted); font-size: 0.75rem; }
+    .footer-socials { display: flex; gap: 16px; }
+    .footer-socials a { color: var(--muted); text-decoration: none; font-size: 0.78rem; }
+    .footer-socials a:hover { color: var(--accent); }
+
+    .blink { animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg); border-bottom: 3px solid var(--yellow); flex-direction: column; padding: 16px 5%; gap: 10px; z-index: 99; }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 0.75rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) { .footer-top { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <span>Get<span class="accent">Micro</span><span class="yellow">services</span></span>
+    <div style="font-size:0.65rem; color:var(--muted); letter-spacing:0.06em; margin-top:3px;">// done-for-you automation agency</div>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#services" class="nav-active">Services</a></li>
+    <li><a href="/#how">Process</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+    <li><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀</button></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="service-tag">AUTOMATION</div>
+  <div class="prompt">cat services/business-automation.txt</div>
+  <h1>Business <span class="accent">Automation</span><span class="blink" style="color:var(--accent);">_</span></h1>
+  <p style="color:var(--muted); font-size:1rem; margin-top:10px; font-family:'Space Grotesk',sans-serif;">Eliminate the manual work eating your week.</p>
+  <p class="hero-sub">We map your repetitive workflows and automate them end-to-end using n8n, Make, Zapier or custom scripts. You describe the pain, we remove it.</p>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section id="included">
+  <div class="section-label">deliverables</div>
+  <h2>What's <span class="yellow">Included</span></h2>
+  <ul class="included-list">
+    <li class="pixel-box"><span>Workflow audit + mapping</span></li>
+    <li class="pixel-box"><span>Full automation build</span></li>
+    <li class="pixel-box"><span>Integration with your existing tools</span></li>
+    <li class="pixel-box"><span>Error handling + alerts</span></li>
+    <li class="pixel-box"><span>Full documentation</span></li>
+    <li class="pixel-box"><span>30-day support</span></li>
+  </ul>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-label">process</div>
+  <h2>How It <span class="accent">Works</span></h2>
+  <div class="steps">
+    <div class="pixel-box step">
+      <div class="step-num">01</div>
+      <h3>You Describe the Task</h3>
+      <p>Tell us what's eating your time. No jargon needed — just explain the problem like you'd tell a colleague.</p>
+    </div>
+    <div class="pixel-box step">
+      <div class="step-num">02</div>
+      <h3>We Scope and Build</h3>
+      <p>We map the workflow, pick the right tools, and build the automation end-to-end. You get a fixed quote upfront.</p>
+    </div>
+    <div class="pixel-box step">
+      <div class="step-num">03</div>
+      <h3>Deploy, Test, Hand Over</h3>
+      <p>We deploy it live, test every edge case, and hand over full source code and documentation. Done in days.</p>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section id="usecases">
+  <div class="section-label">examples</div>
+  <h2>Who Uses <span class="yellow">This</span></h2>
+  <div class="usecase-grid">
+    <div class="pixel-box usecase-card">
+      <h3>Invoice Processing</h3>
+      <p>Accounting teams that manually match invoices, chase payments, and update spreadsheets — automated end-to-end.</p>
+    </div>
+    <div class="pixel-box usecase-card">
+      <h3>Lead Routing</h3>
+      <p>Sales teams receiving leads from multiple sources, manually assigning and tracking follow-ups in different tools.</p>
+    </div>
+    <div class="pixel-box usecase-card">
+      <h3>Report Generation</h3>
+      <p>Managers who spend hours pulling data from multiple sources to build weekly or monthly status reports.</p>
+    </div>
+    <div class="pixel-box usecase-card">
+      <h3>Onboarding Sequences</h3>
+      <p>Operations teams running manual client or employee onboarding with repeated copy-paste and email steps.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools">
+  <div class="section-label">tech stack</div>
+  <h2>Tools We <span class="accent">Use</span></h2>
+  <div class="stack-grid">
+    <span class="stack-tag">n8n</span>
+    <span class="stack-tag">Make</span>
+    <span class="stack-tag">Zapier</span>
+    <span class="stack-tag">Node.js</span>
+    <span class="stack-tag">Python</span>
+    <span class="stack-tag">Google Sheets</span>
+    <span class="stack-tag">Airtable</span>
+  </div>
+</section>
+
+<!-- PRICING CTA -->
+<section id="pricing-cta">
+  <div class="cta-box">
+    <div class="section-label">pricing</div>
+    <div class="price-from">$499 <span>starting from</span></div>
+    <h2>Ready to Stop Doing It <span class="accent">Manually?</span></h2>
+    <p>Fixed price. Full build. You own the code. See our full pricing breakdown.</p>
+    <a href="/#pricing" class="btn-primary">[ View Pricing → ]</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="center">
+    <div class="section-label">contact</div>
+    <h2>Let's <span class="yellow">Talk</span></h2>
+    <p class="section-sub">Tell us what you need. We'll get back to you within a few hours.</p>
+  </div>
+  <form class="contact-form" onsubmit="handleForm(event)" id="contactForm">
+    <input type="text" name="name" placeholder="> your_name" required />
+    <input type="email" name="email" placeholder="> your_email" required />
+    <select name="service">
+      <option value="Business Automation">// Business Automation</option>
+      <option value="">// something else?</option>
+      <option>AI / Telegram Bot</option>
+      <option>API &amp; Integrations</option>
+      <option>Microservices / Backend</option>
+      <option>MVP / Prototype</option>
+      <option>Data Pipelines</option>
+    </select>
+    <textarea rows="4" name="message" placeholder="> describe_your_project..." required></textarea>
+    <button type="submit">[ Send Message → ]</button>
+    <p id="form-msg">✓ Message sent! We'll be in touch within a few hours.</p>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="footer-logo">Get<span class="accent">Micro</span><span class="yellow">services</span></span>
+      <p>Fast, affordable automation and microservices for businesses that want to scale without hiring a dev team.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/services/business-automation">Automation</a></li>
+        <li><a href="/services/ai-telegram-bots">AI Bots</a></li>
+        <li><a href="/services/api-integrations">APIs</a></li>
+        <li><a href="/services/microservices-architecture">Microservices</a></li>
+        <li><a href="/services/mvp-prototyping">MVPs</a></li>
+        <li><a href="/services/data-pipelines">Data Pipelines</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/#how">How It Works</a></li>
+        <li><a href="/#why">Why Us</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/blog">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="/#contact">Free Consultation</a></li>
+        <li><a href="mailto:hello@getmicroservices.com">hello@getmicroservices.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 GetMicroservices. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    const btn = document.getElementById('hamburger');
+    nav.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    });
+  });
+  const themeBtn = document.getElementById('themeBtn');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  if (savedTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    themeBtn.textContent = '\u2600';
+  } else {
+    themeBtn.textContent = '\u263e';
+  }
+  function toggleTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+      themeBtn.textContent = '\u263e';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+      themeBtn.textContent = '\u2600';
+    }
+  }
+  async function handleForm(e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = '[ Sending... ]';
+    btn.disabled = true;
+    const data = {
+      name: form.querySelector('[name="name"]').value,
+      email: form.querySelector('[name="email"]').value,
+      service: form.querySelector('[name="service"]').value,
+      message: form.querySelector('[name="message"]').value,
+      _token: '7f9d43fb7d9ac0b7a0f8f17ec4b08990791368a84f1bf860'
+    };
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+      await fetch('https://n8n.getmicroservices.co/webhook/contact-form-cf9a4e2b', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data), signal: controller.signal
+      });
+      clearTimeout(timeout);
+    } catch(err) {}
+    btn.textContent = '[ Sent! ]';
+    document.getElementById('form-msg').style.display = 'block';
+    form.querySelectorAll('input, textarea').forEach(el => { el.value = ''; el.disabled = true; });
+    form.querySelectorAll('select').forEach(el => { el.selectedIndex = 0; el.disabled = true; });
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.pixel-box').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.45s ease, transform 0.45s ease, border-color 0.2s, box-shadow 0.15s';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
