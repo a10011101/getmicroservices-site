@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="canonical" href="https://getmicroservices.com/b" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>getmicroservices — automation that actually ships</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  input, textarea { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111;
+    --bg3: #161616;
+    --border: #222;
+    --fg: #e8e8e8;
+    --dim: #666;
+    --accent: #00ff88;
+    --accent2: #0088ff;
+    --red: #ff4444;
+    --yellow: #ffcc00;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, background .3s;
+  }
+  nav.scrolled { background: rgba(10,10,10,.95); border-color: var(--border); backdrop-filter: blur(12px); }
+  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); letter-spacing: -.5px; }
+  .nav-logo span { color: var(--dim); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--dim); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-cta {
+    font-family: var(--mono); font-size: 12px; padding: 8px 18px;
+    border: 1px solid var(--accent); color: var(--accent);
+    background: transparent; cursor: pointer; transition: all .2s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--bg); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,255,136,.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 11px; color: var(--accent);
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px;
+    opacity: .8;
+  }
+
+  .hero-title {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700; letter-spacing: -2px; line-height: 1.1;
+    text-align: center; margin-bottom: 20px; max-width: 900px;
+  }
+  .hero-title .hl { color: var(--accent); }
+
+  .hero-sub {
+    font-size: 16px; color: var(--dim); text-align: center;
+    max-width: 480px; margin-bottom: 56px; line-height: 1.7;
+  }
+
+  /* TERMINAL */
+  .terminal {
+    width: 100%; max-width: 680px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0,255,136,.06), 0 40px 80px rgba(0,0,0,.5);
+  }
+
+  .term-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 16px;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; }
+  .dot.y { background: #febc2e; }
+  .dot.g { background: #28c840; }
+  .term-title { font-family: var(--mono); font-size: 11px; color: var(--dim); margin-left: auto; margin-right: auto; }
+
+  .term-body { padding: 24px; font-family: var(--mono); font-size: 13px; line-height: 1.8; min-height: 220px; }
+
+  .term-line { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 4px; }
+  .term-prompt { color: var(--accent); flex-shrink: 0; }
+  .term-text { color: var(--fg); }
+  .term-output { color: var(--dim); padding-left: 22px; margin-bottom: 8px; }
+  .term-output.green { color: var(--accent); }
+  .term-output.blue { color: var(--accent2); }
+
+  .term-input-line { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+  .term-input {
+    background: transparent; border: none; outline: none;
+    color: var(--fg); font-family: var(--mono); font-size: 13px;
+    flex: 1; caret-color: var(--accent);
+  }
+  .cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); animation: blink 1s step-end infinite; vertical-align: middle; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* SUGGESTIONS */
+  .suggestions {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 0 24px 20px;
+  }
+  .sug {
+    font-family: var(--mono); font-size: 11px; color: var(--dim);
+    border: 1px solid var(--border); padding: 4px 10px; border-radius: 4px;
+    cursor: pointer; transition: all .2s;
+  }
+  .sug:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* FLOWS SECTION */
+  .section { padding: 100px 48px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--mono); font-size: 11px; color: var(--accent);
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px;
+  }
+  .section-title { font-size: clamp(24px, 4vw, 40px); font-weight: 700; letter-spacing: -1px; margin-bottom: 16px; }
+  .section-sub { font-size: 15px; color: var(--dim); max-width: 480px; line-height: 1.7; margin-bottom: 56px; }
+
+  /* FLOW DIAGRAMS */
+  .flows { display: flex; flex-direction: column; gap: 40px; }
+
+  .flow-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px;
+    transition: border-color .3s;
+  }
+  .flow-card:hover { border-color: #333; }
+
+  .flow-label {
+    font-family: var(--mono); font-size: 11px; color: var(--dim);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+  }
+  .flow-label::before { content: ''; display: inline-block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+
+  .flow-nodes {
+    display: flex; align-items: center; gap: 0;
+    flex-wrap: wrap; gap: 0;
+    overflow-x: auto; padding-bottom: 4px;
+  }
+
+  .flow-node {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 6px; flex-shrink: 0;
+  }
+
+  .node-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-family: var(--mono); font-size: 12px;
+    display: flex; align-items: center; gap: 8px;
+    white-space: nowrap;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .node-box:hover { border-color: var(--accent); box-shadow: 0 0 12px rgba(0,255,136,.1); }
+  .node-icon { font-size: 16px; }
+  .node-name { color: var(--fg); }
+  .node-type { font-size: 10px; color: var(--dim); }
+
+  .flow-arrow {
+    font-family: var(--mono); color: var(--border);
+    padding: 0 8px; font-size: 18px; flex-shrink: 0;
+    align-self: center; padding-bottom: 20px;
+  }
+
+  .flow-result {
+    margin-top: 20px; padding: 12px 16px;
+    background: rgba(0,255,136,.04);
+    border: 1px solid rgba(0,255,136,.15);
+    border-radius: 6px;
+    font-family: var(--mono); font-size: 12px; color: var(--accent);
+  }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
+    margin-top: 0;
+  }
+
+  .price-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 32px;
+    display: flex; flex-direction: column; gap: 16px;
+    transition: border-color .3s, transform .3s;
+  }
+  .price-card:hover { border-color: #333; transform: translateY(-4px); }
+  .price-card.featured { border-color: var(--accent); background: rgba(0,255,136,.03); }
+
+  .price-name { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 2px; text-transform: uppercase; }
+  .price-amount { font-size: 36px; font-weight: 700; letter-spacing: -1px; }
+  .price-amount span { font-size: 14px; color: var(--dim); font-weight: 400; }
+  .price-desc { font-size: 14px; color: var(--dim); line-height: 1.6; }
+  .price-items { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .price-items li { font-size: 13px; color: var(--dim); display: flex; gap: 10px; align-items: flex-start; }
+  .price-items li::before { content: '→'; color: var(--accent); font-family: var(--mono); flex-shrink: 0; }
+  .price-items li.included { color: var(--fg); }
+
+  .price-btn {
+    font-family: var(--mono); font-size: 12px; padding: 12px;
+    border: 1px solid var(--border); color: var(--dim);
+    background: transparent; cursor: pointer; transition: all .2s;
+    text-align: center; text-decoration: none; display: block;
+    border-radius: 4px; margin-top: auto;
+  }
+  .price-btn:hover { border-color: var(--fg); color: var(--fg); }
+  .price-card.featured .price-btn { border-color: var(--accent); color: var(--accent); }
+  .price-card.featured .price-btn:hover { background: var(--accent); color: var(--bg); }
+
+  /* CONTACT */
+  .contact-wrap {
+    max-width: 600px;
+  }
+
+  .msg-thread {
+    display: flex; flex-direction: column; gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .msg {
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+
+  .msg-avatar {
+    width: 32px; height: 32px; border-radius: 6px;
+    background: var(--bg3); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+
+  .msg-bubble {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; border-top-left-radius: 2px;
+    padding: 12px 16px; font-size: 14px; color: var(--fg);
+    max-width: 480px; line-height: 1.6;
+  }
+
+  .msg.mine { flex-direction: row-reverse; }
+  .msg.mine .msg-bubble {
+    border-radius: 8px; border-top-right-radius: 2px;
+    background: rgba(0,255,136,.08); border-color: rgba(0,255,136,.2);
+  }
+
+  .msg-time { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-top: 4px; }
+
+  .compose-box {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+  }
+
+  .compose-fields { display: flex; gap: 0; border-bottom: 1px solid var(--border); }
+  .compose-field {
+    flex: 1; padding: 12px 16px;
+    background: transparent; border: none; border-right: 1px solid var(--border);
+    color: var(--fg); font-family: var(--sans); font-size: 13px; outline: none;
+  }
+  .compose-field:last-child { border-right: none; }
+  .compose-field::placeholder { color: var(--dim); }
+
+  .compose-textarea {
+    width: 100%; padding: 16px;
+    background: transparent; border: none;
+    color: var(--fg); font-family: var(--sans); font-size: 14px;
+    outline: none; resize: none; min-height: 100px; line-height: 1.6;
+  }
+  .compose-textarea::placeholder { color: var(--dim); }
+
+  .compose-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 16px; border-top: 1px solid var(--border);
+  }
+  .compose-hint { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+  .compose-send {
+    font-family: var(--mono); font-size: 12px; padding: 8px 20px;
+    background: var(--accent); color: var(--bg); border: none;
+    cursor: pointer; transition: opacity .2s; border-radius: 4px;
+  }
+  .compose-send:hover { opacity: .85; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .footer-logo { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .footer-right { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+
+  /* DIVIDER */
+  .full-divider { border: none; border-top: 1px solid var(--border); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .section { padding: 60px 20px; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    footer { padding: 32px 20px; flex-direction: column; gap: 12px; text-align: center; }
+    .compose-fields { flex-direction: column; }
+    .compose-field { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">get<span>micro</span>services<span>.co</span></div>
+  <ul class="nav-links">
+    <li><a href="#flows">work</a></li>
+    <li><a href="#pricing">pricing</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">[ start project ]</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">automation studio</div>
+  <h1 class="hero-title">Tell us what you need.<br><span class="hl">We'll make it run.</span></h1>
+  <p class="hero-sub">No decks, no discovery calls, no "we need to align on scope." Just working automations, shipped fast.</p>
+
+  <div class="terminal">
+    <div class="term-bar">
+      <div class="dot r"></div>
+      <div class="dot y"></div>
+      <div class="dot g"></div>
+      <div class="term-title">automation-cli — bash</div>
+    </div>
+    <div class="term-body" id="termBody">
+      <div class="term-line"><span class="term-prompt">$</span><span class="term-text" id="typedText"></span><span class="cursor" id="cursor"></span></div>
+      <div id="termOutput"></div>
+    </div>
+    <div class="suggestions" id="suggestions">
+      <div class="sug" onclick="runDemo('build me an AI assistant')">build me an AI assistant</div>
+      <div class="sug" onclick="runDemo('qualify my leads with AI')">qualify my leads with AI</div>
+      <div class="sug" onclick="runDemo('automate my invoicing')">automate my invoicing</div>
+      <div class="sug" onclick="runDemo('auto-reply to Gmail')">auto-reply to Gmail</div>
+      <div class="sug" onclick="runDemo('monitor competitors')">monitor competitors</div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- FLOWS -->
+<section class="section" id="flows">
+  <div class="section-label">recent work</div>
+  <h2 class="section-title">Real flows.<br>Real production.</h2>
+  <p class="section-sub">Not mockups. These are live workflows we've shipped for clients.</p>
+
+  <div class="flows">
+
+    <!-- FLOW 1: AI Personal Assistant -->
+    <div class="flow-card">
+      <div class="flow-label">AI personal assistant — founder, London</div>
+      <div class="flow-nodes">
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">📧</span><div><div class="node-name">Gmail + Telegram</div><div class="node-type">Multi-trigger</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">🤖</span><div><div class="node-name">GPT-4o</div><div class="node-type">Read + Classify</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">🔀</span><div><div class="node-name">Priority Router</div><div class="node-type">Switch</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">📋</span><div><div class="node-name">Notion + Calendar</div><div class="node-type">Tasks + Events</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">☀️</span><div><div class="node-name">9AM Briefing</div><div class="node-type">Daily digest</div></div></div>
+        </div>
+      </div>
+      <div class="flow-result">↳ Every morning: agenda, top emails, Stripe revenue, priorities — in one Telegram message. Inbox stays at zero.</div>
+    </div>
+
+    <!-- FLOW 2: AI Lead Qualification -->
+    <div class="flow-card">
+      <div class="flow-label">AI lead qualification — B2B SaaS company</div>
+      <div class="flow-nodes">
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">📝</span><div><div class="node-name">Web Form</div><div class="node-type">Webhook</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">🔍</span><div><div class="node-name">Enrich Lead</div><div class="node-type">Apollo / Clearbit</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">🤖</span><div><div class="node-name">GPT-4o Score</div><div class="node-type">ICP match 0–100</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">🔀</span><div><div class="node-name">Route by Score</div><div class="node-type">Hot / Warm / Cold</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">⚡</span><div><div class="node-name">Instant Alert</div><div class="node-type">Slack + CRM</div></div></div>
+        </div>
+      </div>
+      <div class="flow-result">↳ Hot leads hit the sales rep's Slack in &lt;30s with full context. Cold leads enter nurture. No manual review.</div>
+    </div>
+
+    <!-- FLOW 3: Invoice & Payment Automation -->
+    <div class="flow-card">
+      <div class="flow-label">Invoice & payment automation — agency, 50+ clients</div>
+      <div class="flow-nodes">
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">💳</span><div><div class="node-name">Stripe Payment</div><div class="node-type">Trigger</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">📄</span><div><div class="node-name">Generate PDF</div><div class="node-type">Invoice builder</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">📧</span><div><div class="node-name">Email Client</div><div class="node-type">Gmail + PDF</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">📊</span><div><div class="node-name">Sync Xero</div><div class="node-type">Accounting</div></div></div>
+        </div>
+        <div class="flow-arrow">──▶</div>
+        <div class="flow-node">
+          <div class="node-box"><span class="node-icon">💬</span><div><div class="node-name">Slack Summary</div><div class="node-type">EOD report</div></div></div>
+        </div>
+      </div>
+      <div class="flow-result">↳ Every payment triggers invoice, client email, accounting entry, and owner summary automatically. 4h/week saved.</div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="section-label">pricing</div>
+  <h2 class="section-title">Simple. No surprises.</h2>
+  <p class="section-sub">Fixed scope, fixed price. We don't do hourly billing or "change request" hell.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">single flow</div>
+      <div class="price-amount">$490<span> flat</span></div>
+      <div class="price-desc">One automation, fully built and deployed to your infrastructure.</div>
+      <ul class="price-items">
+        <li class="included">Up to 6 nodes</li>
+        <li class="included">Connected to your existing tools</li>
+        <li class="included">Deployed + documented</li>
+        <li class="included">2 weeks of bug fixes</li>
+        <li>Ongoing support</li>
+        <li>Multiple flows</li>
+      </ul>
+      <a href="#contact" class="price-btn">[ get started ]</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-name">automation sprint</div>
+      <div class="price-amount">$1,900<span> /sprint</span></div>
+      <div class="price-desc">Two weeks, up to 5 flows. We move fast, you ship fast.</div>
+      <ul class="price-items">
+        <li class="included">Up to 5 automations</li>
+        <li class="included">Priority async support</li>
+        <li class="included">Deployed to your stack</li>
+        <li class="included">Full documentation</li>
+        <li class="included">30-day support window</li>
+        <li>Retainer pricing</li>
+      </ul>
+      <a href="#contact" class="price-btn">[ book a sprint ]</a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-name">on-call retainer</div>
+      <div class="price-amount">$790<span> /mo</span></div>
+      <div class="price-desc">We're your automation team. New flows, fixes, changes — whenever you need.</div>
+      <ul class="price-items">
+        <li class="included">Unlimited small requests</li>
+        <li class="included">2 major flows/month</li>
+        <li class="included">24h turnaround</li>
+        <li class="included">Monitoring + alerts</li>
+        <li class="included">Cancel anytime</li>
+        <li class="included">Dedicated Slack channel</li>
+      </ul>
+      <a href="#contact" class="price-btn">[ start retainer ]</a>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-label">contact</div>
+  <h2 class="section-title">Let's talk.</h2>
+  <p class="section-sub">Drop a message. No forms with 12 fields, no "we'll get back to you in 3 business days."</p>
+
+  <div class="contact-wrap">
+    <div class="msg-thread">
+      <div class="msg">
+        <div class="msg-avatar">⚡</div>
+        <div>
+          <div class="msg-bubble">Hey 👋 What are you trying to automate? Give me the messy version — no need to have it figured out.</div>
+          <div class="msg-time">Today, 9:41 AM</div>
+        </div>
+      </div>
+    </div>
+
+    <form class="compose-box" id="contactForm" onsubmit="sendMsg(event)">
+      <div class="compose-fields">
+        <input class="compose-field" type="text" name="name" placeholder="your name" required/>
+        <input class="compose-field" type="email" name="email" placeholder="your email" required/>
+      </div>
+      <textarea class="compose-textarea" name="message" placeholder="what do you want to automate?" rows="4" required></textarea>
+      <div class="compose-footer">
+        <span class="compose-hint" id="composeHint">↵ send</span>
+        <button class="compose-send" type="submit" id="sendBtn">send →</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<hr class="full-divider"/>
+
+<footer>
+  <div class="footer-logo">getmicroservices.co</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+
+<script>
+// Nav scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
+});
+
+// Terminal demo
+const demos = {
+  'build me an AI assistant': [
+    { type: 'out', text: 'analyzing request...', delay: 400 },
+    { type: 'out', text: '→ trigger: Gmail + Telegram (multi-source)', delay: 800, cls: 'blue' },
+    { type: 'out', text: '→ action: GPT-4o reads, classifies, drafts replies', delay: 1200, cls: 'blue' },
+    { type: 'out', text: '→ action: urgent items → instant Telegram alert', delay: 1600, cls: 'blue' },
+    { type: 'out', text: '→ action: tasks → Notion, meetings → Calendar', delay: 2000, cls: 'blue' },
+    { type: 'out', text: '→ action: 9AM daily briefing → Telegram', delay: 2400, cls: 'blue' },
+    { type: 'out', text: '✓ estimated build time: 5 days', delay: 3000, cls: 'green' },
+  ],
+  'qualify my leads with AI': [
+    { type: 'out', text: 'analyzing request...', delay: 400 },
+    { type: 'out', text: '→ trigger: form submission (webhook)', delay: 800, cls: 'blue' },
+    { type: 'out', text: '→ action: enrich via Apollo / Clearbit', delay: 1200, cls: 'blue' },
+    { type: 'out', text: '→ action: GPT-4o scores ICP fit 0–100', delay: 1600, cls: 'blue' },
+    { type: 'out', text: '→ action: hot (80+) → Slack + CRM instant alert', delay: 2000, cls: 'blue' },
+    { type: 'out', text: '→ action: cold → nurture sequence', delay: 2400, cls: 'blue' },
+    { type: 'out', text: '✓ estimated build time: 3 days', delay: 3000, cls: 'green' },
+  ],
+  'automate my invoicing': [
+    { type: 'out', text: 'analyzing request...', delay: 400 },
+    { type: 'out', text: '→ trigger: Stripe payment.succeeded', delay: 800, cls: 'blue' },
+    { type: 'out', text: '→ action: generate branded PDF invoice', delay: 1200, cls: 'blue' },
+    { type: 'out', text: '→ action: email client with PDF attached', delay: 1600, cls: 'blue' },
+    { type: 'out', text: '→ action: sync entry to Xero / QuickBooks', delay: 2000, cls: 'blue' },
+    { type: 'out', text: '→ action: EOD Slack summary to owner', delay: 2400, cls: 'blue' },
+    { type: 'out', text: '✓ estimated build time: 3 days', delay: 3000, cls: 'green' },
+  ],
+  'auto-reply to Gmail': [
+    { type: 'out', text: 'analyzing request...', delay: 400 },
+    { type: 'out', text: '→ trigger: Gmail new message', delay: 800, cls: 'blue' },
+    { type: 'out', text: '→ action: GPT-4o classifies intent + tone', delay: 1200, cls: 'blue' },
+    { type: 'out', text: '→ action: drafts reply in your voice', delay: 1600, cls: 'blue' },
+    { type: 'out', text: '→ action: urgent → Telegram alert with draft', delay: 2000, cls: 'blue' },
+    { type: 'out', text: '→ action: routine → auto-send', delay: 2400, cls: 'blue' },
+    { type: 'out', text: '✓ estimated build time: 4 days', delay: 3000, cls: 'green' },
+  ],
+  'monitor competitors': [
+    { type: 'out', text: 'analyzing request...', delay: 400 },
+    { type: 'out', text: '→ trigger: schedule (daily, 7AM)', delay: 800, cls: 'blue' },
+    { type: 'out', text: '→ action: scrape competitor pricing + content', delay: 1200, cls: 'blue' },
+    { type: 'out', text: '→ action: GPT-4o diffs vs last week', delay: 1600, cls: 'blue' },
+    { type: 'out', text: '→ action: significant change → instant alert', delay: 2000, cls: 'blue' },
+    { type: 'out', text: '→ action: weekly digest report → email', delay: 2400, cls: 'blue' },
+    { type: 'out', text: '✓ estimated build time: 4 days', delay: 3000, cls: 'green' },
+  ],
+};
+
+let isTyping = false;
+
+async function typeText(el, text, speed = 40) {
+  for (let ch of text) {
+    el.textContent += ch;
+    await new Promise(r => setTimeout(r, speed));
+  }
+}
+
+async function runDemo(query) {
+  if (isTyping) return;
+  isTyping = true;
+
+  const typedEl = document.getElementById('typedText');
+  const cursorEl = document.getElementById('cursor');
+  const outputEl = document.getElementById('termOutput');
+
+  // Clear previous
+  typedEl.textContent = '';
+  outputEl.innerHTML = '';
+  cursorEl.style.display = 'inline-block';
+
+  await typeText(typedEl, query, 45);
+  cursorEl.style.display = 'none';
+
+  const steps = demos[query] || [];
+  for (let step of steps) {
+    await new Promise(r => setTimeout(r, step.delay - (steps[0]?.delay || 0)));
+    if (step.type === 'out') {
+      const div = document.createElement('div');
+      div.className = 'term-output' + (step.cls ? ' ' + step.cls : '');
+      div.textContent = step.text;
+      div.style.opacity = '0';
+      div.style.transition = 'opacity 0.3s';
+      outputEl.appendChild(div);
+      setTimeout(() => div.style.opacity = '1', 10);
+    }
+  }
+
+  isTyping = false;
+}
+
+// Auto-run first demo on load
+setTimeout(() => runDemo('build me an AI assistant'), 800);
+
+// Contact form
+function sendMsg(e) {
+  e.preventDefault();
+  const btn = document.getElementById('sendBtn');
+  const hint = document.getElementById('composeHint');
+  const form = e.target;
+
+  btn.textContent = 'sending...';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    // Add reply bubble
+    const thread = document.querySelector('.msg-thread');
+    const userMsg = document.createElement('div');
+    userMsg.className = 'msg mine';
+    userMsg.innerHTML = `
+      <div class="msg-avatar">👤</div>
+      <div>
+        <div class="msg-bubble">${form.querySelector('[name="message"]').value}</div>
+        <div class="msg-time">Just now</div>
+      </div>`;
+    thread.appendChild(userMsg);
+
+    setTimeout(() => {
+      const replyMsg = document.createElement('div');
+      replyMsg.className = 'msg';
+      replyMsg.innerHTML = `
+        <div class="msg-avatar">⚡</div>
+        <div>
+          <div class="msg-bubble">Got it. I'll take a look and get back to you within a few hours. If it's urgent, Telegram is faster.</div>
+          <div class="msg-time">Just now</div>
+        </div>`;
+      thread.appendChild(replyMsg);
+      replyMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 1200);
+
+    btn.textContent = 'sent ✓';
+    hint.textContent = 'message received';
+    form.querySelectorAll('input, textarea').forEach(el => el.value = '');
+  }, 800);
+}
+</script>
+</body>
+</html>
