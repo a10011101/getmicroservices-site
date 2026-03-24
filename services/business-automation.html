@@ -35,7 +35,7 @@
     * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
     input, textarea { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
     body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--fg); font-size: 1rem; font-weight: 600; line-height: 1.6; overflow-x: hidden; }
-    body::after { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.015) 3px, rgba(0,0,0,0.015) 4px); pointer-events: none; z-index: 9999; }
+    
 
     nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 3px solid var(--yellow); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
     .nav-logo { padding: 10px 0; display: flex; flex-direction: column; }
@@ -57,7 +57,7 @@
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    section { padding: 48px 5%; border-bottom: 2px solid var(--border); }
+    section { margin: 0; padding: 48px 5%; border-bottom: 2px solid var(--border); }
     .section-label { font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 14px; }
     .section-label::before { content: '// '; color: var(--muted); }
     h1, h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(0.9rem, 2.5vw, 1.4rem); line-height: 1.5; margin-bottom: 14px; }
@@ -69,7 +69,7 @@
     .pixel-box { background: var(--bg2); border: 2px solid var(--border-bright); position: relative; transition: border-color 0.2s, transform 0.15s, box-shadow 0.15s; }
     .pixel-box:hover { border-color: var(--accent); transform: translate(-3px,-3px); box-shadow: 4px 4px 0 var(--accent); }
 
-    .hero { padding: 40px 5% 40px; border-bottom: 2px solid var(--border); background: var(--bg2); }
+    .hero { padding: 32px 5% 40px; border-bottom: 2px solid var(--border); background: var(--bg); margin: 0; }
     .prompt { color: var(--accent); font-size: 0.85rem; margin-bottom: 10px; font-family: 'Fira Code', monospace; }
     .prompt::before { content: '> '; color: var(--yellow); }
     .hero-sub { color: var(--muted); font-size: 0.92rem; max-width: 600px; margin: 20px 0 0; line-height: 1.75; border-left: 3px solid var(--yellow); padding-left: 16px; }
