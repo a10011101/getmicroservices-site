@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/why-your-crm-and-stripe-dont-talk"/>
+<title>Why Your CRM and Stripe Don't Talk — and How We Fixed It in 48 Hours — getmicroservices</title>
+<meta name="description" content="A SaaS founder was manually copying payment data from Stripe into HubSpot every Monday morning. Here's the integration we built to fix it."/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  * { -webkit-user-select: none; -moz-user-select: none; user-select: none; }
+  input, textarea { -webkit-user-select: text; -moz-user-select: text; user-select: text; }
+  :root { --bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--accent2:#0088ff;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--sans); line-height: 1.6; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; border-bottom: 1px solid transparent; transition: border-color .3s, background .3s; }
+  nav.scrolled { background: rgba(10,10,10,.95); border-color: var(--border); backdrop-filter: blur(12px); }
+  .nav-logo { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); letter-spacing: -.5px; text-decoration: none; }
+  .nav-logo span { color: var(--dim); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--dim); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-cta { font-family: var(--mono); font-size: 12px; padding: 8px 18px; border: 1px solid var(--accent); color: var(--accent); background: transparent; cursor: pointer; transition: all .2s; text-decoration: none; }
+  .nav-cta:hover { background: var(--accent); color: var(--bg); }
+
+  .article { max-width: 680px; margin: 0 auto; padding: 140px 24px 100px; }
+  .back-link { font-family: var(--mono); font-size: 12px; color: var(--dim); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 48px; transition: color .2s; }
+  .back-link:hover { color: var(--accent); }
+  .post-tag { display: inline-block; font-family: var(--mono); font-size: 10px; color: var(--accent); border: 1px solid rgba(0,255,136,.3); border-radius: 3px; padding: 3px 10px; margin-bottom: 20px; }
+  .post-meta { font-family: var(--mono); font-size: 12px; color: var(--dim); margin-bottom: 32px; display: flex; gap: 20px; }
+  h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; margin-bottom: 16px; }
+  .post-lead { font-size: 17px; color: var(--dim); line-height: 1.75; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+  h2 { font-size: 20px; font-weight: 700; letter-spacing: -.5px; margin: 40px 0 16px; }
+  p { color: var(--dim); font-size: 15px; line-height: 1.8; margin-bottom: 20px; }
+  strong { color: var(--fg); font-weight: 600; }
+
+  .flow-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 28px; margin: 32px 0; }
+  .flow-label { font-family: var(--mono); font-size: 11px; color: var(--dim); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+  .flow-label::before { content: ''; display: inline-block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  .flow-nodes { display: flex; align-items: center; flex-wrap: wrap; overflow-x: auto; padding-bottom: 4px; }
+  .node-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 10px 16px; font-family: var(--mono); font-size: 12px; display: flex; flex-direction: column; gap: 3px; white-space: nowrap; }
+  .node-name { color: var(--fg); }
+  .node-sub { font-size: 10px; color: var(--dim); }
+  .flow-arrow { font-family: var(--mono); color: var(--border); padding: 0 8px; font-size: 18px; flex-shrink: 0; align-self: center; padding-bottom: 16px; }
+  .flow-result { margin-top: 20px; padding: 12px 16px; background: rgba(0,255,136,.04); border: 1px solid rgba(0,255,136,.15); border-radius: 6px; font-family: var(--mono); font-size: 12px; color: var(--accent); }
+
+  .result-box { background: var(--bg2); border: 1px solid rgba(0,255,136,.2); border-radius: 8px; padding: 28px; margin: 32px 0; }
+  .result-title { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .result-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; font-size: 14px; color: var(--dim); }
+  .result-item::before { content: '→'; color: var(--accent); font-family: var(--mono); flex-shrink: 0; }
+
+  .post-cta { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 40px; text-align: center; margin-top: 64px; }
+  .post-cta p { font-size: 15px; color: var(--dim); max-width: 380px; margin: 0 auto 24px; }
+  .btn-cta { font-family: var(--mono); font-size: 13px; padding: 12px 28px; background: var(--accent); color: var(--bg); border: none; cursor: pointer; border-radius: 4px; text-decoration: none; display: inline-block; transition: opacity .2s; }
+  .btn-cta:hover { opacity: .85; }
+
+  .full-divider { border: none; border-top: 1px solid var(--border); }
+  footer { border-top: 1px solid var(--border); padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; max-width: 1100px; margin: 0 auto; }
+  .footer-logo { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .footer-right { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .article { padding: 100px 20px 60px; }
+    footer { padding: 32px 20px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/a/" class="nav-logo">get<span>micro</span>services<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#flows">work</a></li>
+    <li><a href="/a/services/business-automation">services</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/blog/">blog</a></li>
+    <li><a href="/a/about">about</a></li>
+  </ul>
+  <a href="/a/#contact" class="nav-cta">[ start project ]</a>
+</nav>
+
+<article class="article">
+  <a href="/a/blog/" class="back-link">← field notes</a>
+
+  <div class="post-tag">case study</div>
+  <h1>Why Your CRM and Stripe Don't Talk — and How We Fixed It in 48 Hours</h1>
+  <div class="post-meta">
+    <span>Mar 24, 2026</span>
+    <span>4 min read</span>
+  </div>
+  <p class="post-lead">A SaaS founder was copying payment data from Stripe into HubSpot every Monday morning. Two hours a week, every week. Here's the integration we built — and what it actually took.</p>
+
+  <h2>The problem nobody talks about</h2>
+  <p>Most SaaS tools don't talk to each other out of the box. Stripe knows about your payments. HubSpot knows about your leads. But unless you manually bridge them, your sales team has no idea which prospects have already paid, which trials converted, or which accounts are at risk of churning.</p>
+  <p>Marcus runs a B2B SaaS company with about 120 active customers. Every Monday he'd open Stripe, export the week's data to a spreadsheet, clean it up, and manually update HubSpot deal stages and contact records. <strong>Two hours. Every Monday. For two years.</strong></p>
+  <p>He'd looked at Zapier. The native integration existed but it was limited — it could push new charges over, but it couldn't sync subscription status changes, handle failed payments, or update deal values dynamically. He needed something custom.</p>
+
+  <h2>What we built</h2>
+  <p>The solution was a lightweight integration layer on n8n, triggered by Stripe webhooks. Every relevant Stripe event fires a webhook in real time.</p>
+
+  <div class="flow-card">
+    <div class="flow-label">stripe → hubspot sync — B2B SaaS, 120 customers</div>
+    <div class="flow-nodes">
+      <div class="node-box"><span class="node-name">⚡ Stripe Webhook</span><span class="node-sub">payment / subscription</span></div>
+      <div class="flow-arrow">──▶</div>
+      <div class="node-box"><span class="node-name">🔀 Event Router</span><span class="node-sub">type classifier</span></div>
+      <div class="flow-arrow">──▶</div>
+      <div class="node-box"><span class="node-name">🔍 HubSpot Lookup</span><span class="node-sub">find contact/deal</span></div>
+      <div class="flow-arrow">──▶</div>
+      <div class="node-box"><span class="node-name">✏️ Update Record</span><span class="node-sub">deal stage + MRR</span></div>
+      <div class="flow-arrow">──▶</div>
+      <div class="node-box"><span class="node-name">🔔 Alert if Churn</span><span class="node-sub">Slack notification</span></div>
+    </div>
+    <div class="flow-result">↳ HubSpot stays in sync with Stripe in real time. Cancellations trigger instant Slack alerts. Zero manual work.</div>
+  </div>
+
+  <p>The router handles five event types: new subscription, renewal, upgrade, failed payment, and cancellation. Each has its own logic — a failed payment triggers a follow-up task in HubSpot, a cancellation fires a Slack alert and marks the deal as churned, a renewal updates the deal value and renewal date.</p>
+  <p>The integration matches records by email, not by ID — so it works even if a customer signed up via a different flow and their Stripe customer ID doesn't exist in HubSpot yet. It creates the contact if needed.</p>
+
+  <h2>The build</h2>
+  <p>We used n8n on their existing VPS. The whole workflow is 22 nodes. We set up Stripe webhook signing verification so the endpoint rejects anything that isn't a legitimate Stripe event. Error handling logs failures to Airtable so nothing gets silently dropped.</p>
+  <p><strong>Total build time: 2 days.</strong> One day for core sync logic and testing against Stripe's test mode. Second day for edge cases — duplicate events, customers with multiple subscriptions, retries on HubSpot API timeouts.</p>
+
+  <h2>The result</h2>
+  <div class="result-box">
+    <div class="result-title">after 4 weeks</div>
+    <div class="result-item">2 hours/week of manual work eliminated completely</div>
+    <div class="result-item">HubSpot deal stages now accurate in real time — sales team stopped asking "did they pay yet?"</div>
+    <div class="result-item">3 at-risk accounts caught early via failed payment alerts — 2 saved</div>
+    <div class="result-item">Marcus: "It just works. I forgot it existed, which is the point."</div>
+  </div>
+
+  <p>Total cost: $490. Marcus was spending ~8 hours/month on manual entry. ROI positive inside the first month.</p>
+
+  <div class="post-cta">
+    <p>Got two tools that should be talking to each other but aren't? We'll connect them.</p>
+    <a href="/a/#contact" class="btn-cta">[ let's talk ]</a>
+  </div>
+</article>
+
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 40));
+</script>
+</body>
+</html>

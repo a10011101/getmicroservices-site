@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Your CRM and Stripe Don't Talk — and How We Fixed It in 48 Hours – GetMicroservices</title>
+  <meta name="description" content="A SaaS founder was manually copying payment data from Stripe into HubSpot every Monday morning. Here's the integration we built to fix it — and why it matters." />
+  <link rel="canonical" href="https://getmicroservices.com/blog/why-your-crm-and-stripe-dont-talk" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
+    input, textarea { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
+    :root { --bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493; }
+    [data-theme="dark"] { --bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--fg); font-size: 1rem; font-weight: 600; line-height: 1.6; overflow-x: hidden; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 3px solid var(--yellow); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 64px; }
+    .nav-logo { padding: 10px 0; display: flex; flex-direction: column; }
+    .nav-logo span { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 700; color: var(--fg); letter-spacing: -0.01em; line-height: 1; }
+    .nav-logo span .accent { color: var(--accent); }
+    .nav-logo span .yellow { color: var(--yellow); }
+    .nav-links { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; padding: 10px 0; }
+    .nav-links a { color: #fff; text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 6px 12px; border: 3px solid var(--fg); background: var(--blue); display: inline-block; transition: background 0.15s; font-family: 'Space Grotesk', sans-serif; }
+    .nav-links a:hover { background: var(--blue-hover); text-decoration: underline; }
+    .nav-links .nav-cta { background: var(--accent); border-color: var(--fg); color: #fff; }
+    .nav-links .nav-cta:hover { background: #8c0052; }
+    .theme-toggle { background: none; border: 2px solid var(--border-bright); color: var(--fg); font-size: 1rem; padding: 4px 8px; cursor: pointer; line-height: 1; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: 2px solid var(--border-bright); padding: 8px 10px; cursor: pointer; flex-shrink: 0; }
+    .hamburger span { display: block; width: 20px; height: 2px; background: var(--fg); }
+
+    /* ARTICLE */
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 56px 5% 80px; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); text-decoration: none; font-family: 'Fira Code', monospace; font-size: 0.78rem; margin-bottom: 40px; transition: color 0.2s; }
+    .back-link:hover { color: var(--accent); }
+    .post-tag { display: inline-block; background: var(--yellow); color: var(--bg); font-family: 'Space Grotesk', sans-serif; font-size: 0.65rem; font-weight: 700; padding: 3px 10px; margin-bottom: 16px; letter-spacing: 0.05em; }
+    .post-meta { display: flex; gap: 16px; font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--muted); margin-bottom: 24px; }
+    h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 20px; }
+    .post-lead { font-size: 1rem; color: var(--muted); line-height: 1.75; margin-bottom: 40px; padding-bottom: 40px; border-bottom: 2px solid var(--border); }
+    h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; margin: 36px 0 14px; }
+    p { color: var(--muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 18px; }
+    p:last-child { margin-bottom: 0; }
+    strong { color: var(--fg); }
+
+    /* FLOW DIAGRAM */
+    .flow-block { background: var(--bg2); border: 2px solid var(--border-bright); padding: 24px; margin: 28px 0; }
+    .flow-label { font-family: 'Fira Code', monospace; font-size: 0.7rem; color: var(--muted); margin-bottom: 16px; }
+    .flow-label::before { content: '> '; color: var(--yellow); }
+    .flow-nodes { display: flex; align-items: center; flex-wrap: wrap; gap: 0; overflow-x: auto; padding-bottom: 4px; }
+    .node { background: var(--bg3); border: 2px solid var(--border-bright); padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.72rem; white-space: nowrap; display: flex; flex-direction: column; gap: 2px; }
+    .node-name { color: var(--fg); font-weight: 700; }
+    .node-sub { color: var(--muted); font-size: 0.65rem; }
+    .arrow { font-family: 'Fira Code', monospace; color: var(--muted); padding: 0 6px; font-size: 1rem; align-self: center; padding-bottom: 12px; }
+    .flow-result { margin-top: 16px; padding: 12px 14px; border-left: 3px solid var(--green); font-family: 'Fira Code', monospace; font-size: 0.72rem; color: var(--green); }
+
+    /* RESULT BOX */
+    .result-box { background: var(--bg2); border: 2px solid var(--border-bright); padding: 24px; margin: 28px 0; }
+    .result-box .result-label { font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; font-weight: 700; color: var(--yellow); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; }
+    .result-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; font-size: 0.85rem; color: var(--muted); }
+    .result-item::before { content: '✓'; color: var(--green); font-family: 'Fira Code', monospace; flex-shrink: 0; }
+
+    /* CTA */
+    .post-cta { background: var(--bg3); border: 3px solid var(--yellow); padding: 40px; text-align: center; margin-top: 56px; position: relative; }
+    .post-cta::before { content: '★ SIMILAR PROBLEM? ★'; font-family: 'Space Grotesk', sans-serif; font-size: 0.65rem; color: var(--bg); background: var(--yellow); padding: 5px 12px; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+    .post-cta p { color: var(--muted); font-size: 0.85rem; margin-bottom: 24px; max-width: 420px; margin-left: auto; margin-right: auto; }
+    .btn-primary { background: var(--accent); color: var(--bg); border: 3px solid var(--fg); padding: 12px 28px; font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem; text-decoration: none; display: inline-block; cursor: pointer; transition: background 0.15s, transform 0.1s; }
+    .btn-primary:hover { background: #8c0052; transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--fg); }
+
+    footer { background: var(--bg); border-top: 3px solid var(--yellow); padding: 40px 5% 24px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-brand { font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--fg); }
+    .footer-brand .accent { color: var(--accent); }
+    .footer-brand .yellow { color: var(--yellow); }
+    .footer-links { display: flex; gap: 16px; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.78rem; font-family: 'Fira Code', monospace; }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg); border-bottom: 3px solid var(--yellow); flex-direction: column; padding: 16px 5%; gap: 10px; z-index: 99; }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 0.75rem; }
+      .flow-nodes { flex-direction: column; align-items: flex-start; }
+      .arrow { transform: rotate(90deg); padding: 4px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" style="text-decoration:none;" class="nav-logo">
+    <span>Get<span class="accent">Micro</span><span class="yellow">services</span></span>
+    <div style="font-size:0.65rem;color:var(--muted);letter-spacing:0.06em;margin-top:3px;">// done-for-you automation agency</div>
+  </a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">Process</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+    <li><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀</button></li>
+  </ul>
+</nav>
+
+<div class="article-wrap">
+  <a href="/blog" class="back-link">← back to blog</a>
+
+  <div class="post-tag">CASE STUDY</div>
+  <h1>Why Your CRM and Stripe Don't Talk — and How We Fixed It in 48 Hours</h1>
+  <div class="post-meta">
+    <span>2026-03-24</span>
+    <span>4 min read</span>
+  </div>
+  <p class="post-lead">A SaaS founder was copying payment data from Stripe into HubSpot every Monday morning. Two hours a week, every week. Here's the integration we built — and what it actually took.</p>
+
+  <h2>The problem nobody talks about</h2>
+  <p>Most SaaS tools don't talk to each other out of the box. Stripe knows about your payments. HubSpot knows about your leads. But unless you manually bridge them, your sales team has no idea which prospects have already paid, which trials converted, or which accounts are at risk of churning.</p>
+  <p>Marcus runs a B2B SaaS company with about 120 active customers. Every Monday he'd open Stripe, export the week's data to a spreadsheet, clean it up, and manually update HubSpot deal stages and contact records. <strong>Two hours. Every Monday. For two years.</strong></p>
+  <p>He'd looked at Zapier. The native integration existed but it was limited — it could push new charges over, but it couldn't sync subscription status changes, handle failed payments, or update deal values dynamically. He needed something custom.</p>
+
+  <h2>What we built</h2>
+  <p>The solution was a lightweight integration layer running on n8n, triggered by Stripe webhooks. Every relevant event in Stripe — new subscription, payment succeeded, payment failed, subscription cancelled — fires a webhook that triggers the flow in real time.</p>
+
+  <div class="flow-block">
+    <div class="flow-label">stripe → hubspot sync — SaaS, 120 customers</div>
+    <div class="flow-nodes">
+      <div class="node"><span class="node-name">⚡ Stripe Webhook</span><span class="node-sub">payment / subscription</span></div>
+      <div class="arrow">──▶</div>
+      <div class="node"><span class="node-name">🔀 Event Router</span><span class="node-sub">type classifier</span></div>
+      <div class="arrow">──▶</div>
+      <div class="node"><span class="node-name">🔍 HubSpot Lookup</span><span class="node-sub">find contact/deal</span></div>
+      <div class="arrow">──▶</div>
+      <div class="node"><span class="node-name">✏️ Update Record</span><span class="node-sub">deal stage + MRR</span></div>
+      <div class="arrow">──▶</div>
+      <div class="node"><span class="node-name">🔔 Alert if Churn</span><span class="node-sub">Slack notification</span></div>
+    </div>
+    <div class="flow-result">↳ HubSpot stays in sync with Stripe in real time. Cancellations trigger instant Slack alerts. Zero manual work.</div>
+  </div>
+
+  <p>The router handles five event types: new subscription, renewal, upgrade, failed payment, and cancellation. Each has its own logic — a failed payment triggers a follow-up task in HubSpot, a cancellation fires a Slack alert to the founder and marks the deal as churned, a renewal just updates the deal value and renewal date.</p>
+  <p>Crucially, the integration matches records by email, not by ID. This means it works even if a customer signed up via a different flow and their Stripe customer ID doesn't exist in HubSpot yet — it creates the contact if needed.</p>
+
+  <h2>The build</h2>
+  <p>We used n8n running on their existing VPS. The whole workflow is 22 nodes. We set up Stripe webhook signing verification so the endpoint rejects anything that isn't a legitimate Stripe event. Error handling logs failures to a simple Airtable sheet so nothing gets silently dropped.</p>
+  <p><strong>Total build time: 2 days.</strong> One day for the core sync logic and testing against Stripe's test mode. Second day for edge cases — duplicate events, customers with multiple subscriptions, retries on HubSpot API timeouts.</p>
+
+  <h2>The result</h2>
+  <div class="result-box">
+    <div class="result-label">after 4 weeks</div>
+    <div class="result-item">2 hours/week of manual work eliminated completely</div>
+    <div class="result-item">HubSpot deal stages now accurate in real time — sales team stopped asking "did they pay yet?"</div>
+    <div class="result-item">3 at-risk accounts caught early via failed payment alerts — 2 saved</div>
+    <div class="result-item">Marcus: "It just works. I forgot it existed, which is the point."</div>
+  </div>
+
+  <p>The total cost was $490. Marcus had been spending roughly 8 hours a month on manual data entry. At his effective hourly rate, the ROI was positive inside the first month.</p>
+
+  <p>The integration is also now the foundation for further automation — we're next looking at triggering onboarding sequences in HubSpot when a trial converts, and flagging accounts that haven't logged in after 14 days.</p>
+
+  <div class="post-cta">
+    <p>Got two tools that should be talking to each other but aren't? We'll connect them.</p>
+    <a href="/#contact" class="btn-primary">[ Book Free Call → ]</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span class="footer-brand">Get<span class="accent">Micro</span><span class="yellow">services</span></span>
+    <div class="footer-links">
+      <a href="/blog">Blog</a>
+      <a href="/about">About</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu(){const n=document.getElementById('navLinks'),b=document.getElementById('hamburger');n.classList.toggle('open');b.classList.toggle('open');}
+  const themeBtn=document.getElementById('themeBtn');
+  if(localStorage.getItem('theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');themeBtn.textContent='☀';}else{themeBtn.textContent='☾';}
+  function toggleTheme(){const d=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement[d?'removeAttribute':'setAttribute']('data-theme',d?'':'dark');localStorage.setItem('theme',d?'light':'dark');themeBtn.textContent=d?'☾':'☀';}
+</script>
+</body>
+</html>
