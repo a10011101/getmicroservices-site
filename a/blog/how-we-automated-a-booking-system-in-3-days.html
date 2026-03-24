@@ -139,6 +139,40 @@
     .nav-links { display: none; }
     footer { padding: 32px 20px; flex-direction: column; gap: 12px; text-align: center; }
   }
+
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .hamburger-btn span { display: block; width: 20px; height: 2px; background: var(--fg); transition: transform 0.2s, opacity 0.2s; }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,10,10,.98);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: var(--mono); font-size: 20px; color: var(--fg); text-decoration: none; letter-spacing: -0.5px; }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-close { position: absolute; top: 24px; right: 24px; font-family: var(--mono); font-size: 24px; color: var(--dim); background: none; border: none; cursor: pointer; }
+  @media (max-width: 768px) {
+    .hamburger-btn { display: flex; }
+    .nav-links { display: none !important; }
+    .nav-cta { display: none; }
+    nav { background: rgba(10,10,10,.97) !important; border-color: var(--border) !important; padding: 16px 20px; }
+    .nav-logo { font-size: 16px !important; }
+  }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -240,6 +274,26 @@
 <script>
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
+});
+</script>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="/a/">home</a>
+    <a href="/a/#flows">work</a>
+    <a href="/a/#pricing">pricing</a>
+    <a href="/a/blog/">blog</a>
+    <a href="/a/about">about</a>
+</div>
+
+<script>
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeMobileMenu();
 });
 </script>
 </body>
