@@ -36,7 +36,7 @@
     body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--fg); font-size: 1rem; font-weight: 600; line-height: 1.6; overflow-x: hidden; }
     body::after { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.015) 3px, rgba(0,0,0,0.015) 4px); pointer-events: none; z-index: 9999; }
 
-    nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 3px solid var(--yellow); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 3px solid var(--yellow); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 64px; }
     .nav-logo { padding: 10px 0; display: flex; flex-direction: column; }
     .nav-logo span { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 700; color: var(--fg); letter-spacing: -0.01em; line-height: 1; }
     .nav-logo span .accent { color: var(--accent); }
