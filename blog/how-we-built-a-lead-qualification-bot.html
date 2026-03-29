@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How We Built a Lead Qualification Bot That Books Calls Automatically — GetMicroservices</title>
+  <meta name="description" content="A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies first and only books the good ones — saving 5+ hours a week." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #f5f3ee; --bg2: #edeae2; --bg3: #e5e1d8; --fg: #1a170f; --muted: #6b6757; --accent: #b5006a; --yellow: #a07200; --blue: #0066cc; --blue-hover: #0052a3; --green: #3a7a00; --border: #ccc9bc; --border-bright: #a8a493; }
+    [data-theme="dark"] { --bg: #1a170f; --bg2: #1f1c13; --bg3: #252018; --fg: #eceae5; --muted: #9b9888; --accent: #ee82cf; --yellow: #f7d51d; --blue: #209cee; --blue-hover: #108de0; --green: #92cc41; --border: #3a3628; --border-bright: #5a5540; }
+    html { scroll-behavior: smooth; }
+    * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
+    input, textarea, p, li, blockquote { -webkit-user-select: text; -moz-user-select: text; user-select: text; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--fg); font-size: 1rem; font-weight: 600; line-height: 1.6; overflow-x: hidden; }
+    body::after { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.015) 3px, rgba(0,0,0,0.015) 4px); pointer-events: none; z-index: 9999; }
+    nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 3px solid var(--yellow); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 64px; }
+    .nav-logo { padding: 10px 0; display: flex; flex-direction: column; }
+    .nav-logo span { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 700; color: var(--fg); letter-spacing: -0.01em; line-height: 1; }
+    .nav-logo span .accent { color: var(--accent); }
+    .nav-logo span .yellow { color: var(--yellow); }
+    .nav-links { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; padding: 10px 0; }
+    .nav-links a { color: #fff; text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 6px 12px; border: 3px solid var(--fg); background: var(--blue); display: inline-block; transition: background 0.15s; font-family: 'Space Grotesk', sans-serif; }
+    .nav-links a:hover { background: var(--blue-hover); text-decoration: underline; }
+    .nav-links .nav-cta { background: var(--accent); border-color: var(--fg); color: #fff; }
+    .nav-links .nav-cta:hover { background: #8c0052; }
+    .theme-toggle { background: none; border: 2px solid var(--border-bright); color: var(--fg); font-size: 1rem; padding: 4px 8px; cursor: pointer; transition: border-color 0.2s, background 0.2s; line-height: 1; }
+    .theme-toggle:hover { border-color: var(--accent); background: rgba(128,128,128,0.1); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: 2px solid var(--border-bright); padding: 8px 10px; cursor: pointer; flex-shrink: 0; }
+    .hamburger span { display: block; width: 20px; height: 2px; background: var(--fg); transition: transform 0.2s, opacity 0.2s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .article-header { padding: 60px 5% 48px; border-bottom: 2px solid var(--border); background: var(--bg2); }
+    .back-link { display: inline-block; font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--muted); text-decoration: none; margin-bottom: 24px; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '< '; }
+    .article-meta { display: flex; gap: 14px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+    .meta-date { font-family: 'Fira Code', monospace; font-size: 0.72rem; color: var(--muted); }
+    .meta-tag { font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; color: var(--bg); background: var(--accent); padding: 3px 8px; }
+    .meta-readtime { font-family: 'Fira Code', monospace; font-size: 0.72rem; color: var(--bg); background: var(--green); padding: 3px 8px; }
+    .article-header h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.2rem, 3vw, 2rem); line-height: 1.4; margin-bottom: 16px; }
+    .article-header .lead { color: var(--muted); font-size: 0.92rem; line-height: 1.75; max-width: 640px; border-left: 3px solid var(--yellow); padding-left: 16px; }
+    .article-body { max-width: 720px; margin: 0 auto; padding: 60px 5%; }
+    .article-body h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; margin: 40px 0 14px; color: var(--fg); }
+    .article-body h2::before { content: '## '; color: var(--muted); font-family: 'Fira Code', monospace; font-size: 0.85rem; }
+    .article-body p { color: var(--muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 18px; }
+    .article-body p strong { color: var(--fg); }
+    .article-body ul { list-style: none; margin: 0 0 18px 0; }
+    .article-body ul li { font-size: 0.88rem; color: var(--muted); padding: 6px 0 6px 20px; position: relative; line-height: 1.7; }
+    .article-body ul li::before { content: '>'; position: absolute; left: 0; color: var(--green); font-weight: 700; font-family: monospace; }
+    .result-box { background: var(--bg2); border: 2px solid var(--green); padding: 24px 28px; margin: 32px 0; }
+    .result-box .result-label { font-family: 'Fira Code', monospace; font-size: 0.72rem; color: var(--green); margin-bottom: 12px; }
+    .result-box ul { list-style: none; margin: 0; }
+    .result-box ul li { font-size: 0.88rem; color: var(--fg); padding: 5px 0; display: flex; gap: 10px; }
+    .result-box ul li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+    .workflow-diagram { background: var(--bg2); border: 2px solid var(--border-bright); padding: 28px 24px; margin: 32px 0; }
+    .workflow-label { font-family: 'Fira Code', monospace; font-size: 0.72rem; color: var(--muted); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .workflow-label::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--accent); }
+    .workflow-nodes { display: flex; align-items: center; flex-wrap: wrap; gap: 0; overflow-x: auto; padding-bottom: 4px; }
+    .wf-node { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
+    .wf-box { background: var(--bg3); border: 2px solid var(--border-bright); padding: 10px 14px; font-family: 'Fira Code', monospace; font-size: 0.75rem; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+    .wf-icon { font-size: 1.1rem; }
+    .wf-name { font-weight: 600; color: var(--fg); font-size: 0.75rem; line-height: 1.3; }
+    .wf-type { color: var(--muted); font-size: 0.65rem; }
+    .wf-arrow { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--muted); padding: 0 6px; flex-shrink: 0; }
+    .workflow-result { font-family: 'Fira Code', monospace; font-size: 0.72rem; color: var(--muted); margin-top: 16px; border-top: 1px solid var(--border); padding-top: 12px; }
+    .article-cta { background: var(--bg2); border-top: 3px solid var(--yellow); padding: 60px 5%; text-align: center; }
+    .cta-inner { max-width: 520px; margin: 0 auto; }
+    .article-cta h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; margin-bottom: 12px; }
+    .article-cta p { color: var(--muted); font-size: 0.88rem; margin-bottom: 28px; line-height: 1.75; }
+    .btn-primary { display: inline-block; background: var(--accent); color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; font-weight: 700; padding: 12px 28px; border: 3px solid var(--fg); text-decoration: none; transition: background 0.15s, transform 0.1s; }
+    .btn-primary:hover { background: #8c0052; transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--fg); }
+    footer { background: var(--bg); border-top: 3px solid var(--yellow); padding: 56px 5% 32px; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand .footer-logo { font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; color: var(--fg); display: block; margin-bottom: 14px; line-height: 1.6; }
+    .footer-brand .footer-logo .accent { color: var(--accent); }
+    .footer-brand .footer-logo .yellow { color: var(--yellow); }
+    .footer-brand p { color: var(--muted); font-size: 0.78rem; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; color: var(--yellow); letter-spacing: 0.08em; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--accent); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { color: var(--muted); font-size: 0.75rem; }
+    .footer-socials { display: flex; gap: 16px; }
+    .footer-socials a { color: var(--muted); text-decoration: none; font-size: 0.78rem; }
+    .footer-socials a:hover { color: var(--accent); }
+    @media (max-width: 768px) { .hamburger { display: flex; } .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg); border-bottom: 3px solid var(--yellow); flex-direction: column; padding: 16px 5%; gap: 10px; z-index: 99; } .nav-links.open { display: flex; } .nav-links a { font-size: 0.75rem; } .footer-top { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .footer-top { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">
+      <span>get<span class="accent">micro</span><span class="yellow">services</span>.com</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/#contact" class="nav-cta">Get a Quote</a></li>
+    </ul>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">◐</button>
+  </nav>
+
+  <header class="article-header">
+    <a class="back-link" href="/blog/">back to blog</a>
+    <div class="article-meta">
+      <span class="meta-date">2026-03-29</span>
+      <span class="meta-tag">Lead Gen</span>
+      <span class="meta-tag">Automation</span>
+      <span class="meta-readtime">5 min read</span>
+    </div>
+    <h1>How We Built a Lead Qualification Bot That Books Calls Automatically</h1>
+    <p class="lead">A B2B agency was burning hours every week on discovery calls with leads who were never going to buy. We built a Telegram bot backed by n8n that screens every inbound lead, scores them, and only puts the good ones on the calendar — automatically.</p>
+  </header>
+
+  <article class="article-body">
+
+    <h2>The Problem</h2>
+    <p>The client runs a B2B digital agency — retainer-based, average deal size around £4k/month. Their contact form was generating 15–20 inquiries a week. Sounds great. The reality? <strong>Most of them were students, competitors, or "just curious" freelancers.</strong> Their sales team was hopping on 30-minute discovery calls with anyone who submitted a form and had a pulse.</p>
+    <p>By the time we came in, they'd calculated the damage: roughly <strong>6–8 wasted calls per week</strong>, each taking 30–45 minutes including prep and follow-up. That's 4–5 hours of senior sales time down the drain, every single week, with zero revenue attached.</p>
+    <p>They'd tried a Typeform qualification survey — open rates were under 30%. They'd tried a "book a call" Calendly link gated by a manual email reply — too slow, leads went cold. What they actually needed was something that felt fast, personal, and frictionless, but still filtered hard enough to protect the calendar.</p>
+
+    <h2>The Solution: A Telegram Bot That Qualifies Before It Books</h2>
+    <p>We built a two-part system: a <strong>Telegram bot for the conversation layer</strong> and <strong>n8n for the logic layer</strong>. When a lead submits the contact form, instead of a generic "we'll be in touch" email, they get an instant Telegram message: <em>"Hey — quick 3-question check before we book your call. Takes 60 seconds."</em></p>
+    <p>The bot walks them through three qualifying questions:</p>
+    <ul>
+      <li>What's your monthly marketing budget? (bucketed: &lt;£500 / £500–2k / £2k–10k / £10k+)</li>
+      <li>What's the main thing you're trying to solve in the next 90 days?</li>
+      <li>Are you the decision-maker, or will others need to be involved?</li>
+    </ul>
+    <p>Each answer feeds a simple scoring model in n8n. Budget under £2k → zero points. Clear problem statement → 2 points. Decision-maker → 3 points. <strong>Score 4+ out of 7 and you get the Calendly link.</strong> Below that, the bot sends a polite "we're not the right fit yet" message with a link to their resource hub instead.</p>
+    <p>The whole conversation takes under 90 seconds. Response rate jumped to over 70% — versus the 28% they were getting with the Typeform.</p>
+
+    <h2>How the Stack Fits Together</h2>
+
+    <div class="workflow-diagram">
+      <div class="workflow-label">automation_flow.json — lead qualification pipeline</div>
+      <div class="workflow-nodes">
+        <div class="wf-node">
+          <div class="wf-box">
+            <span class="wf-icon">📋</span>
+            <div>
+              <div class="wf-name">Contact Form</div>
+              <div class="wf-type">webhook trigger</div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-arrow">→</div>
+        <div class="wf-node">
+          <div class="wf-box">
+            <span class="wf-icon">🔁</span>
+            <div>
+              <div class="wf-name">n8n</div>
+              <div class="wf-type">orchestration</div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-arrow">→</div>
+        <div class="wf-node">
+          <div class="wf-box">
+            <span class="wf-icon">✈️</span>
+            <div>
+              <div class="wf-name">Telegram Bot</div>
+              <div class="wf-type">conversation</div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-arrow">→</div>
+        <div class="wf-node">
+          <div class="wf-box">
+            <span class="wf-icon">🧮</span>
+            <div>
+              <div class="wf-name">Score Engine</div>
+              <div class="wf-type">n8n logic</div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-arrow">→</div>
+        <div class="wf-node">
+          <div class="wf-box">
+            <span class="wf-icon">📅</span>
+            <div>
+              <div class="wf-name">Calendly</div>
+              <div class="wf-type">booking link</div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-arrow">→</div>
+        <div class="wf-node">
+          <div class="wf-box">
+            <span class="wf-icon">📊</span>
+            <div>
+              <div class="wf-name">Google Sheets</div>
+              <div class="wf-type">CRM log</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="workflow-result">// qualified leads → Calendly booking | unqualified → nurture sequence | all leads → Sheets CRM log</div>
+    </div>
+
+    <p>The form submits to a webhook URL. n8n catches it and fires a Telegram message via the Bot API. The bot handles the conversation state — each reply triggers a new n8n webhook, which records the answer, increments the score, and sends the next question. After the third answer, n8n runs the scoring logic and branches: <strong>qualified leads get the Calendly link inline inside Telegram</strong>, unqualified ones get a soft decline plus a resource link.</p>
+    <p>Every lead — qualified or not — gets logged to a Google Sheet with their name, email, score, answers, and timestamp. The client's sales team starts each day with a pre-filtered view. No more inbox archaeology.</p>
+
+    <h2>The Scoring Model (Kept Deliberately Simple)</h2>
+    <p>We've seen clients over-engineer qualification scoring with 15-point rubrics and weighted matrices. This one uses three signals that correlate tightly with closed deals in their specific pipeline:</p>
+    <ul>
+      <li><strong>Budget fit</strong> — £2k–10k gets 2pts, £10k+ gets 3pts. Under £2k gets 0.</li>
+      <li><strong>Problem clarity</strong> — n8n runs a simple keyword check on the free-text answer. "Scaling", "pipeline", "growth", "revenue" → 2pts. Generic non-answers → 0pts.</li>
+      <li><strong>Decision authority</strong> — sole decision-maker → 2pts, "needs sign-off" → 1pt, "just researching" → 0pts.</li>
+    </ul>
+    <p>Threshold: 4 out of 7. After 30 days they reviewed the sheet and found that <strong>every deal they closed had scored 5 or above.</strong> They tightened the threshold to 5. Still works.</p>
+
+    <h2>What About the Unqualified Leads?</h2>
+    <p>We didn't just drop them. Low-scorers go into a lightweight nurture loop: they get added to a Mailchimp sequence (via n8n's Mailchimp node) that sends three emails over six weeks — a case study, a pricing guide, and a "when you're ready" invite. Two of their first-month conversions came from leads that initially scored a 2 and re-engaged three weeks later with a bigger budget.</p>
+    <p>The bot response for low-scorers also matters. We spent time on the copy — it doesn't say "you didn't qualify." It says: <em>"Based on what you've shared, we'd probably be overkill for where you are right now — but we've put together a free guide on [X] that might help. We'll check back in a few weeks."</em> Honest. Non-patronising. Brand-safe.</p>
+
+    <h2>Build Time and What It Cost</h2>
+    <p>End-to-end: <strong>2.5 days of build time</strong>. That includes the Telegram bot setup, the n8n workflow (12 nodes), the scoring logic, the Google Sheets integration, the Mailchimp nurture hook, and testing with real leads from their backlog. Running costs are essentially zero — n8n self-hosted on their existing VPS, Telegram Bot API is free, Google Sheets is free, Mailchimp on their existing plan.</p>
+    <p>The only ongoing cost is the Calendly Pro plan they were already paying for. We just made it earn its keep.</p>
+
+    <div class="result-box">
+      <div class="result-label">// results — first 30 days post-launch</div>
+      <ul>
+        <li>Discovery call volume dropped from 8/week to 3/week — all high-fit leads</li>
+        <li>5+ hours of senior sales time reclaimed per week</li>
+        <li>Lead-to-call conversion rate up 22% (higher intent going in)</li>
+        <li>2 closed deals from the nurture sequence in month one</li>
+        <li>70%+ bot response rate vs 28% Typeform completion rate</li>
+        <li>Built and deployed in 2.5 days, zero ongoing infrastructure cost</li>
+      </ul>
+    </div>
+
+    <h2>Why This Works (and Where It Doesn't)</h2>
+    <p>Telegram has a 90%+ open rate compared to email's 20–30%. When you move the qualification conversation to a channel people actually check, completion rates follow. The bot format also <strong>feels like a conversation, not a form</strong> — that's the psychological unlock. People will answer three quick messages where they'd abandon a six-field survey.</p>
+    <p>That said: this model assumes your leads have Telegram, or are willing to install it. For some B2B verticals (enterprise, regulated industries, older demographics) that's a genuine friction point. In those cases we'd swap Telegram for WhatsApp Business API or an SMS-based equivalent — same n8n logic, different transport layer. The architecture is the same; only the messaging node changes.</p>
+    <p>The scoring model also needs a review every quarter. Lead quality signals drift as your ICP evolves. Build the review into your ops calendar — it takes 20 minutes and keeps the filter sharp.</p>
+
+    <h2>The Takeaway</h2>
+    <p>If your sales process involves any kind of discovery call, you almost certainly have a qualification problem. Most teams solve it with manual email back-and-forth or a form nobody fills out. <strong>Neither respects the lead's time or yours.</strong></p>
+    <p>A bot that qualifies in 90 seconds, scores automatically, and books only the right ones isn't a luxury — it's a basic efficiency fix. The tech exists, it's cheap to run, and the build time is measured in days, not months. The only thing blocking most teams is knowing it's possible.</p>
+    <p>Now you know.</p>
+
+  </article>
+
+  <section class="article-cta">
+    <div class="cta-inner">
+      <h2>Wasting time on the wrong calls?</h2>
+      <p>We'll build you a qualification bot that filters leads automatically — so your calendar only fills with people who can actually buy. Done in days, not months.</p>
+      <a href="/#contact" class="btn-primary">Let's talk →</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">get<span class="accent">micro</span><span class="yellow">services</span>.com</span>
+        <p>Done-for-you automation for B2B agencies and service businesses. We build the systems so you don't have to.</p>
+      </div>
+      <div class="footer-col">
+        <h4>SERVICES</h4>
+        <ul>
+          <li><a href="/#services">Workflow Automation</a></li>
+          <li><a href="/#services">CRM Integration</a></li>
+          <li><a href="/#services">Lead Qualification</a></li>
+          <li><a href="/#services">Booking Systems</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>BLOG</h4>
+        <ul>
+          <li><a href="/blog/">All Posts</a></li>
+          <li><a href="/blog/how-we-automated-a-booking-system-in-3-days">Booking System</a></li>
+          <li><a href="/blog/why-your-crm-and-stripe-dont-talk">CRM + Stripe</a></li>
+          <li><a href="/blog/how-we-built-a-lead-qualification-bot">Lead Qual Bot</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>COMPANY</h4>
+        <ul>
+          <li><a href="/#about">About</a></li>
+          <li><a href="/#contact">Contact</a></li>
+          <li><a href="/#contact">Get a Quote</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 getmicroservices.com — All rights reserved.</p>
+      <div class="footer-socials">
+        <a href="#">Twitter</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if (saved) html.setAttribute('data-theme', saved);
+    toggle.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+  </script>
+
+</body>
+</html>
