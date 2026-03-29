@@ -96,21 +96,25 @@
 </head>
 <body>
 
-  <nav>
-    <a href="/" class="nav-logo">
-      <span>get<span class="accent">micro</span><span class="yellow">services</span>.com</span>
-    </a>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="/blog/">Blog</a></li>
-      <li><a href="/#services">Services</a></li>
-      <li><a href="/#contact" class="nav-cta">Get a Quote</a></li>
-    </ul>
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">◐</button>
-  </nav>
+<nav>
+  <a href="/" style="text-decoration:none;" class="nav-logo">
+    <span>Get<span class="accent">Micro</span><span class="yellow">services</span></span>
+    <div style="font-size:0.65rem; color:var(--muted); letter-spacing:0.06em; margin-top:3px;">// done-for-you automation agency</div>
+  </a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">Process</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+    <li><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀</button></li>
+  </ul>
+</nav>
 
   <header class="article-header">
     <a class="back-link" href="/blog/">back to blog</a>
@@ -265,7 +269,7 @@
   <footer>
     <div class="footer-top">
       <div class="footer-brand">
-        <span class="footer-logo">get<span class="accent">micro</span><span class="yellow">services</span>.com</span>
+        <span class="footer-logo">Get<span class="accent">Micro</span><span class="yellow">services</span></span>
         <p>Done-for-you automation for B2B agencies and service businesses. We build the systems so you don't have to.</p>
       </div>
       <div class="footer-col">
