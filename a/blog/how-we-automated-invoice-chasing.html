@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/how-we-automated-invoice-chasing"/>
+<title>How We Automated Invoice Chasing for a 50-Client Agency — getmicroservices</title>
+<meta name="description" content="An agency owner was manually emailing overdue invoices every week. We automated the whole process — detection, personalised emails, and Slack alerts."/>
+<style>
+  * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  input, textarea { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a; --bg2: #111; --bg3: #161616;
+    --border: #222; --fg: #e8e8e8; --dim: #666;
+    --accent: #00ff88; --accent2: #0088ff;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--sans); line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px; border-bottom: 1px solid var(--border); background: rgba(10,10,10,.97);
+    transition: border-color .3s, background .3s;
+  }
+  nav.scrolled { background: rgba(10,10,10,.95); border-color: var(--border); backdrop-filter: blur(12px); }
+  .nav-logo { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); letter-spacing: -.5px; }
+  .nav-logo span { color: var(--dim); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--dim); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-cta {
+    font-family: var(--mono); font-size: 12px; padding: 8px 18px;
+    border: 1px solid var(--accent); color: var(--accent);
+    background: transparent; cursor: pointer; transition: all .2s; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--bg); }
+
+  /* ARTICLE */
+  .article { max-width: 680px; margin: 0 auto; padding: 140px 24px 100px; }
+
+  .back-link {
+    font-family: var(--mono); font-size: 12px; color: var(--dim);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: 48px; transition: color .2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .post-tag {
+    display: inline-block; font-family: var(--mono); font-size: 10px;
+    color: var(--accent); border: 1px solid rgba(0,255,136,.3);
+    border-radius: 3px; padding: 3px 10px; margin-bottom: 20px;
+  }
+  .post-meta { font-family: var(--mono); font-size: 12px; color: var(--dim); margin-bottom: 32px; display: flex; gap: 20px; }
+
+  h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; margin-bottom: 12px; }
+  .post-lead { font-size: 18px; color: var(--dim); line-height: 1.75; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+
+  h2 { font-size: 22px; font-weight: 700; letter-spacing: -.5px; margin: 40px 0 16px; }
+  p { color: var(--dim); font-size: 16px; line-height: 1.8; margin-bottom: 20px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--fg); font-weight: 600; }
+
+  /* FLOW DIAGRAM */
+  .flow-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 28px; margin: 32px 0;
+  }
+  .flow-label {
+    font-family: var(--mono); font-size: 11px; color: var(--dim);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+  }
+  .flow-label::before { content: ''; display: inline-block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  .flow-nodes {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 0;
+    overflow-x: auto; padding-bottom: 4px;
+  }
+  .flow-node { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; }
+  .node-box {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px 16px; font-family: var(--mono); font-size: 12px;
+    display: flex; align-items: center; gap: 8px; white-space: nowrap;
+  }
+  .node-icon { font-size: 16px; }
+  .node-name { color: var(--fg); }
+  .node-type { font-size: 10px; color: var(--dim); }
+  .flow-arrow { font-family: var(--mono); color: var(--border); padding: 0 8px; font-size: 18px; flex-shrink: 0; align-self: center; padding-bottom: 20px; }
+  .flow-result {
+    margin-top: 20px; padding: 12px 16px;
+    background: rgba(0,255,136,.04); border: 1px solid rgba(0,255,136,.15);
+    border-radius: 6px; font-family: var(--mono); font-size: 12px; color: var(--accent);
+  }
+
+  /* RESULT BOX */
+  .result-box {
+    background: var(--bg2); border: 1px solid rgba(0,255,136,.2);
+    border-radius: 8px; padding: 28px; margin: 32px 0;
+  }
+  .result-box .result-title { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .result-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; font-size: 15px; color: var(--dim); }
+  .result-item::before { content: '→'; color: var(--accent); font-family: var(--mono); flex-shrink: 0; }
+  .result-item:last-child { margin-bottom: 0; }
+
+  /* CTA */
+  .post-cta {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 40px; text-align: center; margin-top: 64px;
+  }
+  .post-cta p { font-size: 15px; color: var(--dim); max-width: 380px; margin: 0 auto 24px; }
+  .btn-cta {
+    font-family: var(--mono); font-size: 13px; padding: 12px 28px;
+    background: var(--accent); color: var(--bg); border: none;
+    cursor: pointer; border-radius: 4px; text-decoration: none;
+    display: inline-block; transition: opacity .2s;
+  }
+  .btn-cta:hover { opacity: .85; }
+
+  .full-divider { border: none; border-top: 1px solid var(--border); }
+  footer {
+    border-top: 1px solid var(--border); padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .footer-logo { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .footer-right { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+
+  
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; background: rgba(10,10,10,.97) !important; border-color: var(--border) !important; }
+    .nav-logo { font-size: 16px; }
+    .nav-cta { display: none; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    footer { padding: 32px 20px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: 1px solid var(--accent);
+    padding: 10px 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 4px;
+  }
+  .hamburger-btn span { display: block; width: 22px; height: 2px; background: #ffffff; transition: transform 0.2s, opacity 0.2s; }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #0a0a0a;
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: var(--mono); font-size: 20px; color: var(--fg); text-decoration: none; letter-spacing: -0.5px; }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-close { position: absolute; top: 24px; right: 24px; font-family: var(--mono); font-size: 24px; color: var(--dim); background: none; border: none; cursor: pointer; }
+  @media (max-width: 768px) {
+    .hamburger-btn { display: flex; }
+    .nav-links { display: none !important; }
+    .nav-cta { display: none; }
+    nav { background: rgba(10,10,10,.97) !important; border-color: var(--border) !important; padding: 16px 20px; }
+    .nav-logo { font-size: 16px !important; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/a/" style="text-decoration:none;" class="nav-logo">get<span>micro</span>services<span>.com</span></a>
+  <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="/a/">home</a></li>
+    <li><a href="/a/#flows">work</a></li>
+    <li><a href="/a/services/business-automation">services</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/#contact">contact</a></li>
+    <li><a href="/a/blog/" class="active">blog</a></li>
+    <li><a href="/a/about">about</a></li>
+  </ul>
+  <a href="/a/#contact" class="nav-cta">[ start project ]</a>
+</nav>
+
+<article class="article">
+
+  <a href="/a/blog/" class="back-link">← field notes</a>
+
+  <div class="post-tag">case study</div>
+  <h1>How We Automated Invoice Chasing for a 50-Client Agency</h1>
+  <div class="post-meta">
+    <span>Mar 29, 2026</span>
+    <span>5 min read</span>
+  </div>
+  <p class="post-lead">An agency owner was manually emailing overdue invoices every week. We automated the whole process — detection, personalised emails, and Slack alerts. Recovered 15% of overdue revenue in the first month.</p>
+
+  <h2>The problem</h2>
+  <p>Marcus runs a digital marketing agency with around 50 active clients. Every Friday he'd sit down and go through his invoicing system, figure out who was overdue, then draft individual emails to each one. On a bad week that was a dozen emails — each one slightly awkward to write, each one mentally draining.</p>
+  <p><strong>It was taking 3–4 hours every single week.</strong> Not because the task is complex, but because it's tedious and emotionally loaded. You're essentially asking someone to pay you. You don't want to sound aggressive. You don't want to be ignored. So you agonise over the wording, individualise each one, and hope for the best.</p>
+  <p>Some invoices were slipping through entirely — clients 60 or 90 days overdue that Marcus had simply forgotten to chase. Others he'd chased once, got no reply, and moved on. The lost revenue was accumulating quietly in the background.</p>
+  <p>He needed a system that would handle the chasing automatically, keep it personal enough to not feel like spam, and alert him when something needed human attention.</p>
+
+  <h2>What we built</h2>
+  <p>The solution was an n8n workflow that runs on a schedule, checks invoice status against Stripe, detects overdue payments, generates personalised chase emails, sends them via Gmail, and posts a Slack notification to Marcus for every email sent.</p>
+
+  <div class="flow-card">
+    <div class="flow-label">invoice chasing automation — agency, 50 clients</div>
+    <div class="flow-nodes">
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">📋</span><div><div class="node-name">Invoice System</div><div class="node-type">Stripe / custom</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">⏱️</span><div><div class="node-name">n8n Scheduler</div><div class="node-type">Daily 9am</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🔍</span><div><div class="node-name">Check Overdue</div><div class="node-type">Filter + segment</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">✉️</span><div><div class="node-name">Generate Email</div><div class="node-type">Personalised copy</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">📨</span><div><div class="node-name">Send via Gmail</div><div class="node-type">From Marcus's address</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🔔</span><div><div class="node-name">Slack Alert</div><div class="node-type">Log + notify</div></div></div>
+      </div>
+    </div>
+    <div class="flow-result">↳ Every overdue invoice gets chased automatically. Marcus sees every email in Slack. No manual work, no forgotten clients.</div>
+  </div>
+
+  <p>The workflow runs every morning at 9am. It pulls all open invoices from Stripe, filters for anything overdue by 7, 14, or 30+ days, and applies a different email template to each tier. A 7-day overdue gets a gentle nudge. A 30-day gets a firmer follow-up with the invoice PDF attached.</p>
+  <p>Each email is built with the client's name, invoice number, amount, and due date pulled directly from Stripe. They look like Marcus wrote them — because the template was written in his voice. Clients have no idea there's automation involved.</p>
+  <p>The Slack notification logs every send: client name, invoice amount, how many days overdue, and which template was used. If Marcus wants to step in and handle something personally, he has the full context right there.</p>
+
+  <h2>The build</h2>
+  <p>We used <strong>n8n</strong> as the workflow engine, the <strong>Stripe API</strong> to pull invoice data, and <strong>Gmail API</strong> (OAuth, from Marcus's own account) to send the emails. The Slack integration was a simple webhook — five minutes to set up.</p>
+  <p>The whole thing runs on a <strong>$6/month VPS</strong> that we provisioned and configured as part of the project. n8n self-hosted, no per-execution fees, no platform lock-in. Marcus got the workflow files, the server details, and a Loom walkthrough he can revisit whenever.</p>
+  <p>We also built a small Google Sheet as a "suppression list" — if Marcus wants to pause chasing for a specific client (maybe they're in a dispute, or he's in conversation with them), he adds their email to the sheet and the workflow skips them automatically.</p>
+  <p><strong>Total build time: 2.5 days.</strong> Day 1 was the Stripe integration and overdue detection logic. Day 2 was email generation, Gmail send, and the Slack notifications. Half of day 3 was edge cases, testing with real invoice data, and the suppression list feature.</p>
+
+  <h2>The result</h2>
+
+  <div class="result-box">
+    <div class="result-title">after 30 days</div>
+    <div class="result-item">3–4 hours of weekly manual chasing reduced to zero — Marcus reviews Slack, that's it</div>
+    <div class="result-item">15% of outstanding overdue revenue recovered in the first month alone</div>
+    <div class="result-item">11 invoices that had been ignored for 60+ days were chased and paid within two weeks</div>
+    <div class="result-item">Zero client complaints — emails read as personal, not automated</div>
+  </div>
+
+  <p>The project cost was $490 — our single flow tier. Marcus was losing more than that every month in invoices he simply wasn't chasing. The system paid for itself in the first week it ran.</p>
+  <p>He told us afterwards: <strong>"I didn't realise how much mental energy that task was taking until it was gone."</strong> That's the part that's hard to put a number on.</p>
+
+  <div class="post-cta">
+    <p>Got money sitting in unpaid invoices? We can probably automate the chase.</p>
+    <a href="/a/#contact" class="btn-cta">[ let's talk ]</a>
+  </div>
+
+</article>
+
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
+});
+</script>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="/a/">home</a>
+  <a href="/a/#flows">work</a>
+  <a href="/a/#pricing">pricing</a>
+  <a href="/a/blog/">blog</a>
+  <a href="/a/about">about</a>
+</div>
+
+<script>
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeMobileMenu();
+});
+</script>
+</body>
+</html>
