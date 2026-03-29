@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9P3QLH1BY4');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How We Automated Invoice Chasing for a 50-Client Agency – GetMicroservices Blog</title>
+  <meta name="description" content="An agency owner was manually emailing overdue invoices every week — 3-4 hours every Friday. We automated detection, personalised chase emails, and Slack alerts. 15% revenue recovered in month one." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="canonical" href="https://getmicroservices.com/blog/how-we-automated-invoice-chasing" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5f3ee; --bg2: #edeae2; --bg3: #e5e1d8;
+      --fg: #1a170f; --muted: #6b6757; --accent: #b5006a;
+      --yellow: #a07200; --blue: #0066cc; --blue-hover: #0052a3;
+      --green: #3a7a00; --border: #ccc9bc; --border-bright: #a8a493;
+    }
+    [data-theme="dark"] {
+      --bg: #1a170f; --bg2: #1f1c13; --bg3: #252018;
+      --fg: #eceae5; --muted: #9b9888; --accent: #ee82cf;
+      --yellow: #f7d51d; --blue: #209cee; --blue-hover: #108de0;
+      --green: #92cc41; --border: #3a3628; --border-bright: #5a5540;
+    }
+    html { scroll-behavior: smooth; }
+    * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
+    input, textarea, p, li, blockquote { -webkit-user-select: text; -moz-user-select: text; user-select: text; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--fg); font-size: 1rem; font-weight: 600; line-height: 1.6; overflow-x: hidden; }
+    body::after { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.015) 3px, rgba(0,0,0,0.015) 4px); pointer-events: none; z-index: 9999; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 3px solid var(--yellow); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 64px; }
+    .nav-logo { padding: 10px 0; display: flex; flex-direction: column; }
+    .nav-logo span { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 700; color: var(--fg); letter-spacing: -0.01em; line-height: 1; }
+    .nav-logo span .accent { color: var(--accent); }
+    .nav-logo span .yellow { color: var(--yellow); }
+    .nav-links { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; padding: 10px 0; }
+    .nav-links a { color: #fff; text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 6px 12px; border: 3px solid var(--fg); background: var(--blue); display: inline-block; transition: background 0.15s; font-family: 'Space Grotesk', sans-serif; }
+    .nav-links a:hover { background: var(--blue-hover); text-decoration: underline; }
+    .nav-links .nav-cta { background: var(--accent); border-color: var(--fg); color: #fff; }
+    .nav-links .nav-cta:hover { background: #8c0052; }
+    .theme-toggle { background: none; border: 2px solid var(--border-bright); color: var(--fg); font-size: 1rem; padding: 4px 8px; cursor: pointer; transition: border-color 0.2s, background 0.2s; line-height: 1; }
+    .theme-toggle:hover { border-color: var(--accent); background: rgba(128,128,128,0.1); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: 2px solid var(--border-bright); padding: 8px 10px; cursor: pointer; flex-shrink: 0; }
+    .hamburger span { display: block; width: 20px; height: 2px; background: var(--fg); transition: transform 0.2s, opacity 0.2s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ARTICLE */
+    .article-header { padding: 60px 5% 48px; border-bottom: 2px solid var(--border); background: var(--bg2); }
+    .back-link { display: inline-block; font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--muted); text-decoration: none; margin-bottom: 24px; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '< '; }
+    .article-meta { display: flex; gap: 14px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+    .meta-date { font-family: 'Fira Code', monospace; font-size: 0.72rem; color: var(--muted); }
+    .meta-tag { font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; color: var(--bg); background: var(--accent); padding: 3px 8px; }
+    .meta-readtime { font-family: 'Fira Code', monospace; font-size: 0.72rem; color: var(--bg); background: var(--green); padding: 3px 8px; }
+    .article-header h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.2rem, 3vw, 2rem); line-height: 1.4; margin-bottom: 16px; }
+    .article-header .lead { color: var(--muted); font-size: 0.92rem; line-height: 1.75; max-width: 640px; border-left: 3px solid var(--yellow); padding-left: 16px; }
+
+    .article-body { max-width: 720px; margin: 0 auto; padding: 60px 5%; }
+    .article-body h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; margin: 40px 0 14px; color: var(--fg); }
+    .article-body h2::before { content: '## '; color: var(--muted); font-family: 'Fira Code', monospace; font-size: 0.85rem; }
+    .article-body p { color: var(--muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 18px; }
+    .article-body p strong { color: var(--fg); }
+    .article-body ul { list-style: none; margin: 0 0 18px 0; }
+    .article-body ul li { font-size: 0.88rem; color: var(--muted); padding: 6px 0 6px 20px; position: relative; line-height: 1.7; }
+    .article-body ul li::before { content: '>'; position: absolute; left: 0; color: var(--green); font-weight: 700; font-family: monospace; }
+
+    /* RESULT BOX */
+    .result-box {
+      background: var(--bg2);
+      border: 2px solid var(--green);
+      padding: 24px 28px;
+      margin: 32px 0;
+    }
+    .result-box .result-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+    .result-box ul { list-style: none; margin: 0; }
+    .result-box ul li { font-size: 0.88rem; color: var(--fg); padding: 5px 0; display: flex; gap: 10px; }
+    .result-box ul li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+    /* WORKFLOW DIAGRAM */
+    .workflow-diagram {
+      background: var(--bg2);
+      border: 2px solid var(--border-bright);
+      padding: 28px 24px;
+      margin: 32px 0;
+    }
+    .workflow-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .workflow-label::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--accent); }
+    .workflow-nodes { display: flex; align-items: center; flex-wrap: wrap; gap: 0; overflow-x: auto; padding-bottom: 4px; }
+    .wf-node { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
+    .wf-box {
+      background: var(--bg3);
+      border: 2px solid var(--border-bright);
+      padding: 10px 14px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      display: flex; align-items: center; gap: 8px;
+      white-space: nowrap;
+      transition: border-color 0.2s, transform 0.15s, box-shadow 0.15s;
+    }
+    .wf-box:hover { border-color: var(--accent); transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--accent); }
+    .wf-icon { font-size: 15px; }
+    .wf-name { color: var(--fg); }
+    .wf-type { font-size: 0.65rem; color: var(--muted); }
+    .wf-arrow { font-family: 'Fira Code', monospace; color: var(--border-bright); padding: 0 6px; font-size: 16px; flex-shrink: 0; align-self: center; padding-bottom: 16px; }
+    .workflow-result { margin-top: 16px; padding: 10px 14px; background: var(--bg3); border-left: 3px solid var(--green); font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--green); }
+
+    /* CTA */
+    .article-cta { padding: 60px 5%; background: var(--bg2); border-top: 2px solid var(--border); text-align: center; }
+    .cta-inner { border: 3px solid var(--yellow); padding: 48px 32px; max-width: 640px; margin: 0 auto; position: relative; }
+    .cta-inner::before { content: '★ WANT THE SAME FOR YOUR BUSINESS? ★'; font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; color: var(--bg); background: var(--yellow); padding: 5px 12px; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+    .cta-inner h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; margin-bottom: 12px; }
+    .cta-inner p { color: var(--muted); font-size: 0.85rem; margin-bottom: 28px; }
+    .btn-primary { background: var(--accent); color: var(--bg); border: 3px solid var(--fg); padding: 14px 28px; font-family: 'Space Grotesk', sans-serif; font-size: 0.82rem; text-decoration: none; display: inline-block; cursor: pointer; transition: background 0.15s, transform 0.1s; }
+    .btn-primary:hover { background: #8c0052; transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--fg); }
+
+    /* FOOTER */
+    footer { background: var(--bg); border-top: 3px solid var(--yellow); padding: 56px 5% 32px; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand .footer-logo { font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; color: var(--fg); display: block; margin-bottom: 14px; }
+    .footer-brand .footer-logo .accent { color: var(--accent); }
+    .footer-brand .footer-logo .yellow { color: var(--yellow); }
+    .footer-brand p { color: var(--muted); font-size: 0.78rem; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; color: var(--yellow); letter-spacing: 0.08em; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--accent); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { color: var(--muted); font-size: 0.75rem; }
+    .footer-socials { display: flex; gap: 16px; }
+    .footer-socials a { color: var(--muted); text-decoration: none; font-size: 0.78rem; }
+    .footer-socials a:hover { color: var(--accent); }
+
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg); border-bottom: 3px solid var(--yellow); flex-direction: column; padding: 16px 5%; gap: 10px; z-index: 99; }
+      .nav-links.open { display: flex; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .workflow-nodes { flex-direction: column; align-items: flex-start; }
+      .wf-arrow { transform: rotate(90deg); padding: 4px 0; align-self: flex-start; margin-left: 20px; }
+    }
+    @media (max-width: 480px) { .footer-top { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" style="text-decoration:none;" class="nav-logo">
+    <span>Get<span class="accent">Micro</span><span class="yellow">services</span></span>
+    <div style="font-size:0.65rem; color:var(--muted); letter-spacing:0.06em; margin-top:3px;">// done-for-you automation agency</div>
+  </a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">Process</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+    <li><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀</button></li>
+  </ul>
+</nav>
+
+<!-- ARTICLE HEADER -->
+<div class="article-header">
+  <a class="back-link" href="/blog"> back to blog</a>
+  <div class="article-meta">
+    <span class="meta-date">March 29, 2026</span>
+    <span class="meta-tag">CASE STUDY</span>
+    <span class="meta-readtime">5 min read</span>
+  </div>
+  <h1>How We Automated Invoice Chasing for a 50-Client Agency</h1>
+  <p class="lead">Every Friday for years, an agency owner spent 3–4 hours writing overdue invoice emails by hand. We built an n8n workflow that detects overdue invoices, sends personalised chase emails via Gmail, and fires a Slack alert — automatically. Fifteen percent of overdue revenue recovered in the first month.</p>
+</div>
+
+<!-- ARTICLE BODY -->
+<article class="article-body">
+
+  <h2>The Problem</h2>
+  <p>James runs a digital marketing agency with around 50 active clients at any given time. Invoicing was fine — he had a system. Chasing was not. Every Friday afternoon he would open a spreadsheet, filter for unpaid invoices, and write individual follow-up emails to each late client. Sometimes five. Sometimes fifteen. Always manual, always time-consuming, always falling behind other work.</p>
+  <p>"Friday was basically ruined," he told us. "Three, sometimes four hours just writing the same emails. 'Hi [Name], just following up on invoice #123...' I'd been doing it for three years."</p>
+  <p>Beyond the time loss, there were real revenue consequences. Invoices that slipped past the first Friday chase sometimes didn't get followed up again for two or three weeks — by which point clients had moved on mentally and the money felt harder to collect. <strong>His average debtor days had crept up to 47.</strong></p>
+
+  <h2>What He Actually Needed</h2>
+  <p>After a quick call, the brief was straightforward. James needed three things:</p>
+  <ul>
+    <li>Automatic detection of overdue invoices from his existing invoice system</li>
+    <li>Personalised chase emails sent via Gmail — not a generic template, something that felt like it came from him</li>
+    <li>A Slack alert so he could see what had been sent without logging in anywhere</li>
+  </ul>
+  <p>He wasn't looking for a new invoicing tool or an accounts receivable platform with a £200/month price tag. He wanted his existing setup to just… do the work it wasn't doing. n8n was the right tool for this: it connects to any API, runs on a schedule, and doesn't require building anything from scratch.</p>
+
+  <h2>What We Built</h2>
+  <p>Here's the full workflow we shipped:</p>
+
+  <!-- WORKFLOW DIAGRAM -->
+  <div class="workflow-diagram">
+    <div class="workflow-label">invoice chasing automation workflow — n8n + Gmail + Slack</div>
+    <div class="workflow-nodes">
+      <div class="wf-node">
+        <div class="wf-box"><span class="wf-icon">🧾</span><div><div class="wf-name">Invoice System</div><div class="wf-type">Data source</div></div></div>
+      </div>
+      <div class="wf-arrow">──▶</div>
+      <div class="wf-node">
+        <div class="wf-box"><span class="wf-icon">⏱️</span><div><div class="wf-name">n8n Scheduler</div><div class="wf-type">Mon + Thu 9am</div></div></div>
+      </div>
+      <div class="wf-arrow">──▶</div>
+      <div class="wf-node">
+        <div class="wf-box"><span class="wf-icon">🔍</span><div><div class="wf-name">Overdue Check</div><div class="wf-type">Days past due</div></div></div>
+      </div>
+      <div class="wf-arrow">──▶</div>
+      <div class="wf-node">
+        <div class="wf-box"><span class="wf-icon">✍️</span><div><div class="wf-name">Email Generator</div><div class="wf-type">Personalised copy</div></div></div>
+      </div>
+      <div class="wf-arrow">──▶</div>
+      <div class="wf-node">
+        <div class="wf-box"><span class="wf-icon">📧</span><div><div class="wf-name">Gmail Send</div><div class="wf-type">Via OAuth</div></div></div>
+      </div>
+      <div class="wf-arrow">──▶</div>
+      <div class="wf-node">
+        <div class="wf-box"><span class="wf-icon">🔔</span><div><div class="wf-name">Slack Alert</div><div class="wf-type">#invoices channel</div></div></div>
+      </div>
+    </div>
+    <div class="workflow-result">↳ Runs automatically Monday + Thursday → checks every unpaid invoice → sends personalised email → posts Slack summary</div>
+  </div>
+
+  <p>The workflow fires twice a week — Monday morning and Thursday afternoon. It pulls the full list of open invoices from his invoice system via API, filters for anything more than 7 days past due, and segments by how long overdue: 7–14 days gets a polite nudge, 15–30 days gets a firmer reminder, and 30+ days triggers a different template that flags the invoice as requiring urgent attention.</p>
+  <p>The email generator node personalises each message using the client name, invoice number, amount, and due date pulled live from the API. The tone matches what James would have written himself — we built the templates from a dozen of his actual chase emails, so the voice is consistent. Clients don't know it's automated.</p>
+  <p>After each send batch, a Slack message drops into the <code>#invoices</code> channel with a quick summary: how many chases went out, total value outstanding, and any invoice that's been chased more than three times (flagged for a personal call). James can see the whole picture in 10 seconds every Monday morning instead of spending Friday afternoon buried in email.</p>
+  <p>The build took about two and a half days. One day setting up the API connections and n8n flow, one day on email template logic and personalisation, half a day testing edge cases with real invoice data.</p>
+
+  <h2>The Result</h2>
+
+  <div class="result-box">
+    <div class="result-label">// measured results — 4 weeks post-launch</div>
+    <ul>
+      <li>3–4 hours every Friday reclaimed — James now spends under 10 minutes reviewing the Slack digest</li>
+      <li>15% of previously-overdue revenue collected in the first month</li>
+      <li>Average debtor days dropped from 47 to 31</li>
+      <li>Chase frequency increased from once a week to twice — without any extra effort</li>
+      <li>No monthly SaaS fee — just the n8n instance already in use ($12/mo VPS)</li>
+    </ul>
+  </div>
+
+  <p>The 15% figure surprised James. "I assumed most of those invoices would come in eventually," he said. "But some of them were genuinely just… waiting for someone to ask. Clients aren't sitting there thinking about our invoice — they're thinking about their own stuff. A polite email at the right time is all it takes."</p>
+  <p>The other thing worth noting: the consistency matters. Manual chasing is inconsistent by nature — some Fridays he had time, some he didn't. The automation runs at exactly the same time, every week, regardless of what else is happening. That regularity on its own seems to have changed how clients perceive the invoicing process.</p>
+
+  <h2>What This Actually Cost</h2>
+  <p>This was a focused, single-workflow build — scoped under our Starter plan. James paid a fixed price, received the full n8n workflow exported and documented, and has been running it independently since day one. No ongoing fees to us, no retainer, no black box.</p>
+  <p>If your business has a similar problem — revenue sitting uncollected because nobody has time to chase it — <a href="/#contact" style="color: var(--accent);">get in touch</a>. The call is free and we'll tell you honestly whether automation is the right move.</p>
+
+</article>
+
+<!-- CTA -->
+<div class="article-cta">
+  <div class="cta-inner">
+    <h2>Got Revenue Sitting in Unpaid Invoices?</h2>
+    <p>Tell us your setup. Free 30-minute call, honest advice, fixed-price quote. We'll have it running in days, not months.</p>
+    <a href="/#contact" class="btn-primary">[ Book Free Call → ]</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="footer-logo">Get<span class="accent">Micro</span><span class="yellow">services</span></span>
+      <p>Fast, affordable automation and microservices for businesses that want to scale without hiring a dev team.</p>
+    </div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="/#services">Automation</a></li><li><a href="/#services">AI Bots</a></li><li><a href="/#services">APIs</a></li><li><a href="/#services">MVPs</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="/#pricing">Pricing</a></li><li><a href="/about">About</a></li><li><a href="/blog">Blog</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul><li><a href="/#contact">Free Consultation</a></li><li><a href="mailto:hello@getmicroservices.com">hello@getmicroservices.com</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 GetMicroservices. All rights reserved.</p>
+    <div class="footer-socials"><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    });
+  });
+  const themeBtn = document.getElementById('themeBtn');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  if (savedTheme === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); themeBtn.textContent = '\u2600'; }
+  else { themeBtn.textContent = '\u263e'; }
+  function toggleTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) { document.documentElement.removeAttribute('data-theme'); localStorage.setItem('theme', 'light'); themeBtn.textContent = '\u263e'; }
+    else { document.documentElement.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); themeBtn.textContent = '\u2600'; }
+  }
+</script>
+</body>
+</html>
