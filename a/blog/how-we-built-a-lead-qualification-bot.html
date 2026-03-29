@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/how-we-built-a-lead-qualification-bot"/>
+<title>How We Built a Lead Qualification Bot That Books Calls Automatically — getmicroservices</title>
+<meta name="description" content="A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies leads first — saving 5+ hours of wasted calls per week."/>
+<style>
+  * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  input, textarea { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a; --bg2: #111; --bg3: #161616;
+    --border: #222; --fg: #e8e8e8; --dim: #666;
+    --accent: #00ff88; --accent2: #0088ff;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--sans); line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px; border-bottom: 1px solid var(--border); background: rgba(10,10,10,.97);
+    transition: border-color .3s, background .3s;
+  }
+  nav.scrolled { background: rgba(10,10,10,.95); border-color: var(--border); backdrop-filter: blur(12px); }
+  .nav-logo { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); letter-spacing: -.5px; }
+  .nav-logo span { color: var(--dim); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--dim); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-links a.active { color: var(--accent); }
+  .nav-cta {
+    font-family: var(--mono); font-size: 12px; padding: 8px 18px;
+    border: 1px solid var(--accent); color: var(--accent);
+    background: transparent; cursor: pointer; transition: all .2s; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--bg); }
+
+  /* ARTICLE */
+  .article { max-width: 680px; margin: 0 auto; padding: 140px 24px 100px; }
+
+  .back-link {
+    font-family: var(--mono); font-size: 12px; color: var(--dim);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: 48px; transition: color .2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .post-tag {
+    display: inline-block; font-family: var(--mono); font-size: 10px;
+    color: var(--accent); border: 1px solid rgba(0,255,136,.3);
+    border-radius: 3px; padding: 3px 10px; margin-bottom: 20px;
+  }
+  .post-meta { font-family: var(--mono); font-size: 12px; color: var(--dim); margin-bottom: 32px; display: flex; gap: 20px; }
+
+  h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; margin-bottom: 12px; }
+  .post-lead { font-size: 18px; color: var(--dim); line-height: 1.75; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+
+  h2 { font-size: 22px; font-weight: 700; letter-spacing: -.5px; margin: 40px 0 16px; }
+  p { color: var(--dim); font-size: 16px; line-height: 1.8; margin-bottom: 20px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--fg); font-weight: 600; }
+
+  /* FLOW DIAGRAM */
+  .flow-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 28px; margin: 32px 0;
+  }
+  .flow-label {
+    font-family: var(--mono); font-size: 11px; color: var(--dim);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+  }
+  .flow-label::before { content: ''; display: inline-block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  .flow-nodes {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 0;
+    overflow-x: auto; padding-bottom: 4px;
+  }
+  .flow-node { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; }
+  .node-box {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px 16px; font-family: var(--mono); font-size: 12px;
+    display: flex; align-items: center; gap: 8px; white-space: nowrap;
+  }
+  .node-icon { font-size: 16px; }
+  .node-name { color: var(--fg); }
+  .node-type { font-size: 10px; color: var(--dim); }
+  .flow-arrow { font-family: var(--mono); color: var(--border); padding: 0 8px; font-size: 18px; flex-shrink: 0; align-self: center; padding-bottom: 20px; }
+  .flow-result {
+    margin-top: 20px; padding: 12px 16px;
+    background: rgba(0,255,136,.04); border: 1px solid rgba(0,255,136,.15);
+    border-radius: 6px; font-family: var(--mono); font-size: 12px; color: var(--accent);
+  }
+  .flow-branch {
+    margin-top: 16px; padding: 14px 16px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 6px; font-family: var(--mono); font-size: 11px; color: var(--dim);
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .flow-branch-row { display: flex; align-items: center; gap: 10px; }
+  .branch-yes { color: var(--accent); }
+  .branch-no { color: #ff6b6b; }
+
+  /* RESULT BOX */
+  .result-box {
+    background: var(--bg2); border: 1px solid rgba(0,255,136,.2);
+    border-radius: 8px; padding: 28px; margin: 32px 0;
+  }
+  .result-box .result-title { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .result-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; font-size: 15px; color: var(--dim); }
+  .result-item::before { content: '→'; color: var(--accent); font-family: var(--mono); flex-shrink: 0; }
+  .result-item:last-child { margin-bottom: 0; }
+
+  /* CTA */
+  .post-cta {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 40px; text-align: center; margin-top: 64px;
+  }
+  .post-cta p { font-size: 15px; color: var(--dim); max-width: 380px; margin: 0 auto 24px; }
+  .btn-cta {
+    font-family: var(--mono); font-size: 13px; padding: 12px 28px;
+    background: var(--accent); color: var(--bg); border: none;
+    cursor: pointer; border-radius: 4px; text-decoration: none;
+    display: inline-block; transition: opacity .2s;
+  }
+  .btn-cta:hover { opacity: .85; }
+
+  .full-divider { border: none; border-top: 1px solid var(--border); }
+  footer {
+    border-top: 1px solid var(--border); padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .footer-logo { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .footer-right { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+
+  
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; background: rgba(10,10,10,.97) !important; border-color: var(--border) !important; }
+    .nav-logo { font-size: 16px; }
+    .nav-cta { display: none; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    footer { padding: 32px 20px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: 1px solid var(--accent);
+    padding: 10px 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 4px;
+  }
+  .hamburger-btn span { display: block; width: 22px; height: 2px; background: #ffffff; transition: transform 0.2s, opacity 0.2s; }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #0a0a0a;
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: var(--mono); font-size: 20px; color: var(--fg); text-decoration: none; letter-spacing: -0.5px; }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-close { position: absolute; top: 24px; right: 24px; font-family: var(--mono); font-size: 24px; color: var(--dim); background: none; border: none; cursor: pointer; }
+  @media (max-width: 768px) {
+    .hamburger-btn { display: flex; }
+    .nav-links { display: none !important; }
+    .nav-cta { display: none; }
+    nav { background: rgba(10,10,10,.97) !important; border-color: var(--border) !important; padding: 16px 20px; }
+    .nav-logo { font-size: 16px !important; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/a/" style="text-decoration:none;" class="nav-logo">get<span>micro</span>services<span>.com</span></a>
+  <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="/a/">home</a></li>
+    <li><a href="/a/#flows">work</a></li>
+    <li><a href="/a/services/business-automation">services</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/#contact">contact</a></li>
+    <li><a href="/a/blog/" class="active">blog</a></li>
+    <li><a href="/a/about">about</a></li>
+  </ul>
+  <a href="/a/#contact" class="nav-cta">[ start project ]</a>
+</nav>
+
+<article class="article">
+
+  <a href="/a/blog/" class="back-link">← field notes</a>
+
+  <div class="post-tag">case study</div>
+  <h1>How We Built a Lead Qualification Bot That Books Calls Automatically</h1>
+  <div class="post-meta">
+    <span>Mar 29, 2026</span>
+    <span>5 min read</span>
+  </div>
+  <p class="post-lead">A B2B agency was jumping on discovery calls with whoever filled out their contact form — qualified or not. We built a bot that asks the right questions first, scores the lead, and only books a Calendly call if it's worth anyone's time.</p>
+
+  <h2>The problem</h2>
+  <p>Marko runs a B2B agency offering done-for-you marketing services. His website contact form was working — leads were coming in. The problem was what happened next.</p>
+  <p>Every form submission triggered a manual 30-minute discovery call. No pre-screening, no filters. A solo founder with a $500 budget got the same slot as a funded startup ready to spend $5k/month. <strong>Marko was burning 6–8 hours a week on calls that went nowhere.</strong></p>
+  <p>He'd tried adding a budget field to the form. People either skipped it or lied. What he needed wasn't a better form — he needed a conversation that felt human enough to get honest answers, but automated enough to run without him.</p>
+
+  <h2>What we built</h2>
+  <p>We built a qualification bot using n8n and the Telegram Bot API, triggered the moment a lead submits the contact form. Here's the full flow:</p>
+
+  <div class="flow-card">
+    <div class="flow-label">lead qualification automation — B2B agency</div>
+    <div class="flow-nodes">
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">📋</span><div><div class="node-name">Contact Form</div><div class="node-type">Lead submits</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">⚡</span><div><div class="node-name">n8n Webhook</div><div class="node-type">Trigger</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🤖</span><div><div class="node-name">Telegram Bot</div><div class="node-type">Qualifies lead</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🎯</span><div><div class="node-name">Lead Scorer</div><div class="node-type">Score answers</div></div></div>
+      </div>
+    </div>
+    <div class="flow-branch">
+      <div class="flow-branch-row"><span class="branch-yes">IF qualified →</span><span>Calendly link sent. Slack alert to Marko.</span></div>
+      <div class="flow-branch-row"><span class="branch-no">ELSE →</span><span>Nurture email sequence. No call booked.</span></div>
+    </div>
+    <div class="flow-result">↳ Only qualified leads reach Marko's calendar. Everyone else enters a nurture sequence automatically.</div>
+  </div>
+
+  <p>The bot sends a short Telegram message to the lead within 60 seconds of form submission — while their interest is still hot. It asks four questions: company size, current monthly marketing spend, main challenge, and timeline to start. Conversational, not interrogative.</p>
+  <p>Each answer feeds a simple scoring model. Leads above the threshold get a Calendly link and a warm message. Leads below the threshold get a polished "not quite yet" email that keeps the door open without wasting Marko's time. Marko gets a Slack ping either way — a brief summary of the lead and their score.</p>
+
+  <h2>The build</h2>
+  <p>The stack was deliberately simple: <strong>n8n</strong> as the workflow engine, the <strong>Telegram Bot API</strong> for the conversation layer, and the <strong>Calendly API</strong> to generate one-time booking links on the fly. No custom backend, no database — everything routes through n8n's built-in data handling.</p>
+  <p>We self-hosted n8n on a $6/month VPS. Marko owns the full workflow and can adjust the scoring thresholds himself — we documented it clearly enough that he doesn't need us for tuning.</p>
+  <p>The qualifying questions were the part that took the most thought. We went through three iterations before landing on four questions that felt natural to answer and gave enough signal to score reliably. The tech was the easy part.</p>
+  <p><strong>Total build time: 2.5 days.</strong> Day 1: webhook → Telegram flow + question sequence. Day 2: scoring logic, Calendly integration, Slack notifications. Half of day 3: testing with real form submissions and refining edge cases.</p>
+
+  <h2>The result</h2>
+
+  <div class="result-box">
+    <div class="result-title">after 4 weeks</div>
+    <div class="result-item">5+ hours of unqualified discovery calls eliminated every week</div>
+    <div class="result-item">Close rate on booked calls jumped from 22% to 41% — only real fits getting through</div>
+    <div class="result-item">Lead response time dropped from 4–6 hours to under 60 seconds</div>
+    <div class="result-item">Marko's first message: "I had my first zero-call Monday in two years"</div>
+  </div>
+
+  <p>The unqualified leads don't disappear — they go into a nurture sequence that re-engages them when their situation changes. Two leads who scored below threshold in week one became paying clients six weeks later.</p>
+  <p>The project was $490. Marko was spending roughly that in billable hours every week on dead-end calls. Week one paid for it.</p>
+
+  <div class="post-cta">
+    <p>Wasting time on leads that never convert? We can fix the filter.</p>
+    <a href="/a/#contact" class="btn-cta">[ let's talk ]</a>
+  </div>
+
+</article>
+
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
+});
+</script>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="/a/">home</a>
+    <a href="/a/#flows">work</a>
+    <a href="/a/#pricing">pricing</a>
+    <a href="/a/blog/">blog</a>
+    <a href="/a/about">about</a>
+</div>
+
+<script>
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeMobileMenu();
+});
+</script>
+</body>
+</html>
