@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/why-zapier-gets-expensive-fast"/>
+<title>Why Zapier Gets Expensive Fast (and What We Use Instead) — getmicroservices</title>
+<meta name="description" content="Zapier starts free but scales brutally. Here's the real cost breakdown for agencies — and why we switched our clients to n8n."/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  *{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+  input,textarea{-webkit-user-select:text;-moz-user-select:text;user-select:text;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--accent2:#0088ff;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);transition:border-color .3s;}
+  nav.scrolled{border-bottom-color:#333;}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .cost-table{width:100%;border-collapse:collapse;margin:28px 0;font-family:var(--mono);font-size:12px;}
+  .cost-table th{text-align:left;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);color:var(--fg);font-size:11px;letter-spacing:.05em;}
+  .cost-table td{padding:10px 14px;border:1px solid var(--border);color:var(--dim);}
+  .cost-table tr:nth-child(even) td{background:var(--bg2);}
+  .cost-table .highlight{color:var(--accent);}
+  .flow-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;margin:32px 0;}
+  .flow-label{font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+  .flow-label::before{content:'';display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;}
+  .flow-nodes{display:flex;align-items:center;flex-wrap:wrap;gap:0;overflow-x:auto;padding-bottom:4px;}
+  .node-box{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 16px;font-family:var(--mono);font-size:12px;display:flex;flex-direction:column;gap:3px;white-space:nowrap;}
+  .node-name{color:var(--fg);}
+  .node-sub{font-size:10px;color:var(--dim);}
+  .flow-arrow{font-family:var(--mono);color:var(--border);padding:0 8px;font-size:18px;flex-shrink:0;align-self:center;padding-bottom:16px;}
+  .flow-result{margin-top:20px;padding:12px 16px;background:rgba(0,255,136,.04);border:1px solid rgba(0,255,136,.15);border-radius:6px;font-family:var(--mono);font-size:12px;color:var(--accent);}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">get<span>micro</span>services<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#work">work</a></li>
+    <li><a href="/a/blog">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+
+<div class="article">
+  <a class="back-link" href="/a/blog">← blog</a>
+  <div class="post-tag">automation</div>
+  <div class="post-meta">
+    <span>2026-03-28</span>
+    <span>5 min read</span>
+  </div>
+  <h1>Why Zapier Gets Expensive Fast (and What We Use Instead)</h1>
+  <p class="post-lead">Zapier starts free but scales brutally. At 50,000 tasks/month you're paying $299. At 100,000 you're at $599. We've moved every agency client off Zapier — here's the honest breakdown of why.</p>
+
+  <h2>The Zapier Pricing Trap</h2>
+  <p>Zapier's free tier gives you 100 tasks/month. Sounds fine — until you realise that <strong>every action in a Zap counts as a separate task</strong>. A 5-step Zap triggered 200 times a month uses 1,000 tasks. Add three more Zaps and you're paying before you've automated anything meaningful.</p>
+  <p>The real pain kicks in at agency scale. A client with a busy CRM, active Shopify store, and a few reporting Zaps can easily burn through 50,000–100,000 tasks/month. That's $299–$599/month — every single month.</p>
+
+  <h2>Real Numbers</h2>
+  <table class="cost-table">
+    <thead><tr><th>Platform</th><th>Tasks/month</th><th>Monthly</th><th>Annual</th></tr></thead>
+    <tbody>
+      <tr><td>Zapier Professional</td><td>100,000</td><td class="highlight">$599</td><td class="highlight">$7,188</td></tr>
+      <tr><td>n8n Cloud (Starter)</td><td>Unlimited</td><td>$20</td><td>$240</td></tr>
+      <tr><td>n8n Self-hosted (VPS)</td><td>Unlimited</td><td>~$12</td><td>~$144</td></tr>
+      <tr><td>Make (Integromat)</td><td>100,000 ops</td><td>$99</td><td>$1,188</td></tr>
+    </tbody>
+  </table>
+
+  <h2>What You Lose When You Leave Zapier</h2>
+  <p>To be fair: Zapier is genuinely polished. 7,000+ app integrations, human-readable error messages, and non-technical users can maintain Zaps without help. <strong>If your team has non-developers building their own automations, Zapier is still defensible under $100/month.</strong></p>
+  <ul>
+    <li>Zapier: 7,000+ integrations. n8n: ~400 native nodes (covers every major tool)</li>
+    <li>Zapier needs zero technical knowledge. n8n has a learning curve</li>
+    <li>Zapier handles retries and error logging cleanly out of the box</li>
+    <li>n8n: run custom JavaScript/Python inside any workflow node</li>
+  </ul>
+
+  <h2>When to Switch</h2>
+  <p>Our rule of thumb: <strong>spending more than $100/month on Zapier? Migration pays for itself in under 3 months.</strong></p>
+  <ul>
+    <li>You need multi-step logic Zapier's Paths can't handle</li>
+    <li>You want to run code inside your workflows</li>
+    <li>You're hitting the 15-minute polling delay and need real-time triggers</li>
+    <li>You need self-hosted for data residency or compliance</li>
+  </ul>
+
+  <h2>The Migration Flow</h2>
+  <div class="flow-card">
+    <div class="flow-label">zapier → n8n migration process</div>
+    <div class="flow-nodes">
+      <div class="node-box"><span class="node-name">Audit Zaps</span><span class="node-sub">list triggers + actions</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Classify</span><span class="node-sub">HTTP vs OAuth apps</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Rebuild in n8n</span><span class="node-sub">parallel run</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Validate</span><span class="node-sub">compare outputs</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Kill Zapier</span><span class="node-sub">cancel subscription</span></div>
+    </div>
+    <div class="flow-result">typical migration timeline: 1–2 weeks with parallel validation run</div>
+  </div>
+
+  <h2>Typical Outcome</h2>
+  <div class="result-box">
+    <div class="result-title">migration results</div>
+    <div class="result-item">$300–$600/month saved on tooling costs</div>
+    <div class="result-item">Unlimited tasks — no more watching the counter</div>
+    <div class="result-item">Full workflow visibility in self-hosted instance</div>
+    <div class="result-item">Custom JavaScript nodes for complex logic</div>
+    <div class="result-item">ROI on migration cost: under 60 days</div>
+  </div>
+
+  <p>If you're ready to make the switch, <a href="/a/#contact">we migrate clients off Zapier regularly</a> and can have your stack running on n8n within a week.</p>
+</div>
+
+<hr class="full-divider"/>
+<footer>
+  <span class="footer-logo">getmicroservices.com</span>
+  <span class="footer-right">built by humans. run by automations.</span>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20);});
+</script>
+</body>
+</html>
