@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/automating-invoice-chasing-recovered-8000"/>
+<title>Automating Invoice Chasing: How One Freelancer Recovered £8,000 — getmicroservices</title>
+<meta name="description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks — without a single uncomfortable phone call."/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  *{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+  input,textarea{-webkit-user-select:text;-moz-user-select:text;user-select:text;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--accent2:#0088ff;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);transition:border-color .3s;}
+  nav.scrolled{border-bottom-color:#333;}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  code{font-family:var(--mono);font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:3px;color:var(--accent);}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  .callout{background:var(--bg2);border-left:2px solid rgba(0,255,136,.4);padding:16px 20px;margin:24px 0;font-family:var(--mono);font-size:12px;color:var(--dim);}
+  .flow-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;margin:32px 0;}
+  .flow-label{font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+  .flow-label::before{content:'';display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;}
+  .flow-nodes{display:flex;align-items:center;flex-wrap:wrap;gap:0;overflow-x:auto;padding-bottom:4px;}
+  .node-box{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 16px;font-family:var(--mono);font-size:12px;display:flex;flex-direction:column;gap:3px;white-space:nowrap;}
+  .node-name{color:var(--fg);}
+  .node-sub{font-size:10px;color:var(--dim);}
+  .flow-arrow{font-family:var(--mono);color:var(--border);padding:0 8px;font-size:18px;flex-shrink:0;align-self:center;padding-bottom:16px;}
+  .flow-result{margin-top:20px;padding:12px 16px;background:rgba(0,255,136,.04);border:1px solid rgba(0,255,136,.15);border-radius:6px;font-family:var(--mono);font-size:12px;color:var(--accent);}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">get<span>micro</span>services<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#work">work</a></li>
+    <li><a href="/a/blog">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+
+<div class="article">
+  <a class="back-link" href="/a/blog">← blog</a>
+  <div class="post-tag">workflow</div>
+  <div class="post-meta">
+    <span>2026-03-26</span>
+    <span>6 min read</span>
+  </div>
+  <h1>Automating Invoice Chasing: How One Freelancer Recovered £8,000 in Late Payments</h1>
+  <p class="post-lead">A freelance designer had £8,340 sitting in overdue invoices. Manual chasing felt too awkward to do consistently. We built a system that did it for her — professionally, persistently, and automatically.</p>
+
+  <h2>The Problem With Manual Chasing</h2>
+  <p>Most freelancers have the same issue: the invoice goes out, NET 30 terms, and then nothing. Following up feels uncomfortable. You write one polite email, wait a week, write another. Some invoices just quietly age into uncollectable debt.</p>
+  <p>Our client had six overdue invoices ranging from £400 to £2,200. The oldest was 94 days old. <strong>Total outstanding: £8,340.</strong></p>
+
+  <h2>The Workflow</h2>
+  <div class="flow-card">
+    <div class="flow-label">n8n invoice chasing — daily cron</div>
+    <div class="flow-nodes">
+      <div class="node-box"><span class="node-name">Cron</span><span class="node-sub">08:00 daily</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Stripe</span><span class="node-sub">list open invoices</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Function</span><span class="node-sub">calc days overdue</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">IF / Switch</span><span class="node-sub">tier 1–4 routing</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Gmail</span><span class="node-sub">send tiered email</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Sheets</span><span class="node-sub">log action + timestamp</span></div>
+    </div>
+    <div class="flow-result">runs every morning · no human input required · logs every action</div>
+  </div>
+
+  <h2>The Escalation Tiers</h2>
+  <p>Four email templates that escalate in tone without becoming hostile:</p>
+  <ul>
+    <li><strong>Tier 1 (7–13 days):</strong> Friendly nudge — "Just checking this didn't get lost in your inbox."</li>
+    <li><strong>Tier 2 (14–29 days):</strong> Polite but clear — invoice number, amount, payment link included.</li>
+    <li><strong>Tier 3 (30–44 days):</strong> Firm — references overdue status, requests action by a specific date.</li>
+    <li><strong>Tier 4 (45+ days):</strong> Final notice — mentions potential escalation to a collections process.</li>
+  </ul>
+
+  <div class="callout">
+    ⚠ the workflow checks last_contacted in Sheets before sending. if a client was emailed &lt;48h ago, no automated email fires. human override is always respected.
+  </div>
+
+  <h2>Technical Notes</h2>
+  <p>Stripe's <code>due_date</code> field is only set if you configure payment terms explicitly. We fell back to <code>created + 30 days</code> when it's null. The Gmail OAuth setup needs a Google Cloud project — straightforward, took about an hour.</p>
+
+  <h2>What Happened</h2>
+  <p>Within the first week, three of six overdue clients paid. Two responded to Tier 1 — they'd genuinely forgotten. One responded to Tier 2 with a same-day payment. The remaining three needed Tier 3. The 94-day invoice took a Tier 4 message plus a manual call, but the automated escalation created the urgency that made her finally pick up the phone.</p>
+
+  <div class="result-box">
+    <div class="result-title">outcome — 6 weeks post-launch</div>
+    <div class="result-item">£8,340 in outstanding invoices recovered</div>
+    <div class="result-item">Zero awkward manual chasing emails written</div>
+    <div class="result-item">Average days-to-payment: 52 → 18</div>
+    <div class="result-item">System still running — catches new overdue invoices automatically</div>
+    <div class="result-item">~3 hours/month saved on invoice admin</div>
+  </div>
+
+  <p>If you want this running for your freelance or agency business, <a href="/a/#contact">we build it for a fixed price</a> — typically recovered within the first invoice it chases.</p>
+</div>
+
+<hr class="full-divider"/>
+<footer>
+  <span class="footer-logo">getmicroservices.com</span>
+  <span class="footer-right">built by humans. run by automations.</span>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20);});
+</script>
+</body>
+</html>

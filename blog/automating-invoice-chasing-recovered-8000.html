@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Automating Invoice Chasing: How One Freelancer Recovered £8,000 in Late Payments – GetMicroservices Blog</title>
+  <meta name="description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks — without a single uncomfortable phone call."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/automating-invoice-chasing-recovered-8000"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;font-weight:600;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:700;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;transition:border-color 0.2s,background 0.2s;line-height:1;}
+    .theme-toggle:hover{border-color:var(--accent);background:rgba(128,128,128,0.1);}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'< ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'>';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul{list-style:none;}
+    .result-box ul li{font-size:0.88rem;color:var(--muted);padding:5px 0 5px 18px;position:relative;}
+    .result-box ul li::before{content:'→';position:absolute;left:0;color:var(--green);font-family:monospace;}
+    .flow-box{background:var(--bg3);border:2px solid var(--border);padding:20px 24px;margin:28px 0;font-family:'Fira Code',monospace;font-size:0.8rem;color:var(--muted);line-height:2;}
+    .flow-box .step{color:var(--fg);}
+    .callout{background:var(--bg2);border-left:4px solid var(--accent);padding:16px 20px;margin:24px 0;font-family:'Fira Code',monospace;font-size:0.8rem;color:var(--fg);}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav{padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/"><span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span><span style="font-family:'Fira Code',monospace;font-size:0.65rem;color:var(--muted);margin-top:2px;">// done-for-you automation agency</span></a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+</nav>
+
+<div class="article-header">
+  <a class="back-link" href="/blog">back to blog</a>
+  <div class="article-meta">
+    <span class="meta-tag">workflow</span>
+    <span class="meta-readtime">6 min read</span>
+    <span class="meta-date">2026-03-26</span>
+  </div>
+  <h1>Automating Invoice Chasing: How One Freelancer Recovered £8,000 in Late Payments</h1>
+  <p class="lead">A freelance designer had £8,000 sitting in overdue invoices. She knew chasing was necessary, but the awkwardness was making her avoid it. We built a system that did it for her — professionally, persistently, and automatically.</p>
+</div>
+
+<div class="article-body">
+  <h2>The Problem With Manual Chasing</h2>
+  <p>Most freelancers have the same issue: the invoice goes out, payment terms are NET 30, and then… nothing. Following up feels uncomfortable. You don't want to damage the relationship. You write a polite email, wait another week, write another one. Some invoices just quietly age into uncollectable debt.</p>
+  <p>Our client had six overdue invoices ranging from £400 to £2,200. The oldest was 94 days old. She'd sent one follow-up email to each client and then avoided it. <strong>Total outstanding: £8,340.</strong></p>
+
+  <h2>The System We Built</h2>
+  <p>We used n8n connected to Stripe (her billing tool) and Gmail. The workflow runs every morning, checks Stripe for unpaid invoices past their due date, and sends escalating reminder emails based on how overdue the invoice is.</p>
+
+  <div class="flow-box">
+    <span class="step">Trigger:</span> n8n Cron — runs daily at 08:00<br>
+    → <span class="step">Stripe:</span> List all invoices with status = 'open' + due_date &lt; today<br>
+    → <span class="step">n8n Function:</span> Calculate days overdue, assign escalation tier<br>
+    → <span class="step">n8n IF node:</span> Route by tier (7d / 14d / 30d / 45d+)<br>
+    → <span class="step">Gmail:</span> Send personalised email for that tier<br>
+    → <span class="step">Google Sheets:</span> Log action taken + timestamp
+  </div>
+
+  <h2>The Escalation Tiers</h2>
+  <p>This is where the real work was. We wrote four email templates that escalate in tone without ever becoming hostile:</p>
+  <ul>
+    <li><strong>Tier 1 (7–13 days overdue):</strong> Friendly nudge. "Just checking this didn't get lost in your inbox."</li>
+    <li><strong>Tier 2 (14–29 days overdue):</strong> Polite but clear. "Invoice #123 is now 14 days past due — please let me know if there's an issue."</li>
+    <li><strong>Tier 3 (30–44 days overdue):</strong> Firm. "This invoice is now significantly overdue. Please action by Friday or contact me to arrange payment."</li>
+    <li><strong>Tier 4 (45+ days overdue):</strong> Final notice tone. References potential escalation to a collections process.</li>
+  </ul>
+  <p>Each email is personalised with the client's name, invoice number, amount, and a direct link to the Stripe payment page. The system also tracks whether an email was already sent at each tier, so clients don't get the same reminder twice.</p>
+
+  <div class="callout">
+    ⚠ Important: the workflow checks a "last_contacted" column in Google Sheets before sending. If a client was emailed less than 48 hours ago (e.g. they replied and she sent a manual response), no automated email goes out. Human override is always possible.
+  </div>
+
+  <h2>What Happened</h2>
+  <p>Within the first week, three of the six overdue clients paid. Two of them responded to the Tier 1 nudge — they'd genuinely forgotten. One responded to the Tier 2 email with an apology and same-day payment. The remaining three needed Tier 3 messages before responding.</p>
+  <p>The £2,200 oldest invoice (94 days) took a Tier 4 message and a manual follow-up call she made herself — but the automated escalation created the urgency that made her finally pick up the phone.</p>
+
+  <div class="result-box">
+    <div class="result-title">// outcome — 6 weeks post-launch</div>
+    <ul>
+      <li>£8,340 in outstanding invoices recovered</li>
+      <li>Zero awkward manual chasing emails written</li>
+      <li>Average days-to-payment dropped from 52 → 18</li>
+      <li>System still running — catches new overdue invoices automatically</li>
+      <li>Time saved: ~3 hours/month on invoice admin</li>
+    </ul>
+  </div>
+
+  <h2>The Technical Nuances</h2>
+  <p>Stripe's invoice API is well-documented but has a few gotchas. The <code style="font-family:'Fira Code',monospace;background:var(--bg3);padding:2px 6px;">due_date</code> field is only populated if you set payment terms explicitly — if you use Stripe's default, invoices may not have a due_date at all. We handled this by falling back to <code style="font-family:'Fira Code',monospace;background:var(--bg3);padding:2px 6px;">created + 30 days</code> when due_date is null.</p>
+  <p>The Gmail node needed OAuth setup, which is straightforward but requires a Google Cloud project. The whole system was running in under a day. Ongoing maintenance: essentially zero.</p>
+
+  <h2>Can You Build This?</h2>
+  <p>If you're comfortable with n8n and the Stripe API, yes — this is a solid weekend project. The email templates take the most thought. If you'd rather not spend the weekend on it, <a href="/#contact" style="color:var(--accent);">we build this kind of system for a fixed price</a>, and it typically pays for itself within the first recovered invoice.</p>
+</div>
+
+<footer>
+  <p><a href="/blog">← Back to Blog</a> &nbsp;·&nbsp; <a href="/">GetMicroservices</a> &nbsp;·&nbsp; <a href="/#contact">Work with us</a></p>
+</footer>
+
+<script>
+  function toggleTheme(){const h=document.documentElement;const d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'':'dark');document.getElementById('themeBtn').textContent=d?'🌙':'☀️';}
+</script>
+</body>
+</html>
