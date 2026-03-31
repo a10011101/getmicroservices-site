@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="40" fill="#f0ede6"/>
+  <!-- "G" - black -->
+  <text x="40" y="180" font-family="Georgia, serif" font-size="190" font-weight="700" fill="#1a1a1a">G</text>
+  <!-- "M" - pink/magenta -->
+  <text x="30" y="350" font-family="Georgia, serif" font-size="190" font-weight="700" fill="#b5006a">M</text>
+  <!-- "S" - olive/gold -->
+  <text x="270" y="490" font-family="Georgia, serif" font-size="190" font-weight="700" fill="#8b6914">S</text>
+</svg>
