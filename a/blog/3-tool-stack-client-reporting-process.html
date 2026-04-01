@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/3-tool-stack-client-reporting-process"/>
+<title>The 3-Tool Stack That Runs Our Entire Client Reporting Process — getmicroservices</title>
+<meta name="description" content="We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack — that's the whole stack."/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  *{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+  input,textarea{-webkit-user-select:text;-moz-user-select:text;user-select:text;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--accent2:#0088ff;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid transparent;background:rgba(10,10,10,.97);transition:border-color .3s;}
+  nav.scrolled{border-bottom-color:var(--border);}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 20px;position:relative;line-height:1.7;}
+  ul li::before{content:'›';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  ul li strong{color:var(--fg);}
+  .flow-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;margin:32px 0;}
+  .flow-label{font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+  .flow-label::before{content:'';display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;}
+  .flow-nodes{display:flex;align-items:center;flex-wrap:wrap;gap:0;overflow-x:auto;padding-bottom:4px;}
+  .node-box{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 16px;font-family:var(--mono);font-size:12px;display:flex;flex-direction:column;gap:3px;white-space:nowrap;}
+  .node-name{color:var(--fg);}
+  .node-sub{font-size:10px;color:var(--dim);}
+  .flow-arrow{font-family:var(--mono);color:var(--border);padding:0 8px;font-size:18px;flex-shrink:0;align-self:center;padding-bottom:16px;}
+  .flow-result{margin-top:20px;padding:12px 16px;background:rgba(0,255,136,.04);border:1px solid rgba(0,255,136,.15);border-radius:6px;font-family:var(--mono);font-size:12px;color:var(--accent);}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">get<span>micro</span>services<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#work">work</a></li>
+    <li><a href="/a/blog" class="active">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+
+<div class="article">
+  <a class="back-link" href="/a/blog">← blog</a>
+  <div class="post-tag">automation</div>
+  <div class="post-meta">
+    <span>2026-03-30</span>
+    <span>5 min read</span>
+  </div>
+  <h1>The 3-Tool Stack That Runs Our Entire Client Reporting Process</h1>
+  <p class="post-lead">We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack — that's the whole stack. Here's exactly how it works.</p>
+
+  <h2>The Reporting Trap</h2>
+  <p>Every agency knows this pain. Friday afternoon, someone is manually pulling numbers from five different places, pasting them into a spreadsheet, formatting a summary, and emailing it to a list of clients. <strong>Three hours of work that produces a PDF nobody asked for.</strong></p>
+  <p>The problem isn't the data. It's the assembly. And assembly is exactly what automation is built for.</p>
+
+  <h2>The Three Tools</h2>
+  <ul>
+    <li><strong>Google Sheets</strong> — single source of truth for all KPIs, updated by integrations throughout the week</li>
+    <li><strong>n8n</strong> — orchestration layer that reads the sheet, formats the report, and fires delivery</li>
+    <li><strong>Slack + email</strong> — delivery: Slack for internal teams, email for external clients</li>
+  </ul>
+
+  <h2>How the Workflow Runs</h2>
+  <p>Every Monday at 8:00 AM, a cron trigger fires in n8n. It reads the previous week's data range from Google Sheets — traffic, conversions, revenue, tasks completed. A JavaScript node cleans and formats the numbers, calculates week-over-week deltas, and flags anything that moved more than 15%. Then it builds two outputs simultaneously.</p>
+
+  <div class="flow-card">
+    <div class="flow-label">n8n workflow — weekly client reporting</div>
+    <div class="flow-nodes">
+      <div class="node-box"><span class="node-name">Cron Trigger</span><span class="node-sub">Mon 08:00 AM</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Google Sheets</span><span class="node-sub">read KPI range</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">JS Node</span><span class="node-sub">format + delta calc</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Slack</span><span class="node-sub">block kit card</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Gmail</span><span class="node-sub">branded HTML email</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Google Sheets</span><span class="node-sub">log delivery status</span></div>
+    </div>
+    <div class="flow-result">trigger: Monday 08:00 → reports delivered before the team's first coffee</div>
+  </div>
+
+  <h2>The Formatting Layer</h2>
+  <p>The n8n JavaScript node does the heavy lifting: rounds numbers, adds % deltas, flags anomalies, and injects everything into an HTML template string. The Slack message uses Block Kit — a structured JSON format that renders as a clean card. <strong>The whole formatting step is under 40 lines of JavaScript.</strong> No external libraries.</p>
+
+  <h2>Handling Edge Cases</h2>
+  <p>A validation node checks for empty cells before formatting. If anything looks wrong, it pings the ops channel instead of sending a broken report to the client. This single safeguard has prevented three embarrassing client emails since deployment.</p>
+
+  <h2>The Result</h2>
+  <div class="result-box">
+    <div class="result-title">outcome</div>
+    <div class="result-item">Reporting time: 3 hours/week → zero manual effort</div>
+    <div class="result-item">Reports delivered at 8:00 AM every Monday without fail</div>
+    <div class="result-item">Clients get branded HTML email; team gets Slack card</div>
+    <div class="result-item">Anomaly detection catches data issues before clients do</div>
+    <div class="result-item">~12 hours/month reclaimed across the team</div>
+  </div>
+
+  <h2>What It Actually Cost to Build</h2>
+  <p>Seven hours total. Three designing the Sheets schema. Two building the n8n workflow. Two refining the email template. The tools are all free or already in the client's stack — the only cost was build time.</p>
+  <p>If you want this running before your next client call, <a href="/a/#contact">get in touch</a>. It's one of our most common fixed-price builds.</p>
+</div>
+
+<hr class="full-divider"/>
+<footer>
+  <span class="footer-logo">getmicroservices.com</span>
+  <span class="footer-right">built by humans. run by automations.</span>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20);});
+</script>
+</body>
+</html>

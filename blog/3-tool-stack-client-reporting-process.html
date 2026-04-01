@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The 3-Tool Stack That Runs Our Entire Client Reporting Process – GetMicroservices Blog</title>
+  <meta name="description" content="We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack — that's the whole stack."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/3-tool-stack-client-reporting-process"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;font-weight:600;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:700;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;transition:border-color 0.2s,background 0.2s;line-height:1;}
+    .theme-toggle:hover{border-color:var(--accent);background:rgba(128,128,128,0.1);}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'< ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'>';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul{list-style:none;}
+    .result-box ul li{font-size:0.88rem;color:var(--muted);padding:5px 0 5px 18px;position:relative;}
+    .result-box ul li::before{content:'→';position:absolute;left:0;color:var(--green);font-family:monospace;}
+    .flow-box{background:var(--bg3);border:2px solid var(--border);padding:20px 24px;margin:28px 0;font-family:'Fira Code',monospace;font-size:0.8rem;color:var(--muted);line-height:2;}
+    .flow-box .step{color:var(--fg);}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav{padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/"><span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span><span style="font-family:'Fira Code',monospace;font-size:0.65rem;color:var(--muted);margin-top:2px;">// done-for-you automation agency</span></a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+</nav>
+
+<div class="article-header">
+  <a class="back-link" href="/blog">back to blog</a>
+  <div class="article-meta">
+    <span class="meta-tag">automation</span>
+    <span class="meta-readtime">5 min read</span>
+    <span class="meta-date">2026-03-30</span>
+  </div>
+  <h1>The 3-Tool Stack That Runs Our Entire Client Reporting Process</h1>
+  <p class="lead">We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack — that's the whole stack. Here's exactly how it works.</p>
+</div>
+
+<div class="article-body">
+  <h2>The Reporting Trap</h2>
+  <p>Every agency knows this pain. Friday afternoon, someone is manually pulling numbers from five different places, pasting them into a spreadsheet, formatting a summary, and emailing it to a list of clients who may or may not read it. <strong>Three hours of work that produces a PDF nobody asked for.</strong></p>
+  <p>We've seen this at every scale — solo consultants, 10-person agencies, in-house marketing teams. The problem isn't the data. It's the assembly. And assembly is exactly what automation is built for.</p>
+
+  <h2>The Three Tools</h2>
+  <p>We didn't introduce any new software. The client already had all three tools — they were just using them in isolation:</p>
+  <ul>
+    <li><strong>Google Sheets</strong> — the single source of truth for all KPIs, updated by various integrations throughout the week</li>
+    <li><strong>n8n</strong> — the orchestration layer that reads the sheet, formats the report, and fires the delivery</li>
+    <li><strong>Slack + email</strong> — delivery channels: Slack for internal teams, email for external clients</li>
+  </ul>
+
+  <h2>How the Workflow Runs</h2>
+  <p>Every Monday at 8:00 AM, a cron trigger fires in n8n. It reads the previous week's data range from Google Sheets — traffic, conversions, revenue, tasks completed, whatever the client tracks. A few JavaScript nodes clean and format the numbers. Then it builds two outputs: a Slack block message for the internal team, and an HTML email for the client.</p>
+
+  <div class="flow-box">
+    <span class="step">Trigger:</span> Cron — every Monday 08:00<br>
+    → <span class="step">Google Sheets:</span> Read KPI range for last 7 days<br>
+    → <span class="step">n8n (JS node):</span> Format numbers, calculate deltas, flag anomalies<br>
+    → <span class="step">Slack:</span> Post formatted summary to #weekly-report channel<br>
+    → <span class="step">Gmail:</span> Send branded HTML report to client distribution list<br>
+    → <span class="step">Google Sheets:</span> Log delivery timestamp + status
+  </div>
+
+  <h2>The Formatting Layer</h2>
+  <p>This is where most people give up. Raw Sheets data looks awful in an email. The n8n JavaScript node does the heavy lifting: it rounds numbers, adds % deltas vs the prior week, highlights anything that moved more than 15% in either direction, and injects everything into an HTML template string.</p>
+  <p>The Slack message uses Block Kit — a structured JSON format that renders as a clean card with bold metrics and colour-coded arrows. <strong>The whole formatting step is under 40 lines of JavaScript.</strong> No external libraries, no separate templating engine.</p>
+
+  <h2>Handling Edge Cases</h2>
+  <p>What if the Sheets data is incomplete? What if a metric column is blank? We added a validation node that checks for empty cells before formatting. If anything looks wrong, it pings a Slack alert to the internal ops channel instead of sending a broken report to the client. The delivery is suppressed until someone manually approves it.</p>
+  <p>This single safeguard has prevented exactly three embarrassing client emails since we deployed it.</p>
+
+  <h2>The Result</h2>
+  <div class="result-box">
+    <div class="result-title">// outcome</div>
+    <ul>
+      <li>Reporting time: 3 hours/week → zero manual effort</li>
+      <li>Reports delivered at 8:00 AM every Monday without fail</li>
+      <li>Clients receive branded HTML email, team gets Slack card</li>
+      <li>Anomaly detection catches data issues before clients do</li>
+      <li>~12 hours/month reclaimed across the team</li>
+    </ul>
+  </div>
+
+  <h2>What It Actually Cost to Build</h2>
+  <p>Seven hours total. Three hours designing the Sheets schema and agreeing on which metrics mattered. Two hours building the n8n workflow. Two hours refining the email template and testing delivery. The tools are all free or already in the client's stack — the only cost was the build time.</p>
+  <p>If you want this running before your next client call, <a href="/#contact" style="color:var(--accent);">get in touch</a>. It's one of our most common fixed-price builds.</p>
+</div>
+
+<footer>
+  <p><a href="/blog">← Back to Blog</a> &nbsp;·&nbsp; <a href="/">GetMicroservices</a> &nbsp;·&nbsp; <a href="/#contact">Work with us</a></p>
+</footer>
+
+<script>
+  function toggleTheme(){const h=document.documentElement;const d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'':'dark');document.getElementById('themeBtn').textContent=d?'🌙':'☀️';}
+</script>
+</body>
+</html>
