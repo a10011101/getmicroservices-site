@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/lead-qualification-bot-weekend-build"/>
+<title>How We Built a Lead Qualification Bot in a Weekend — getmicroservices</title>
+<meta name="description" content="A Typeform webhook, 90 minutes of n8n work, and a scoring formula. By Monday morning, every new lead was automatically graded, routed, and sitting in the CRM."/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  *{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+  input,textarea{-webkit-user-select:text;-moz-user-select:text;user-select:text;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--accent2:#0088ff;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid transparent;background:rgba(10,10,10,.97);transition:border-color .3s;}
+  nav.scrolled{border-bottom-color:var(--border);}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 20px;position:relative;line-height:1.7;}
+  ul li::before{content:'›';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  .score-table{width:100%;border-collapse:collapse;margin:24px 0;font-family:var(--mono);font-size:12px;}
+  .score-table th{background:var(--bg2);color:var(--fg);padding:8px 12px;text-align:left;border:1px solid var(--border);}
+  .score-table td{padding:8px 12px;border:1px solid var(--border);color:var(--dim);}
+  .score-table td:last-child{color:var(--accent);font-weight:700;}
+  .flow-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;margin:32px 0;}
+  .flow-label{font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+  .flow-label::before{content:'';display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;}
+  .flow-nodes{display:flex;align-items:center;flex-wrap:wrap;gap:0;overflow-x:auto;padding-bottom:4px;}
+  .node-box{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 16px;font-family:var(--mono);font-size:12px;display:flex;flex-direction:column;gap:3px;white-space:nowrap;}
+  .node-name{color:var(--fg);}
+  .node-sub{font-size:10px;color:var(--dim);}
+  .flow-arrow{font-family:var(--mono);color:var(--border);padding:0 8px;font-size:18px;flex-shrink:0;align-self:center;padding-bottom:16px;}
+  .flow-result{margin-top:20px;padding:12px 16px;background:rgba(0,255,136,.04);border:1px solid rgba(0,255,136,.15);border-radius:6px;font-family:var(--mono);font-size:12px;color:var(--accent);}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}.score-table{font-size:10px;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">get<span>micro</span>services<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#work">work</a></li>
+    <li><a href="/a/blog" class="active">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+
+<div class="article">
+  <a class="back-link" href="/a/blog">← blog</a>
+  <div class="post-tag">workflow</div>
+  <div class="post-meta">
+    <span>2026-03-30</span>
+    <span>6 min read</span>
+  </div>
+  <h1>How We Built a Lead Qualification Bot in a Weekend</h1>
+  <p class="post-lead">A Typeform webhook, 90 minutes of n8n work, and a scoring formula. By Monday morning, every new lead was automatically graded, routed, and sitting in the CRM — without a human touching it.</p>
+
+  <h2>The Problem With Manual Lead Triage</h2>
+  <p>A SaaS founder was spending two hours every morning reviewing intake form submissions. The form data was all there — company size, budget range, use case — but someone had to read it, make a judgement, and route it. <strong>The information for a decision already existed. The decision itself didn't need a human.</strong></p>
+
+  <h2>The Scoring Model</h2>
+  <p>Before touching n8n, we spent an hour defining what a "good" lead looked like. Five signals, each worth a different number of points:</p>
+
+  <table class="score-table">
+    <thead>
+      <tr><th>signal</th><th>criteria</th><th>pts</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>company size</td><td>50+ employees</td><td>+30</td></tr>
+      <tr><td>budget stated</td><td>$1k+/month</td><td>+25</td></tr>
+      <tr><td>use case fit</td><td>core product use case</td><td>+20</td></tr>
+      <tr><td>timeline</td><td>ready within 30 days</td><td>+15</td></tr>
+      <tr><td>decision maker</td><td>self-identified as buyer</td><td>+10</td></tr>
+    </tbody>
+  </table>
+
+  <p>Score ≥ 70 = Hot. 40–69 = Warm. Below 40 = Nurture. Weights stored in a Sheets config tab — no developer needed to adjust them.</p>
+
+  <h2>The Workflow</h2>
+  <div class="flow-card">
+    <div class="flow-label">n8n workflow — lead qualification bot</div>
+    <div class="flow-nodes">
+      <div class="node-box"><span class="node-name">Typeform / Tally</span><span class="node-sub">webhook trigger</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">n8n JS Node</span><span class="node-sub">score formula</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Switch Node</span><span class="node-sub">hot / warm / nurture</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Slack</span><span class="node-sub">DM or channel notify</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">HubSpot</span><span class="node-sub">create / update contact</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Google Sheets</span><span class="node-sub">log score + timestamp</span></div>
+    </div>
+    <div class="flow-result">trigger: form submit → lead scored, routed, and in CRM in &lt; 60 seconds</div>
+  </div>
+
+  <h2>Plugging In the Webhook</h2>
+  <p>Typeform and Tally both support native webhooks. Payload structures differ slightly — a Set node normalises the shape before the scoring logic, so the formula works identically regardless of which form tool fires it.</p>
+  <p>The scoring JavaScript is ~25 lines. Weights are read from a Google Sheets config tab. <strong>This single decision saved the most back-and-forth later</strong> — the founder tweaks weights without opening n8n.</p>
+
+  <h2>The CRM Step</h2>
+  <p>HubSpot's n8n node creates or updates a contact, sets lead score as a custom property, and applies a tag. Deduplication by email — check if contact exists, branch on new vs. update. <strong>Two lines. Most people skip this and end up with duplicate contacts.</strong></p>
+
+  <h2>Weekend Build Log</h2>
+  <ul>
+    <li>Saturday AM — scoring model defined, webhook tested, n8n skeleton built</li>
+    <li>Saturday PM — HubSpot integration, Slack notifications, Sheets logging</li>
+    <li>Sunday — edge cases, error handling, missing fields, duplicate leads</li>
+    <li>Sunday evening — live on production, founder watching DMs roll in</li>
+  </ul>
+
+  <h2>The Result</h2>
+  <div class="result-box">
+    <div class="result-title">outcome</div>
+    <div class="result-item">Lead triage time: 2 hours/day → zero</div>
+    <div class="result-item">Hot leads reach founder within 60 seconds of form submission</div>
+    <div class="result-item">Warm and nurture leads auto-enrolled in the right sequences</div>
+    <div class="result-item">Scoring weights adjustable via Sheets — no developer needed</div>
+    <div class="result-item">~44 hours/month returned to the founder</div>
+  </div>
+
+  <h2>Build It Yourself?</h2>
+  <p>The hardest part isn't the code — it's the scoring model. Spend an hour with whoever handles sales and nail down what signals actually predict a closed deal. Once you have that, the n8n build is straightforward.</p>
+  <p>If you'd rather skip the weekend and have it live on Monday, <a href="/a/#contact">we can build it for you</a>. Lead qualification bots are one of our most requested projects.</p>
+</div>
+
+<hr class="full-divider"/>
+<footer>
+  <span class="footer-logo">getmicroservices.com</span>
+  <span class="footer-right">built by humans. run by automations.</span>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20);});
+</script>
+</body>
+</html>
