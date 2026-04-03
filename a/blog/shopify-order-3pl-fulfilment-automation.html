@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/shopify-order-3pl-fulfilment-automation"/>
+<title>Shopify → 3PL Fulfilment Automation: From 6-Hour Lag to 10 Minutes — getmicroservices</title>
+<meta name="description" content="A DTC brand was manually copy-pasting 500 Shopify orders a month into their 3PL portal. Here's the n8n pipeline we built to eliminate that entirely."/>
+<style>
+  * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  input, textarea { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a; --bg2: #111; --bg3: #161616;
+    --border: #222; --fg: #e8e8e8; --dim: #666;
+    --accent: #00ff88; --accent2: #0088ff;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--sans); line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px; border-bottom: 1px solid var(--border); background: rgba(10,10,10,.97);
+    transition: border-color .3s, background .3s;
+  }
+  nav.scrolled { background: rgba(10,10,10,.95); border-color: var(--border); backdrop-filter: blur(12px); }
+  .nav-logo { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); letter-spacing: -.5px; }
+  .nav-logo span { color: var(--dim); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--dim); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-cta {
+    font-family: var(--mono); font-size: 12px; padding: 8px 18px;
+    border: 1px solid var(--accent); color: var(--accent);
+    background: transparent; cursor: pointer; transition: all .2s; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--bg); }
+
+  /* ARTICLE */
+  .article { max-width: 680px; margin: 0 auto; padding: 140px 24px 100px; }
+
+  .back-link {
+    font-family: var(--mono); font-size: 12px; color: var(--dim);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: 48px; transition: color .2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .post-tag {
+    display: inline-block; font-family: var(--mono); font-size: 10px;
+    color: var(--accent); border: 1px solid rgba(0,255,136,.3);
+    border-radius: 3px; padding: 3px 10px; margin-bottom: 20px;
+  }
+  .post-meta { font-family: var(--mono); font-size: 12px; color: var(--dim); margin-bottom: 32px; display: flex; gap: 20px; }
+
+  h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; margin-bottom: 12px; }
+  .post-lead { font-size: 18px; color: var(--dim); line-height: 1.75; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+
+  h2 { font-size: 22px; font-weight: 700; letter-spacing: -.5px; margin: 40px 0 16px; }
+  p { color: var(--dim); font-size: 16px; line-height: 1.8; margin-bottom: 20px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--fg); font-weight: 600; }
+
+  ul { list-style: none; margin: 0 0 20px 0; }
+  ul li { color: var(--dim); font-size: 15px; padding: 6px 0 6px 20px; position: relative; line-height: 1.7; }
+  ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); }
+
+  /* FLOW DIAGRAM */
+  .flow-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 28px; margin: 32px 0;
+  }
+  .flow-label {
+    font-family: var(--mono); font-size: 11px; color: var(--dim);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+  }
+  .flow-label::before { content: ''; display: inline-block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  .flow-nodes {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 0;
+    overflow-x: auto; padding-bottom: 4px;
+  }
+  .flow-node { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; }
+  .node-box {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px 16px; font-family: var(--mono); font-size: 12px;
+    display: flex; align-items: center; gap: 8px; white-space: nowrap;
+  }
+  .node-icon { font-size: 16px; }
+  .node-name { color: var(--fg); }
+  .node-type { font-size: 10px; color: var(--dim); }
+  .flow-arrow { font-family: var(--mono); color: var(--border); padding: 0 8px; font-size: 18px; flex-shrink: 0; align-self: center; padding-bottom: 20px; }
+  .flow-result {
+    margin-top: 20px; padding: 12px 16px;
+    background: rgba(0,255,136,.04); border: 1px solid rgba(0,255,136,.15);
+    border-radius: 6px; font-family: var(--mono); font-size: 12px; color: var(--accent);
+  }
+
+  /* RESULT BOX */
+  .result-box {
+    background: var(--bg2); border: 1px solid rgba(0,255,136,.2);
+    border-radius: 8px; padding: 28px; margin: 32px 0;
+  }
+  .result-box .result-title { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .result-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; font-size: 15px; color: var(--dim); }
+  .result-item::before { content: '→'; color: var(--accent); font-family: var(--mono); flex-shrink: 0; }
+  .result-item:last-child { margin-bottom: 0; }
+
+  /* CTA */
+  .post-cta {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 40px; text-align: center; margin-top: 64px;
+  }
+  .post-cta p { font-size: 15px; color: var(--dim); max-width: 380px; margin: 0 auto 24px; }
+  .btn-cta {
+    font-family: var(--mono); font-size: 13px; padding: 12px 28px;
+    background: var(--accent); color: var(--bg); border: none;
+    cursor: pointer; border-radius: 4px; text-decoration: none;
+    display: inline-block; transition: opacity .2s;
+  }
+  .btn-cta:hover { opacity: .85; }
+
+  .full-divider { border: none; border-top: 1px solid var(--border); }
+  footer {
+    border-top: 1px solid var(--border); padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .footer-logo { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .footer-right { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; background: rgba(10,10,10,.97) !important; border-color: var(--border) !important; }
+    .nav-logo { font-size: 16px; }
+    .nav-cta { display: none; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    footer { padding: 32px 20px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: 1px solid var(--accent);
+    padding: 10px 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 4px;
+  }
+  .hamburger-btn span { display: block; width: 22px; height: 2px; background: #ffffff; transition: transform 0.2s, opacity 0.2s; }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #0a0a0a;
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: var(--mono); font-size: 20px; color: var(--fg); text-decoration: none; letter-spacing: -0.5px; }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-close { position: absolute; top: 24px; right: 24px; font-family: var(--mono); font-size: 24px; color: var(--dim); background: none; border: none; cursor: pointer; }
+  @media (max-width: 768px) {
+    .hamburger-btn { display: flex; }
+    .nav-links { display: none !important; }
+    .nav-cta { display: none; }
+    nav { background: rgba(10,10,10,.97) !important; border-color: var(--border) !important; padding: 16px 20px; }
+    .nav-logo { font-size: 16px !important; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/a/" style="text-decoration:none;" class="nav-logo">get<span>micro</span>services<span>.com</span></a>
+  <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="/a/">home</a></li>
+    <li><a href="/a/#flows">work</a></li>
+    <li><a href="/a/services/business-automation">services</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/#contact">contact</a></li>
+    <li><a href="/a/blog/" class="active">blog</a></li>
+    <li><a href="/a/about">about</a></li>
+  </ul>
+  <a href="/a/#contact" class="nav-cta">[ start project ]</a>
+</nav>
+
+<article class="article">
+
+  <a href="/a/blog/" class="back-link">← field notes</a>
+
+  <div class="post-tag">case study</div>
+  <h1>Shopify → 3PL Fulfilment Automation: From 6-Hour Lag to 10 Minutes</h1>
+  <div class="post-meta">
+    <span>Mar 31, 2026</span>
+    <span>6 min read</span>
+  </div>
+  <p class="post-lead">A DTC skincare brand was manually copy-pasting every Shopify order into their 3PL portal — 500 times a month. Here's the n8n pipeline we built to make that a problem of the past.</p>
+
+  <h2>The problem</h2>
+  <p>James runs a direct-to-consumer skincare brand doing around 500 orders a month through Shopify. Their 3PL handles warehousing and shipping. Sounds like a clean setup — until you ask how orders get from Shopify to the 3PL.</p>
+  <p>The answer: someone logs into Shopify, copies the order details, logs into the 3PL portal, and pastes them in. Manually. For every order. <strong>That's 3–4 hours of ops work every single day.</strong></p>
+  <p>"We have a 3PL with a perfectly good API," their ops lead told us. "And we're typing addresses into a web form fifteen times a day." They'd had two fulfilment errors in the previous month from typos. A wrong digit in a postcode. One order shipped to a completely different city.</p>
+  <p>Nobody had prioritised the fix because the business was growing fast and there were always more urgent fires. Classic ops debt.</p>
+
+  <h2>What we built</h2>
+  <p>A five-step n8n pipeline that handles the full order handoff — trigger to tracking number — with zero human steps for routine orders:</p>
+
+  <div class="flow-card">
+    <div class="flow-label">shopify → 3pl fulfilment pipeline</div>
+    <div class="flow-nodes">
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🛒</span><div><div class="node-name">Shopify Webhook</div><div class="node-type">orders/paid</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🔄</span><div><div class="node-name">SKU Mapper</div><div class="node-type">Sheets lookup</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🚦</span><div><div class="node-name">Validator</div><div class="node-type">Address + stock</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">📦</span><div><div class="node-name">3PL API</div><div class="node-type">POST fulfilment</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🔁</span><div><div class="node-name">Tracking Sync</div><div class="node-type">Write to Shopify</div></div></div>
+      </div>
+    </div>
+    <div class="flow-result">↳ order paid → 3PL receives it in &lt;10 min → tracking written back to Shopify → Slack alert only on exceptions</div>
+  </div>
+
+  <p>The SKU mapper is a Google Sheet that translates Shopify variant IDs to 3PL warehouse codes. The ops team owns it — when new products launch, they add a row. No code involved.</p>
+  <p>The validator checks three things before the 3PL API call: does the SKU exist in the warehouse catalog, does the address pass a basic format check, is the item flagged as in stock. Anything that fails routes to a Slack channel with a link to the order. An exception takes about 5 minutes to handle manually. Everything else is invisible.</p>
+  <p>Tracking sync is a separate scheduled workflow that polls the 3PL every two hours, grabs new tracking numbers, and writes them to the Shopify order. That fires Shopify's native shipping email — so customers get their tracking notification automatically, earlier than before.</p>
+
+  <h2>The details that matter</h2>
+  <p>A few non-obvious pieces we had to build:</p>
+  <ul>
+    <li><strong>Bundle handling</strong> — some Shopify products are bundles that map to multiple 3PL SKUs. We added an expansion step that splits one line item into many before the API call.</li>
+    <li><strong>International customs</strong> — the 3PL needs HS codes and declared values for cross-border shipments. A second Sheet tab maps product categories to HS codes; the workflow looks this up per item.</li>
+    <li><strong>Idempotency</strong> — Shopify can send the same webhook more than once. We track order IDs that have already been submitted so the 3PL never gets a duplicate.</li>
+  </ul>
+  <p>None of these are exotic problems, but they're invisible until you run real orders. That's why we always test with live data in staging before flipping to production.</p>
+
+  <h2>The stack</h2>
+  <p>n8n as the workflow engine, running on a $12/month VPS. Google Sheets for the SKU and HS code mappings — ops-editable, no engineering required. Shopify webhooks as the trigger. The 3PL's REST API as the destination. Slack for exception alerts.</p>
+  <p>No new software for the team to learn. No monthly platform fee per order. The brand got the full workflow export, the Sheets templates, and a Loom walkthrough. Self-sufficient from day one.</p>
+  <p><strong>Build time: 4 days.</strong> The 3PL's API documentation was patchy, which cost us half a day. Everything else was clean.</p>
+
+  <h2>The result</h2>
+
+  <div class="result-box">
+    <div class="result-title">after 6 weeks</div>
+    <div class="result-item">Fulfilment lag: 6 hours average → under 10 minutes</div>
+    <div class="result-item">3–4 hours/day of manual ops work eliminated</div>
+    <div class="result-item">Fulfilment error rate dropped to zero for automated orders</div>
+    <div class="result-item">~3% of orders flagged as exceptions; each resolved in under 5 minutes</div>
+    <div class="result-item">"Where's my order" support tickets down noticeably — tracking emails go out same day now</div>
+  </div>
+
+  <p>The ops lead put it well: "I only see a Slack message when something actually needs me. I don't think about orders anymore." That's what a well-built automation should feel like — not a dashboard to monitor, just a problem that stopped existing.</p>
+
+  <div class="post-cta">
+    <p>Still manually pushing orders to your 3PL? We can probably fix that in a week.</p>
+    <a href="/a/#contact" class="btn-cta">[ let's talk ]</a>
+  </div>
+
+</article>
+
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
+});
+</script>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="/a/">home</a>
+  <a href="/a/#flows">work</a>
+  <a href="/a/#pricing">pricing</a>
+  <a href="/a/blog/">blog</a>
+  <a href="/a/about">about</a>
+</div>
+
+<script>
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeMobileMenu();
+});
+</script>
+</body>
+</html>
