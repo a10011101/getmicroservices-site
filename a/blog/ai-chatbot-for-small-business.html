@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/ai-chatbot-for-small-business"/>
+<title>AI Chatbots for Small Business: What Actually Works in 2026 — getmicroservices</title>
+<meta name="description" content="Thinking about adding an AI chatbot to your small business? Here's what actually works, real use cases, honest cost breakdown, and what to avoid."/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  *{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+  input,textarea{-webkit-user-select:text;-moz-user-select:text;user-select:text;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--accent2:#0088ff;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .flow-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;margin:32px 0;}
+  .flow-label{font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+  .flow-label::before{content:'';display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;}
+  .flow-nodes{display:flex;align-items:center;flex-wrap:wrap;gap:0;overflow-x:auto;}
+  .node-box{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 16px;font-family:var(--mono);font-size:12px;display:flex;flex-direction:column;gap:3px;white-space:nowrap;}
+  .node-name{color:var(--fg);}
+  .node-sub{font-size:10px;color:var(--dim);}
+  .flow-arrow{font-family:var(--mono);color:var(--border);padding:0 8px;font-size:18px;flex-shrink:0;align-self:center;padding-bottom:16px;}
+  .flow-result{margin-top:20px;padding:12px 16px;background:rgba(0,255,136,.04);border:1px solid rgba(0,255,136,.15);border-radius:6px;font-family:var(--mono);font-size:12px;color:var(--accent);}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  .cta-card{background:var(--bg2);border:1px solid rgba(0,255,136,.3);border-radius:8px;padding:32px;margin:40px 0;text-align:center;}
+  .cta-card h3{font-size:18px;font-weight:700;margin-bottom:10px;}
+  .cta-card p{color:var(--dim);font-size:14px;margin-bottom:24px;}
+  .cta-card a{font-family:var(--mono);font-size:13px;padding:10px 24px;border:1px solid var(--accent);color:var(--accent);background:transparent;text-decoration:none;display:inline-block;transition:all .2s;}
+  .cta-card a:hover{background:var(--accent);color:var(--bg);}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">get<span>micro</span>services<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#work">work</a></li>
+    <li><a href="/a/blog">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+<div class="article">
+  <a class="back-link" href="/a/blog">← blog</a>
+  <div class="post-tag">AI</div>
+  <div class="post-meta"><span>2026-04-03</span><span>5 min read</span></div>
+  <h1>AI Chatbots for Small Business: What Actually Works in 2026</h1>
+  <p class="post-lead">Every SaaS platform promises a chatbot that will "revolutionise your customer experience." Most of them are disappointing. Here's what actually works for small businesses in 2026 — and what doesn't.</p>
+  <h2>What SMEs Actually Need</h2>
+  <p>Not a chatbot that pretends to be human. What most small businesses need: <strong>handle the 60–70% of queries that are repetitive, escalate the rest with context.</strong> Reduce human volume. Make human responses better when needed.</p>
+
+  <h2>3 Use Cases That Work</h2>
+
+  <h2>1. Support (FAQ + Escalation)</h2>
+  <p>AI trained on your knowledge base answers common questions. Can't answer confidently → collects contact details → flags to your team with a summary. 60–80% of queries handled automatically.</p>
+
+  <h2>2. Booking</h2>
+  <p>Customer asks about availability → AI checks calendar → proposes slots → booking created. Works via website, WhatsApp, or Telegram. We built this for a spa owner spending 3 hours/day on manual WhatsApp bookings.</p>
+
+  <h2>3. Lead Qualification</h2>
+  <p>Inbound lead → AI asks qualifying questions → scores → books a call if qualified → polite decline if not. Your team only talks to people worth talking to. 5+ hours/week saved on dead-end discovery calls.</p>
+
+  <h2>Build vs Platform</h2>
+  <ul>
+    <li><strong>Platforms (Tidio, Intercom):</strong> Quick setup, $100–$500+/month, limited customisation, ecosystem lock-in</li>
+    <li><strong>Custom (GPT-4o + n8n):</strong> 1–3 day build, you own it, integrates with your actual systems, &lt;£5/month API costs</li>
+  </ul>
+  <p>Under 500 queries/month: platform is fine. Over that: build custom.</p>
+
+  <h2>What to Avoid</h2>
+  <ul>
+    <li>Generic AI with no business context — damages trust</li>
+    <li>No escalation path to a human</li>
+    <li>Hiding that it's AI — disclosure is better</li>
+    <li>Deploying without running 50+ test scenarios</li>
+  </ul>
+
+  <h2>Real Costs</h2>
+  <div class="flow-card">
+    <div class="flow-label">monthly cost breakdown</div>
+    <div class="flow-nodes">
+      <div class="node-box"><span class="node-name">API (GPT-4o-mini)</span><span class="node-sub">~£0.50 per 1k queries</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">n8n self-hosted</span><span class="node-sub">~$12/mo VPS</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Build cost</span><span class="node-sub">$500–$1,500 one-time</span></div>
+    </div>
+    <div class="flow-result">ongoing cost after build: almost nothing — update knowledge base when info changes</div>
+  </div>
+
+  <div class="cta-card">
+    <h3>Want a Custom AI Chatbot?</h3>
+    <p>Trained on your business, integrated with your tools. Fixed price, delivered in days.</p>
+    <a href="/a/#contact">[ Start the Conversation → ]</a>
+  </div>
+</div>
+<hr class="full-divider"/>
+<footer>
+  <span class="footer-logo">getmicroservices.com</span>
+  <span class="footer-right">built by humans. run by automations.</span>
+</footer>
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20);});
+</script>
+</body>
+</html>

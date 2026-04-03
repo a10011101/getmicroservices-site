@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/how-to-automate-your-business"/>
+<title>How to Automate Your Business: A Practical Guide for SME Owners — getmicroservices</title>
+<meta name="description" content="Not sure how to automate your business? This practical guide covers where to start, which processes to pick, and which tools to use — without the jargon."/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  *{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+  input,textarea{-webkit-user-select:text;-moz-user-select:text;user-select:text;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--accent2:#0088ff;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .flow-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;margin:32px 0;}
+  .flow-label{font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+  .flow-label::before{content:'';display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;}
+  .flow-nodes{display:flex;align-items:center;flex-wrap:wrap;gap:0;overflow-x:auto;}
+  .node-box{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 16px;font-family:var(--mono);font-size:12px;display:flex;flex-direction:column;gap:3px;white-space:nowrap;}
+  .node-name{color:var(--fg);}
+  .node-sub{font-size:10px;color:var(--dim);}
+  .flow-arrow{font-family:var(--mono);color:var(--border);padding:0 8px;font-size:18px;flex-shrink:0;align-self:center;padding-bottom:16px;}
+  .flow-result{margin-top:20px;padding:12px 16px;background:rgba(0,255,136,.04);border:1px solid rgba(0,255,136,.15);border-radius:6px;font-family:var(--mono);font-size:12px;color:var(--accent);}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  .cta-card{background:var(--bg2);border:1px solid rgba(0,255,136,.3);border-radius:8px;padding:32px;margin:40px 0;text-align:center;}
+  .cta-card h3{font-size:18px;font-weight:700;margin-bottom:10px;}
+  .cta-card p{color:var(--dim);font-size:14px;margin-bottom:24px;}
+  .cta-card a{font-family:var(--mono);font-size:13px;padding:10px 24px;border:1px solid var(--accent);color:var(--accent);background:transparent;text-decoration:none;display:inline-block;transition:all .2s;}
+  .cta-card a:hover{background:var(--accent);color:var(--bg);}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">get<span>micro</span>services<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#work">work</a></li>
+    <li><a href="/a/blog">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+<div class="article">
+  <a class="back-link" href="/a/blog">← blog</a>
+  <div class="post-tag">automation</div>
+  <div class="post-meta"><span>2026-04-03</span><span>6 min read</span></div>
+  <h1>How to Automate Your Business: A Practical Guide for SME Owners</h1>
+  <p class="post-lead">Most business owners know they should automate more. Few know where to start. This is the guide we wish existed — practical, tool-agnostic, and written for people who run businesses, not dev teams.</p>
+  <h2>Start With the Pain, Not the Technology</h2>
+  <p>Most business owners approach automation backwards — they start with a tool ("I heard about Zapier") instead of a problem ("I spend 4 hours every Friday pulling together reports"). <strong>Automation built around pain points pays for itself. Automation built around tools often doesn't.</strong></p>
+  <p>Before you touch any software, spend 30 minutes listing every repetitive task in your business. The stuff you could explain to a teenager in 10 minutes. That list is your roadmap.</p>
+
+  <h2>Three Categories Worth Automating</h2>
+  <ul>
+    <li><strong>High frequency, low complexity</strong> — Confirmation emails, invoice chasing, spreadsheet updates. Quick wins.</li>
+    <li><strong>Medium frequency, structured data</strong> — Reports, CRM sync, lead routing. More effort, bigger savings.</li>
+    <li><strong>Low frequency, high stakes</strong> — Monthly compliance, board packs. Automate once basics are covered.</li>
+  </ul>
+  <p><strong>Skip for now:</strong> anything requiring genuine judgement or customer relationships. The ROI isn't there for most SMEs yet.</p>
+
+  <h2>Tool Selection</h2>
+  <div class="flow-card">
+    <div class="flow-label">automation tool spectrum</div>
+    <div class="flow-nodes">
+      <div class="node-box"><span class="node-name">Zapier</span><span class="node-sub">easiest, pricey at scale</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Make</span><span class="node-sub">more power, better value</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">n8n</span><span class="node-sub">self-hosted, unlimited</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Custom</span><span class="node-sub">Python/Node.js, needs dev</span></div>
+    </div>
+    <div class="flow-result">recommendation: start with Zapier/Make to validate, migrate to n8n once it's proven</div>
+  </div>
+
+  <h2>Build vs Hire</h2>
+  <p>Simple 2–3 step automations: build it yourself. Complex multi-step flows with error handling and custom logic: hire someone. If you've spent more than a day debugging something that still breaks, the time cost already exceeds the build cost.</p>
+
+  <h2>Common Mistakes</h2>
+  <ul>
+    <li>Automating a broken process (fix it first)</li>
+    <li>No error handling (what happens at 2am?)</li>
+    <li>Over-automating customer touchpoints</li>
+    <li>No documentation for your team</li>
+    <li>Trying to automate everything at once</li>
+  </ul>
+
+  <h2>This Week's Action</h2>
+  <p>Pick the single most painful repetitive task. Time it. Calculate monthly cost (hours × rate). If it's over £200/month in time, it's worth automating. Build or hire a simple version, run for a month, measure the result.</p>
+
+  <div class="result-box">
+    <div class="result-title">next steps</div>
+    <div class="result-item">Identify your top 3 repetitive time-sinks</div>
+    <div class="result-item">Calculate monthly cost of each</div>
+    <div class="result-item">Pick the highest ROI and automate it first</div>
+    <div class="result-item">Or — <a href="/a/#contact">talk to us</a> and we'll do the audit for you</div>
+  </div>
+
+  <div class="cta-card">
+    <h3>Want Someone to Map It Out?</h3>
+    <p>We audit businesses and build automation roadmaps. Free discovery call, then a clear plan.</p>
+    <a href="/a/services/automation-consultant">[ See Consultancy Service → ]</a>
+  </div>
+</div>
+<hr class="full-divider"/>
+<footer>
+  <span class="footer-logo">getmicroservices.com</span>
+  <span class="footer-right">built by humans. run by automations.</span>
+</footer>
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20);});
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/zapier-alternative-for-agencies"/>
+<title>The Best Zapier Alternative for Agencies in 2026 — getmicroservices</title>
+<meta name="description" content="Zapier gets expensive at agency scale. Here's an honest comparison of n8n, Make, and other Zapier alternatives — including trade-offs, real costs, and when each makes sense."/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  *{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+  input,textarea{-webkit-user-select:text;-moz-user-select:text;user-select:text;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--accent2:#0088ff;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .flow-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;margin:32px 0;}
+  .flow-label{font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+  .flow-label::before{content:'';display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;}
+  .flow-nodes{display:flex;align-items:center;flex-wrap:wrap;gap:0;overflow-x:auto;}
+  .node-box{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 16px;font-family:var(--mono);font-size:12px;display:flex;flex-direction:column;gap:3px;white-space:nowrap;}
+  .node-name{color:var(--fg);}
+  .node-sub{font-size:10px;color:var(--dim);}
+  .flow-arrow{font-family:var(--mono);color:var(--border);padding:0 8px;font-size:18px;flex-shrink:0;align-self:center;padding-bottom:16px;}
+  .flow-result{margin-top:20px;padding:12px 16px;background:rgba(0,255,136,.04);border:1px solid rgba(0,255,136,.15);border-radius:6px;font-family:var(--mono);font-size:12px;color:var(--accent);}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  .cta-card{background:var(--bg2);border:1px solid rgba(0,255,136,.3);border-radius:8px;padding:32px;margin:40px 0;text-align:center;}
+  .cta-card h3{font-size:18px;font-weight:700;margin-bottom:10px;}
+  .cta-card p{color:var(--dim);font-size:14px;margin-bottom:24px;}
+  .cta-card a{font-family:var(--mono);font-size:13px;padding:10px 24px;border:1px solid var(--accent);color:var(--accent);background:transparent;text-decoration:none;display:inline-block;transition:all .2s;}
+  .cta-card a:hover{background:var(--accent);color:var(--bg);}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">get<span>micro</span>services<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#work">work</a></li>
+    <li><a href="/a/blog">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+<div class="article">
+  <a class="back-link" href="/a/blog">← blog</a>
+  <div class="post-tag">tools</div>
+  <div class="post-meta"><span>2026-04-03</span><span>5 min read</span></div>
+  <h1>The Best Zapier Alternative for Agencies in 2026</h1>
+  <p class="post-lead">Agencies hit the Zapier wall fast. 100,000 tasks/month on Zapier costs $599. The same volume on n8n costs $12 (your VPS). Here's an honest breakdown of your options.</p>
+  <h2>Why Agencies Hit the Zapier Wall</h2>
+  <p>Every action in a multi-step Zap counts as a separate task. A 5-step workflow triggered 500 times = 2,500 tasks. At agency scale, task limits burn fast. 100,000 tasks/month on Zapier: <strong>$599</strong>.</p>
+
+  <h2>n8n: The Main Alternative</h2>
+  <p>Open-source, self-hosted, unlimited tasks. Runs on a $12/month VPS. No per-task pricing, no vendor lock-in.</p>
+  <ul>
+    <li>Unlimited tasks at fixed infrastructure cost</li>
+    <li>Full code execution (JS/Python nodes)</li>
+    <li>Data stays on your infrastructure</li>
+    <li>Custom nodes for any API</li>
+  </ul>
+  <p><strong>Trade-offs:</strong> ~400 native integrations vs Zapier's 7,000+. Technical setup required. You manage updates and uptime.</p>
+
+  <h2>Make: The Middle Ground</h2>
+  <p>Cloud-hosted like Zapier, more powerful, better pricing. 100k operations/month: <strong>$99</strong>. Best for agencies that want more power without managing infrastructure.</p>
+
+  <h2>Decision Framework</h2>
+  <div class="flow-card">
+    <div class="flow-label">when to switch</div>
+    <div class="flow-nodes">
+      <div class="node-box"><span class="node-name">Stay Zapier</span><span class="node-sub">&lt;$100/mo, non-technical team</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Switch Make</span><span class="node-sub">Team plan+, complex logic</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Switch n8n</span><span class="node-sub">$200+/mo, technical capacity</span></div>
+    </div>
+    <div class="flow-result">migration ROI: typically recovered within 60–90 days of Zapier savings</div>
+  </div>
+
+  <div class="result-box">
+    <div class="result-title">cost at 100k tasks/month</div>
+    <div class="result-item">Zapier: $599/month</div>
+    <div class="result-item">Make: $99/month</div>
+    <div class="result-item">n8n Cloud: $20/month</div>
+    <div class="result-item">n8n Self-hosted: ~$12/month</div>
+  </div>
+
+  <div class="cta-card">
+    <h3>Ready to Switch?</h3>
+    <p>We migrate agencies from Zapier to n8n. Parallel-run validation, no downtime.</p>
+    <a href="/a/#contact">[ Talk About Migration → ]</a>
+  </div>
+</div>
+<hr class="full-divider"/>
+<footer>
+  <span class="footer-logo">getmicroservices.com</span>
+  <span class="footer-right">built by humans. run by automations.</span>
+</footer>
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20);});
+</script>
+</body>
+</html>

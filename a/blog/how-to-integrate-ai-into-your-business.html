@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/how-to-integrate-ai-into-your-business"/>
+<title>How to Integrate AI Into Your Business (Without a Tech Team) — getmicroservices</title>
+<meta name="description" content="Practical guide to AI integration for small business owners. What AI actually does, 5 starting points, real costs, and common mistakes to avoid."/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  *{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+  input,textarea{-webkit-user-select:text;-moz-user-select:text;user-select:text;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--accent2:#0088ff;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .flow-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;margin:32px 0;}
+  .flow-label{font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+  .flow-label::before{content:'';display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;}
+  .flow-nodes{display:flex;align-items:center;flex-wrap:wrap;gap:0;overflow-x:auto;}
+  .node-box{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 16px;font-family:var(--mono);font-size:12px;display:flex;flex-direction:column;gap:3px;white-space:nowrap;}
+  .node-name{color:var(--fg);}
+  .node-sub{font-size:10px;color:var(--dim);}
+  .flow-arrow{font-family:var(--mono);color:var(--border);padding:0 8px;font-size:18px;flex-shrink:0;align-self:center;padding-bottom:16px;}
+  .flow-result{margin-top:20px;padding:12px 16px;background:rgba(0,255,136,.04);border:1px solid rgba(0,255,136,.15);border-radius:6px;font-family:var(--mono);font-size:12px;color:var(--accent);}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  .cta-card{background:var(--bg2);border:1px solid rgba(0,255,136,.3);border-radius:8px;padding:32px;margin:40px 0;text-align:center;}
+  .cta-card h3{font-size:18px;font-weight:700;margin-bottom:10px;}
+  .cta-card p{color:var(--dim);font-size:14px;margin-bottom:24px;}
+  .cta-card a{font-family:var(--mono);font-size:13px;padding:10px 24px;border:1px solid var(--accent);color:var(--accent);background:transparent;text-decoration:none;display:inline-block;transition:all .2s;}
+  .cta-card a:hover{background:var(--accent);color:var(--bg);}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">get<span>micro</span>services<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#work">work</a></li>
+    <li><a href="/a/blog">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+<div class="article">
+  <a class="back-link" href="/a/blog">← blog</a>
+  <div class="post-tag">AI</div>
+  <div class="post-meta"><span>2026-04-03</span><span>6 min read</span></div>
+  <h1>How to Integrate AI Into Your Business (Without a Tech Team)</h1>
+  <p class="post-lead">AI integration sounds complicated. It doesn't have to be. Here's a practical guide to what AI can actually do for your business today — and where to start without a technical team.</p>
+  <h2>What It Actually Means</h2>
+  <p>AI integration for most SMEs means connecting an existing AI service (GPT-4o, Claude) to your existing tools (email, CRM, documents) via an automation workflow. <strong>You're not training models. You're pointing capable AI at your data and telling it what to do.</strong></p>
+
+  <h2>5 Starting Points</h2>
+
+  <h2>1. Email Triage</h2>
+  <p>Every email classified (urgent/delegate/FYI), summarised, routed. Result: 15 minutes of email per day. Cost: ~£1.50/month in API calls for a busy inbox.</p>
+
+  <h2>2. Support Chatbot</h2>
+  <p>AI trained on your FAQs handles 60–80% of queries. Complex ones escalated with a summary. Builds in a day, works 24/7.</p>
+
+  <h2>3. Document Processing</h2>
+  <p>Invoices, contracts, CVs — AI reads and extracts structured data. PDF invoice → accounting software entry, no human touch.</p>
+
+  <h2>4. Data Analysis</h2>
+  <p>Upload sales data → AI writes plain-English summary, flags anomalies. No analyst needed for routine reporting.</p>
+
+  <h2>5. Meeting Summaries</h2>
+  <p>Record meeting → AI transcribes → extracts actions → assigns owners → drops into Notion/Asana. Done before you leave the call.</p>
+
+  <h2>Real Costs</h2>
+  <div class="flow-card">
+    <div class="flow-label">AI API cost reality</div>
+    <div class="flow-nodes">
+      <div class="node-box"><span class="node-name">GPT-4o-mini</span><span class="node-sub">£2/month per 1k emails</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">GPT-4o</span><span class="node-sub">complex tasks, ~10× cost</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">n8n self-hosted</span><span class="node-sub">unlimited runs, ~£10/mo VPS</span></div>
+    </div>
+    <div class="flow-result">API costs are negligible. The investment is in the build — connecting tools and testing.</div>
+  </div>
+
+  <h2>Common Mistakes</h2>
+  <ul>
+    <li>Expecting perfection — build human review for high-stakes decisions</li>
+    <li>Starting too big — one use case, prove it, then expand</li>
+    <li>Ignoring data quality — garbage in, garbage out</li>
+    <li>No fallback for when the API is down</li>
+    <li>Over-trusting outputs before validating accuracy</li>
+  </ul>
+
+  <div class="cta-card">
+    <h3>Want Your First AI Integration Built?</h3>
+    <p>We build done-for-you AI automation for SMEs. Fixed price, fast delivery.</p>
+    <a href="/a/#contact">[ Talk to Us → ]</a>
+  </div>
+</div>
+<hr class="full-divider"/>
+<footer>
+  <span class="footer-logo">getmicroservices.com</span>
+  <span class="footer-right">built by humans. run by automations.</span>
+</footer>
+<script>
+  window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20);});
+</script>
+</body>
+</html>
