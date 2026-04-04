@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Install OpenClaw – Mac & Business Setup Service | GetMicroservices</title>
+  <meta name="description" content="Get OpenClaw installed and configured on your Mac or business infrastructure. Done-for-you setup starting from $499. Live in 24 hours." />
+  <link rel="canonical" href="https://getmicroservices.com/install-openclaw/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- OG -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://getmicroservices.com/install-openclaw/" />
+  <meta property="og:title" content="Install OpenClaw – Done-For-You Setup" />
+  <meta property="og:description" content="We install and configure OpenClaw on your Mac or business server. Starting from $499. Live in 24 hours." />
+  <meta property="og:site_name" content="GetMicroservices" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f3ee;
+      --surface: #ffffff;
+      --border: #d9d4c7;
+      --text: #1a1a1a;
+      --muted: #6b6560;
+      --accent: #b5006a;
+      --accent-hover: #8a004f;
+      --code: #fdf6ec;
+      --pixel: 2px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--surface);
+      border-bottom: var(--pixel) solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent);
+      color: #fff !important;
+      padding: 0.45rem 1.1rem;
+      border: var(--pixel) solid var(--text);
+      box-shadow: 3px 3px 0 var(--text);
+      font-weight: 700 !important;
+      transition: box-shadow 0.15s, transform 0.15s !important;
+    }
+    .nav-cta:hover {
+      box-shadow: 1px 1px 0 var(--text) !important;
+      transform: translate(2px, 2px);
+      color: #fff !important;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 3.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--code);
+      border: var(--pixel) solid var(--border);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      padding: 0.25rem 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    .hero-cta-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border: var(--pixel) solid var(--text);
+      box-shadow: 4px 4px 0 var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover {
+      box-shadow: 2px 2px 0 var(--text);
+      transform: translate(2px, 2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 0.85rem 2rem;
+      border: var(--pixel) solid var(--text);
+      box-shadow: 4px 4px 0 var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .btn-secondary:hover {
+      box-shadow: 2px 2px 0 var(--text);
+      transform: translate(2px, 2px);
+    }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: var(--surface);
+      border-top: var(--pixel) solid var(--border);
+      border-bottom: var(--pixel) solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .trust-item span { color: var(--accent); font-weight: 700; }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 4rem 2rem; }
+    .section-inner { max-width: 1080px; margin: 0 auto; }
+    .section-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── WHAT IS OPENCLAW ── */
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    @media (max-width: 700px) { .what-grid { grid-template-columns: 1fr; } }
+    .what-text p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .what-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    @media (max-width: 500px) { .what-features { grid-template-columns: 1fr; } }
+    .feature-chip {
+      background: var(--code);
+      border: var(--pixel) solid var(--border);
+      padding: 0.55rem 0.85rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--text);
+    }
+    .feature-chip::before { content: '→ '; color: var(--accent); }
+
+    /* ── PRICING CARDS ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .pixel-box {
+      background: var(--surface);
+      border: var(--pixel) solid var(--border);
+      box-shadow: 4px 4px 0 var(--border);
+      padding: 2rem;
+      position: relative;
+    }
+    .pixel-box.featured {
+      border-color: var(--accent);
+      box-shadow: 4px 4px 0 var(--accent);
+    }
+    .badge {
+      position: absolute;
+      top: -14px;
+      left: 1.5rem;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.65rem;
+      border: var(--pixel) solid var(--text);
+    }
+    .plan-name {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.4rem;
+    }
+    .plan-price {
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .plan-price sub {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    .plan-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .plan-features {
+      list-style: none;
+      margin-bottom: 1.75rem;
+    }
+    .plan-features li {
+      font-size: 0.92rem;
+      padding: 0.35rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .plan-features li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .plan-features li.muted::before { content: '–'; color: var(--border); }
+    .plan-features li.muted { color: var(--muted); }
+
+    /* ── PROCESS ── */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+    .step {
+      background: var(--surface);
+      border: var(--pixel) solid var(--border);
+      box-shadow: 4px 4px 0 var(--border);
+      padding: 1.5rem;
+    }
+    .step-num {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      opacity: 0.3;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .step h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .step p {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* ── FAQ ── */
+    .faq-list { max-width: 720px; }
+    details {
+      border: var(--pixel) solid var(--border);
+      background: var(--surface);
+      margin-bottom: 0.75rem;
+      box-shadow: 3px 3px 0 var(--border);
+    }
+    summary {
+      font-weight: 600;
+      font-size: 0.98rem;
+      cursor: pointer;
+      padding: 1rem 1.25rem;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '+';
+      font-family: 'Fira Code', monospace;
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+    details[open] summary::after { content: '–'; }
+    details p {
+      padding: 0 1.25rem 1rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 0.75rem;
+    }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      background: var(--text);
+      color: #fff;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .cta-band h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      margin-bottom: 0.75rem;
+    }
+    .cta-band p {
+      color: #aaa;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+    .btn-white {
+      background: #fff;
+      color: var(--text);
+      padding: 0.85rem 2rem;
+      border: var(--pixel) solid #fff;
+      box-shadow: 4px 4px 0 var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .btn-white:hover {
+      box-shadow: 2px 2px 0 var(--accent);
+      transform: translate(2px, 2px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--surface);
+      border-top: var(--pixel) solid var(--border);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .footer-logo span { color: var(--accent); }
+    footer p {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+    }
+    footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+
+    /* ── MOBILE NAV ── */
+    .hamburger { display: none; cursor: pointer; background: none; border: none; padding: 0.5rem; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; }
+    .mobile-menu { display: none; }
+    @media (max-width: 640px) {
+      .hamburger { display: block; }
+      .nav-links { display: none; }
+      .nav-cta-desktop { display: none; }
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        background: var(--surface);
+        border-bottom: var(--pixel) solid var(--border);
+        padding: 1rem 2rem;
+        gap: 0.75rem;
+      }
+      .mobile-menu.open { display: flex; }
+      .mobile-menu a {
+        font-size: 1rem;
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        padding: 0.4rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+
+    /* alt bg sections */
+    .alt-bg { background: var(--surface); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://getmicroservices.com" class="nav-logo">Get<span>Micro</span>Services</a>
+  <ul class="nav-links">
+    <li><a href="#what">What is OpenClaw</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#process">How it Works</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="mailto:hello@getmicroservices.com" class="nav-cta nav-cta-desktop">Get Started</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#what">What is OpenClaw</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#process">How it Works</a>
+  <a href="#faq">FAQ</a>
+  <a href="mailto:hello@getmicroservices.com">→ Get Started</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">// done-for-you AI setup</div>
+  <h1>Get <span>OpenClaw</span> Running —<br>Without the Headaches</h1>
+  <p>We install, configure, and hand off a fully working OpenClaw AI assistant on your Mac or business server. You're live in 24 hours. No terminal required.</p>
+  <div class="hero-cta-group">
+    <a href="mailto:hello@getmicroservices.com?subject=OpenClaw%20Setup%20Enquiry" class="btn-primary">Get Your Setup — from $499</a>
+    <a href="#pricing" class="btn-secondary">See All Plans</a>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">⚡ <span>24h</span> turnaround</div>
+  <div class="trust-item">🔒 <span>100%</span> private — your data, your server</div>
+  <div class="trust-item">🛠 <span>Full</span> handoff + walkthrough</div>
+  <div class="trust-item">💬 <span>30-day</span> support included</div>
+</div>
+
+<!-- WHAT IS OPENCLAW -->
+<section id="what">
+  <div class="section-inner">
+    <div class="what-grid">
+      <div class="what-text">
+        <div class="section-label">// what is openclaw</div>
+        <h2 class="section-title">Your own AI assistant,<br>running on <em>your</em> infrastructure</h2>
+        <p>OpenClaw is an open-source AI assistant platform — like having a personal ChatGPT that lives on your machine, connects to your tools, and never sends your data anywhere you haven't approved.</p>
+        <p>It connects to Telegram, WhatsApp, Discord, email, calendar, GitHub, Shopify, and dozens more. It can run automations, manage workflows, answer questions, and actually get things done — not just chat.</p>
+        <p>Setting it up correctly takes hours of fiddling. We skip that part for you.</p>
+      </div>
+      <div class="what-features">
+        <div class="feature-chip">Telegram / WhatsApp bot</div>
+        <div class="feature-chip">Email & calendar access</div>
+        <div class="feature-chip">Shopify & CRM sync</div>
+        <div class="feature-chip">Custom automations</div>
+        <div class="feature-chip">Runs locally / VPS</div>
+        <div class="feature-chip">Your own AI model</div>
+        <div class="feature-chip">No SaaS fees</div>
+        <div class="feature-chip">Private by default</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="alt-bg">
+  <div class="section-inner">
+    <div class="section-label">// pricing</div>
+    <h2 class="section-title">One-time setup. Done properly.</h2>
+    <p class="section-sub">No subscriptions. No ongoing retainer unless you want one. Pay once, own it forever.</p>
+
+    <div class="pricing-grid">
+
+      <!-- MAC PERSONAL -->
+      <div class="pixel-box">
+        <div class="plan-name">Mac Personal</div>
+        <div class="plan-price">$499<sub> one-time</sub></div>
+        <p class="plan-desc">OpenClaw installed and configured on your personal Mac. Perfect for founders, freelancers, and power users.</p>
+        <ul class="plan-features">
+          <li>Remote setup via screen share</li>
+          <li>OpenClaw installed + configured</li>
+          <li>Connect 1 messaging channel (Telegram/WhatsApp/Discord)</li>
+          <li>Basic persona + memory setup</li>
+          <li>30-min handoff walkthrough</li>
+          <li>30 days email support</li>
+          <li class="muted">Custom integrations</li>
+          <li class="muted">VPS / server deployment</li>
+        </ul>
+        <a href="mailto:hello@getmicroservices.com?subject=Mac%20Personal%20Setup%20%E2%80%94%20%24499" class="btn-primary" style="width:100%;text-align:center;">Get Started</a>
+      </div>
+
+      <!-- POWER USER -->
+      <div class="pixel-box featured">
+        <div class="badge">★ Most Popular</div>
+        <div class="plan-name">Power User</div>
+        <div class="plan-price">$899<sub> one-time</sub></div>
+        <p class="plan-desc">Full setup on Mac or VPS, all channels connected, custom automations baked in. Ready to run your day from day one.</p>
+        <ul class="plan-features">
+          <li>Mac or VPS deployment</li>
+          <li>All messaging channels connected</li>
+          <li>Email + Google Calendar integration</li>
+          <li>2 custom automations or workflows</li>
+          <li>Custom persona, memory & identity</li>
+          <li>1-hour handoff + training call</li>
+          <li>60 days priority support</li>
+          <li class="muted">Team / multi-user setup</li>
+        </ul>
+        <a href="mailto:hello@getmicroservices.com?subject=Power%20User%20Setup%20%E2%80%94%20%24899" class="btn-primary" style="width:100%;text-align:center;">Get Started</a>
+      </div>
+
+      <!-- BUSINESS -->
+      <div class="pixel-box">
+        <div class="plan-name">Business</div>
+        <div class="plan-price">$1,999<sub> one-time</sub></div>
+        <p class="plan-desc">Full business deployment. Multiple users, custom integrations, Shopify/CRM/n8n wiring, and an AI assistant that actually runs your ops.</p>
+        <ul class="plan-features">
+          <li>VPS or on-premise deployment</li>
+          <li>Multi-user / team setup</li>
+          <li>Shopify, CRM, or ERP integration</li>
+          <li>n8n automation stack included</li>
+          <li>Up to 5 custom automations</li>
+          <li>Full documentation delivered</li>
+          <li>2-hour onboarding session</li>
+          <li>90 days priority support</li>
+        </ul>
+        <a href="mailto:hello@getmicroservices.com?subject=Business%20Setup%20Enquiry" class="btn-primary" style="width:100%;text-align:center;">Contact Us</a>
+      </div>
+
+    </div>
+
+    <p style="margin-top:1.5rem;font-size:0.85rem;color:var(--muted);font-family:'Fira Code',monospace;">
+      // Need something custom? <a href="mailto:hello@getmicroservices.com" style="color:var(--accent);">Email us</a> — we build bespoke setups for complex teams.
+    </p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="process">
+  <div class="section-inner">
+    <div class="section-label">// how it works</div>
+    <h2 class="section-title">Four steps. Live in 24 hours.</h2>
+    <p class="section-sub">You don't touch the terminal once. We handle everything, then hand it over.</p>
+
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Book your setup</h3>
+        <p>Send us an email. We'll reply within a few hours to confirm and schedule your session.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>15-min intake call</h3>
+        <p>We ask about your stack, tools, and what you want your AI to actually do. Takes 15 minutes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>We do the setup</h3>
+        <p>Remote screen share or server access. We install, configure, integrate, and test everything.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Handoff + walkthrough</h3>
+        <p>We walk you through what we built, what it can do, and how to use it. You're fully in control.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="alt-bg">
+  <div class="section-inner">
+    <div class="section-label">// faq</div>
+    <h2 class="section-title">Common questions</h2>
+    <div class="faq-list">
+
+      <details>
+        <summary>What exactly is OpenClaw?</summary>
+        <p>OpenClaw is an open-source AI assistant platform that you self-host. Think of it as your own private AI — like ChatGPT, but running on your machine, connected to your tools (Telegram, email, calendar, Shopify, etc.), with no data leaving your infrastructure without your say-so.</p>
+      </details>
+
+      <details>
+        <summary>Do I need a Mac to use this?</summary>
+        <p>No. OpenClaw runs on Mac, Linux, and Windows (via WSL). We can also deploy it on a VPS (like a DigitalOcean or Hetzner server) so it's always on, even when your laptop is closed. We'll recommend the best option for you during the intake call.</p>
+      </details>
+
+      <details>
+        <summary>What AI model does it use?</summary>
+        <p>OpenClaw works with any major AI provider — Claude (Anthropic), GPT-4o (OpenAI), Gemini, or local models via Ollama. You bring your own API key. We'll help you get set up with whichever you prefer. The model cost is separate from our setup fee.</p>
+      </details>
+
+      <details>
+        <summary>Is my data private?</summary>
+        <p>Yes. OpenClaw runs on your own machine or server. Your conversations, files, and integrations stay where you put them. The only external calls are to the AI model provider you choose (e.g. OpenAI or Anthropic) — same as when you use ChatGPT directly.</p>
+      </details>
+
+      <details>
+        <summary>What if something breaks after setup?</summary>
+        <p>Every plan includes at least 30 days of support. If something breaks or stops working within that window, we'll fix it. After that, ongoing support retainers are available if you want one.</p>
+      </details>
+
+      <details>
+        <summary>How is payment handled?</summary>
+        <p>We invoice via Stripe. Payment is due before work begins. We'll send a link when you book.</p>
+      </details>
+
+      <details>
+        <summary>Can you set it up for a team?</summary>
+        <p>Yes — that's the Business plan. We can configure multi-user setups, connect it to shared tools (Slack, CRM, Shopify), and build out automations your whole team benefits from.</p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>Ready to have your own AI assistant?</h2>
+  <p>Drop us an email. We'll get back to you within a few hours.</p>
+  <a href="mailto:hello@getmicroservices.com?subject=OpenClaw%20Setup%20Enquiry" class="btn-white">Start Your Setup →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="https://getmicroservices.com" class="footer-logo">Get<span>Micro</span>Services</a>
+  <p>© 2026 GetMicroservices. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="https://getmicroservices.com">Home</a>
+    <a href="https://getmicroservices.com/blog">Blog</a>
+    <a href="mailto:hello@getmicroservices.com">Contact</a>
+  </div>
+</footer>
+
+<script>
+  function toggleMobileMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMobileMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+  document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', closeMobileMenu));
+</script>
+
+</body>
+</html>
