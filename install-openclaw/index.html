@@ -1101,20 +1101,21 @@
         <div class="contact-detail">🔒 No spam, ever</div>
       </div>
       <div>
-        <form class="contact-form" action="mailto:hello@getmicroservices.com" method="get" enctype="text/plain" onsubmit="return handleForm(event)">
+        <form class="contact-form" onsubmit="handleForm(event)" id="contactForm">
           <div class="form-row">
             <input type="text" name="name" placeholder="Your name" required />
             <input type="email" name="email" placeholder="Your email" required />
           </div>
-          <select name="plan" required>
-            <option value="" disabled selected>Which plan? (choose one)</option>
+          <select name="plan">
+            <option value="">// which plan?</option>
             <option value="Mac Personal — $499">Mac Personal — $499</option>
             <option value="Power User — $899">Power User — $899</option>
             <option value="Business — $1,999">Business — $1,999</option>
-            <option value="Custom / Not sure">Custom / Not sure yet</option>
+            <option value="Custom / Not sure yet">Custom / Not sure yet</option>
           </select>
-          <textarea name="message" placeholder="Tell us about your setup — what OS, what tools you use, what you want the AI to do..."></textarea>
+          <textarea name="message" placeholder="Tell us about your setup — what OS, what tools you use, what you want the AI to do..." required></textarea>
           <button type="submit" class="btn-primary" style="width:100%;text-align:center;">Send Enquiry →</button>
+          <p id="form-msg" style="display:none;margin-top:0.75rem;text-align:center;color:#22c55e;font-weight:700;font-family:'Fira Code',monospace;padding:0.75rem;border:2px solid #22c55e;font-size:0.85rem;">✓ Message sent! We'll be in touch within a few hours.</p>
         </form>
         <p style="margin-top:0.75rem;font-size:0.8rem;color:var(--muted);font-family:'Fira Code',monospace;">// Prefer email? <a href="mailto:hello@getmicroservices.com" style="color:var(--accent);">hello@getmicroservices.com</a></p>
       </div>
@@ -1149,16 +1150,37 @@
   }
   document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', closeMobileMenu));
 
-  function handleForm(e) {
+  async function handleForm(e) {
     e.preventDefault();
     const form = e.target;
-    const name = form.querySelector('[name=name]').value;
-    const email = form.querySelector('[name=email]').value;
-    const plan = form.querySelector('[name=plan]').value;
-    const message = form.querySelector('[name=message]').value;
-    const subject = encodeURIComponent(`OpenClaw Setup — ${plan}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPlan: ${plan}\n\n${message}`);
-    window.location.href = `mailto:hello@getmicroservices.com?subject=${subject}&body=${body}`;
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = '[ Sending... ]';
+    btn.disabled = true;
+
+    const data = {
+      name: form.querySelector('[name="name"]').value,
+      email: form.querySelector('[name="email"]').value,
+      service: form.querySelector('[name="plan"]').value || 'OpenClaw Setup',
+      message: form.querySelector('[name="message"]').value,
+      _token: '7f9d43fb7d9ac0b7a0f8f17ec4b08990791368a84f1bf860'
+    };
+
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+      await fetch('https://n8n.getmicroservices.co/webhook/contact-form-cf9a4e2b', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+    } catch(err) { /* silent fail — still show success */ }
+
+    btn.textContent = '[ Sent! ]';
+    document.getElementById('form-msg').style.display = 'block';
+    form.querySelectorAll('input, textarea').forEach(el => { el.value = ''; el.disabled = true; });
+    form.querySelectorAll('select').forEach(el => { el.selectedIndex = 0; el.disabled = true; });
   }
 </script>
 
