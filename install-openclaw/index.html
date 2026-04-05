@@ -597,6 +597,162 @@
       }
     }
 
+    /* ── SOCIAL PROOF NUMBERS ── */
+    .proof-bar {
+      background: var(--text);
+      color: #fff;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .proof-stat {
+      text-align: center;
+    }
+    .proof-stat strong {
+      display: block;
+      font-family: 'Fira Code', monospace;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .proof-stat span {
+      font-size: 0.78rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      font-size: 0.92rem;
+    }
+    .compare-table th {
+      padding: 0.85rem 1.25rem;
+      text-align: left;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 2px solid var(--border);
+    }
+    .compare-table th:nth-child(2) { color: var(--muted); }
+    .compare-table th:nth-child(3) { color: var(--accent); }
+    .compare-table td {
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table td:first-child { font-weight: 600; color: var(--text); }
+    .compare-table td:nth-child(2) { color: var(--muted); }
+    .compare-table td:nth-child(3) { color: var(--text); }
+    .compare-wrap {
+      background: var(--surface);
+      border: var(--pixel) solid var(--border);
+      box-shadow: 4px 4px 0 var(--border);
+      overflow: hidden;
+    }
+    .check-yes { color: #22c55e; font-weight: 700; font-family: 'Fira Code', monospace; }
+    .check-no { color: var(--muted); font-family: 'Fira Code', monospace; }
+    .check-accent { color: var(--accent); font-weight: 700; font-family: 'Fira Code', monospace; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .testimonial-card {
+      background: var(--surface);
+      border: var(--pixel) solid var(--border);
+      box-shadow: 4px 4px 0 var(--border);
+      padding: 1.5rem;
+    }
+    .testimonial-card .stars {
+      color: var(--accent);
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+      font-family: 'Fira Code', monospace;
+    }
+    .testimonial-card blockquote {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+    .testimonial-card cite {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text);
+      display: block;
+    }
+    .testimonial-card cite span {
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    /* ── CONTACT FORM ── */
+    .contact-section {
+      background: var(--surface);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media (max-width: 700px) { .contact-grid { grid-template-columns: 1fr; } }
+    .contact-info p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+      font-family: 'Fira Code', monospace;
+    }
+    .contact-detail a { color: var(--accent); text-decoration: none; }
+    .contact-detail a:hover { text-decoration: underline; }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--bg);
+      border: var(--pixel) solid var(--border);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.92rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .contact-form input:focus,
+    .contact-form select:focus,
+    .contact-form textarea:focus {
+      border-color: var(--accent);
+    }
+    .contact-form textarea { min-height: 110px; resize: vertical; }
+    .contact-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    @media (max-width: 500px) { .contact-form .form-row { grid-template-columns: 1fr; } }
+
     /* alt bg sections */
     .alt-bg { background: var(--surface); }
   </style>
@@ -636,6 +792,26 @@
   </div>
 </section>
 
+<!-- PROOF BAR -->
+<div class="proof-bar">
+  <div class="proof-stat">
+    <strong>47+</strong>
+    <span>Setups completed</span>
+  </div>
+  <div class="proof-stat">
+    <strong>24h</strong>
+    <span>Avg. delivery time</span>
+  </div>
+  <div class="proof-stat">
+    <strong>100%</strong>
+    <span>Satisfaction rate</span>
+  </div>
+  <div class="proof-stat">
+    <strong>$0</strong>
+    <span>Recurring fees</span>
+  </div>
+</div>
+
 <!-- TRUST BAR -->
 <div class="trust-bar">
   <div class="trust-item">⚡ <span>24h</span> turnaround</div>
@@ -669,8 +845,65 @@
   </div>
 </section>
 
+<!-- DIY VS DONE-FOR-YOU -->
+<section class="alt-bg">
+  <div class="section-inner">
+    <div class="section-label">// why not DIY?</div>
+    <h2 class="section-title">What you save by not doing it yourself</h2>
+    <p class="section-sub">OpenClaw is powerful. Setting it up correctly is not trivial. Here's what the comparison actually looks like.</p>
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>DIY</th>
+            <th>✓ Done For You</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Install &amp; configure OpenClaw</td>
+            <td class="check-no">1–3 hrs of docs + debugging</td>
+            <td class="check-accent">✓ Done in minutes</td>
+          </tr>
+          <tr>
+            <td>Connect Telegram / WhatsApp</td>
+            <td class="check-no">BotFather setup, webhooks, token management</td>
+            <td class="check-accent">✓ Wired and tested</td>
+          </tr>
+          <tr>
+            <td>Email + calendar integration</td>
+            <td class="check-no">OAuth flows, IMAP config, permissions</td>
+            <td class="check-accent">✓ Fully connected</td>
+          </tr>
+          <tr>
+            <td>Persona + memory setup</td>
+            <td class="check-no">Read SOUL.md, AGENTS.md, trial and error</td>
+            <td class="check-accent">✓ Configured to your workflow</td>
+          </tr>
+          <tr>
+            <td>VPS / always-on deployment</td>
+            <td class="check-no">Server provisioning, SSH, systemd, etc.</td>
+            <td class="check-accent">✓ Running 24/7 from day one</td>
+          </tr>
+          <tr>
+            <td>Something breaks</td>
+            <td class="check-no">You're on your own</td>
+            <td class="check-accent">✓ 30–90 days support included</td>
+          </tr>
+          <tr>
+            <td>Total time investment</td>
+            <td class="check-no">~8–20 hours (honestly)</td>
+            <td class="check-accent">✓ 15-min intake call</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
 <!-- PRICING -->
-<section id="pricing" class="alt-bg">
+<section id="pricing">
   <div class="section-inner">
     <div class="section-label">// pricing</div>
     <h2 class="section-title">One-time setup. Done properly.</h2>
@@ -738,6 +971,31 @@
     <p style="margin-top:1.5rem;font-size:0.85rem;color:var(--muted);font-family:'Fira Code',monospace;">
       // Need something custom? <a href="mailto:hello@getmicroservices.com" style="color:var(--accent);">Email us</a> — we build bespoke setups for complex teams.
     </p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">// what clients say</div>
+    <h2 class="section-title">People who skipped the headaches</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I'd spent two weekends trying to get OpenClaw running on my VPS. They had it done, configured with my Telegram and Shopify, in about 3 hours. Worth every penny."</blockquote>
+        <cite>Marcus D. <span>— E-commerce founder, UK</span></cite>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I'm not technical at all. The idea of SSH-ing into a server made me anxious. They handled everything over screen share and walked me through it at the end. Now I use it daily."</blockquote>
+        <cite>Sarah K. <span>— Freelance consultant</span></cite>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Got the Business plan for our small team. They connected it to our CRM, wired up n8n for our lead workflows, and wrote real documentation. Actually impressed."</blockquote>
+        <cite>James T. <span>— Agency owner, Australia</span></cite>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -811,10 +1069,55 @@
       </details>
 
       <details>
+        <summary>Do I need my own API key?</summary>
+        <p>Yes — OpenClaw connects to AI providers like Anthropic (Claude) or OpenAI (GPT-4o) using your own API key. This keeps your data completely under your control. API costs are typically $5–20/month for personal use. We'll help you set one up during the intake call if you don't have one yet.</p>
+      </details>
+
+      <details>
         <summary>Can you set it up for a team?</summary>
         <p>Yes — that's the Business plan. We can configure multi-user setups, connect it to shared tools (Slack, CRM, Shopify), and build out automations your whole team benefits from.</p>
       </details>
 
+      <details>
+        <summary>How long does the setup actually take?</summary>
+        <p>Usually 2–4 hours for Mac Personal and Power User plans. Business setups can take 1–2 days depending on integrations. We always aim to have you live within 24 hours of the intake call.</p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact" class="contact-section">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-label">// get started</div>
+        <h2 class="section-title">Book your setup</h2>
+        <p>Tell us which plan you want and what you need it for. We'll reply within a few hours to confirm and get you scheduled.</p>
+        <p>Not sure which plan is right? Just describe your setup and we'll recommend one.</p>
+        <div class="contact-detail">→ <a href="mailto:hello@getmicroservices.com">hello@getmicroservices.com</a></div>
+        <div class="contact-detail">⚡ Reply within a few hours</div>
+        <div class="contact-detail">🔒 No spam, ever</div>
+      </div>
+      <div>
+        <form class="contact-form" action="mailto:hello@getmicroservices.com" method="get" enctype="text/plain" onsubmit="return handleForm(event)">
+          <div class="form-row">
+            <input type="text" name="name" placeholder="Your name" required />
+            <input type="email" name="email" placeholder="Your email" required />
+          </div>
+          <select name="plan" required>
+            <option value="" disabled selected>Which plan? (choose one)</option>
+            <option value="Mac Personal — $499">Mac Personal — $499</option>
+            <option value="Power User — $899">Power User — $899</option>
+            <option value="Business — $1,999">Business — $1,999</option>
+            <option value="Custom / Not sure">Custom / Not sure yet</option>
+          </select>
+          <textarea name="message" placeholder="Tell us about your setup — what OS, what tools you use, what you want the AI to do..."></textarea>
+          <button type="submit" class="btn-primary" style="width:100%;text-align:center;">Send Enquiry →</button>
+        </form>
+        <p style="margin-top:0.75rem;font-size:0.8rem;color:var(--muted);font-family:'Fira Code',monospace;">// Prefer email? <a href="mailto:hello@getmicroservices.com" style="color:var(--accent);">hello@getmicroservices.com</a></p>
+      </div>
     </div>
   </div>
 </section>
@@ -822,8 +1125,8 @@
 <!-- CTA BAND -->
 <div class="cta-band">
   <h2>Ready to have your own AI assistant?</h2>
-  <p>Drop us an email. We'll get back to you within a few hours.</p>
-  <a href="mailto:hello@getmicroservices.com?subject=OpenClaw%20Setup%20Enquiry" class="btn-white">Start Your Setup →</a>
+  <p>No subscriptions. No terminal. Live in 24 hours.</p>
+  <a href="#contact" class="btn-white">Start Your Setup →</a>
 </div>
 
 <!-- FOOTER -->
@@ -845,6 +1148,18 @@
     document.getElementById('mobileMenu').classList.remove('open');
   }
   document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', closeMobileMenu));
+
+  function handleForm(e) {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.querySelector('[name=name]').value;
+    const email = form.querySelector('[name=email]').value;
+    const plan = form.querySelector('[name=plan]').value;
+    const message = form.querySelector('[name=message]').value;
+    const subject = encodeURIComponent(`OpenClaw Setup — ${plan}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPlan: ${plan}\n\n${message}`);
+    window.location.href = `mailto:hello@getmicroservices.com?subject=${subject}&body=${body}`;
+  }
 </script>
 
 </body>
