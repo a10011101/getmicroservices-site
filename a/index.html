@@ -606,10 +606,10 @@
 
     <form class="compose-box" id="contactForm" onsubmit="sendMsg(event)">
       <div class="compose-fields">
-        <input class="compose-field" type="text" name="name" placeholder="your name" required/>
+        <input class="compose-field" type="text" name="name" placeholder="your name" required pattern="[A-Za-z\s\-']+" title="Letters, spaces, hyphens and apostrophes only" oninput="this.value=this.value.replace(/[^A-Za-z\s\-']/g,'')">
         <input class="compose-field" type="email" name="email" placeholder="your email" required/>
       </div>
-      <textarea class="compose-textarea" name="message" placeholder="what do you want to automate?" rows="4" required></textarea>
+      <textarea class="compose-textarea" name="message" placeholder="what do you want to automate?" rows="4" required maxlength="300" oninput="this.value=this.value.replace(/[<>\'\";\`\\\/]/g,'')"></textarea>
       <div class="compose-footer">
         <span class="compose-hint" id="composeHint">↵ send</span>
         <button class="compose-send" type="submit" id="sendBtn">send →</button>

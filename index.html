@@ -897,7 +897,7 @@
     <p class="section-sub">Tell us what you need. We'll get back to you within a few hours.</p>
   </div>
   <form class="contact-form" onsubmit="handleForm(event)" id="contactForm">
-    <input type="text" name="name" placeholder="> your_name" required />
+    <input type="text" name="name" placeholder="> your_name" required pattern="[A-Za-z\s\-']+" title="Letters, spaces, hyphens and apostrophes only" oninput="this.value=this.value.replace(/[^A-Za-z\s\-']/g,'')">
     <input type="email" name="email" placeholder="> your_email" required />
     <select name="service">
       <option value="">// what do you need?</option>
@@ -908,7 +908,7 @@
       <option>MVP / Prototype</option>
       <option>Something else</option>
     </select>
-    <textarea rows="4" name="message" placeholder="> describe_your_project..." required></textarea>
+    <textarea rows="4" name="message" placeholder="> describe_your_project..." required maxlength="300" oninput="this.value=this.value.replace(/[<>\'\";\`\\\/]/g,'')"></textarea>
     <button type="submit">[ Send Message → ]</button>
     <p id="form-msg">✓ Message sent! We'll be in touch within a few hours.</p>
   </form>
