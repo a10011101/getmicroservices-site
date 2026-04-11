@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/saas-onboarding-automation"/>
+<title>How We Cut SaaS Trial Churn by 34% With Automated Onboarding — getmicroservices</title>
+<meta name="description" content="A solo-founder SaaS was losing 60% of trial users in week one. Here's the behaviour-driven onboarding sequence we built and what it changed."/>
+<style>
+  * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  input, textarea { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a; --bg2: #111; --bg3: #161616;
+    --border: #222; --fg: #e8e8e8; --dim: #666;
+    --accent: #00ff88; --accent2: #0088ff;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--sans); line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px; border-bottom: 1px solid var(--border); background: rgba(10,10,10,.97);
+    transition: border-color .3s, background .3s;
+  }
+  nav.scrolled { background: rgba(10,10,10,.95); border-color: var(--border); backdrop-filter: blur(12px); }
+  .nav-logo { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); letter-spacing: -.5px; }
+  .nav-logo span { color: var(--dim); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--dim); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-cta {
+    font-family: var(--mono); font-size: 12px; padding: 8px 18px;
+    border: 1px solid var(--accent); color: var(--accent);
+    background: transparent; cursor: pointer; transition: all .2s; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--bg); }
+
+  /* ARTICLE */
+  .article { max-width: 680px; margin: 0 auto; padding: 140px 24px 100px; }
+
+  .back-link {
+    font-family: var(--mono); font-size: 12px; color: var(--dim);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: 48px; transition: color .2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .post-tag {
+    display: inline-block; font-family: var(--mono); font-size: 10px;
+    color: var(--accent); border: 1px solid rgba(0,255,136,.3);
+    border-radius: 3px; padding: 3px 10px; margin-bottom: 20px;
+  }
+  .post-meta { font-family: var(--mono); font-size: 12px; color: var(--dim); margin-bottom: 32px; display: flex; gap: 20px; }
+
+  h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; margin-bottom: 12px; }
+  .post-lead { font-size: 18px; color: var(--dim); line-height: 1.75; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+
+  h2 { font-size: 22px; font-weight: 700; letter-spacing: -.5px; margin: 40px 0 16px; }
+  p { color: var(--dim); font-size: 16px; line-height: 1.8; margin-bottom: 20px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--fg); font-weight: 600; }
+  em { color: var(--fg); font-style: italic; }
+
+  ul.body-list { list-style: none; margin: 0 0 24px 0; }
+  ul.body-list li { font-size: 15px; color: var(--dim); padding: 6px 0 6px 20px; position: relative; line-height: 1.7; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  ul.body-list li:last-child { border-bottom: none; }
+  ul.body-list li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 700; font-family: var(--mono); }
+
+  /* FLOW DIAGRAM */
+  .flow-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 28px; margin: 32px 0;
+  }
+  .flow-label {
+    font-family: var(--mono); font-size: 11px; color: var(--dim);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+  }
+  .flow-label::before { content: ''; display: inline-block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  .flow-nodes {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 0;
+    overflow-x: auto; padding-bottom: 4px;
+  }
+  .flow-node { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; }
+  .node-box {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px 16px; font-family: var(--mono); font-size: 12px;
+    display: flex; align-items: center; gap: 8px; white-space: nowrap;
+  }
+  .node-icon { font-size: 16px; }
+  .node-name { color: var(--fg); }
+  .node-type { font-size: 10px; color: var(--dim); }
+  .flow-arrow { font-family: var(--mono); color: var(--border); padding: 0 8px; font-size: 18px; flex-shrink: 0; align-self: center; padding-bottom: 20px; }
+  .flow-result {
+    margin-top: 20px; padding: 12px 16px;
+    background: rgba(0,255,136,.04); border: 1px solid rgba(0,255,136,.15);
+    border-radius: 6px; font-family: var(--mono); font-size: 12px; color: var(--accent);
+  }
+
+  /* RESULT BOX */
+  .result-box {
+    background: var(--bg2); border: 1px solid rgba(0,255,136,.2);
+    border-radius: 8px; padding: 28px; margin: 32px 0;
+  }
+  .result-box .result-title { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .result-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; font-size: 15px; color: var(--dim); }
+  .result-item::before { content: '→'; color: var(--accent); font-family: var(--mono); flex-shrink: 0; }
+  .result-item:last-child { margin-bottom: 0; }
+
+  /* CTA */
+  .post-cta {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 40px; text-align: center; margin-top: 64px;
+  }
+  .post-cta p { font-size: 15px; color: var(--dim); max-width: 380px; margin: 0 auto 24px; }
+  .btn-cta {
+    font-family: var(--mono); font-size: 13px; padding: 12px 28px;
+    background: var(--accent); color: var(--bg); border: none;
+    cursor: pointer; border-radius: 4px; text-decoration: none;
+    display: inline-block; transition: opacity .2s;
+  }
+  .btn-cta:hover { opacity: .85; }
+
+  .full-divider { border: none; border-top: 1px solid var(--border); }
+  footer {
+    border-top: 1px solid var(--border); padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .footer-logo { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .footer-right { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; background: rgba(10,10,10,.97) !important; border-color: var(--border) !important; }
+    .nav-logo { font-size: 16px; }
+    .nav-cta { display: none; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    footer { padding: 32px 20px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: 1px solid var(--accent);
+    padding: 10px 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 4px;
+  }
+  .hamburger-btn span { display: block; width: 22px; height: 2px; background: #ffffff; transition: transform 0.2s, opacity 0.2s; }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #0a0a0a;
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: var(--mono); font-size: 20px; color: var(--fg); text-decoration: none; letter-spacing: -0.5px; }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-close { position: absolute; top: 24px; right: 24px; font-family: var(--mono); font-size: 24px; color: var(--dim); background: none; border: none; cursor: pointer; }
+  @media (max-width: 768px) {
+    .hamburger-btn { display: flex; }
+    .nav-links { display: none !important; }
+    .nav-cta { display: none; }
+    nav { background: rgba(10,10,10,.97) !important; border-color: var(--border) !important; padding: 16px 20px; }
+    .nav-logo { font-size: 16px !important; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <meta property="og:title" content="How We Cut SaaS Trial Churn by 34% With Automated Onboarding — getmicroservices"/>
+  <meta property="og:description" content="A solo-founder SaaS was losing 60% of trial users in week one. Here's the behaviour-driven onboarding sequence we built and what it changed."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/a/blog/saas-onboarding-automation"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:title" content="How We Cut SaaS Trial Churn by 34% With Automated Onboarding — getmicroservices"/>
+  <meta name="twitter:description" content="A solo-founder SaaS was losing 60% of trial users in week one. Here's the behaviour-driven onboarding sequence we built and what it changed."/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How We Cut SaaS Trial Churn by 34% With Automated Onboarding",
+  "description": "A solo-founder SaaS was losing 60% of trial users in week one. Here's the behaviour-driven onboarding sequence we built and what it changed.",
+  "datePublished": "2026-04-11",
+  "publisher": {
+    "@type": "Organization",
+    "name": "GetMicroservices"
+  },
+  "url": "https://getmicroservices.com/a/blog/saas-onboarding-automation"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://getmicroservices.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://getmicroservices.com/a/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "How We Cut SaaS Trial Churn by 34% With Automated Onboarding",
+      "item": "https://getmicroservices.com/a/blog/saas-onboarding-automation"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/a/" style="text-decoration:none;" class="nav-logo">get<span>micro</span>services<span>.com</span></a>
+  <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="/a/">home</a></li>
+    <li><a href="/a/#flows">work</a></li>
+    <li><a href="/a/services/business-automation">services</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/#contact">contact</a></li>
+    <li><a href="/a/blog/" class="active">blog</a></li>
+    <li><a href="/a/about">about</a></li>
+  </ul>
+  <a href="/a/#contact" class="nav-cta">[ start project ]</a>
+</nav>
+
+<article class="article">
+
+  <a href="/a/blog/" class="back-link">← field notes</a>
+
+  <div class="post-tag">case study</div>
+  <h1>How We Cut SaaS Trial Churn by 34% With Automated Onboarding</h1>
+  <div class="post-meta">
+    <span>Apr 11, 2026</span>
+    <span>6 min read</span>
+  </div>
+  <p class="post-lead">A solo-founder SaaS was losing 60% of trial signups in the first five days. The product wasn't the problem. The silence after signup was. Here's what we built and what changed.</p>
+
+  <h2>The problem</h2>
+  <p>Callum builds a project management tool for small agencies. Good product — paid user retention was solid. But trial conversions were stuck at 12%, and almost every drop-off happened before day five.</p>
+  <p>The pattern showed up clearly in the data: users signed up, opened the welcome email, logged in once or twice, then vanished. When Callum emailed churned trialists to ask why, the answers were consistent: <strong>"I didn't know where to start."</strong> One user put it more bluntly: "I meant to explore it but I forgot about it."</p>
+  <p>His onboarding was a single welcome email at signup, then nothing until a "trial ends in 3 days" reminder. No nudges, no guidance, no acknowledgment that a real human had just signed up.</p>
+  <p>He knew it needed fixing. He didn't have time to fix it manually — he was the only person in the company.</p>
+
+  <h2>The milestone that mattered</h2>
+  <p>Before building anything, we dug into Callum's analytics to find the activation point. It turned out users who linked a client project <em>and</em> assigned at least one task converted at 4× the baseline rate. Callum called it "the connected moment."</p>
+  <p>Only 29% of trial users were reaching it. The job of the onboarding sequence was simple: get more users to that milestone, faster, without Callum doing anything manually.</p>
+  <p>We designed a seven-touch behaviour-driven sequence:</p>
+  <ul class="body-list">
+    <li>Immediate welcome — single CTA, no feature dump</li>
+    <li>Day 1: if no project created, send a "here's how to start in 2 minutes" nudge</li>
+    <li>Day 3: if project exists but no tasks, send a task-creation tip</li>
+    <li>Day 3 (alternate): if completely inactive, send a personal-feel "are you stuck?" email</li>
+    <li>Day 6: midpoint recap + agency-specific feature spotlight</li>
+    <li>Day 12: trial-ending conversion push with limited-time offer</li>
+    <li>Day 16: win-back email for non-converters</li>
+  </ul>
+  <p>Every branch checked what the user had actually done before sending. No one got the same email if they were in different places in their journey.</p>
+
+  <h2>What we built</h2>
+
+  <div class="flow-card">
+    <div class="flow-label">saas onboarding automation — n8n + postmark + stripe</div>
+    <div class="flow-nodes">
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🆕</span><div><div class="node-name">New Signup</div><div class="node-type">Webhook trigger</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">📧</span><div><div class="node-name">Welcome Email</div><div class="node-type">Postmark</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">⏳</span><div><div class="node-name">Wait + Check</div><div class="node-type">Product API poll</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🔀</span><div><div class="node-name">Branch</div><div class="node-type">Active / Stuck / Cold</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🎯</span><div><div class="node-name">Targeted Nudge</div><div class="node-type">Email + Slack alert</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">💳</span><div><div class="node-name">Convert / Win-back</div><div class="node-type">Stripe checkout link</div></div></div>
+      </div>
+    </div>
+    <div class="flow-result">↳ Every trial user gets the right email at the right moment. Callum gets a Slack ping when someone hits the connected moment.</div>
+  </div>
+
+  <p>Stack: <strong>n8n</strong> as the workflow engine, <strong>Postmark</strong> for email delivery, Callum's product API for activity checks, <strong>Stripe</strong> payment links embedded directly in conversion emails. Everything runs on a $6/month VPS.</p>
+  <p>We also built a lightweight Notion table — populated by n8n — showing each active trial user's current stage and whether they'd hit the activation milestone. Updates itself. No manual work.</p>
+  <p><strong>Build time: 4 days.</strong> The n8n wiring was one day. The rest was iterating on email copy with Callum and testing the activity-check logic against his staging environment.</p>
+
+  <h2>A note on the emails</h2>
+  <p>The welcome email we replaced was 400 words of feature bullets with a header image and three CTAs. We cut it to 90 words, plain text, one link. The "are you stuck?" email at day 3 was written to read like Callum had personally noticed the user hadn't logged in — because that framing converts at roughly 2× the rate of an obviously automated newsletter.</p>
+  <p>Open rates went from 22% to 41% in the first two weeks. Most of that was the shift to plain text and better subject lines. Automation let us deliver the right message; copy made people actually read it.</p>
+
+  <h2>The result</h2>
+
+  <div class="result-box">
+    <div class="result-title">60-day post-launch cohort</div>
+    <div class="result-item">Trial-to-paid conversion: 12% → 18.3% — a 53% relative lift</div>
+    <div class="result-item">Early churn (days 1–5) down 34%</div>
+    <div class="result-item">"Connected moment" hit rate: 29% → 61% of trial users</div>
+    <div class="result-item">Callum's onboarding time: ~4 hrs/week → ~20 min/week</div>
+    <div class="result-item">Win-back sequence recovered 11% of non-converters at day 14</div>
+  </div>
+
+  <p>The economics compound. A 6-point conversion lift isn't just more customers this month — it's more customers every month, at zero marginal cost, as long as the sequence runs. The automation paid for itself in under 18 days based on the additional MRR from the first cohort.</p>
+  <p>Callum at the 30-day mark: <em>"I've been getting Slack pings all week when users hit the connected moment. I used to not even notice if someone was actually using the product. Now I see it happen in real time."</em></p>
+
+  <h2>What actually made it work</h2>
+  <p>Not the automation. The automation was the mechanism. What made it work was finding the one milestone that predicted conversion, then designing every touchpoint around getting users there faster.</p>
+  <p>Most founders default to "send more emails." The real move is send fewer, better-timed emails to the right people based on what they've actually done. Automation is what makes that feasible without a $500/month CRM suite and a dedicated success team.</p>
+  <p>If you're running a SaaS trial and your onboarding is still a welcome email followed by silence, this is probably your highest-ROI automation.</p>
+
+  <div class="post-cta">
+    <p>Running a SaaS trial? We'll map your onboarding gaps and tell you exactly what to build.</p>
+    <a href="/a/#contact" class="btn-cta">[ let's talk ]</a>
+  </div>
+
+</article>
+
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
+});
+</script>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="/a/">home</a>
+  <a href="/a/#flows">work</a>
+  <a href="/a/#pricing">pricing</a>
+  <a href="/a/blog/">blog</a>
+  <a href="/a/about">about</a>
+</div>
+
+<script>
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeMobileMenu();
+});
+</script>
+</body>
+</html>
