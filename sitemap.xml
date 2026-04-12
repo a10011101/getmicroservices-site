@@ -151,6 +151,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://getmicroservices.com/blog/ai-agents-small-business/</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://getmicroservices.com/a/blog/3-tool-stack-client-reporting-process</loc>
     <lastmod>2026-04-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -261,6 +267,12 @@
   <url>
     <loc>https://getmicroservices.com/a/blog/zapier-alternative-for-agencies</loc>
     <lastmod>2026-04-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://getmicroservices.com/a/blog/ai-agents-small-business/</loc>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
