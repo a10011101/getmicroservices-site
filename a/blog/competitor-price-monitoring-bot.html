@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/competitor-price-monitoring-bot"/>
+<title>Competitor Price Monitoring Bot That Runs Every Morning — getmicroservices</title>
+<meta name="description" content="An online retailer was spending 2 hours a day manually checking competitor prices. We built an n8n pipeline that scrapes, compares, and delivers a Slack digest before the trading day starts."/>
+<style>
+  * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  input, textarea { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a; --bg2: #111; --bg3: #161616;
+    --border: #222; --fg: #e8e8e8; --dim: #666;
+    --accent: #00ff88; --accent2: #0088ff;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--sans); line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px; border-bottom: 1px solid var(--border); background: rgba(10,10,10,.97);
+    transition: border-color .3s, background .3s;
+  }
+  nav.scrolled { background: rgba(10,10,10,.95); border-color: var(--border); backdrop-filter: blur(12px); }
+  .nav-logo { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); letter-spacing: -.5px; }
+  .nav-logo span { color: var(--dim); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--dim); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-cta {
+    font-family: var(--mono); font-size: 12px; padding: 8px 18px;
+    border: 1px solid var(--accent); color: var(--accent);
+    background: transparent; cursor: pointer; transition: all .2s; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--bg); }
+
+  /* ARTICLE */
+  .article { max-width: 680px; margin: 0 auto; padding: 140px 24px 100px; }
+
+  .back-link {
+    font-family: var(--mono); font-size: 12px; color: var(--dim);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: 48px; transition: color .2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .post-tag {
+    display: inline-block; font-family: var(--mono); font-size: 10px;
+    color: var(--accent); border: 1px solid rgba(0,255,136,.3);
+    border-radius: 3px; padding: 3px 10px; margin-bottom: 20px;
+  }
+  .post-meta { font-family: var(--mono); font-size: 12px; color: var(--dim); margin-bottom: 32px; display: flex; gap: 20px; }
+
+  h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.15; margin-bottom: 12px; }
+  .post-lead { font-size: 18px; color: var(--dim); line-height: 1.75; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+
+  h2 { font-size: 22px; font-weight: 700; letter-spacing: -.5px; margin: 40px 0 16px; }
+  p { color: var(--dim); font-size: 16px; line-height: 1.8; margin-bottom: 20px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--fg); font-weight: 600; }
+  ul { list-style: none; margin: 0 0 20px 0; }
+  ul li { color: var(--dim); font-size: 15px; padding: 5px 0 5px 20px; position: relative; line-height: 1.7; }
+  ul li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 700; font-family: var(--mono); }
+  ul li strong { color: var(--fg); }
+
+  /* FLOW DIAGRAM */
+  .flow-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 28px; margin: 32px 0;
+  }
+  .flow-label {
+    font-family: var(--mono); font-size: 11px; color: var(--dim);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+  }
+  .flow-label::before { content: ''; display: inline-block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  .flow-nodes {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 0;
+    overflow-x: auto; padding-bottom: 4px;
+  }
+  .flow-node { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; }
+  .node-box {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px 16px; font-family: var(--mono); font-size: 12px;
+    display: flex; align-items: center; gap: 8px; white-space: nowrap;
+  }
+  .node-icon { font-size: 16px; }
+  .node-name { color: var(--fg); }
+  .node-type { font-size: 10px; color: var(--dim); }
+  .flow-arrow { font-family: var(--mono); color: var(--border); padding: 0 8px; font-size: 18px; flex-shrink: 0; align-self: center; padding-bottom: 20px; }
+  .flow-result {
+    margin-top: 20px; padding: 12px 16px;
+    background: rgba(0,255,136,.04); border: 1px solid rgba(0,255,136,.15);
+    border-radius: 6px; font-family: var(--mono); font-size: 12px; color: var(--accent);
+  }
+
+  /* RESULT BOX */
+  .result-box {
+    background: var(--bg2); border: 1px solid rgba(0,255,136,.2);
+    border-radius: 8px; padding: 28px; margin: 32px 0;
+  }
+  .result-box .result-title { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .result-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; font-size: 15px; color: var(--dim); }
+  .result-item::before { content: '→'; color: var(--accent); font-family: var(--mono); flex-shrink: 0; }
+  .result-item:last-child { margin-bottom: 0; }
+
+  /* CTA */
+  .post-cta {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 40px; text-align: center; margin-top: 64px;
+  }
+  .post-cta p { font-size: 15px; color: var(--dim); max-width: 380px; margin: 0 auto 24px; }
+  .btn-cta {
+    font-family: var(--mono); font-size: 13px; padding: 12px 28px;
+    background: var(--accent); color: var(--bg); border: none;
+    cursor: pointer; border-radius: 4px; text-decoration: none;
+    display: inline-block; transition: opacity .2s;
+  }
+  .btn-cta:hover { opacity: .85; }
+
+  .full-divider { border: none; border-top: 1px solid var(--border); }
+  footer {
+    border-top: 1px solid var(--border); padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .footer-logo { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .footer-right { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; background: rgba(10,10,10,.97) !important; border-color: var(--border) !important; }
+    .nav-logo { font-size: 16px; }
+    .nav-cta { display: none; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    footer { padding: 32px 20px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: 1px solid var(--accent);
+    padding: 10px 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 4px;
+  }
+  .hamburger-btn span { display: block; width: 22px; height: 2px; background: #ffffff; transition: transform 0.2s, opacity 0.2s; }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #0a0a0a;
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: var(--mono); font-size: 20px; color: var(--fg); text-decoration: none; letter-spacing: -0.5px; }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-close { position: absolute; top: 24px; right: 24px; font-family: var(--mono); font-size: 24px; color: var(--dim); background: none; border: none; cursor: pointer; }
+  @media (max-width: 768px) {
+    .hamburger-btn { display: flex; }
+    .nav-links { display: none !important; }
+    .nav-cta { display: none; }
+    nav { background: rgba(10,10,10,.97) !important; border-color: var(--border) !important; padding: 16px 20px; }
+    .nav-logo { font-size: 16px !important; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <meta property="og:title" content="Competitor Price Monitoring Bot That Runs Every Morning — getmicroservices"/>
+  <meta property="og:description" content="An online retailer was spending 2 hours a day manually checking competitor prices. We built an n8n pipeline that scrapes, compares, and delivers a Slack digest before the trading day starts."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/a/blog/competitor-price-monitoring-bot"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:title" content="Competitor Price Monitoring Bot That Runs Every Morning — getmicroservices"/>
+  <meta name="twitter:description" content="An online retailer was spending 2 hours a day manually checking competitor prices. We built an n8n pipeline that scrapes, compares, and delivers a Slack digest before the trading day starts."/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Competitor Price Monitoring Bot That Runs Every Morning — getmicroservices",
+  "description": "An online retailer was spending 2 hours a day manually checking competitor prices. We built an n8n pipeline that scrapes, compares, and delivers a Slack digest before the trading day starts.",
+  "datePublished": "2026-04-13",
+  "publisher": {
+    "@type": "Organization",
+    "name": "GetMicroservices"
+  },
+  "url": "https://getmicroservices.com/a/blog/competitor-price-monitoring-bot"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://getmicroservices.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://getmicroservices.com/a/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Competitor Price Monitoring Bot That Runs Every Morning — getmicroservices",
+      "item": "https://getmicroservices.com/a/blog/competitor-price-monitoring-bot"
+    }
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P3QLH1BY4');
+</script>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/a/" style="text-decoration:none;" class="nav-logo">get<span>micro</span>services<span>.com</span></a>
+  <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="/a/">home</a></li>
+    <li><a href="/a/#flows">work</a></li>
+    <li><a href="/a/services/business-automation">services</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/#contact">contact</a></li>
+    <li><a href="/a/blog/" class="active">blog</a></li>
+    <li><a href="/a/about">about</a></li>
+  </ul>
+  <a href="/a/#contact" class="nav-cta">[ start project ]</a>
+</nav>
+
+<article class="article">
+
+  <a href="/a/blog/" class="back-link">← field notes</a>
+
+  <div class="post-tag">case study</div>
+  <h1>Competitor Price Monitoring Bot That Runs Every Morning</h1>
+  <div class="post-meta">
+    <span>Apr 13, 2026</span>
+    <span>5 min read</span>
+  </div>
+  <p class="post-lead">An online electronics retailer was spending 2 hours every morning manually checking competitor prices across 250 SKUs. We built an n8n pipeline that scrapes, compares, and delivers a Slack digest before the trading day starts — and found 12% of their margin sitting on the table.</p>
+
+  <h2>The problem</h2>
+  <p>James runs a five-person online electronics shop. Every morning, someone on his team would open a spreadsheet, manually visit four competitor websites, find matching products, and log the prices. It took about two hours. On the days they skipped it — bank holidays, busy periods — they were flying blind.</p>
+  <p><strong>Twice in six months they'd missed a competitor running a weekend flash sale</strong> and watched conversion drop without understanding why until Monday morning. By then it was too late.</p>
+  <p>Proper repricing tools exist, but they're built for Amazon and priced accordingly. James didn't need dynamic repricing. He needed visibility — fast enough to act on it.</p>
+
+  <h2>What we built</h2>
+  <p>A fully automated price monitoring pipeline on n8n. Here's the flow:</p>
+
+  <div class="flow-card">
+    <div class="flow-label">price monitor — n8n, runs daily at 06:00</div>
+    <div class="flow-nodes">
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">⏰</span><div><div class="node-name">Cron Trigger</div><div class="node-type">06:00 daily</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🕷️</span><div><div class="node-name">Scraper ×4</div><div class="node-type">HTTP + CSS selectors</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🛒</span><div><div class="node-name">Shopify API</div><div class="node-type">Own prices</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">🔍</span><div><div class="node-name">Compare + Flag</div><div class="node-type">Risk / Opportunity</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">📊</span><div><div class="node-name">Log to Sheets</div><div class="node-type">Rolling history</div></div></div>
+      </div>
+      <div class="flow-arrow">──▶</div>
+      <div class="flow-node">
+        <div class="node-box"><span class="node-icon">💬</span><div><div class="node-name">Slack Digest</div><div class="node-type">06:30 delivery</div></div></div>
+      </div>
+    </div>
+    <div class="flow-result">↳ Team wakes up to a Slack message: top 10 price gaps, any new competitor drops, and a "clear" signal if nothing material changed</div>
+  </div>
+
+  <p>The scraper hits four competitor sites at 6 AM using plain HTTP requests and CSS selectors — no headless browser needed since prices are server-rendered. Each scraped price is matched against a Google Sheet mapping table (competitor URL → James's SKU) and compared with live Shopify prices via the Admin API.</p>
+  <p>Items where a competitor is more than 3% cheaper get flagged as exposure. Items where James is cheaper than all competitors get tagged as potential margin upside. Everything logs to a rolling Google Sheet — one row per SKU per day — giving him a 90-day price history he'd never had before.</p>
+  <p>The Slack message lands at 6:30 AM. On quiet days it's two lines. On the day a competitor ran a 15% category flash sale at 7 PM, the midnight re-run caught it and the team matched prices before Friday opened.</p>
+
+  <h2>The edge cases</h2>
+  <p>A few things that aren't obvious until you're building it:</p>
+  <ul>
+    <li><strong>Out-of-stock items</strong> — when a competitor hides price on OOS products, we treat it as "unknown" not zero, so it doesn't corrupt the comparison.</li>
+    <li><strong>Bundled pricing</strong> — one competitor lists some items in multi-packs. The mapping table includes a unit-price multiplier so comparisons stay apples-to-apples.</li>
+    <li><strong>Site redesigns</strong> — we checksum the scraped HTML structure. If it changes significantly, n8n sends an alert before the next run instead of returning garbage data silently.</li>
+    <li><strong>Rate limiting</strong> — randomised 2–6 second delay between requests, rotating user-agent. Polite, not aggressive.</li>
+  </ul>
+
+  <h2>The result</h2>
+
+  <div class="result-box">
+    <div class="result-title">after 6 weeks</div>
+    <div class="result-item">~2 hours/day saved — zero manual checking since launch</div>
+    <div class="result-item">12% average margin improvement — 42 SKUs repriced after discovering they were underpriced vs. all competitors</div>
+    <div class="result-item">Flash sale caught in real-time — matched competitor promotion within 90 minutes</div>
+    <div class="result-item">90-day price history now available on every SKU</div>
+    <div class="result-item">Runs on the same $12/month VPS as their other n8n workflows</div>
+  </div>
+
+  <p>The margin finding was the real surprise. By surfacing SKUs where James was cheaper than all four competitors — often by 10–20% — he raised prices on 42 products in the first three weeks. Conversion didn't move. Revenue did.</p>
+  <p>"I'd been leaving money on the table for two years without knowing it," he told us. "The bot paid for itself in week one."</p>
+
+  <h2>The build</h2>
+  <p>We scoped this under our single-flow Starter tier. The build took about two and a half days: scraper and Shopify integration on day one, comparison logic and Sheets logging on day two, Slack output tuning and edge-case testing on day three.</p>
+  <p>James got the full n8n workflow JSON, the Google Sheets mapping template, and a short doc for adding new competitors or updating SKU mappings himself. <strong>No ongoing dependency on us.</strong></p>
+
+  <div class="post-cta">
+    <p>Running an e-commerce store and still doing price research manually? Let's talk.</p>
+    <a href="/a/#contact" class="btn-cta">[ let's talk ]</a>
+  </div>
+
+</article>
+
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
+});
+</script>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="/a/">home</a>
+  <a href="/a/#flows">work</a>
+  <a href="/a/#pricing">pricing</a>
+  <a href="/a/blog/">blog</a>
+  <a href="/a/about">about</a>
+</div>
+
+<script>
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeMobileMenu();
+});
+</script>
+</body>
+</html>
