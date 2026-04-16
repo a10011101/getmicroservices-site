@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9P3QLH1BY4');
+  </script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How We Automated Employee Timesheet Processing for a Digital Marketing Agency – GetMicroservices Blog</title>
+  <meta name="description" content="A 15-person agency was losing 20+ hours monthly on manual timesheet collection. We built an automated Slack→Google Sheets→Payroll pipeline that cut admin work by 95%." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="canonical" href="https://getmicroservices.com/blog/automated-employee-timesheet-processing" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5f3ee; --bg2: #edeae2; --bg3: #e5e1d8;
+      --fg: #1a170f; --muted: #6b6757; --accent: #b5006a;
+      --yellow: #a07200; --blue: #0066cc; --blue-hover: #0052a3;
+      --green: #3a7a00; --border: #ccc9bc; --border-bright: #a8a493;
+    }
+    [data-theme="dark"] {
+      --bg: #1a170f; --bg2: #1f1c13; --bg3: #252018;
+      --fg: #eceae5; --muted: #9b9888; --accent: #ee82cf;
+      --yellow: #f7d51d; --blue: #209cee; --blue-hover: #108de0;
+      --green: #92cc41; --border: #3a3628; --border-bright: #5a5540;
+    }
+    html { scroll-behavior: smooth; }
+    * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
+    input, textarea, p, li, blockquote { -webkit-user-select: text; -moz-user-select: text; user-select: text; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--fg); font-size: 1rem; font-weight: 600; line-height: 1.6; overflow-x: hidden; }
+    body::after { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.015) 3px, rgba(0,0,0,0.015) 4px); pointer-events: none; z-index: 9999; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 3px solid var(--yellow); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 64px; }
+    .nav-logo { padding: 10px 0; display: flex; flex-direction: column; }
+    .nav-logo span { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 400; color: var(--fg); letter-spacing: -0.01em; line-height: 1; }
+    .nav-logo span .accent { color: var(--accent); }
+    .nav-logo span .yellow { color: var(--yellow); }
+    .nav-links { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; padding: 10px 0; }
+    .nav-links a { color: #fff; text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 6px 12px; border: 3px solid var(--fg); background: var(--blue); display: inline-block; transition: background 0.15s; font-family: 'Space Grotesk', sans-serif; }
+    .nav-links a:hover { background: var(--blue-hover); }
+    .nav-links .nav-cta { background: var(--accent); border-color: var(--accent); }
+    .nav-links .nav-cta:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+    .theme-toggle { background: transparent; border: 3px solid var(--fg); color: var(--fg); font-size: 1rem; width: 40px; height: 40px; cursor: pointer; font-family: 'Space Grotesk', sans-serif; }
+    .hamburger { display: none; background: transparent; border: none; cursor: pointer; flex-direction: column; gap: 4px; padding: 10px; }
+    .hamburger span { display: block; width: 24px; height: 3px; background: var(--fg); transition: transform 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
+
+    article { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+    .article-header { margin-bottom: 40px; }
+    .back-link { display: inline-block; margin-bottom: 16px; color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+    .back-link:hover { color: var(--accent); }
+    .article-meta { display: flex; gap: 16px; margin-bottom: 12px; font-size: 0.9rem; color: var(--muted); }
+    h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
+    .article-lead { font-size: 1.2rem; color: var(--muted); margin-bottom: 40px; max-width: 600px; }
+    h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; margin: 48px 0 20px; }
+    p { margin-bottom: 20px; }
+    strong { color: var(--accent); }
+    .workflow-diagram { background: var(--bg2); border: 3px solid var(--border); padding: 24px; margin: 32px 0; }
+    .wf-box { background: var(--bg3); border: 2px solid var(--border-bright); padding: 16px; margin-bottom: 12px; }
+    .wf-box:last-child { margin-bottom: 0; }
+    .result-box { background: var(--bg2); border: 3px solid var(--green); padding: 24px; margin: 32px 0; }
+    .result-label { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: var(--green); margin-bottom: 16px; }
+    .result-box ul { list-style: none; }
+    .result-box li { margin-bottom: 12px; padding-left: 20px; position: relative; }
+    .result-box li::before { content: '→'; position: absolute; left: 0; color: var(--green); }
+    .article-cta { background: var(--bg2); border: 3px solid var(--accent); padding: 40px; margin: 60px 0; text-align: center; }
+    .cta-inner { max-width: 500px; margin: 0 auto; }
+    .article-cta h2 { margin-top: 0; }
+    .btn-primary { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 12px 24px; border: 3px solid var(--accent); font-family: 'Space Grotesk', sans-serif; font-weight: 600; margin-top: 20px; }
+    .btn-primary:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+    footer { background: var(--bg2); border-top: 3px solid var(--yellow); padding: 40px 5%; }
+    .footer-top { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin-bottom: 12px; }
+    .footer-logo .accent { color: var(--accent); }
+    .footer-logo .yellow { color: var(--yellow); }
+    .footer-col h4 { font-family: 'Space Grotesk', sans-serif; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 8px; }
+    .footer-col a { color: var(--muted); text-decoration: none; }
+    .footer-col a:hover { color: var(--accent); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+    .footer-socials { display: flex; gap: 20px; }
+    .footer-socials a { color: var(--muted); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; position: fixed; top: 64px; left: 0; right: 0; background: var(--bg); flex-direction: column; padding: 20px; border-bottom: 3px solid var(--yellow); }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" style="text-decoration:none;" class="nav-logo">
+    <span>Get<span class="accent">Micro</span><span class="yellow">services</span></span>
+    <div style="font-size:0.65rem; color:var(--muted); letter-spacing:0.06em; margin-top:3px;">// done-for-you automation agency</div>
+  </a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">Process</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+    <li><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀</button></li>
+  </ul>
+</nav>
+
+<article>
+  <div class="article-header">
+    <a href="/blog" class="back-link">← Back to Blog</a>
+    <div class="article-meta">
+      <span>Apr 17, 2026</span>
+      <span>6 min read</span>
+    </div>
+    <h1>How We Automated Employee Timesheet Processing for a Digital Marketing Agency</h1>
+    <p class="article-lead">A 15-person agency was losing 20+ hours monthly on manual timesheet collection. We built an automated Slack→Google Sheets→Payroll pipeline that cut admin work by 95%.</p>
+  </div>
+
+  <h2>The Problem</h2>
+  <p>A 15-person digital marketing agency was spending over <strong>20 hours every month</strong> on timesheet administration. Employees would:</p>
+  <ol>
+    <li>Fill out Google Forms with their hours</li>
+    <li>Managers would manually review and approve each submission</li>
+    <li>The operations manager would copy-paste data into a master spreadsheet</li>
+    <li>Finance would manually calculate totals and prepare payroll data</li>
+    <li>Discrepancies would require back-and-forth emails</li>
+  </ol>
+  <p>This process was error-prone, frustrating for employees, and consumed valuable management time that could have been spent on client work.</p>
+
+  <h2>What We Built</h2>
+  <p>A fully automated Slack→Google Sheets→Payroll pipeline using n8n:</p>
+
+  <div class="workflow-diagram">
+    <div class="wf-box">
+      <strong>Slack Reminder Bot</strong> – Every Friday at 4 PM, sends a reminder to all employees with a custom "Submit Timesheet" button
+    </div>
+    <div class="wf-box">
+      <strong>Interactive Timesheet Form</strong> – When clicked, opens a modal in Slack where employees can select projects, enter hours, and add notes
+    </div>
+    <div class="wf-box">
+      <strong>Auto-Validation</strong> – Checks for total hours limits, missing projects, and incomplete days
+    </div>
+    <div class="wf-box">
+      <strong>Manager Approval Workflow</strong> – Slack notifications with "Approve" or "Request Changes" buttons
+    </div>
+    <div class="wf-box">
+      <strong>Payroll Preparation</strong> – Automated summarization, overtime calculation, and CSV generation
+    </div>
+  </div>
+
+  <h3>Technical Stack</h3>
+  <ul>
+    <li><strong>n8n</strong> – Orchestration engine</li>
+    <li><strong>Slack API</strong> – Employee interaction and notifications</li>
+    <li><strong>Google Sheets API</strong> – Data storage and manipulation</li>
+    <li><strong>PostgreSQL</strong> – Audit logging and state management</li>
+    <li><strong>Custom validation logic</strong> – Business rules enforcement</li>
+  </ul>
+
+  <h2>The Results</h2>
+  
+  <div class="result-box">
+    <div class="result-label">// measured results — first month post-launch</div>
+    <ul>
+      <li><strong>95% reduction</strong> in timesheet-related admin work</li>
+      <li>Payroll processing time cut from <strong>8 hours to 30 minutes</strong></li>
+      <li>100% of employees submitted on time (vs. 60% previously)</li>
+      <li>Zero data entry errors since launch</li>
+      <li>Employee satisfaction with "HR stuff" increased from 2/5 to 4.5/5</li>
+      <li>Eliminated 100+ monthly emails about timesheet issues</li>
+    </ul>
+  </div>
+
+  <h3>Ongoing Benefits</h3>
+  <ul>
+    <li>Real-time visibility into project hours vs. budget</li>
+    <li>Automated alerts when projects are approaching budget limits</li>
+    <li>Historical data for capacity planning and client billing</li>
+    <li>Complete audit trail for compliance requirements</li>
+  </ul>
+
+  <h2>The Client's Reaction</h2>
+  <blockquote style="border-left: 3px solid var(--accent); padding-left: 20px; margin: 30px 0; font-style: italic;">
+    "I was skeptical we could automate something this nuanced, but the team at GetMicroservices understood our exact workflow and built something that feels like magic. What used to be a monthly headache is now completely hands-off. We're already looking at what else we can automate."
+  </blockquote>
+
+  <h2>Want Something Similar?</h2>
+  <p>If your team is drowning in manual processes like timesheets, expense reports, or client reporting, we can build you a custom automation in days, not months. <a href="/#contact" style="color: var(--accent);">Start your project today →</a></p>
+
+</article>
+
+<!-- CTA -->
+<div class="article-cta">
+  <div class="cta-inner">
+    <h2>Got a Workflow That Needs Fixing?</h2>
+    <p>Tell us what's eating your time. Free 30-minute call, honest advice, fixed-price quote.</p>
+    <a href="/#contact" class="btn-primary">[ Book Free Call → ]</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="footer-logo">Get<span class="accent">Micro</span><span class="yellow">services</span></span>
+      <p>Fast, affordable automation and microservices for businesses that want to scale without hiring a dev team.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/#services">Automation</a></li>
+        <li><a href="/#services">AI Bots</a></li>
+        <li><a href="/#services">APIs</a></li>
+        <li><a href="/#services">MVPs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/blog">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="/#contact">Free Consultation</a></li>
+        <li><a href="mailto:hello@getmicroservices.com">hello@getmicroservices.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 GetMicroservices. All rights reserved.</p>
+    <div class="footer-socials"><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    });
+  });
+  const themeBtn = document.getElementById('themeBtn');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  if (savedTheme === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); themeBtn.textContent = '\u2600'; }
+  else { themeBtn.textContent = '\u263e'; }
+  function toggleTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) { document.documentElement.removeAttribute('data-theme'); localStorage.setItem('theme', 'light'); themeBtn.textContent = '\u263e'; }
+    else { document.documentElement.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); themeBtn.textContent = '\u2600'; }
+  }
+</script>
+</body>
+</html>
