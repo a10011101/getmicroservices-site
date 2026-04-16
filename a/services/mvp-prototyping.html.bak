@@ -11,13 +11,6 @@
 <link rel="canonical" href="https://getmicroservices.com/a/services/mvp-prototyping"/>
 <title>MVPs & Rapid Prototyping — getmicroservices</title>
 <meta name="description" content="From idea to working product in 72 hours. Got an idea? We'll build a working prototype fast so you can validate, pitch, or launch. No bloated discovery phases. No months of planning before a single line of code."/>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-9P3QLH1BY4');
-</script>
 <style>
   * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
   input, textarea { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
@@ -115,14 +108,6 @@
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-9P3QLH1BY4');
-</script>
 </head>
 <body>
 <nav id="nav">
