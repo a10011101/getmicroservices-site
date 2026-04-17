@@ -909,6 +909,8 @@
       <option>Something else</option>
     </select>
     <textarea rows="4" name="message" placeholder="> describe_your_project..." required maxlength="300" oninput="this.value=this.value.replace(/[<>\'\";\`\\\/]/g,'')"></textarea>
+    <!-- Honeypot field - hidden from humans -->
+    <input type="text" name="_honey" style="display:none !important; opacity:0; position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
     <button type="submit">[ Send Message → ]</button>
     <p id="form-msg">✓ Message sent! We'll be in touch within a few hours.</p>
   </form>
@@ -1010,6 +1012,15 @@
     const btn = form.querySelector('button[type="submit"]');
     btn.textContent = '[ Sending... ]';
     btn.disabled = true;
+
+    // Check honeypot (bots fill hidden fields)
+    const honey = form.querySelector("[name='_honey']").value;
+    if (honey) {
+      // Bot detected - show success but don't send
+      btn.textContent = '[ Sent! ]';
+      document.getElementById("form-msg").style.display = "block";
+      return;
+    }
 
     const data = {
       name: form.querySelector('[name="name"]').value,
