@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#0077B5" rx="40"/>
+  
+  <!-- Robot Head -->
+  <circle cx="200" cy="150" r="80" fill="#FFFFFF"/>
+  
+  <!-- Robot Eyes -->
+  <circle cx="170" cy="130" r="15" fill="#0077B5"/>
+  <circle cx="230" cy="130" r="15" fill="#0077B5"/>
+  
+  <!-- Robot Antenna -->
+  <rect x="195" y="70" width="10" height="30" fill="#FFFFFF"/>
+  <circle cx="200" cy="60" r="15" fill="#FF6B6B"/>
+  
+  <!-- Robot Mouth (Chat Bubble) -->
+  <path d="M150 180 Q200 220 250 180" stroke="#0077B5" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- LinkedIn "in" symbol inside mouth -->
+  <g transform="translate(175, 165) scale(0.8)">
+    <rect x="0" y="0" width="60" height="60" fill="#0077B5" rx="10"/>
+    <text x="30" y="42" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">in</text>
+  </g>
+  
+  <!-- Gear/Settings icon (representing automation) -->
+  <g transform="translate(320, 80) scale(0.7)">
+    <circle cx="0" cy="0" r="30" fill="#FFFFFF" stroke="#0077B5" stroke-width="3"/>
+    <path d="M0 -25 L0 -15 M0 25 L0 15 M-25 0 L-15 0 M25 0 L15 0" stroke="#0077B5" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="8" fill="#0077B5"/>
+  </g>
+  
+  <!-- Calendar icon (representing scheduling) -->
+  <g transform="translate(80, 80) scale(0.7)">
+    <rect x="-25" y="-20" width="50" height="40" fill="#FFFFFF" stroke="#0077B5" stroke-width="3" rx="5"/>
+    <rect x="-25" y="-20" width="50" height="12" fill="#FF6B6B" rx="5 5 0 0"/>
+    <line x1="-15" y1="0" x2="-5" y2="0" stroke="#0077B5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="5" y1="0" x2="15" y2="0" stroke="#0077B5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="-15" y1="10" x2="-5" y2="10" stroke="#0077B5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="5" y1="10" x2="15" y2="10" stroke="#0077B5" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  
+  <!-- App Name -->
+  <text x="200" y="300" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#FFFFFF" text-anchor="middle">PostAutobot</text>
+  
+  <!-- Tagline -->
+  <text x="200" y="340" font-family="Arial, sans-serif" font-size="18" fill="#FFFFFF" text-anchor="middle" opacity="0.9">LinkedIn Automation</text>
+</svg>
