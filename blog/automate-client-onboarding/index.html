@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Automate Client Onboarding (No Code) | GetMicroservices</title>
+    <meta name="description" content="Learn how to automate client onboarding without writing code. Step-by-step guide using n8n, Make, or Zapier to save hours each week.">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9P3QLH1BY4');
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Space Grotesk', sans-serif; line-height: 1.6; color: #333; background: #f5f3ee; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .pixel-box { background: white; border: 2px solid #b5006a; padding: 30px; margin-bottom: 30px; box-shadow: 4px 4px 0 #b5006a; }
+        h1 { font-size: 2.5rem; color: #b5006a; margin-bottom: 20px; font-weight: 700; }
+        .meta { font-family: 'Fira Code', monospace; color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+        .post-date { background: #b5006a; color: white; padding: 4px 8px; display: inline-block; margin-right: 10px; }
+        .post-readtime { background: #4caf50; color: white; padding: 4px 8px; display: inline-block; }
+        .content { font-size: 1.1rem; }
+        .content h2 { color: #b5006a; margin: 30px 0 15px; font-size: 1.8rem; border-left: 4px solid #b5006a; padding-left: 15px; }
+        .content p { margin-bottom: 20px; }
+        .content ul, .content ol { margin: 20px 0 20px 30px; }
+        .code-block { background: #2d2d2d; color: #f8f8f2; padding: 20px; font-family: 'Fira Code', monospace; margin: 20px 0; border-radius: 4px; overflow-x: auto; }
+        .read-more { display: inline-block; background: #b5006a; color: white; padding: 10px 20px; text-decoration: none; font-family: 'Fira Code', monospace; margin-top: 20px; }
+        .read-more:hover { background: #9a0058; }
+        footer { margin-top: 60px; padding-top: 30px; border-top: 2px solid #b5006a; text-align: center; color: #666; font-size: 0.9rem; }
+        .nav { margin-bottom: 30px; }
+        .nav a { color: #b5006a; text-decoration: none; font-family: 'Fira Code', monospace; }
+        .nav a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="nav">
+            <a href="/blog/">&larr; Back to Blog</a>
+        </nav>
+        
+        <article class="pixel-box post-card">
+            <div class="meta">
+                <span class="post-date">2026-04-18</span>
+                <span class="post-readtime">7 min read</span>
+            </div>
+            
+            <h1>How to Automate Client Onboarding (No Code)</h1>
+            
+            <div class="content">
+                <p>Client onboarding is one of the most time-consuming processes for service businesses. From collecting information to setting up accounts and sending welcome emails, it can eat up hours each week. The good news? You can automate almost all of it without writing a single line of code.</p>
+                
+                <h2>Why Automate Client Onboarding?</h2>
+                <ul>
+                    <li><strong>Save 5-10 hours per week</strong> on manual tasks</li>
+                    <li><strong>Reduce errors</strong> from manual data entry</li>
+                    <li><strong>Improve client experience</strong> with instant responses</li>
+                    <li><strong>Scale your business</strong> without hiring more staff</li>
+                </ul>
+                
+                <h2>The 5-Step No-Code Automation Framework</h2>
+                
+                <h3>1. Client Intake Form</h3>
+                <p>Start with a Typeform or Google Form that collects all necessary information. Connect it to your automation tool (n8n, Make, or Zapier) to trigger the onboarding workflow.</p>
+                
+                <div class="code-block">
+// Example n8n webhook trigger
+{
+  "client_name": "John Doe",
+  "email": "john@example.com",
+  "service": "Website Development",
+  "budget": "$5000"
+}
+                </div>
+                
+                <h3>2. Automated Document Creation</h3>
+                <p>Use the form data to automatically generate contracts, proposals, and NDAs with tools like PandaDoc or DocuSign.</p>
+                
+                <h3>3. Account Setup & Access</h3>
+                <p>Automatically create accounts in your project management tools (Trello, Asana, Notion) and grant client access.</p>
+                
+                <h3>4. Welcome Email Sequence</h3>
+                <p>Send personalized welcome emails with next steps, resources, and calendar links for kickoff meetings.</p>
+                
+                <h3>5. Internal Notifications</h3>
+                <p>Alert your team in Slack or Microsoft Teams when a new client signs up, so everyone is prepared.</p>
+                
+                <h2>Tools You Can Use</h2>
+                <ul>
+                    <li><strong>n8n</strong> (self-hosted, most flexible)</li>
+                    <li><strong>Make</strong> (formerly Integromat, visual builder)</li>
+                    <li><strong>Zapier</strong> (easiest to start with)</li>
+                    <li><strong>Airtable</strong> (database + automation)</li>
+                    <li><strong>Notion</strong> (with automation integrations)</li>
+                </ul>
+                
+                <h2>Sample Workflow: n8n Client Onboarding</h2>
+                <p>Here's a simple n8n workflow you can copy:</p>
+                <ol>
+                    <li>Webhook trigger (from Typeform)</li>
+                    <li>Create Google Doc contract</li>
+                    <li>Send contract via PandaDoc for signing</li>
+                    <li>Create Trello board with client template</li>
+                    <li>Send welcome email sequence (3 emails)</li>
+                    <li>Post to Slack #new-clients channel</li>
+                </ol>
+                
+                <p>This entire workflow runs automatically whenever a new client submits your intake form.</p>
+                
+                <h2>Getting Started</h2>
+                <p>Start with one automation at a time. The first and most impactful is usually the welcome email sequence. Once that's working, add document creation, then account setup.</p>
+                
+                <p>Remember: The goal isn't to automate 100% on day one. Start with what saves you the most time, then expand.</p>
+            </div>
+            
+            <a href="/blog/" class="read-more">← Back to Blog</a>
+        </article>
+        
+        <footer>
+            <p>&copy; 2026 GetMicroservices. // done-for-you automation agency</p>
+            <p>Need help automating your client onboarding? <a href="/#contact" style="color: #b5006a;">Contact us</a></p>
+        </footer>
+    </div>
+</body>
+</html>

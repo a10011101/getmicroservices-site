@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Automate Client Onboarding (No Code) | getmicroservices.com</title>
+    <meta name="description" content="Learn how to automate client onboarding without writing code. Step-by-step guide using n8n, Make, or Zapier to save hours each week.">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-9P3QLH1BY4');
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #e0e0e0; background: #0a0a0a; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .post-card { background: #1a1a1a; border: 1px solid #00ff88; padding: 40px; margin-bottom: 40px; }
+        h1 { font-family: 'JetBrains Mono', monospace; font-size: 2.5rem; color: #00ff88; margin-bottom: 20px; font-weight: 500; }
+        .post-meta { font-family: 'JetBrains Mono', monospace; color: #888; font-size: 0.9rem; margin-bottom: 30px; }
+        .post-tag { background: #00ff88; color: #0a0a0a; padding: 4px 8px; font-size: 0.8rem; display: inline-block; margin-right: 10px; }
+        .content { font-size: 1.1rem; }
+        .content h2 { font-family: 'JetBrains Mono', monospace; color: #00ff88; margin: 40px 0 20px; font-size: 1.8rem; }
+        .content p { margin-bottom: 25px; color: #ccc; }
+        .content ul, .content ol { margin: 25px 0 25px 35px; color: #ccc; }
+        .code-block { background: #000; color: #00ff88; padding: 25px; font-family: 'JetBrains Mono', monospace; margin: 25px 0; border: 1px solid #333; border-left: 4px solid #00ff88; }
+        .post-arrow { color: #00ff88; font-size: 1.5rem; margin-top: 30px; display: inline-block; }
+        footer { margin-top: 80px; padding-top: 40px; border-top: 1px solid #333; text-align: center; color: #666; font-size: 0.9rem; }
+        .footer-logo { font-family: 'JetBrains Mono', monospace; color: #00ff88; margin-bottom: 10px; }
+        .nav { margin-bottom: 40px; }
+        .nav a { color: #00ff88; text-decoration: none; font-family: 'JetBrains Mono', monospace; }
+        .nav a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="nav">
+            <a href="/a/blog/">← /a/blog/</a>
+        </nav>
+        
+        <article class="post-card">
+            <div class="post-meta">
+                <span class="post-tag">automation</span>
+                <span class="post-tag">no-code</span>
+                <span>2026-04-18 • 7 min read</span>
+            </div>
+            
+            <h1>How to Automate Client Onboarding (No Code)</h1>
+            
+            <div class="content">
+                <p>client onboarding consumes hours each week. manual processes create bottlenecks. automation eliminates them. here's how.</p>
+                
+                <h2>why automate?</h2>
+                <ul>
+                    <li>save 5-10 hours weekly</li>
+                    <li>eliminate manual errors</li>
+                    <li>scale without linear time investment</li>
+                    <li>professional, consistent experience</li>
+                </ul>
+                
+                <h2>the framework</h2>
+                
+                <h3>1. intake → trigger</h3>
+                <p>typeform / google form → webhook → automation tool. data flows automatically.</p>
+                
+                <div class="code-block">
+// n8n webhook payload
+{
+  "client": "john doe",
+  "email": "john@example.com", 
+  "service": "website dev",
+  "budget": 5000
+}
+                </div>
+                
+                <h3>2. documents → auto-generated</h3>
+                <p>contracts, proposals, ndas. created from templates with client data inserted.</p>
+                
+                <h3>3. accounts → auto-created</h3>
+                <p>trello, asana, notion, slack. access granted automatically.</p>
+                
+                <h3>4. communication → sequenced</h3>
+                <p>welcome emails, resources, calendar links. sent immediately.</p>
+                
+                <h3>5. team → notified</h3>
+                <p>slack / teams alert when client signs. everyone prepared.</p>
+                
+                <h2>tool stack</h2>
+                <ul>
+                    <li>n8n (self-hosted, powerful)</li>
+                    <li>make (visual, flexible)</li>
+                    <li>zapier (simple, extensive)</li>
+                    <li>airtable (database + automation)</li>
+                    <li>notion (with api integrations)</li>
+                </ul>
+                
+                <h2>sample: n8n workflow</h2>
+                <ol>
+                    <li>webhook (typeform submission)</li>
+                    <li>google doc contract creation</li>
+                    <li>pandadoc for e-signature</li>
+                    <li>trello board from template</li>
+                    <li>welcome email sequence (3)</li>
+                    <li>slack #new-clients post</li>
+                </ol>
+                
+                <p>entire process runs automatically. zero manual intervention.</p>
+                
+                <h2>implementation</h2>
+                <p>start with one component. welcome emails first. then documents. then accounts. iterate.</p>
+                
+                <p>goal: reduce manual work incrementally. not 100% automation day one.</p>
+            </div>
+            
+            <a href="/a/blog/" class="post-arrow">→</a>
+        </article>
+        
+        <footer>
+            <div class="footer-logo">get<span>micro</span>services<span>.com</span></div>
+            <p>built by humans. run by automations.</p>
+        </footer>
+    </div>
+</body>
+</html>
