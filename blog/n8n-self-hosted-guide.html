@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Self-Hosting n8n: Complete Setup Guide (2026) – GetMicroservices Blog</title>
+  <meta name="description" content="Step-by-step guide to self-hosting n8n on a VPS in 2026. Docker, HTTPS, Caddy, and production best practices. Own your automation infrastructure."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/n8n-self-hosted-guide"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;font-weight:600;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:400;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;transition:border-color 0.2s,background 0.2s;line-height:1;}
+    .theme-toggle:hover{border-color:var(--accent);background:rgba(128,128,128,0.1);}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'< ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'>';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul{list-style:none;}
+    .result-box ul li{font-size:0.88rem;color:var(--muted);padding:5px 0 5px 18px;position:relative;}
+    .result-box ul li::before{content:'→';position:absolute;left:0;color:var(--green);font-family:monospace;}
+    .flow-box{background:var(--bg3);border:2px solid var(--border);padding:20px 24px;margin:28px 0;font-family:'Fira Code',monospace;font-size:0.8rem;color:var(--muted);line-height:2;}
+    .flow-box .step{color:var(--fg);}
+    .cost-table{width:100%;border-collapse:collapse;margin:28px 0;font-size:0.85rem;}
+    .cost-table th{font-family:'Space Grotesk',sans-serif;font-size:0.78rem;text-align:left;padding:8px 12px;background:var(--bg3);border:2px solid var(--border);color:var(--fg);}
+    .cost-table td{padding:8px 12px;border:1px solid var(--border);color:var(--muted);font-family:'Fira Code',monospace;font-size:0.78rem;}
+    .cost-table tr:nth-child(even) td{background:var(--bg2);}
+    .cost-table .highlight{color:var(--accent);font-weight:700;}
+    .cost-table .win{color:var(--green);font-weight:700;}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav{padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  </style>
+  <meta property="og:title" content="Self-Hosting n8n: Complete Setup Guide (2026) – GetMicroservices Blog"/>
+  <meta property="og:description" content="Step-by-step guide to self-hosting n8n on a VPS in 2026. Docker, HTTPS, Caddy, and production best practices. Own your automation infrastructure."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/blog/n8n-self-hosted-guide"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/">
+    <span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span>
+    <span style="font-family:'Fira Code',monospace;font-size:0.62rem;color:var(--muted);margin-top:3px;">// done-for-you automation agency</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')" aria-label="Toggle dark mode">◐</button>
+</nav>
+
+<div class="article-header">
+  <a class="back-link" href="/blog/">Back to Blog</a>
+  <div class="article-meta">
+    <span class="meta-date">2026-04-20</span>
+    <span class="meta-tag">n8n</span>
+    <span class="meta-tag">Self-Hosting</span>
+    <span class="meta-readtime">9 min read</span>
+  </div>
+  <h1>Self-Hosting n8n: Complete Setup Guide (2026)</h1>
+  <p class="lead">Skip the cloud subscription. Run n8n on your own VPS for under $10/month — with Docker, Caddy for HTTPS, and production-ready config. This is exactly how we set it up for clients.</p>
+</div>
+
+<div class="article-body">
+
+  <p>We've self-hosted n8n for dozens of clients over the past two years. The cloud version is fine for testing, but once you hit real workflow volume, the pricing jumps fast. Self-hosting puts you in control: <strong>unlimited workflows, unlimited executions, your data stays on your server.</strong></p>
+
+  <p>This guide covers the exact setup we use in production — not a "hello world" demo. By the end you'll have n8n running on a proper domain with HTTPS, auto-restart, and basic security hardening.</p>
+
+  <h2>What You Need Before You Start</h2>
+
+  <ul>
+    <li>A VPS with at least 1GB RAM (2GB recommended) — DigitalOcean, Hetzner, or Vultr all work</li>
+    <li>A domain name with DNS access</li>
+    <li>Ubuntu 22.04 LTS (what this guide uses)</li>
+    <li>Basic comfort with SSH and the command line</li>
+  </ul>
+
+  <p>We typically use <strong>Hetzner CX21</strong> (2 vCPU, 4GB RAM, €4.15/mo) for client setups — it's overkill for most workflows but leaves headroom for growth. DigitalOcean's $6/mo droplet works fine for lighter use.</p>
+
+  <h2>Step 1: Install Docker &amp; Docker Compose</h2>
+
+  <p>SSH into your server and run the following:</p>
+
+  <div class="flow-box">
+    <span class="step"># Update system</span><br/>
+    sudo apt update &amp;&amp; sudo apt upgrade -y<br/><br/>
+    <span class="step"># Install Docker</span><br/>
+    curl -fsSL https://get.docker.com | sh<br/>
+    sudo usermod -aG docker $USER<br/>
+    newgrp docker<br/><br/>
+    <span class="step"># Verify</span><br/>
+    docker --version
+  </div>
+
+  <p>Docker Compose V2 is included with modern Docker installs. Confirm with <code style="font-family:'Fira Code',monospace;color:var(--accent);">docker compose version</code>. If it's missing, install the plugin: <code style="font-family:'Fira Code',monospace;color:var(--accent);">sudo apt install docker-compose-plugin</code></p>
+
+  <h2>Step 2: Point Your Domain to the Server</h2>
+
+  <p>Before setting up HTTPS, your domain needs to resolve to your server IP. In your DNS provider, add an A record:</p>
+
+  <div class="flow-box">
+    <span class="step">Type:</span> A<br/>
+    <span class="step">Name:</span> n8n (or @ for root domain)<br/>
+    <span class="step">Value:</span> YOUR.SERVER.IP.ADDRESS<br/>
+    <span class="step">TTL:</span> 300
+  </div>
+
+  <p>Wait 5–10 minutes for DNS to propagate. Confirm with <code style="font-family:'Fira Code',monospace;color:var(--accent);">dig n8n.yourdomain.com +short</code> — it should return your server IP.</p>
+
+  <h2>Step 3: Create the Docker Compose File</h2>
+
+  <p>Create a directory for your n8n stack and add the compose file:</p>
+
+  <div class="flow-box">
+    <span class="step">mkdir ~/n8n-stack &amp;&amp; cd ~/n8n-stack</span><br/>
+    <span class="step">nano docker-compose.yml</span>
+  </div>
+
+  <p>Paste this configuration:</p>
+
+  <div class="flow-box">
+    version: '3.8'<br/><br/>
+    services:<br/>
+    &nbsp;&nbsp;n8n:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;image: n8nio/n8n:latest<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;restart: always<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;ports:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- "5678:5678"<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;environment:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- N8N_HOST=n8n.yourdomain.com<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- N8N_PORT=5678<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- N8N_PROTOCOL=https<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- NODE_ENV=production<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- WEBHOOK_URL=https://n8n.yourdomain.com/<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- GENERIC_TIMEZONE=Europe/London<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- N8N_BASIC_AUTH_ACTIVE=true<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- N8N_BASIC_AUTH_USER=admin<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- N8N_BASIC_AUTH_PASSWORD=changeme123<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;volumes:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- n8n_data:/home/node/.n8n<br/><br/>
+    volumes:<br/>
+    &nbsp;&nbsp;n8n_data:
+  </div>
+
+  <p><strong>Important:</strong> Change <code style="font-family:'Fira Code',monospace;color:var(--accent);">N8N_BASIC_AUTH_PASSWORD</code> to something secure. This is your login password.</p>
+
+  <h2>Step 4: Set Up Caddy for HTTPS</h2>
+
+  <p>Caddy handles HTTPS automatically — no certbot needed. Install it:</p>
+
+  <div class="flow-box">
+    sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https<br/>
+    curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg<br/>
+    curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list<br/>
+    sudo apt update<br/>
+    sudo apt install caddy
+  </div>
+
+  <p>Create your Caddyfile:</p>
+
+  <div class="flow-box">
+    sudo nano /etc/caddy/Caddyfile
+  </div>
+
+  <div class="flow-box">
+    n8n.yourdomain.com {<br/>
+    &nbsp;&nbsp;reverse_proxy localhost:5678<br/>
+    }
+  </div>
+
+  <p>That's it. Caddy fetches a Let's Encrypt certificate automatically on first request. Reload Caddy:</p>
+
+  <div class="flow-box">
+    sudo systemctl reload caddy
+  </div>
+
+  <h2>Step 5: Start n8n</h2>
+
+  <div class="flow-box">
+    cd ~/n8n-stack<br/>
+    docker compose up -d
+  </div>
+
+  <p>Wait 30 seconds, then visit <code style="font-family:'Fira Code',monospace;color:var(--accent);">https://n8n.yourdomain.com</code>. You should see the n8n login screen. Log in with the credentials you set above.</p>
+
+  <div class="result-box">
+    <div class="result-title">✓ What You Have Now</div>
+    <ul>
+      <li>n8n running on your own VPS</li>
+      <li>HTTPS with auto-renewing Let's Encrypt cert</li>
+      <li>Basic auth protecting the UI</li>
+      <li>Auto-restart on server reboot</li>
+      <li>Persistent data storage via Docker volume</li>
+    </ul>
+  </div>
+
+  <h2>Production Hardening (Don't Skip This)</h2>
+
+  <p>The basic setup above works, but for anything you're relying on daily, add these:</p>
+
+  <ul>
+    <li><strong>UFW firewall:</strong> <code style="font-family:'Fira Code',monospace;color:var(--accent);">sudo ufw allow 22,80,443/tcp &amp;&amp; sudo ufw enable</code></li>
+    <li><strong>Fail2ban:</strong> protects SSH from brute-force — <code style="font-family:'Fira Code',monospace;color:var(--accent);">sudo apt install fail2ban</code></li>
+    <li><strong>Automatic backups:</strong> set up a cron job to dump the Docker volume to S3 or Backblaze B2 weekly</li>
+    <li><strong>Pin the n8n version:</strong> replace <code style="font-family:'Fira Code',monospace;color:var(--accent);">n8nio/n8n:latest</code> with a specific version (e.g. <code style="font-family:'Fira Code',monospace;color:var(--accent);">n8nio/n8n:1.40.0</code>) to prevent surprise breaking changes</li>
+    <li><strong>Enable 2FA:</strong> n8n has built-in TOTP support in settings — enable it</li>
+  </ul>
+
+  <h2>Adding a PostgreSQL Database</h2>
+
+  <p>By default n8n uses SQLite — fine for small use, but under heavy load (1000+ executions/day) you'll want PostgreSQL. Update your compose file:</p>
+
+  <div class="flow-box">
+    services:<br/>
+    &nbsp;&nbsp;postgres:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;image: postgres:15<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;restart: always<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;environment:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- POSTGRES_USER=n8n<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- POSTGRES_PASSWORD=strongpassword<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- POSTGRES_DB=n8n<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;volumes:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- postgres_data:/var/lib/postgresql/data<br/><br/>
+    &nbsp;&nbsp;n8n:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;# ... existing config ...<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;environment:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- DB_TYPE=postgresdb<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- DB_POSTGRESDB_HOST=postgres<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- DB_POSTGRESDB_USER=n8n<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- DB_POSTGRESDB_PASSWORD=strongpassword<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- DB_POSTGRESDB_DATABASE=n8n<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;depends_on:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- postgres
+  </div>
+
+  <h2>Updating n8n</h2>
+
+  <p>Keeping n8n updated is two commands:</p>
+
+  <div class="flow-box">
+    cd ~/n8n-stack<br/>
+    docker compose pull<br/>
+    docker compose up -d
+  </div>
+
+  <p>The old container is replaced with zero workflow data loss (it's stored in the volume). We run updates on client servers monthly — check the n8n changelog first for breaking changes.</p>
+
+  <h2>Monitoring &amp; Alerts</h2>
+
+  <p>n8n has built-in workflow execution logging under Settings → Log Streaming. For server-level monitoring, we use <strong>Uptime Kuma</strong> — another Docker container that pings your n8n URL and sends Telegram/Slack alerts if it goes down. Free, self-hosted, five minutes to set up.</p>
+
+  <div class="flow-box">
+    docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data louislam/uptime-kuma:1
+  </div>
+
+  <h2>Cost Comparison: Self-Host vs Cloud</h2>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Monthly Cost</th>
+        <th>Executions</th>
+        <th>Workflows</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>n8n Cloud Starter</td>
+        <td class="highlight">$24</td>
+        <td>2,500/mo</td>
+        <td>5 active</td>
+      </tr>
+      <tr>
+        <td>n8n Cloud Pro</td>
+        <td class="highlight">$60</td>
+        <td>10,000/mo</td>
+        <td>15 active</td>
+      </tr>
+      <tr>
+        <td>Self-hosted (Hetzner CX21)</td>
+        <td class="win">~$5</td>
+        <td>Unlimited</td>
+        <td>Unlimited</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>For our agency clients, self-hosting typically pays for itself within the first month. The only real cost is your time setting it up — which is why this guide exists.</p>
+
+  <h2>When to Use Cloud Instead</h2>
+
+  <p>Self-hosting isn't always the right call. Stick with n8n cloud if:</p>
+
+  <ul>
+    <li>You're not comfortable managing a Linux server</li>
+    <li>You need n8n's enterprise features (SSO, audit logs)</li>
+    <li>You want someone else to handle updates and uptime</li>
+    <li>Your workflow volume is low (&lt;500 executions/month)</li>
+  </ul>
+
+  <div class="result-box">
+    <div class="result-title">⚡ TL;DR Setup Checklist</div>
+    <ul>
+      <li>VPS with 2GB+ RAM on Ubuntu 22.04</li>
+      <li>Docker + Docker Compose installed</li>
+      <li>Domain A record pointed at server IP</li>
+      <li>docker-compose.yml with n8n config</li>
+      <li>Caddy installed and configured as reverse proxy</li>
+      <li>UFW firewall + Fail2ban enabled</li>
+      <li>PostgreSQL added for production load</li>
+      <li>Uptime Kuma monitoring running</li>
+    </ul>
+  </div>
+
+  <p>Questions or hitting a wall? We help teams migrate from n8n cloud to self-hosted as part of our automation builds. <a href="/#contact" style="color:var(--accent);">Get in touch</a> if you want it done for you.</p>
+
+</div>
+
+<footer>
+  <p>© 2026 <a href="/">GetMicroservices</a> · <a href="/blog/">Blog</a> · <a href="/#contact">Contact</a></p>
+</footer>
+
+</body>
+</html>

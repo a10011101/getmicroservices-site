@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/n8n-self-hosted-guide"/>
+<title>Self-Hosting n8n: Complete Setup Guide (2026) — getmicroservices</title>
+<meta name="description" content="Step-by-step guide to self-hosting n8n on a VPS in 2026. Docker, HTTPS, Caddy, and production best practices. Own your automation infrastructure."/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P3QLH1BY4');
+</script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  *{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+  input,textarea{-webkit-user-select:text;-moz-user-select:text;user-select:text;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--accent2:#0088ff;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);transition:border-color .3s;}
+  nav.scrolled{border-bottom-color:#333;}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  code{font-family:var(--mono);font-size:12px;color:var(--accent);background:var(--bg3);padding:2px 6px;border-radius:3px;}
+  .cost-table{width:100%;border-collapse:collapse;margin:28px 0;font-family:var(--mono);font-size:12px;}
+  .cost-table th{text-align:left;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);color:var(--fg);font-size:11px;letter-spacing:.05em;}
+  .cost-table td{padding:10px 14px;border:1px solid var(--border);color:var(--dim);}
+  .cost-table tr:nth-child(even) td{background:var(--bg2);}
+  .cost-table .highlight{color:#ff4466;}
+  .cost-table .win{color:var(--accent);}
+  .flow-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;margin:32px 0;}
+  .flow-label{font-family:var(--mono);font-size:11px;color:var(--dim);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+  .flow-label::before{content:'';display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;}
+  .flow-nodes{display:flex;align-items:center;flex-wrap:wrap;gap:0;overflow-x:auto;padding-bottom:4px;}
+  .node-box{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 16px;font-family:var(--mono);font-size:12px;display:flex;flex-direction:column;gap:3px;white-space:nowrap;}
+  .node-name{color:var(--fg);}
+  .node-sub{font-size:10px;color:var(--dim);}
+  .flow-arrow{font-family:var(--mono);color:var(--border);padding:0 8px;font-size:18px;flex-shrink:0;align-self:center;padding-bottom:16px;}
+  .flow-result{margin-top:20px;padding:12px 16px;background:rgba(0,255,136,.04);border:1px solid rgba(0,255,136,.15);border-radius:6px;font-family:var(--mono);font-size:12px;color:var(--accent);}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  .cmd-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px 24px;margin:24px 0;font-family:var(--mono);font-size:12px;color:var(--dim);line-height:2.2;overflow-x:auto;}
+  .cmd-block .comment{color:#444;}
+  .cmd-block .cmd{color:var(--fg);}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">get<span>micro</span>services<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#how">how it works</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/blog/">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+
+<div class="article">
+  <a class="back-link" href="/a/blog/">← all posts</a>
+
+  <div class="post-tag">n8n · self-hosting</div>
+  <div class="post-meta">
+    <span>2026-04-20</span>
+    <span>9 min read</span>
+  </div>
+
+  <h1>Self-Hosting n8n: Complete Setup Guide (2026)</h1>
+
+  <p class="post-lead">Skip the cloud subscription. Run n8n on your own VPS for under $10/month — Docker, Caddy for HTTPS, PostgreSQL for scale. This is exactly how we do it in production.</p>
+
+  <p>We've deployed n8n on VPS infrastructure for dozens of clients. The cloud version is convenient, but the pricing model doesn't scale. Self-hosting is <strong>cheaper, faster, and you own your data.</strong> This guide covers production-grade setup, not a demo.</p>
+
+  <h2>What You Need</h2>
+
+  <ul>
+    <li>VPS with 1–2GB RAM (Hetzner CX21 at ~€4/mo recommended)</li>
+    <li>A domain with DNS access</li>
+    <li>Ubuntu 22.04 LTS</li>
+    <li>Comfortable with SSH and terminal</li>
+  </ul>
+
+  <h2>Step 1: Install Docker</h2>
+
+  <div class="cmd-block">
+    <span class="comment"># Update system</span><br/>
+    <span class="cmd">sudo apt update && sudo apt upgrade -y</span><br/><br/>
+    <span class="comment"># Install Docker</span><br/>
+    <span class="cmd">curl -fsSL https://get.docker.com | sh</span><br/>
+    <span class="cmd">sudo usermod -aG docker $USER && newgrp docker</span><br/><br/>
+    <span class="comment"># Verify</span><br/>
+    <span class="cmd">docker --version && docker compose version</span>
+  </div>
+
+  <h2>Step 2: Point DNS to Your Server</h2>
+
+  <p>Add an A record in your DNS panel:</p>
+
+  <div class="cmd-block">
+    Type: A<br/>
+    Name: n8n<br/>
+    Value: YOUR.SERVER.IP<br/>
+    TTL: 300
+  </div>
+
+  <p>Confirm propagation: <code>dig n8n.yourdomain.com +short</code></p>
+
+  <h2>Step 3: Docker Compose Config</h2>
+
+  <div class="cmd-block">
+    <span class="cmd">mkdir ~/n8n-stack && cd ~/n8n-stack && nano docker-compose.yml</span>
+  </div>
+
+  <div class="cmd-block">
+    version: '3.8'<br/><br/>
+    services:<br/>
+    &nbsp;&nbsp;n8n:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;image: n8nio/n8n:latest<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;restart: always<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;ports:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- "5678:5678"<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;environment:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- N8N_HOST=n8n.yourdomain.com<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- N8N_PROTOCOL=https<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- WEBHOOK_URL=https://n8n.yourdomain.com/<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- NODE_ENV=production<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- GENERIC_TIMEZONE=Europe/London<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- N8N_BASIC_AUTH_ACTIVE=true<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- N8N_BASIC_AUTH_USER=admin<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- N8N_BASIC_AUTH_PASSWORD=changeme123<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;volumes:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- n8n_data:/home/node/.n8n<br/><br/>
+    volumes:<br/>
+    &nbsp;&nbsp;n8n_data:
+  </div>
+
+  <p>Change <code>N8N_BASIC_AUTH_PASSWORD</code> to something strong before proceeding.</p>
+
+  <h2>Step 4: HTTPS with Caddy</h2>
+
+  <div class="cmd-block">
+    <span class="comment"># Install Caddy</span><br/>
+    <span class="cmd">sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https</span><br/>
+    <span class="cmd">curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg</span><br/>
+    <span class="cmd">curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list</span><br/>
+    <span class="cmd">sudo apt update && sudo apt install caddy</span>
+  </div>
+
+  <div class="cmd-block">
+    <span class="comment"># /etc/caddy/Caddyfile</span><br/>
+    n8n.yourdomain.com {<br/>
+    &nbsp;&nbsp;reverse_proxy localhost:5678<br/>
+    }
+  </div>
+
+  <div class="cmd-block">
+    <span class="cmd">sudo systemctl reload caddy</span>
+  </div>
+
+  <p>Caddy auto-provisions Let's Encrypt certs. No certbot. No manual renewal.</p>
+
+  <h2>Step 5: Launch</h2>
+
+  <div class="cmd-block">
+    <span class="cmd">cd ~/n8n-stack && docker compose up -d</span>
+  </div>
+
+  <p>Visit <code>https://n8n.yourdomain.com</code> — you should see the login screen within 30 seconds.</p>
+
+  <div class="result-box">
+    <div class="result-title">what you have now</div>
+    <div class="result-item">n8n running on your VPS, fully under your control</div>
+    <div class="result-item">HTTPS with auto-renewing Let's Encrypt certificate</div>
+    <div class="result-item">Basic auth on the UI</div>
+    <div class="result-item">Auto-restart on reboot (restart: always)</div>
+    <div class="result-item">Persistent data in Docker volume</div>
+  </div>
+
+  <h2>Production Hardening</h2>
+
+  <ul>
+    <li><strong>UFW firewall:</strong> <code>sudo ufw allow 22,80,443/tcp && sudo ufw enable</code></li>
+    <li><strong>Fail2ban:</strong> <code>sudo apt install fail2ban</code> — blocks SSH brute-force</li>
+    <li><strong>Backup the volume:</strong> cron job to Backblaze B2 or S3 weekly</li>
+    <li><strong>Pin the n8n version:</strong> use <code>n8nio/n8n:1.40.0</code> instead of <code>:latest</code></li>
+    <li><strong>Enable 2FA:</strong> Settings → Two-factor authentication in the n8n UI</li>
+  </ul>
+
+  <h2>Add PostgreSQL for Scale</h2>
+
+  <p>Default SQLite works under low load. Above ~1000 executions/day, switch to Postgres:</p>
+
+  <div class="cmd-block">
+    services:<br/>
+    &nbsp;&nbsp;postgres:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;image: postgres:15<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;restart: always<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;environment:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- POSTGRES_USER=n8n<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- POSTGRES_PASSWORD=strongpassword<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- POSTGRES_DB=n8n<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;volumes:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- postgres_data:/var/lib/postgresql/data<br/><br/>
+    &nbsp;&nbsp;n8n:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;# add to environment:<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;- DB_TYPE=postgresdb<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;- DB_POSTGRESDB_HOST=postgres<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;- DB_POSTGRESDB_USER=n8n<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;- DB_POSTGRESDB_PASSWORD=strongpassword<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;- DB_POSTGRESDB_DATABASE=n8n<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;depends_on: [postgres]
+  </div>
+
+  <h2>Cost: Self-Host vs Cloud</h2>
+
+  <table class="cost-table">
+    <thead>
+      <tr><th>option</th><th>monthly</th><th>executions</th><th>workflows</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>n8n Cloud Starter</td><td class="highlight">$24</td><td>2,500/mo</td><td>5 active</td></tr>
+      <tr><td>n8n Cloud Pro</td><td class="highlight">$60</td><td>10,000/mo</td><td>15 active</td></tr>
+      <tr><td>Self-hosted (Hetzner CX21)</td><td class="win">~$5</td><td>unlimited</td><td>unlimited</td></tr>
+    </tbody>
+  </table>
+
+  <h2>When Cloud Makes Sense</h2>
+
+  <ul>
+    <li>Not comfortable managing a Linux server</li>
+    <li>Need enterprise features (SSO, audit logging)</li>
+    <li>Low volume (&lt;500 executions/month)</li>
+    <li>Want managed uptime and updates</li>
+  </ul>
+
+  <div class="result-box">
+    <div class="result-title">quick checklist</div>
+    <div class="result-item">VPS with 2GB+ RAM, Ubuntu 22.04</div>
+    <div class="result-item">Docker + Docker Compose installed</div>
+    <div class="result-item">DNS A record pointing at server IP</div>
+    <div class="result-item">docker-compose.yml with n8n config</div>
+    <div class="result-item">Caddy configured as reverse proxy</div>
+    <div class="result-item">UFW firewall + Fail2ban enabled</div>
+    <div class="result-item">PostgreSQL added for production load</div>
+    <div class="result-item">Uptime monitoring via Uptime Kuma</div>
+  </div>
+
+  <p>Need this done for you? We set up and maintain n8n infrastructure as part of our automation builds. <a href="/a/#contact">Get in touch →</a></p>
+</div>
+
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+</script>
+</body>
+</html>
