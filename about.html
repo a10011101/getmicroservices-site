@@ -395,6 +395,84 @@
       .footer-top { grid-template-columns: 1fr; }
     }
   </style>
+
+<style>
+/* ── Lead Magnet Styles ── */
+/* ── Lead Magnet Popup / Embed Styles ── */
+/* Drop this into any page that wants a lead capture */
+
+.leadmagnet-wrap {
+  position: fixed; bottom: 80px; right: 20px; z-index: 9999;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+}
+
+/* Floating CTA pill */
+.leadmagnet-pill {
+  background: var(--accent, #b5006a);
+  color: #fff; border: 2px solid var(--fg, #1a1a1a);
+  padding: 10px 18px; border-radius: 30px; cursor: pointer;
+  font-family: inherit; font-size: 0.82rem; font-weight: 700;
+  box-shadow: 3px 3px 0 var(--fg, #1a1a1a);
+  transition: transform 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+.leadmagnet-pill:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--fg, #1a1a1a);
+}
+
+/* Popup card */
+.leadmagnet-card {
+  display: none;
+  background: var(--bg, #f5f3ee); border: 2px solid var(--fg, #1a1a1a);
+  border-radius: 12px; padding: 20px; max-width: 320px;
+  box-shadow: 8px 8px 0 var(--fg, #1a1a1a);
+  position: relative;
+}
+.leadmagnet-card.open { display: block; }
+
+.leadmagnet-card h3 {
+  font-size: 1rem; margin: 0 0 4px; color: var(--fg, #1a1a1a);
+}
+.leadmagnet-card p {
+  font-size: 0.78rem; color: var(--muted, #666); margin: 0 0 14px; line-height: 1.5;
+}
+.leadmagnet-card input {
+  width: 100%; box-sizing: border-box;
+  padding: 10px 12px; margin-bottom: 8px; font-size: 0.82rem;
+  background: #fff; border: 2px solid var(--border-bright, #ccc);
+  color: var(--fg, #1a1a1a); border-radius: 4px;
+}
+.leadmagnet-card input:focus {
+  outline: none; border-color: var(--accent, #b5006a);
+}
+.leadmagnet-card button {
+  width: 100%; padding: 10px; font-size: 0.82rem; font-weight: 700;
+  background: var(--accent, #b5006a); color: #fff;
+  border: 2px solid var(--fg, #1a1a1a); border-radius: 4px;
+  cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+}
+.leadmagnet-card button:hover {
+  opacity: 0.9;
+}
+.leadmagnet-card button:disabled {
+  opacity: 0.5; cursor: not-allowed;
+}
+
+.leadmagnet-close {
+  position: absolute; top: 8px; right: 10px;
+  background: none; border: none; font-size: 1.2rem;
+  cursor: pointer; color: var(--muted, #999);
+  padding: 0; line-height: 1;
+}
+
+.leadmagnet-success {
+  display: none;
+  font-size: 0.82rem; color: var(--accent, #b5006a);
+  font-weight: 600; margin-top: 8px;
+}
+.leadmagnet-success.show { display: block; }
+</style>
 </head>
 <body>
 
@@ -651,6 +729,102 @@
     el.style.transition = 'opacity 0.45s ease, transform 0.45s ease, border-color 0.2s, box-shadow 0.15s';
     observer.observe(el);
   });
+</script>
+
+/* ── Lead Magnet JS Handler ── */
+/* Inline this in any page that wants lead capture */
+
+<script>
+(function() {
+  // Config per site
+  const CONFIG = {
+    'getmicroservices.com': {
+      magnet: 'Automation Audit Checklist',
+      pdfUrl: '/lead-magnets/gms-checklist.pdf',
+      title: '📋 Free Automation Audit Checklist',
+      desc: 'Find every process in your business that needs automating. 30 items across 5 departments.',
+      webhook: 'https://n8n.getmicroservices.co/webhook/lead-magnet-cf9a4e2b'
+    },
+    'best-nmn.com': {
+      magnet: 'NMN Beginner\'s Guide',
+      pdfUrl: '/lead-magnets/best-nmn-guide.pdf',
+      title: '🧬 Free NMN Beginner\'s Guide',
+      desc: 'Dosage, timing, stacking — everything you need before taking NMN.',
+      webhook: 'https://n8n.getmicroservices.co/webhook/lead-magnet-cf9a4e2b'
+    },
+    'install-openclaw.net': {
+      magnet: 'OpenClaw Quick-Start Cheatsheet',
+      pdfUrl: '/lead-magnets/openclaw-cheatsheet.pdf',
+      title: '⚡ Free OpenClaw Quick-Start Guide',
+      desc: 'Installation commands, config tips, and Telegram setup in one page.',
+      webhook: 'https://n8n.getmicroservices.co/webhook/lead-magnet-cf9a4e2b'
+    },
+    'avlabs.bio': {
+      magnet: 'The Longevity Stack Guide',
+      pdfUrl: '/lead-magnets/avlabs-longevity-stack.pdf',
+      title: '🔬 Free Longevity Stack Guide',
+      desc: 'How to stack NMN + CoQ10 + Vitamin D3 for maximum anti-aging benefit.',
+      webhook: 'https://n8n.getmicroservices.co/webhook/lead-magnet-cf9a4e2b'
+    }
+  };
+
+  const domain = window.location.hostname.replace('www.', '');
+  const cfg = CONFIG[domain] || CONFIG[Object.keys(CONFIG).find(d => domain.endsWith(d))];
+
+  if (!cfg) return;
+
+  // Build HTML
+  const wrap = document.createElement('div');
+  wrap.className = 'leadmagnet-wrap';
+  wrap.innerHTML = `
+    <div class="leadmagnet-card" id="lmCard">
+      <button class="leadmagnet-close" onclick="document.getElementById('lmCard').classList.remove('open')">×</button>
+      <h3>${cfg.title}</h3>
+      <p>${cfg.desc}</p>
+      <input type="text" id="lmName" placeholder="Your first name" required />
+      <input type="email" id="lmEmail" placeholder="Your email address" required />
+      <button id="lmBtn" onclick="lmSubmit()">Get Free PDF →</button>
+      <div class="leadmagnet-success" id="lmSuccess">✓ PDF sent! Check your inbox.</div>
+    </div>
+    <button class="leadmagnet-pill" onclick="document.getElementById('lmCard').classList.toggle('open')">
+      📘 Free Guide
+    </button>
+  `;
+  document.body.appendChild(wrap);
+
+  window.lmSubmit = async function() {
+    const name = document.getElementById('lmName').value.trim();
+    const email = document.getElementById('lmEmail').value.trim();
+    const btn = document.getElementById('lmBtn');
+    const success = document.getElementById('lmSuccess');
+
+    if (!name || !email) { return; }
+    if (!email.includes('@')) { return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    try {
+      await fetch(cfg.webhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, email,
+          magnet: cfg.magnet,
+          pdfUrl: cfg.pdfUrl,
+          site: domain,
+          _token: '7f9d43fb7d9ac0b7a0f8f17ec4b08990791368a84f1bf860'
+        })
+      });
+    } catch(e) { /* silent */ }
+
+    success.classList.add('show');
+    btn.textContent = '✓ Sent!';
+    document.getElementById('lmName').value = '';
+    document.getElementById('lmEmail').value = '';
+    setTimeout(() => { btn.disabled = false; btn.textContent = 'Get Free PDF →'; }, 3000);
+  };
+})();
 </script>
 </body>
 </html>
