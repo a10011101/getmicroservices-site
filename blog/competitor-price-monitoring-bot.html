@@ -256,6 +256,7 @@
 <article class="article-body">
 
   <h2>The Problem</h2>
+  <p>James runs a five-person online electronics shop. For a related e-commerce automation, see <a href="/blog/shopify-order-3pl-fulfilment-automation" style="color:var(--accent);">our Shopify order fulfilment automation</a> that eliminates manual data entry entirely.</p>
   <p>James runs a five-person online electronics shop. They compete with several larger retailers on roughly 250 SKUs — mostly consumer audio, cables, and accessories. Every morning, he or someone on his team would open a spreadsheet, manually visit four competitor websites, find matching products, and update the sheet with their current prices.</p>
   <p>When we spoke to him he'd been doing this for two years. He knew it was a waste of time. He also knew that on the days nobody got round to it — bank holidays, busy periods — they were flying blind. <strong>Twice in six months they'd missed a competitor running a weekend flash sale</strong> and watched their conversion rate tank without understanding why until Monday morning.</p>
   <p>"The data exists," he said. "I just can't see it fast enough to act on it."</p>
@@ -306,7 +307,7 @@
     <div class="workflow-result">↳ Team wakes up to a Slack message: top 10 price gaps, any new competitor drops, and a "clear" signal if nothing material changed</div>
   </div>
 
-  <p>Each morning at 6 AM, n8n wakes up and hits four competitor sites using HTTP request nodes with CSS selector scraping. No Puppeteer, no headless browser — these sites render prices in the HTML, so a plain fetch is fast and reliable. If a site goes down or changes its markup, n8n flags it in the digest rather than silently failing.</p>
+  <p>Each morning at 6 AM, n8n wakes up and hits four competitor sites using HTTP request nodes with CSS selector scraping. Combined with our <a href="/blog/shopify-order-3pl-fulfilment-automation" style="color:var(--accent);">Shopify order fulfilment automation</a>, this gives e-commerce owners full operational visibility. No Puppeteer, no headless browser — these sites render prices in the HTML, so a plain fetch is fast and reliable. If a site goes down or changes its markup, n8n flags it in the digest rather than silently failing.</p>
   <p>The scraped prices are matched against a mapping table (a Google Sheet James maintains with competitor URLs mapped to his own SKUs) and then compared with live Shopify prices pulled via the API. The logic is straightforward: items where a competitor is more than 3% cheaper get flagged as "⚠️ exposure," items where he's cheaper than all competitors get tagged "✅ room to move."</p>
   <p>Everything gets written to a rolling Google Sheet — one row per SKU per day. James can now see a 90-day price history on any product with a filter. That alone was something he'd never had before.</p>
   <p>The Slack message lands at 6:30 AM (the scrape and comparison takes about 20 minutes across all SKUs). It shows the top flagged items, any new changes since yesterday, and a footer summary. On quiet days it's two lines. On busy days — like when a major competitor ran a 15% flash sale on audio gear — the message is longer and actionable.</p>

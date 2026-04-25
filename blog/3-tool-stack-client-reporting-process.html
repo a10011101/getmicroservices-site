@@ -137,7 +137,7 @@
 <div class="article-body">
   <h2>The Reporting Trap</h2>
   <p>Every agency knows this pain. Friday afternoon, someone is manually pulling numbers from five different places, pasting them into a spreadsheet, formatting a summary, and emailing it to a list of clients who may or may not read it. <strong>Three hours of work that produces a PDF nobody asked for.</strong></p>
-  <p>We've seen this at every scale — solo consultants, 10-person agencies, in-house marketing teams. The problem isn't the data. It's the assembly. And assembly is exactly what automation is built for.</p>
+  <p>We've seen this at every scale — solo consultants, 10-person agencies, in-house marketing teams. Our post on <a href="/blog/google-sheets-slack-digest-ops-teams" style="color:var(--accent);">turning Google Sheets into a Slack digest</a> covers a similar approach for operations teams. The problem isn't the data. It's the assembly. And assembly is exactly what automation is built for.</p>
 
   <h2>The Three Tools</h2>
   <p>We didn't introduce any new software. The client already had all three tools — they were just using them in isolation:</p>
@@ -148,7 +148,7 @@
   </ul>
 
   <h2>How the Workflow Runs</h2>
-  <p>Every Monday at 8:00 AM, a cron trigger fires in n8n. It reads the previous week's data range from Google Sheets — traffic, conversions, revenue, tasks completed, whatever the client tracks. A few JavaScript nodes clean and format the numbers. Then it builds two outputs: a Slack block message for the internal team, and an HTML email for the client.</p>
+  <p>Every Monday at 8:00 AM, a cron trigger fires in n8n. For an e-commerce version of the same pattern, see <a href="/blog/competitor-price-monitoring-bot" style="color:var(--accent);">our competitor price monitoring bot</a> that delivers daily digests to Slack before trading starts. It reads the previous week's data range from Google Sheets — traffic, conversions, revenue, tasks completed, whatever the client tracks. A few JavaScript nodes clean and format the numbers. Then it builds two outputs: a Slack block message for the internal team, and an HTML email for the client.</p>
 
   <div class="flow-box">
     <span class="step">Trigger:</span> Cron — every Monday 08:00<br>

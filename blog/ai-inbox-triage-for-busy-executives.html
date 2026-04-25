@@ -258,11 +258,11 @@
   <h2>The Problem</h2>
   <p>James runs a 12-person digital consultancy. At any given time he has three active client projects, a sales pipeline, a team of project managers, and a business development function that generates a constant stream of inbound enquiries. His inbox is the connective tissue of all of it.</p>
   <p>When we spoke to him, he described something a lot of founders recognise: the inbox had become a full-time job in itself. <strong>200 to 250 emails a day</strong>, a mix of client escalations, supplier invoices, sales pitches, team updates, and newsletters. Every morning he'd sit down and spend 90 minutes sorting through it. Then again in the afternoon. Then check one more time before bed "just in case."</p>
-  <p>"The problem isn't volume," he told us. "It's cognitive load. I can't just delete everything that looks unimportant — sometimes an important email has a vague subject line. So I end up reading things I didn't need to read, and I'm still anxious I missed something."</p>
+  <p>"The problem isn't volume," he told us. For a related approach to customer-facing automation, see <a href="/blog/ai-chatbot-for-small-business" style="color:var(--accent);">how AI chatbots for small business</a> handle repetitive queries with a similar classification pattern. "It's cognitive load. I can't just delete everything that looks unimportant — sometimes an important email has a vague subject line. So I end up reading things I didn't need to read, and I'm still anxious I missed something."</p>
   <p>He'd tried inbox zero systems, priority flags, filters. None of them solved the core problem: he still had to read and evaluate each email himself before he could act on it.</p>
 
   <h2>What He Actually Needed</h2>
-  <p>After mapping his inbox categories, it became clear there were really four kinds of email:</p>
+  <p>After mapping his inbox categories, it became clear there were really four kinds of email: urgent client issues, delegatable tasks, read-later info, and noise. For a broader look at AI classification use cases, read <a href="/blog/how-to-integrate-ai-into-your-business" style="color:var(--accent);">how to integrate AI into your business</a>.</p>
   <ul>
     <li><strong>Urgent:</strong> client escalations, payment issues, anything with a deadline in the next 24 hours</li>
     <li><strong>Delegate:</strong> things his team could handle without him — supplier queries, routine project updates, scheduling</li>
@@ -301,7 +301,7 @@
     <div class="workflow-result">↳ Every email classified in ~3 seconds → urgent ones pinged to Slack with a one-line summary → everything else labelled and sorted automatically</div>
   </div>
 
-  <p>The AI classifier receives the sender, subject line, and first 400 characters of the email body. It returns a category (urgent / delegate / read-later / archive) plus a one-sentence summary. That summary is what James sees in Slack — so he can decide in five seconds whether to act, without opening his email client at all.</p>
+  <p>The AI classifier receives the sender, subject line, and first 400 characters of the email body. For automated follow-ups to incoming leads, see <a href="/blog/lead-qualification-bot-weekend-build" style="color:var(--accent);">our lead qualification bot</a> that scores and routes prospects automatically. It returns a category (urgent / delegate / read-later / archive) plus a one-sentence summary. That summary is what James sees in Slack — so he can decide in five seconds whether to act, without opening his email client at all.</p>
   <p>Delegatable emails get forwarded to the right team member automatically, based on a simple routing table we set up in a Google Sheet. James can update that table himself — no code required.</p>
   <p>Everything else gets a Gmail label applied and is moved out of the primary inbox. His inbox now shows only the handful of items classified as urgent or unclassifiable. The rest is neatly sorted and waiting when he wants it.</p>
   <p>We also added a daily digest: at 5 PM, n8n compiles a summary of everything classified as "read later" that day and sends it as a single Slack message. One glance, nothing missed.</p>

@@ -10,8 +10,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Why Your CRM and Stripe Don't Talk — and How We Fixed It in 48 Hours – GetMicroservices</title>
-  <meta name="description" content="A SaaS founder was manually copying payment data from Stripe into HubSpot every Monday morning. Here's the integration we built to fix it — and why it matters." />
+  <title>Why Your CRM and Stripe Don't Talk - and How We Fixed It in 48 Hours - GetMicroservices</title>
+  <meta name="description" content="A SaaS founder was manually copying payment data from Stripe into HubSpot every Monday morning. Here's the integration we built to fix it - and why it matters." />
   <link rel="canonical" href="https://getmicroservices.com/blog/why-your-crm-and-stripe-dont-talk" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -95,19 +95,19 @@
     }
   </style>
 
-  <meta property="og:title" content="Why Your CRM and Stripe Don't Talk — and How We Fixed It in 48 Hours – GetMicroservices"/>
+  <meta property="og:title" content="Why Your CRM and Stripe Don't Talk - and How We Fixed It in 48 Hours - GetMicroservices"/>
   <meta property="og:description" content="A SaaS founder was manually copying payment data from Stripe into HubSpot every Monday morning. Here"/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/blog/why-your-crm-and-stripe-dont-talk"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="Why Your CRM and Stripe Don't Talk — and How We Fixed It in 48 Hours – GetMicroservices"/>
+  <meta name="twitter:title" content="Why Your CRM and Stripe Don't Talk - and How We Fixed It in 48 Hours - GetMicroservices"/>
   <meta name="twitter:description" content="A SaaS founder was manually copying payment data from Stripe into HubSpot every Monday morning. Here"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Why Your CRM and Stripe Don't Talk — and How We Fixed It in 48 Hours – GetMicroservices",
+  "headline": "Why Your CRM and Stripe Don't Talk - and How We Fixed It in 48 Hours - GetMicroservices",
   "description": "A SaaS founder was manually copying payment data from Stripe into HubSpot every Monday morning. Here",
   "datePublished": "2026-03-24",
   "publisher": {
@@ -137,7 +137,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "Why Your CRM and Stripe Don't Talk — and How We Fixed It in 48 Hours – GetMicroservices",
+      "name": "Why Your CRM and Stripe Don't Talk - and How We Fixed It in 48 Hours - GetMicroservices",
       "item": "https://getmicroservices.com/blog/why-your-crm-and-stripe-dont-talk"
     }
   ]
@@ -168,23 +168,23 @@
   <a href="/blog" class="back-link">← back to blog</a>
 
   <div class="post-tag">CASE STUDY</div>
-  <h1>Why Your CRM and Stripe Don't Talk — and How We Fixed It in 48 Hours</h1>
+  <h1>Why Your CRM and Stripe Don't Talk - and How We Fixed It in 48 Hours</h1>
   <div class="post-meta">
     <span>2026-03-24</span>
     <span>4 min read</span>
   </div>
-  <p class="post-lead">A SaaS founder was copying payment data from Stripe into HubSpot every Monday morning. Two hours a week, every week. Here's the integration we built — and what it actually took.</p>
+  <p class="post-lead">A SaaS founder was copying payment data from Stripe into HubSpot every Monday morning. Two hours a week, every week. Here's the integration we built - and what it actually took.</p>
 
   <h2>The problem nobody talks about</h2>
-  <p>Most SaaS tools don't talk to each other out of the box. Stripe knows about your payments. HubSpot knows about your leads. But unless you manually bridge them, your sales team has no idea which prospects have already paid, which trials converted, or which accounts are at risk of churning.</p>
-  <p>Marcus runs a B2B SaaS company with about 120 active customers. Every Monday he'd open Stripe, export the week's data to a spreadsheet, clean it up, and manually update HubSpot deal stages and contact records. <strong>Two hours. Every Monday. For two years.</strong></p>
-  <p>He'd looked at Zapier. The native integration existed but it was limited — it could push new charges over, but it couldn't sync subscription status changes, handle failed payments, or update deal values dynamically. He needed something custom.</p>
+  <p>Most SaaS tools don't talk to each other out of the box. Stripe knows about your payments. HubSpot knows about your leads. But unless you manually bridge them, your sales team has no idea which prospects have already paid, which trials converted, or which accounts are at risk of churning. We solved a similar integration challenge when we <a href="/blog/automating-invoice-chasing-recovered-8000" style="color:var(--accent);">automated invoice chasing and recovered £8,000</a> in unpaid invoices.</p>
+  <p>Marcus runs a B2B SaaS company with about 120 active customers. Every Monday he’d open Stripe, export the week’s data to a spreadsheet, clean it up, and manually update HubSpot deal stages and contact records. <strong>Two hours. Every Monday. For two years.</strong> For a similar approach applied to e-commerce, see how we built <a href="/blog/shopify-order-3pl-fulfilment-automation" style="color:var(--accent);">Shopify order fulfilment automation</a> that eliminates manual data entry entirely.</p>
+  <p>He'd looked at Zapier. The native integration existed but it was limited - it could push new charges over, but it couldn't sync subscription status changes, handle failed payments, or update deal values dynamically. He needed something custom.</p>
 
   <h2>What we built</h2>
-  <p>The solution was a lightweight integration layer running on n8n, triggered by Stripe webhooks. Every relevant event in Stripe — new subscription, payment succeeded, payment failed, subscription cancelled — fires a webhook that triggers the flow in real time.</p>
+  <p>The solution was a lightweight integration layer running on n8n, triggered by Stripe webhooks. Every relevant event in Stripe - new subscription, payment succeeded, payment failed, subscription cancelled - fires a webhook that triggers the flow in real time.</p>
 
   <div class="flow-block">
-    <div class="flow-label">stripe → hubspot sync — SaaS, 120 customers</div>
+    <div class="flow-label">stripe → hubspot sync - SaaS, 120 customers</div>
     <div class="flow-nodes">
       <div class="node"><span class="node-name">⚡ Stripe Webhook</span><span class="node-sub">payment / subscription</span></div>
       <div class="arrow">──▶</div>
@@ -199,25 +199,25 @@
     <div class="flow-result">↳ HubSpot stays in sync with Stripe in real time. Cancellations trigger instant Slack alerts. Zero manual work.</div>
   </div>
 
-  <p>The router handles five event types: new subscription, renewal, upgrade, failed payment, and cancellation. Each has its own logic — a failed payment triggers a follow-up task in HubSpot, a cancellation fires a Slack alert to the founder and marks the deal as churned, a renewal just updates the deal value and renewal date.</p>
-  <p>Crucially, the integration matches records by email, not by ID. This means it works even if a customer signed up via a different flow and their Stripe customer ID doesn't exist in HubSpot yet — it creates the contact if needed.</p>
+  <p>The router handles five event types: new subscription, renewal, upgrade, failed payment, and cancellation. Each has its own logic - a failed payment triggers a follow-up task in HubSpot, a cancellation fires a Slack alert to the founder and marks the deal as churned, a renewal just updates the deal value and renewal date.</p>
+  <p>Crucially, the integration matches records by email, not by ID. This means it works even if a customer signed up via a different flow and their Stripe customer ID doesn't exist in HubSpot yet - it creates the contact if needed.</p>
 
   <h2>The build</h2>
   <p>We used n8n running on their existing VPS. The whole workflow is 22 nodes. We set up Stripe webhook signing verification so the endpoint rejects anything that isn't a legitimate Stripe event. Error handling logs failures to a simple Airtable sheet so nothing gets silently dropped.</p>
-  <p><strong>Total build time: 2 days.</strong> One day for the core sync logic and testing against Stripe's test mode. Second day for edge cases — duplicate events, customers with multiple subscriptions, retries on HubSpot API timeouts.</p>
+  <p><strong>Total build time: 2 days.</strong> One day for the core sync logic and testing against Stripe's test mode. Second day for edge cases - duplicate events, customers with multiple subscriptions, retries on HubSpot API timeouts.</p>
 
   <h2>The result</h2>
   <div class="result-box">
     <div class="result-label">after 4 weeks</div>
     <div class="result-item">2 hours/week of manual work eliminated completely</div>
-    <div class="result-item">HubSpot deal stages now accurate in real time — sales team stopped asking "did they pay yet?"</div>
-    <div class="result-item">3 at-risk accounts caught early via failed payment alerts — 2 saved</div>
+    <div class="result-item">HubSpot deal stages now accurate in real time - sales team stopped asking "did they pay yet?"</div>
+    <div class="result-item">3 at-risk accounts caught early via failed payment alerts - 2 saved</div>
     <div class="result-item">Marcus: "It just works. I forgot it existed, which is the point."</div>
   </div>
 
   <p>The total cost was $490. Marcus had been spending roughly 8 hours a month on manual data entry. At his effective hourly rate, the ROI was positive inside the first month.</p>
 
-  <p>The integration is also now the foundation for further automation — we're next looking at triggering onboarding sequences in HubSpot when a trial converts, and flagging accounts that haven't logged in after 14 days.</p>
+  <p>The integration is also now the foundation for further automation - we're next looking at triggering onboarding sequences in HubSpot when a trial converts, and flagging accounts that haven't logged in after 14 days.</p>
 
   <div class="post-cta">
     <p>Got two tools that should be talking to each other but aren't? We'll connect them.</p>
