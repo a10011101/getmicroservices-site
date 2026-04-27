@@ -167,6 +167,10 @@
       .wf-arrow { transform: rotate(90deg); padding: 4px 0; align-self: flex-start; margin-left: 20px; }
     }
     @media (max-width: 480px) { .footer-top { grid-template-columns: 1fr; } }
+  
+    .further-reading a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .further-reading a:hover { text-decoration: underline; }
+    .further-reading ul li { margin-bottom: 0.4rem; }
   </style>
 
   <meta property="og:title" content="How We Built an AI Inbox Triage System for a Busy Executive – GetMicroservices Blog"/>
@@ -327,7 +331,16 @@
   <p>We built this under our Starter tier — one focused automation, four integrations (Gmail, OpenAI, Slack, Google Sheets), delivered in under a week. James had the workflow running in production within 4 days of our first call. He got the full n8n workflow exported, the routing sheet template, and a short Loom walkthrough so he could adjust the classifier prompt himself as his needs change.</p>
   <p>If your inbox is eating your calendar, <a href="/" style="color: var(--accent);">let's talk</a>. The call is free and we'll tell you honestly whether this kind of automation makes sense for your setup.</p>
 
-</article>
+
+    <div class="further-reading pixel-box" style="margin-top:2.5rem; padding:1.5rem 2rem;">
+      <h2 style="font-size:1.15rem; margin-bottom:1rem; color:var(--accent); font-family:'Fira Code',monospace;">📖 Further Reading</h2>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="/blog/automate-client-onboarding/">How to Automate Client Onboarding (No Code)</a></li>
+        <li><a href="/blog/ai-content-workflow">How I Automate Content Creation with AI</a></li>
+        <li><a href="/blog/automate-small-business-tasks">10 Small Business Tasks You Should Automate Right Now</a></li>
+      </ul>
+    </div>
+  </article>
 
 <!-- CTA -->
 <div class="article-cta">

@@ -199,7 +199,11 @@
     footer { flex-direction: column; gap: 20px; text-align: center; }
     .footer-right { text-align: center; }
   }
-</style>
+
+    .further-reading a { color: #00ff88; text-decoration: none; }
+    .further-reading a:hover { text-decoration: underline; opacity:0.8; }
+    .further-reading ul li { margin-bottom: 0.4rem; }
+  </style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -359,7 +363,16 @@
     <a href="/a/#contact">[ start your automation project → ]</a>
   </div>
 
-</article>
+
+    <div class="further-reading" style="margin-top:2.5rem; padding:1.5rem 0; border-top:1px solid rgba(255,255,255,0.08);">
+      <h2 style="font-size:1.05rem; margin-bottom:1rem; color:#00ff88; font-family:'JetBrains Mono',monospace; letter-spacing:0.02em;">📖 Further Reading</h2>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="/a/blog/automating-invoice-chasing-recovered-8000">Automating Invoice Chasing: How One Freelancer Recovered £8,000 in Late Payments</a></li>
+        <li><a href="/a/blog/automate-small-business-tasks">10 Small Business Tasks You Should Automate Right Now</a></li>
+        <li><a href="/a/blog/competitor-price-monitoring-bot">Competitor Price Monitoring Bot That Runs Every Morning</a></li>
+      </ul>
+    </div>
+  </article>
 
 <hr class="full-divider"/>
 <footer>

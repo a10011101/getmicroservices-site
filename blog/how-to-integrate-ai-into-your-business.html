@@ -66,6 +66,10 @@
     footer p{color:var(--muted);font-size:0.78rem;}
     footer a{color:var(--accent);text-decoration:none;}
     @media(max-width:768px){nav{padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  
+    .further-reading a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .further-reading a:hover { text-decoration: underline; }
+    .further-reading ul li { margin-bottom: 0.4rem; }
   </style>
 
   <meta property="og:title" content="How to Integrate AI Into Your Business (Without a Tech Team) – GetMicroservices Blog"/>
@@ -195,5 +199,14 @@
 <script>
   function toggleTheme(){const h=document.documentElement;const d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'':'dark');document.getElementById('themeBtn').textContent=d?'🌙':'☀️';}
 </script>
+
+    <div class="further-reading pixel-box" style="margin-top:2.5rem; padding:1.5rem 2rem;">
+      <h2 style="font-size:1.15rem; margin-bottom:1rem; color:var(--accent); font-family:'Fira Code',monospace;">📖 Further Reading</h2>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="/blog/how-we-automated-a-booking-system-in-3-days">How We Automated a Booking System in 3 Days</a></li>
+        <li><a href="/blog/how-to-automate-your-business">How to Automate Your Business: A Practical Guide for SME Owners</a></li>
+        <li><a href="/blog/how-we-automated-invoice-chasing">How We Automated Invoice Chasing for a 50-Client Agency</a></li>
+      </ul>
+    </div>
 </body>
 </html>

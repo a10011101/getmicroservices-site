@@ -67,7 +67,11 @@
   .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
   .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
   @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}.score-table{font-size:10px;}}
-</style>
+
+    .further-reading a { color: #00ff88; text-decoration: none; }
+    .further-reading a:hover { text-decoration: underline; opacity:0.8; }
+    .further-reading ul li { margin-bottom: 0.4rem; }
+  </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
@@ -228,5 +232,14 @@
 <script>
   window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20);});
 </script>
+
+    <div class="further-reading" style="margin-top:2.5rem; padding:1.5rem 0; border-top:1px solid rgba(255,255,255,0.08);">
+      <h2 style="font-size:1.05rem; margin-bottom:1rem; color:#00ff88; font-family:'JetBrains Mono',monospace; letter-spacing:0.02em;">📖 Further Reading</h2>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="/a/blog/make-vs-zapier">Make vs Zapier: The Honest Comparison for 2026</a></li>
+        <li><a href="/a/blog/how-we-built-a-lead-qualification-bot">How We Built a Lead Qualification Bot That Books Calls Automatically</a></li>
+        <li><a href="/a/blog/n8n-self-hosted-guide">Self-Hosting n8n: Complete Setup Guide (2026)</a></li>
+      </ul>
+    </div>
 </body>
 </html>

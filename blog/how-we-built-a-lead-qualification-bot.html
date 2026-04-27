@@ -105,6 +105,10 @@
     .footer-socials a:hover { color: var(--accent); }
     @media (max-width: 768px) { .hamburger { display: flex; } .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg); border-bottom: 3px solid var(--yellow); flex-direction: column; padding: 16px 5%; gap: 10px; z-index: 99; } .nav-links.open { display: flex; } .nav-links a { font-size: 0.75rem; } .footer-top { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 480px) { .footer-top { grid-template-columns: 1fr; } }
+  
+    .further-reading a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .further-reading a:hover { text-decoration: underline; }
+    .further-reading ul li { margin-bottom: 0.4rem; }
   </style>
 
   <meta property="og:title" content="How We Built a Lead Qualification Bot That Books Calls Automatically — GetMicroservices"/>
@@ -326,6 +330,15 @@
     <p>A bot that qualifies in 90 seconds, scores automatically, and books only the right ones isn't a luxury — it's a basic efficiency fix. The tech exists, it's cheap to run, and the build time is measured in days, not months. The only thing blocking most teams is knowing it's possible.</p>
     <p>Now you know.</p>
 
+  
+    <div class="further-reading pixel-box" style="margin-top:2.5rem; padding:1.5rem 2rem;">
+      <h2 style="font-size:1.15rem; margin-bottom:1rem; color:var(--accent); font-family:'Fira Code',monospace;">📖 Further Reading</h2>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="/blog/lead-qualification-bot-weekend-build">How We Built a Lead Qualification Bot in a Weekend</a></li>
+        <li><a href="/blog/how-we-automated-invoice-chasing">How We Automated Invoice Chasing for a 50-Client Agency</a></li>
+        <li><a href="/blog/make-vs-zapier">Make vs Zapier: The Honest Comparison for 2026</a></li>
+      </ul>
+    </div>
   </article>
 
   <section class="article-cta">

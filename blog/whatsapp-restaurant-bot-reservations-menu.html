@@ -167,6 +167,10 @@
       .wf-arrow { transform: rotate(90deg); padding: 4px 0; align-self: flex-start; margin-left: 20px; }
     }
     @media (max-width: 480px) { .footer-top { grid-template-columns: 1fr; } }
+  
+    .further-reading a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .further-reading a:hover { text-decoration: underline; }
+    .further-reading ul li { margin-bottom: 0.4rem; }
   </style>
 
   <meta property="og:title" content="How We Built a WhatsApp Bot for a Restaurant in 48 Hours – GetMicroservices Blog"/>
@@ -338,7 +342,16 @@
   <p>This was scoped under our Growth plan — two connected flows (reservation + FAQ), WhatsApp API setup, custom knowledge base, and the Telegram escalation layer. Dimitri got full documentation, the n8n workflow JSON, and a 30-minute handover call. He's been running independently since week one.</p>
   <p>If your restaurant, bar, or hospitality business is drowning in the same kind of messages, <a href="/" style="color: var(--accent);">let's talk</a>. The call is free and we'll tell you honestly what's worth automating and what isn't.</p>
 
-</article>
+
+    <div class="further-reading pixel-box" style="margin-top:2.5rem; padding:1.5rem 2rem;">
+      <h2 style="font-size:1.15rem; margin-bottom:1rem; color:var(--accent); font-family:'Fira Code',monospace;">📖 Further Reading</h2>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="/blog/why-your-crm-and-stripe-dont-talk">Why Your CRM and Stripe Don't Talk - and How We Fixed It in 48 Hours</a></li>
+        <li><a href="/blog/webhook-explained">Webhooks Explained: Automate Anything</a></li>
+        <li><a href="/blog/why-zapier-gets-expensive-fast">Why Zapier Gets Expensive Fast (and What We Use Instead)</a></li>
+      </ul>
+    </div>
+  </article>
 
 <!-- CTA -->
 <div class="article-cta">

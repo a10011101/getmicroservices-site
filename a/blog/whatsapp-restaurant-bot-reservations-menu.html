@@ -190,7 +190,11 @@
     nav { background: rgba(10,10,10,.97) !important; border-color: var(--border) !important; padding: 16px 20px; }
     .nav-logo { font-size: 16px !important; }
   }
-</style>
+
+    .further-reading a { color: #00ff88; text-decoration: none; }
+    .further-reading a:hover { text-decoration: underline; opacity:0.8; }
+    .further-reading ul li { margin-bottom: 0.4rem; }
+  </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
@@ -364,7 +368,16 @@
     <a href="/a/#contact" class="btn-cta">[ let's talk ]</a>
   </div>
 
-</article>
+
+    <div class="further-reading" style="margin-top:2.5rem; padding:1.5rem 0; border-top:1px solid rgba(255,255,255,0.08);">
+      <h2 style="font-size:1.05rem; margin-bottom:1rem; color:#00ff88; font-family:'JetBrains Mono',monospace; letter-spacing:0.02em;">📖 Further Reading</h2>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="/a/blog/why-your-crm-and-stripe-dont-talk">Why Your CRM and Stripe Don't Talk — and How We Fixed It in 48 Hours</a></li>
+        <li><a href="/a/blog/webhook-explained">Webhooks Explained: Automate Anything</a></li>
+        <li><a href="/a/blog/why-zapier-gets-expensive-fast">Why Zapier Gets Expensive Fast (and What We Use Instead)</a></li>
+      </ul>
+    </div>
+  </article>
 
 <hr class="full-divider"/>
 <footer>

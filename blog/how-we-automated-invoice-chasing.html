@@ -167,6 +167,10 @@
       .wf-arrow { transform: rotate(90deg); padding: 4px 0; align-self: flex-start; margin-left: 20px; }
     }
     @media (max-width: 480px) { .footer-top { grid-template-columns: 1fr; } }
+  
+    .further-reading a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .further-reading a:hover { text-decoration: underline; }
+    .further-reading ul li { margin-bottom: 0.4rem; }
   </style>
 
   <meta property="og:title" content="How We Automated Invoice Chasing for a 50-Client Agency – GetMicroservices Blog"/>
@@ -328,7 +332,16 @@
   <p>This was a focused, single-workflow build — scoped under our Starter plan. James paid a fixed price, received the full n8n workflow exported and documented, and has been running it independently since day one. No ongoing fees to us, no retainer, no black box.</p>
   <p>If your business has a similar problem — revenue sitting uncollected because nobody has time to chase it — <a href="/" style="color: var(--accent);">get in touch</a>. The call is free and we'll tell you honestly whether automation is the right move.</p>
 
-</article>
+
+    <div class="further-reading pixel-box" style="margin-top:2.5rem; padding:1.5rem 2rem;">
+      <h2 style="font-size:1.15rem; margin-bottom:1rem; color:var(--accent); font-family:'Fira Code',monospace;">📖 Further Reading</h2>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="/blog/how-we-built-a-lead-qualification-bot">How We Built a Lead Qualification Bot That Books Calls Automatically</a></li>
+        <li><a href="/blog/how-we-automated-a-booking-system-in-3-days">How We Automated a Booking System in 3 Days</a></li>
+        <li><a href="/blog/lead-qualification-bot-weekend-build">How We Built a Lead Qualification Bot in a Weekend</a></li>
+      </ul>
+    </div>
+  </article>
 
 <!-- CTA -->
 <div class="article-cta">

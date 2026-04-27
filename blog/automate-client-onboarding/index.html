@@ -39,7 +39,11 @@
         .nav { margin-bottom: 30px; }
         .nav a { color: #b5006a; text-decoration: none; font-family: 'Fira Code', monospace; }
         .nav a:hover { text-decoration: underline; }
-    </style>
+    
+    .further-reading a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .further-reading a:hover { text-decoration: underline; }
+    .further-reading ul li { margin-bottom: 0.4rem; }
+  </style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -139,7 +143,16 @@
             </div>
             
             <a href="/blog/" class="read-more">← Back to Blog</a>
-        </article>
+        
+    <div class="further-reading pixel-box" style="margin-top:2.5rem; padding:1.5rem 2rem;">
+      <h2 style="font-size:1.15rem; margin-bottom:1rem; color:var(--accent); font-family:'Fira Code',monospace;">📖 Further Reading</h2>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="/blog/automate-small-business-tasks">10 Small Business Tasks You Should Automate Right Now</a></li>
+        <li><a href="/blog/ai-inbox-triage-for-busy-executives">How We Built an AI Inbox Triage System for a Busy Executive</a></li>
+        <li><a href="/blog/automated-employee-timesheet-processing">How We Automated Employee Timesheet Processing for a Digital Marketing Agency</a></li>
+      </ul>
+    </div>
+  </article>
         
         <footer>
             <p>&copy; 2026 GetMicroservices. // done-for-you automation agency</p>
