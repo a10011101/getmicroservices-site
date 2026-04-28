@@ -157,7 +157,7 @@
   <p>A SaaS founder was spending two hours every morning reviewing intake form submissions. The form data was all there — company size, budget range, use case — but someone had to read it, make a judgement, and route it. <strong>The information for a decision already existed. The decision itself didn't need a human.</strong></p>
 
   <h2>The Scoring Model</h2>
-  <p>Before touching n8n, we spent an hour defining what a "good" lead looked like. Five signals, each worth a different number of points:</p>
+  <p>Before touching <a href="/a/blog/n8n-vs-zapier-2026">n8n</a>, we spent an hour defining what a "good" lead looked like. Five signals, each worth a different number of points:</p>
 
   <table class="score-table">
     <thead>
@@ -174,12 +174,10 @@
 
   <p>Score ≥ 70 = Hot. 40–69 = Warm. Below 40 = Nurture. Weights stored in a Sheets config tab — no developer needed to adjust them.</p>
 
-  <h2>The Workflow</h2>
-  <div class="flow-card">
+  <h2>The Workflow</h2><a href="/a/blog/n8n-vs-zapier-2026">n8n</a> workflow — <div class="flow-card">
     <div class="flow-label">n8n workflow — <a href="/a/blog/how-we-built-a-lead-qualification-bot">lead qualification</a> bot</div>
     <div class="flow-nodes">
-      <div class="node-box"><span class="node-name">Typeform / Tally</span><span class="node-sub">webhook trigger</span></div>
-      <div class="flow-arrow">→</div>
+      <div class="node-box"><span class="node-name">Typeform / Tally</span><span class="node-sub">webhook trigger</span></div><a href="/a/blog/n8n-vs-zapier-2026">n8n</a> JS Node<div class="flow-arrow">→</div>
       <div class="node-box"><span class="node-name">n8n JS Node</span><span class="node-sub">score formula</span></div>
       <div class="flow-arrow">→</div>
       <div class="node-box"><span class="node-name">Switch Node</span><span class="node-sub">hot / warm / nurture</span></div>

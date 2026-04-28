@@ -210,13 +210,12 @@
     <p>They'd tried a Typeform qualification survey — open rates were under 30%. They'd tried a "book a call" Calendly link gated by a manual <a href="/blog/ai-inbox-triage-for-busy-executives">email</a> reply — too slow, leads went cold. What they actually needed was something that felt fast, personal, and frictionless, but still filtered hard enough to protect the calendar.</p>
 
     <h2>The Solution: A Telegram Bot That Qualifies Before It Books</h2>
-    <p>We built a two-part system: a <strong>Telegram bot for the conversation layer</strong>. When a lead submits the contact form, instead of a generic "we'll be in touch" <a href="/blog/ai-inbox-triage-for-busy-executives">email</a>, they get an instant Telegram message: <strong>n8n for the logic layer</strong>. When a lead submits the contact form, instead of a generic "we'll be in touch" email, they get an instant Telegram message: <em>"Hey — quick 3-question check before we book your call. Takes 60 seconds."</em></p>
+    <p>We built a two-part system: a <strong>Telegram bot for the conversation layer</strong>. When a lead submits the contact form, instead of a generic "we'll be in touch" <a href="/blog/ai-inbox-triage-for-busy-executives">email</a>, they get an instant Telegram message: <strong><a href="/blog/n8n-vs-zapier-2026">n8n</a> for the logic layer</strong>. When a lead submits the contact form, instead of a generic "we'll be in touch" email, they get an instant Telegram message: <em>"Hey — quick 3-question check before we book your call. Takes 60 seconds."</em></p>
     <p>The bot walks them through three qualifying questions:</p>
     <ul>
       <li>What's your monthly marketing budget? (bucketed: &lt;£500 / £500–2k / £2k–10k / £10k+)</li>
       <li>What's the main thing you're trying to solve in the next 90 days?</li>
-      <li>Are you the decision-maker, or will others need to be involved?</li>
-    </ul>
+      <li>Are you the decision-maker, or will others need to be involved?</li>Each answer feeds a simple scoring model in <a href="/blog/n8n-vs-zapier-2026">n8n</a>. Budget under £2k → zero points. Clear problem statement → 2 points. Decision-maker → 3 points. </ul>
     <p>Each answer feeds a simple scoring model in n8n. Budget under £2k → zero points. Clear problem statement → 2 points. Decision-maker → 3 points. <strong>Score 4+ out of 7 and you get the Calendly link.</strong> Below that, the bot sends a polite "we're not the right fit yet" message with a link to their resource hub instead.</p>
     <p>The whole conversation takes under 90 seconds. Response rate jumped to over 70% — versus the 28% they were getting with the Typeform.</p>
 
@@ -236,8 +235,7 @@
         </div>
         <div class="wf-arrow">→</div>
         <div class="wf-node">
-          <div class="wf-box">
-            <span class="wf-icon">🔁</span>
+          <div class="wf-box"><a href="/blog/n8n-vs-zapier-2026">n8n</a><span class="wf-icon">🔁</span>
             <div>
               <div class="wf-name">n8n</div>
               <div class="wf-type">orchestration</div>

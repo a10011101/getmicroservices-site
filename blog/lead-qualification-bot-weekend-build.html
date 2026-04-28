@@ -143,7 +143,7 @@
 </div>
 
 <div class="article-body">
-  <h2>The Problem With Manual Lead Triage</h2>
+  <h2>The Problem With Manual Lead <a href="/blog/ai-inbox-triage-for-busy-executives">Triage</a></h2>
   <p>A SaaS founder was spending two hours every morning reviewing intake form submissions. Some leads were enterprise deals worth chasing hard. Others were students on free plans. The form data was all there — company size, budget range, use case — but someone had to read it, make a judgement, and route it to the right person.</p>
   <p><strong>The information for a decision already existed. For a comprehensive approach, read <a href="/blog/how-to-automate-your-business" style="color:var(--accent);">how to automate your business</a> — the same principles apply to <a href="/blog/how-we-built-a-lead-qualification-bot">lead qualification</a> and beyond.</p>
   <p><strong>The information for a decision already existed. The decision itself didn't need a human.</strong></p>
@@ -173,16 +173,13 @@
     → <span class="step">n8n (JS node):</span> Parse fields, run scoring formula against config<br>
     → <span class="step">Switch node:</span> Route by score — Hot / Warm / Nurture<br>
     → <span class="step">Hot path:</span> Slack DM to founder + HubSpot contact (Hot tag)<br>
-    → <span class="step">Warm path:</span> Add to HubSpot sequence + Slack #warm-leads channel<br>
-    → <span class="step">Nurture path:</span> Add to email drip campaign + tag in HubSpot<br>
+    → <span class="step">Warm path:</span> Add to HubSpot sequence + Slack #warm-leads channel<br> Add to <a href="/blog/ai-inbox-triage-for-busy-executives">email</a> drip campaign + tag in HubSpot<span class="step">Nurture path:</span> Add to email drip campaign + tag in HubSpot<br>
     → <span class="step">All paths:</span> Log to Google Sheets with score + timestamp
   </div>
 
   <h2>Plugging In the Webhook</h2>
   <p>Typeform has a native webhook option under Integrations. Tally does too, though the payload structure is slightly different — you'll need to map field IDs to readable names in the first n8n node. We used a Set node to normalise the shape before the scoring logic so the formula works identically regardless of which form tool fires it.</p>
-  <p>The scoring JavaScript is about 25 lines. It reads weights from a Google Sheets "config" tab so the founder can adjust them without opening n8n. This was the single decision that saved the most back-and-forth later.</p>
-
-  <h2>The CRM Step</h2>
+  <p>The scoring JavaScript is about 25 lines. It reads weights from a Google Sheets "config" tab so the founder can adjust them without opening n8n. This was the single decision that saved the most back-and-forth later.</p>The deduplication check is two lines — check by <a href="/blog/ai-inbox-triage-for-busy-executives">email</a>, branch on exists/new.<h2>The CRM Step</h2>
   <p>We used HubSpot's n8n node to create or update a contact, set the lead score as a custom property, and apply a tag. If the contact already existed (returning lead), the workflow updated rather than duplicated. <strong>The deduplication check is two lines — check by email, branch on exists/new.</strong> This is the step most people skip and regret.</p>
 
   <h2>What We Built in a Weekend</h2>

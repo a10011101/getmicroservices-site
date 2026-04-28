@@ -157,11 +157,10 @@
   <h2>The Three Tools</h2>
   <ul>
     <li><strong><a href="/a/blog/google-sheets-slack-digest-ops-teams">Google Sheets</a></strong> — single source of truth for all KPIs, updated by integrations throughout the week</li>
-    <li><strong>n8n</strong> — orchestration layer that reads the sheet, formats the report, and fires delivery</li><a href="/a/blog/google-sheets-slack-digest-ops-teams"> — delivery: <a href="/a/blog/google-sheets-slack-digest-ops-teams">Slack</a> for internal teams, email for external clients</a> + email<li><strong>Slack + email</strong> — delivery: Slack for internal teams, email for external clients</li>
+    <li><strong><a href="/a/blog/n8n-vs-zapier-2026">n8n</a></strong> — orchestration layer that reads the sheet, formats the report, and fires delivery</li><a href="/a/blog/google-sheets-slack-digest-ops-teams"> — delivery: <a href="/a/blog/google-sheets-slack-digest-ops-teams">Slack</a> for internal teams, email for external clients</a> + email<li><strong>Slack + email</strong> — delivery: Slack for internal teams, email for external clients</li>
   </ul>
 
-  <h2>How the Workflow Runs</h2>
-  <p>Every Monday at 8:00 AM, a cron trigger fires in n8n. It reads the previous week's data range from Google Sheets — traffic, conversions, revenue, tasks completed. A JavaScript node cleans and formats the numbers, calculates week-over-week deltas, and flags anything that moved more than 15%. Then it builds two outputs simultaneously.</p>
+  <h2>Every Monday at 8:00 AM, a cron trigger fires in <a href="/a/blog/n8n-vs-zapier-2026">n8n</a>. It reads the previous week's data range from Google Sheets — traffic, conversions, revenue, tasks completed. A JavaScript node cleans and formats the numbers, calculates week-over-week deltas, and flags anything that moved more than 15%. Then it builds two outputs simultaneously.</h2><a href="/a/blog/n8n-vs-zapier-2026">n8n</a> workflow — weekly client reporting<p>Every Monday at 8:00 AM, a cron trigger fires in n8n. It reads the previous week's data range from Google Sheets — traffic, conversions, revenue, tasks completed. A JavaScript node cleans and formats the numbers, calculates week-over-week deltas, and flags anything that moved more than 15%. Then it builds two outputs simultaneously.</p>
 
   <div class="flow-card">
     <div class="flow-label">n8n workflow — weekly client reporting</div>

@@ -266,7 +266,7 @@
   <p>"I know I need to do better onboarding," he told us. For client-based businesses facing the same challenge, we also built an <a href="/blog/automate-client-onboarding/" style="color:var(--accent);">automated client onboarding system</a> that works on a similar principle. "But I'm a solo founder. I can't manually email every trial user. I don't have time to build a drip sequence properly."</p>
 
   <h2>What We Mapped Out</h2>
-  <p>Before writing a single n8n node, we mapped the ideal onboarding journey. The goal was to get each user to their first meaningful action — what Callum called "the connected moment" — where they'd linked a client project and assigned a task. Users who hit that milestone converted at 4× the base rate.</p>
+  <p>Before writing a single <a href="/blog/n8n-vs-zapier-2026">n8n</a> node, we mapped the ideal onboarding journey. The goal was to get each user to their first meaningful action — what Callum called "the connected moment" — where they'd linked a client project and assigned a task. Users who hit that milestone converted at 4× the base rate.</p>
   <p>So we designed the sequence around that single goal:</p>
   <ul>
     <li>Immediate welcome email with a single clear CTA (not a feature dump)</li>
@@ -279,9 +279,7 @@
   </ul>
   <p>Every branch was behaviour-driven. The sequence watched what users actually did in the product and adjusted accordingly. No one got the same email if they were in a different place in their journey.</p>
 
-  <h2>What We Built</h2>
-
-  <div class="workflow-diagram">
+  <h2>What We Built</h2>saas onboarding automation — <a href="/blog/n8n-vs-zapier-2026">n8n</a> + Stripe + Postmark<div class="workflow-diagram">
     <div class="workflow-label">saas onboarding automation — n8n + Stripe + Postmark</div>
     <div class="workflow-nodes">
       <div class="wf-node">
@@ -307,8 +305,7 @@
       <div class="wf-node">
         <div class="wf-box"><span class="wf-icon">💳</span><div><div class="wf-name">Convert / Win-back</div><div class="wf-type">Stripe checkout link</div></div></div>
       </div>
-    </div>
-    <div class="workflow-result">↳ Every trial user gets behaviour-matched emails at the right moment — zero manual effort from Callum</div>
+    </div>The technical stack: <a href="/blog/n8n-vs-zapier-2026">n8n</a> as the <div class="workflow-result">↳ Every trial user gets behaviour-matched emails at the right moment — zero manual effort from Callum</div>
   </div>
 
   <p>The technical stack: n8n as the <a href="/blog/n8n-business-processes">workflow</a> engine, Postmark for transactional email delivery, Callum's own product API to query user activity, and Stripe for payment links embedded in the conversion emails. Callum got a Slack notification any time a user hit the "connected moment" milestone — a small win he could see in real time.</p>
