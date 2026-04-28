@@ -39,7 +39,7 @@
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg);
-      color: var(--text);
+      color: var(--fg);
       line-height: 1.7;
       font-size: 16px;
     }
@@ -66,7 +66,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
       font-size: 1rem;
-      color: var(--text);
+      color: var(--fg);
       text-decoration: none;
     }
     .nav-logo span { color: var(--green); }
@@ -97,12 +97,12 @@
       border: none;
       cursor: pointer;
       padding: 6px;
-      color: var(--text);
+      color: var(--fg);
       font-size: 1.2rem;
     }
     .mobile-menu {
       display: none;
-      background: var(--surface);
+      background: var(--bg2);
       border-bottom: 1px solid var(--border);
       padding: 20px 24px;
       flex-direction: column;
@@ -112,7 +112,7 @@
     .mobile-menu a {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.9rem;
-      color: var(--text);
+      color: var(--fg);
       padding: 6px 0;
       border-bottom: 1px solid var(--border);
     }
@@ -182,7 +182,7 @@
     h2 {
       font-size: 1.45rem;
       font-weight: 700;
-      color: var(--text);
+      color: var(--fg);
       margin: 48px 0 16px;
     }
     h2::before {
@@ -198,11 +198,11 @@
       color: var(--green);
       margin: 28px 0 10px;
     }
-    p { margin-bottom: 18px; color: var(--text); }
+    p { margin-bottom: 18px; color: var(--fg); }
 
     /* FLOW CARDS (agent cards) */
     .flow-card {
-      background: var(--surface);
+      background: var(--bg2);
       border: 1px solid var(--border);
       border-radius: 4px;
       padding: 28px 24px;
@@ -245,7 +245,7 @@
     .node-box {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.72rem;
-      color: var(--text);
+      color: var(--fg);
       background: var(--surface2);
       border: 1px solid var(--border);
       padding: 5px 12px;
@@ -271,7 +271,7 @@
     .result-item {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.78rem;
-      color: var(--text);
+      color: var(--fg);
       padding: 3px 0;
       border-bottom: 1px solid var(--border);
     }
@@ -280,7 +280,7 @@
 
     /* CALLOUT */
     .callout {
-      background: var(--surface);
+      background: var(--bg2);
       border: 1px solid var(--green-border);
       border-left: 3px solid var(--green);
       padding: 20px 24px;
@@ -306,11 +306,11 @@
       color: var(--green);
       font-family: 'JetBrains Mono', monospace;
     }
-    .check-list li strong { color: var(--text); }
+    .check-list li strong { color: var(--fg); }
 
     /* CTA BOX */
     .cta-box {
-      background: var(--surface);
+      background: var(--bg2);
       border: 1px solid var(--green-border);
       border-radius: 4px;
       padding: 40px 36px;
@@ -329,7 +329,7 @@
     .cta-box h2 {
       font-size: 1.5rem;
       margin-top: 0;
-      color: var(--text);
+      color: var(--fg);
     }
     .cta-box h2::before { display: none; }
     .cta-box p { color: var(--muted); margin-bottom: 24px; }
@@ -348,7 +348,7 @@
 
     /* FOOTER */
     footer {
-      background: var(--surface);
+      background: var(--bg2);
       border-top: 1px solid var(--border);
       text-align: center;
       padding: 32px 24px;
@@ -375,7 +375,7 @@
 <body>
 
 <nav id="nav">
-  <a href="/a/" class="nav-logo">get<span>micro</span>services<span>.com</span></a>
+  <a href="/a/" class="nav-logo">Get<span class="accent">Micro</span><span class="yellow">Services</span></a>
   <div class="nav-links-wrap">
     <ul class="nav-links">
       <li><a href="/a/#services">services</a></li>
@@ -456,7 +456,7 @@
       <div class="flow-body">
         <p>Customer support is the single most common automation use case for small businesses, and Intercom's Fin agent is the closest thing to a genuinely useful product in this space. Unlike generic chatbots that just frustrate customers, Fin is trained on your actual documentation, help articles, and support history.</p>
         <p>Fin resolves conversations autonomously when it has the answer — drawing on your knowledge base and past tickets. When it doesn't know, it escalates to a human with a full context summary already written. Small businesses using Fin report handling 50–70% of support queries without human involvement, typically within the first 30 days.</p>
-        <p><strong style="color:var(--text);">Real use case:</strong> A 12-person e-commerce brand was drowning in "Where's my order?" and "Can I return this?" queries. After deploying Fin, 68% of tickets closed automatically. Their two-person support team went from firefighting to actually improving products.</p>
+        <p><strong style="color:var(--fg);">Real use case:</strong> A 12-person e-commerce brand was drowning in "Where's my order?" and "Can I return this?" queries. After deploying Fin, 68% of tickets closed automatically. Their two-person support team went from firefighting to actually improving products.</p>
       </div>
       <div class="flow-result">
         <div class="result-label">// results</div>
@@ -488,7 +488,7 @@
         <p>Sales outreach is broken for most small businesses. Either you're manually researching prospects for hours before writing a single email, or you're blasting generic templates that get ignored. Clay solves this elegantly.</p>
         <p>Clay is a data enrichment and outreach automation platform with an AI agent layer on top ("Claygent"). You define your ideal customer profile, feed in a list of target companies, and Clay pulls data from LinkedIn, company websites, tech stacks, and news mentions — then writes genuinely personalised first lines for each prospect.</p>
         <p>For small businesses, the power is personalisation-at-scale. Instead of 20 deeply researched emails per week, you can send 200 genuinely personalised ones. Response rates typically run 3–5x higher than generic sequences.</p>
-        <p><strong style="color:var(--text);">Real use case:</strong> A two-person B2B agency built a list of 800 local professional services firms, enriched each with owner name, recent company news, and hiring status — then Claygent wrote personalised opening lines. 34 meetings booked from one campaign.</p>
+        <p><strong style="color:var(--fg);">Real use case:</strong> A two-person B2B agency built a list of 800 local professional services firms, enriched each with owner name, recent company news, and hiring status — then Claygent wrote personalised opening lines. 34 meetings booked from one campaign.</p>
       </div>
       <div class="flow-result">
         <div class="result-label">// results</div>
@@ -519,7 +519,7 @@
       <div class="flow-body">
         <p>Content creation AI agents have matured enormously from the "write me a blog post" tools of 2022. Jasper and Writer now function as genuine content operations platforms with agent capabilities — they maintain your brand voice across dozens of content types, integrate with your CMS, and can execute multi-step content workflows autonomously.</p>
         <p>Jasper's "Campaigns" feature lets you brief a single marketing campaign and have the agent generate the blog post, email sequence, social media posts, and ad copy variations — all consistent in tone, optimised for each channel. For small businesses, the practical win is reclaiming 10–20 hours per week of writing time.</p>
-        <p><strong style="color:var(--text);">Real use case:</strong> A solo financial advisor was struggling to maintain a weekly newsletter and monthly blog. Using Jasper with a pre-loaded brand voice document, she reduced first-draft creation time from 3 hours to 40 minutes per piece.</p>
+        <p><strong style="color:var(--fg);">Real use case:</strong> A solo financial advisor was struggling to maintain a weekly newsletter and monthly blog. Using Jasper with a pre-loaded brand voice document, she reduced first-draft creation time from 3 hours to 40 minutes per piece.</p>
       </div>
       <div class="flow-result">
         <div class="result-label">// results</div>
@@ -550,7 +550,7 @@
       <div class="flow-body">
         <p>Calendar management sounds mundane, but the cognitive overhead of scheduling — protecting deep work time, fitting in admin, managing back-and-forth meeting requests — is a massive hidden tax on small business owners. Reclaim.ai is an AI scheduling agent that lives in your Google Calendar and acts as an intelligent buffer between your intentions and your commitments.</p>
         <p>Reclaim learns what kind of work you do, when you do it best, and how to protect time for the things that matter. It automatically schedules recurring tasks around your meetings and handles 1:1 scheduling with clients by finding mutually available times based on genuine priority, not just first-available slots.</p>
-        <p><strong style="color:var(--text);">Real use case:</strong> A freelance consultant was losing 8+ hours per week to reactive scheduling. After 3 weeks with Reclaim, she had 4 hours of protected focus time daily and stopped working after 6pm.</p>
+        <p><strong style="color:var(--fg);">Real use case:</strong> A freelance consultant was losing 8+ hours per week to reactive scheduling. After 3 weeks with Reclaim, she had 4 hours of protected focus time daily and stopped working after 6pm.</p>
       </div>
       <div class="flow-result">
         <div class="result-label">// results</div>
@@ -582,7 +582,7 @@
         <p>Data entry is the silent killer of small business productivity. Copying information between tools, updating CRMs from emails, pulling data from websites into spreadsheets — it's tedious, low-value work that still eats hours every week. Bardeen is a browser-based automation agent that eliminates most of it.</p>
         <p>Bardeen runs as a Chrome extension and can watch what you do on screen, then replicate it automatically. More powerfully, it has pre-built "playbooks" for the most common data tasks: scraping LinkedIn profiles into your CRM, pulling invoice data from Gmail into a spreadsheet, syncing Calendly bookings to Notion, and hundreds more.</p>
         <p>The AI layer means you can describe what you want in plain English and Bardeen will build the automation. No code, no Zapier subscription required.</p>
-        <p><strong style="color:var(--text);">Real use case:</strong> A property management company was manually entering tenant application data from PDF forms into their database — a 3-hour daily task. Bardeen automated the extraction and entry in a weekend, saving 15 hours per week immediately.</p>
+        <p><strong style="color:var(--fg);">Real use case:</strong> A property management company was manually entering tenant application data from PDF forms into their database — a 3-hour daily task. Bardeen automated the extraction and entry in a weekend, saving 15 hours per week immediately.</p>
       </div>
       <div class="flow-result">
         <div class="result-label">// results</div>
