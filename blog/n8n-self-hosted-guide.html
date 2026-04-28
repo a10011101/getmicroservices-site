@@ -129,7 +129,7 @@
 
 <div class="article-body">
 
-  <p>We've self-hosted n8n for dozens of clients over the past two years. The cloud version is fine for testing, but once you hit real workflow volume, the pricing jumps fast. Self-hosting puts you in control: <strong>unlimited workflows, unlimited executions, your data stays on your server.</strong></p>
+  <p>We've self-hosted <a href="/blog/n8n-vs-zapier-2026">n8n</a> for dozens of clients over the past two years. The cloud version is fine for testing, but once you hit real workflow volume, the pricing jumps fast. Self-hosting puts you in control: <strong>unlimited workflows, unlimited executions, your data stays on your server.</strong>This guide covers the exact setup we use in production — not a "hello world" demo. By the end you'll have <a href="/blog/n8n-vs-zapier-2026">n8n</a> running on a proper domain with HTTPS, auto-restart, and basic security hardening.</p>
 
   <p>This guide covers the exact setup we use in production — not a "hello world" demo. By the end you'll have n8n running on a proper domain with HTTPS, auto-restart, and basic security hardening.</p>
 
@@ -166,7 +166,7 @@
   <p>Before setting up HTTPS, your domain needs to resolve to your server IP. In your DNS provider, add an A record:</p>
 
   <div class="flow-box">
-    <span class="step">Type:</span> A<br/>
+    <span class="step"> <a href="/blog/n8n-vs-zapier-2026">n8n</a> (or @ for root domain)</span> A<br/>
     <span class="step">Name:</span> n8n (or @ for root domain)<br/>
     <span class="step">Value:</span> YOUR.SERVER.IP.ADDRESS<br/>
     <span class="step">TTL:</span> 300

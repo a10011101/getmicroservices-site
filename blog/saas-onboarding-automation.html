@@ -260,8 +260,8 @@
 <article class="article-body">
 
   <h2>The Problem</h2>
-  <p>Callum runs a project management tool aimed at small agencies. The product was good — retention among paid users was strong. But the trial-to-paid conversion rate was stuck at around 12%, and analytics showed that most drop-offs happened in the first five days. We applied a similar behaviour-driven approach to <a href="/blog/automate-client-onboarding/" style="color:var(--accent);">automated client onboarding</a> for service businesses.</p>
-  <p>The pattern was consistent: users would sign up, poke around for a bit, then disappear. When Callum surveyed churned trialists, the answers clustered around one theme: <strong>"I didn't know where to start."</strong></p>
+  <p>Callum runs a project management tool aimed at small agencies. The product was good — retention among paid users was strong. But the trial-to-paid conversion rate was stuck at around 12%, and analytics showed that most drop-offs happened in the first five days. We applied a similar behaviour-driven approach to <a href="/blog/automate-client-onboarding/" style="color:var(--accent);">automated <a href="/blog/automate-client-onboarding">client onboarding</a></a> for service businesses.</p>
+  <p>The pattern was consistent: users would sign up, poke around for a bit, then disappear. When Callum surveyed churned trialists, the answers clustered around one theme: <strong>"I didn't know where to start."</strong>His current <a href="/blog/automate-client-onboarding">onboard</a>"I know I need to do better <a href="/blog/automate-client-onboarding">onboard</a>ing," he told us. For client-based businesses facing the same challenge, we also built an </p>
   <p>His current onboarding was a single welcome email sent immediately on signup, followed by nothing until a "your trial ends in 3 days" reminder. There was no guidance, no nudges, no check-in. New users were dropped into the product and expected to figure it out.</p>
   <p>"I know I need to do better onboarding," he told us. For client-based businesses facing the same challenge, we also built an <a href="/blog/automate-client-onboarding/" style="color:var(--accent);">automated client onboarding system</a> that works on a similar principle. "But I'm a solo founder. I can't manually email every trial user. I don't have time to build a drip sequence properly."</p>
 
@@ -311,7 +311,7 @@
     <div class="workflow-result">↳ Every trial user gets behaviour-matched emails at the right moment — zero manual effort from Callum</div>
   </div>
 
-  <p>The technical stack: n8n as the workflow engine, Postmark for transactional email delivery, Callum's own product API to query user activity, and Stripe for payment links embedded in the conversion emails. Callum got a Slack notification any time a user hit the "connected moment" milestone — a small win he could see in real time.</p>
+  <p>The technical stack: n8n as the <a href="/blog/n8n-business-processes">workflow</a> engine, Postmark for transactional email delivery, Callum's own product API to query user activity, and Stripe for payment links embedded in the conversion emails. Callum got a Slack notification any time a user hit the "connected moment" milestone — a small win he could see in real time.</p>
   <p>We also built a lightweight internal dashboard in Notion (populated by n8n) showing each trial user's current stage, last email sent, and whether they'd hit the key milestone. Nothing fancy — just a table that updated itself.</p>
   <p><strong>Build time: 4 days.</strong> The majority of that was iterating on email copy with Callum and testing the activity-check logic against his staging environment. The n8n wiring itself was maybe a day's work.</p>
 

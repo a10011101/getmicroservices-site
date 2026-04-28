@@ -147,16 +147,15 @@
   <p>We didn't introduce any new software. The client already had all three tools — they were just using them in isolation:</p>
   <ul>
     <li><strong>Google Sheets</strong> — the single source of truth for all KPIs, updated by various integrations throughout the week</li>
-    <li><strong>n8n</strong> — the orchestration layer that reads the sheet, formats the report, and fires the delivery</li>
+    <li><strong><a href="/blog/n8n-vs-zapier-2026">n8n</a></strong> — the orchestration layer that reads the sheet, formats the report, and fires the delivery</li>
     <li><strong>Slack + email</strong> — delivery channels: Slack for internal teams, email for external clients</li>
   </ul>
 
-  <h2>How the Workflow Runs</h2>
+  <h2>Every Monday at 8:00 AM, a cron trigger fires in <a href="/blog/n8n-vs-zapier-2026">n8n</a>. For an e-commerce version of the same pattern, see </h2>
   <p>Every Monday at 8:00 AM, a cron trigger fires in n8n. For an e-commerce version of the same pattern, see <a href="/blog/competitor-price-monitoring-bot" style="color:var(--accent);">our competitor price monitoring bot</a> that delivers daily digests to Slack before trading starts. It reads the previous week's data range from Google Sheets — traffic, conversions, revenue, tasks completed, whatever the client tracks. A few JavaScript nodes clean and format the numbers. Then it builds two outputs: a Slack block message for the internal team, and an HTML email for the client.</p>
 
   <div class="flow-box">
-    <span class="step">Trigger:</span> Cron — every Monday 08:00<br>
-    → <span class="step">Google Sheets:</span> Read KPI range for last 7 days<br>
+    <span class="step">Trigger:</span> Cron — every Monday 08:00<br><a href="/blog/n8n-vs-zapier-2026">n8n</a> (JS node):<span class="step">Google Sheets:</span> Read KPI range for last 7 days<br>
     → <span class="step">n8n (JS node):</span> Format numbers, calculate deltas, flag anomalies<br>
     → <span class="step">Slack:</span> Post formatted summary to #weekly-report channel<br>
     → <span class="step">Gmail:</span> Send branded HTML report to client distribution list<br>

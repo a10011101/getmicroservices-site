@@ -207,10 +207,10 @@
     <h2>The Problem</h2>
     <p>The client runs a B2B digital agency — retainer-based, average deal size around £4k/month. Their contact form was generating 15–20 inquiries a week. Sounds great. The reality? <strong>Most of them were students, competitors, or "just curious" freelancers.</strong> Their sales team was hopping on 30-minute discovery calls with anyone who submitted a form and had a pulse.</p>
     <p>By the time we came in, they'd calculated the damage: roughly <strong>6–8 wasted calls per week</strong>, each taking 30–45 minutes including prep and follow-up. That's 4–5 hours of senior sales time down the drain, every single week, with zero revenue attached.</p>
-    <p>They'd tried a Typeform qualification survey — open rates were under 30%. They'd tried a "book a call" Calendly link gated by a manual email reply — too slow, leads went cold. What they actually needed was something that felt fast, personal, and frictionless, but still filtered hard enough to protect the calendar.</p>
+    <p>They'd tried a Typeform qualification survey — open rates were under 30%. They'd tried a "book a call" Calendly link gated by a manual <a href="/blog/ai-inbox-triage-for-busy-executives">email</a> reply — too slow, leads went cold. What they actually needed was something that felt fast, personal, and frictionless, but still filtered hard enough to protect the calendar.</p>
 
     <h2>The Solution: A Telegram Bot That Qualifies Before It Books</h2>
-    <p>We built a two-part system: a <strong>Telegram bot for the conversation layer</strong> and <strong>n8n for the logic layer</strong>. When a lead submits the contact form, instead of a generic "we'll be in touch" email, they get an instant Telegram message: <em>"Hey — quick 3-question check before we book your call. Takes 60 seconds."</em></p>
+    <p>We built a two-part system: a <strong>Telegram bot for the conversation layer</strong>. When a lead submits the contact form, instead of a generic "we'll be in touch" <a href="/blog/ai-inbox-triage-for-busy-executives">email</a>, they get an instant Telegram message: <strong>n8n for the logic layer</strong>. When a lead submits the contact form, instead of a generic "we'll be in touch" email, they get an instant Telegram message: <em>"Hey — quick 3-question check before we book your call. Takes 60 seconds."</em></p>
     <p>The bot walks them through three qualifying questions:</p>
     <ul>
       <li>What's your monthly marketing budget? (bucketed: &lt;£500 / £500–2k / £2k–10k / £10k+)</li>
@@ -288,7 +288,7 @@
       <div class="workflow-result">// qualified leads → Calendly booking | unqualified → nurture sequence | all leads → Sheets CRM log</div>
     </div>
 
-    <p>The form submits to a webhook URL. n8n catches it and fires a Telegram message via the Bot API. The bot handles the conversation state — each reply triggers a new n8n webhook, which records the answer, increments the score, and sends the next question. After the third answer, n8n runs the scoring logic and branches: <strong>qualified leads get the Calendly link inline inside Telegram</strong>, unqualified ones get a soft decline plus a resource link.</p>
+    <p>Every lead — qualified or not — gets logged to a Google Sheet with their name, email, score, answers, and timestamp. The client's sales team starts each day with a pre-filtered view. No more <a href="/blog/ai-inbox-triage-for-busy-executives">inbox</a> archaeology.<strong>qualified leads get the Calendly link inline inside Telegram</strong>, unqualified ones get a soft decline plus a resource link.</p>
     <p>Every lead — qualified or not — gets logged to a Google Sheet with their name, email, score, answers, and timestamp. The client's sales team starts each day with a pre-filtered view. No more inbox archaeology.</p>
 
     <h2>The Scoring Model (Kept Deliberately Simple)</h2>

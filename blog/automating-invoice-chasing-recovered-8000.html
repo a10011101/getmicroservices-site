@@ -150,11 +150,9 @@
   <p>Our client had six overdue invoices ranging from £400 to £2,200. For a broader look at keeping your systems connected, see <a href="/blog/why-your-crm-and-stripe-dont-talk" style="color:var(--accent);">why your CRM and Stripe don’t talk</a> and how to fix it. We also built a full-scale version for a 50-client agency — read about <a href="/blog/how-we-automated-invoice-chasing" style="color:var(--accent);">automated invoice chasing at scale</a>. For a broader look at keeping your systems connected, read our post on <a href="/blog/why-your-crm-and-stripe-dont-talk" style="color:var(--accent);">why your CRM and Stripe don’t talk</a> and how to fix it. The oldest was 94 days old. She'd sent one follow-up email to each client and then avoided it. <strong>Total outstanding: £8,340.</strong></p>
 
   <h2>The System We Built</h2>
-  <p>We used n8n connected to Stripe (her billing tool) and Gmail. The workflow runs every morning, checks Stripe for unpaid invoices past their due date, and sends escalating reminder emails based on how overdue the invoice is.</p>
+  <p>We used <a href="/blog/n8n-vs-zapier-2026">n8n</a> connected to Stripe (her billing tool) and Gmail. The workflow runs every morning, checks Stripe for unpaid invoices past their due date, and sends escalating reminder emails based on how overdue the invoice is.</p>
 
-  <div class="flow-box">
-    <span class="step">Trigger:</span> n8n Cron — runs daily at 08:00<br>
-    → <span class="step">Stripe:</span> List all invoices with status = 'open' + due_date &lt; today<br>
+  <div class="flow-box"> <a href="/blog/n8n-vs-zapier-2026">n8n</a> Cron — runs daily at 08:00<span class="step">Trigger:</span> n8n Cron — runs daily at 08:00<br><a href="/blog/n8n-vs-zapier-2026">n8n</a> Function:<span class="step">Stripe:</span> List all invoices with status = 'open' + due_date &lt; today<br>
     → <span class="step">n8n Function:</span> Calculate days overdue, assign escalation tier<br>
     → <span class="step">n8n IF node:</span> Route by tier (7d / 14d / 30d / 45d+)<br>
     → <span class="step">Gmail:</span> Send personalised email for that tier<br>

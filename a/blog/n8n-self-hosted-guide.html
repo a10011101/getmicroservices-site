@@ -111,7 +111,7 @@
 
   <p class="post-lead">Skip the cloud subscription. Run n8n on your own VPS for under $10/month — Docker, Caddy for HTTPS, PostgreSQL for scale. This is exactly how we do it in production.</p>
 
-  <p>We've deployed n8n on VPS infrastructure for dozens of clients. The cloud version is convenient, but the pricing model doesn't scale. Self-hosting is <strong>cheaper, faster, and you own your data.</strong> This guide covers production-grade setup, not a demo.</p>
+  <p>We've deployed <a href="/a/blog/n8n-vs-zapier-2026">n8n</a> on VPS infrastructure for dozens of clients. The cloud version is convenient, but the pricing model doesn't scale. Self-hosting is <strong>cheaper, faster, and you own your data.</strong> This guide covers production-grade setup, not a demo.</p>
 
   <h2>What You Need</h2>
 
@@ -137,11 +137,9 @@
   <h2>Step 2: Point DNS to Your Server</h2>
 
   <p>Add an A record in your DNS panel:</p>
-
-  <div class="cmd-block">
+    Name: <a href="/a/blog/n8n-vs-zapier-2026">n8n</a><div class="cmd-block">
     Type: A<br/>
-    Name: n8n<br/>
-    Value: YOUR.SERVER.IP<br/>
+    Name: n8n<br/>dig <a href="/a/blog/n8n-vs-zapier-2026">n8n</a>.yourdomain.com +short<br/>
     TTL: 300
   </div>
 

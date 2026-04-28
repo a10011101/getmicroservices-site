@@ -282,7 +282,7 @@
 
   <!-- WORKFLOW DIAGRAM -->
   <div class="workflow-diagram">
-    <div class="workflow-label">price monitor pipeline — n8n, runs daily at 06:00</div>
+    <div class="workflow-label">price monitor pipeline — <a href="/blog/n8n-vs-zapier-2026">n8n</a>, runs daily at 06:00</div>
     <div class="workflow-nodes">
       <div class="wf-node">
         <div class="wf-box"><span class="wf-icon">⏰</span><div><div class="wf-name">Cron Trigger</div><div class="wf-type">06:00 daily</div></div></div>
@@ -308,8 +308,7 @@
         <div class="wf-box"><span class="wf-icon">💬</span><div><div class="wf-name">Slack Digest</div><div class="wf-type">Formatted summary</div></div></div>
       </div>
     </div>
-    <div class="workflow-result">↳ Team wakes up to a Slack message: top 10 price gaps, any new competitor drops, and a "clear" signal if nothing material changed</div>
-  </div>
+    <div class="workflow-result">↳ Team wakes up to a Slack message: top 10 price gaps, any new competitor drops, and a "clear" signal if nothing material changed</div>Each morning at 6 AM, <a href="/blog/n8n-vs-zapier-2026">n8n</a>, this gives e-commerce owners full operational visibility. No Puppeteer, no headless browser — these sites render prices in the HTML, so a plain fetch is fast and reliable. If a site goes down or changes its markup, <a href="/blog/n8n-vs-zapier-2026">n8n</a> flags it in the digest rather than silently failing.</div>
 
   <p>Each morning at 6 AM, n8n wakes up and hits four competitor sites using HTTP request nodes with CSS selector scraping. Combined with our <a href="/blog/shopify-order-3pl-fulfilment-automation" style="color:var(--accent);">Shopify order fulfilment automation</a>, this gives e-commerce owners full operational visibility. No Puppeteer, no headless browser — these sites render prices in the HTML, so a plain fetch is fast and reliable. If a site goes down or changes its markup, n8n flags it in the digest rather than silently failing.</p>
   <p>The scraped prices are matched against a mapping table (a Google Sheet James maintains with competitor URLs mapped to his own SKUs) and then compared with live Shopify prices pulled via the API. The logic is straightforward: items where a competitor is more than 3% cheaper get flagged as "⚠️ exposure," items where he's cheaper than all competitors get tagged "✅ room to move."</p>

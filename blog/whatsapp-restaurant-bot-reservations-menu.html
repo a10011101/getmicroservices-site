@@ -276,10 +276,9 @@
   <p>Only the fourth category genuinely needed a human. The first three — easily 85% of all messages — could be handled automatically, instantly, and probably better than a rushed staff member typing on a phone between customers.</p>
 
   <h2>What We Built</h2>
-  <p>The solution is a WhatsApp Business API bot powered by n8n, with Google Sheets as the reservation ledger and a simple static knowledge base for menu and FAQ responses. Here's the full flow:</p>
+  <p>The solution is a WhatsApp Business API bot powered by <a href="/blog/n8n-vs-zapier-2026">n8n</a>, with Google Sheets as the reservation ledger and a simple static knowledge base for menu and FAQ responses. Here's the full flow:</p>
 
-  <!-- WORKFLOW DIAGRAM -->
-  <div class="workflow-diagram">
+  <!-- WORKFLOW DIAGRAM -->restaurant WhatsApp bot — <a href="/blog/n8n-vs-zapier-2026">n8n</a> + WhatsApp Business API<div class="workflow-diagram">
     <div class="workflow-label">restaurant WhatsApp bot — n8n + WhatsApp Business API</div>
     <div class="workflow-nodes">
       <div class="wf-node">
@@ -306,7 +305,7 @@
   </div>
 
   <p>The intent classifier reads the incoming message and routes it to one of four branches. Menu and info questions get an immediate templated reply pulled from a simple JSON knowledge base — allergen info, opening hours, location, dress code. Dimitri updates this file himself when the menu changes; it takes about two minutes.</p>
-  <p>Reservation requests kick off a short guided conversation: the bot asks for date, time, and party size, checks the Google Sheet for availability, and either confirms or offers alternative slots. The booking writes to the sheet automatically. Staff get a Telegram notification for every new reservation — no need to check the WhatsApp thread.</p>
+  <p>The whole stack runs on <a href="/blog/n8n-vs-zapier-2026">n8n</a> hosted on a $6/month VPS. WhatsApp Business API access was set up through Meta's Cloud API — no third-party subscription required, just a verified business account. </p>
   <p>Anything the classifier isn't confident about — unusual requests, complaints, complex queries — gets flagged with a "human needed" tag and forwarded to the manager's personal WhatsApp with the full context. Response time on those drops from "whenever someone checks the shared phone" to instant.</p>
   <p>The whole stack runs on n8n hosted on a $6/month VPS. WhatsApp Business API access was set up through Meta's Cloud API — no third-party subscription required, just a verified business account. <strong>Total build: 48 hours across two days.</strong></p>
 
