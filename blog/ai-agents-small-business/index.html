@@ -23,32 +23,24 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --pink: #b5006a;
-      --pink-light: #fce4f1;
-      --bg: #f5f3ee;
-      --surface: #ffffff;
-      --text: #1a1a1a;
-      --muted: #666;
-      --border: #d8d4cc;
-      --pixel: 2px solid #1a1a1a;
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;
     }
 
     body {
       font-family: 'Space Grotesk', sans-serif;
       background: var(--bg);
-      color: var(--text);
+      color: var(--fg);
       line-height: 1.7;
       font-size: 16px;
     }
 
     code, .mono { font-family: 'Fira Code', monospace; }
-    a { color: var(--pink); text-decoration: none; }
+    a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
     /* PIXEL NAV */
     nav {
-      background: var(--surface);
+      background: var(--bg2);
       border-bottom: var(--pixel);
       padding: 0 24px;
       display: flex;
@@ -63,18 +55,18 @@
     .nav-logo {
       font-weight: 700;
       font-size: 1.1rem;
-      color: var(--text);
+      color: var(--fg);
       line-height: 1.2;
       text-decoration: none;
     }
-    .nav-logo span { color: var(--pink); }
+    .nav-logo span { color: var(--accent); }
     .nav-tagline { font-family: 'Fira Code', monospace; font-size: 0.7rem; color: var(--muted); }
     .nav-right { display: flex; align-items: center; gap: 20px; }
     .nav-links { display: flex; gap: 16px; list-style: none; }
     .nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--muted); }
-    .nav-links a:hover { color: var(--pink); text-decoration: none; }
+    .nav-links a:hover { color: var(--accent); text-decoration: none; }
     .nav-cta {
-      background: var(--pink);
+      background: var(--accent);
       color: #fff;
       font-weight: 700;
       font-size: 0.88rem;
@@ -97,23 +89,23 @@
       display: block;
       width: 24px;
       height: 2px;
-      background: var(--text);
+      background: var(--fg);
     }
 
     .mobile-nav {
       display: none;
-      background: var(--surface);
+      background: var(--bg2);
       border-bottom: var(--pixel);
       padding: 16px 24px;
     }
     .mobile-nav.open { display: block; }
     #navLinks.open { display: flex; flex-direction: column; gap: 12px; }
     #navLinks { display: none; list-style: none; }
-    #navLinks a { font-size: 1rem; font-weight: 500; color: var(--text); }
+    #navLinks a { font-size: 1rem; font-weight: 500; color: var(--fg); }
 
     /* HERO */
     .hero {
-      background: var(--surface);
+      background: var(--bg2);
       border-bottom: var(--pixel);
       padding: 64px 24px 48px;
     }
@@ -124,14 +116,14 @@
       color: var(--muted);
       margin-bottom: 20px;
     }
-    .breadcrumb a { color: var(--pink); }
+    .breadcrumb a { color: var(--accent); }
     .hero-tag {
       display: inline-block;
       font-family: 'Fira Code', monospace;
       font-size: 0.75rem;
-      background: var(--pink-light);
-      color: var(--pink);
-      border: 1px solid var(--pink);
+      background: var(--bg2);
+      color: var(--accent);
+      border: 1px solid var(--accent);
       padding: 3px 10px;
       margin-bottom: 16px;
       font-weight: 500;
@@ -165,12 +157,12 @@
       font-weight: 700;
       margin: 48px 0 16px;
       padding-left: 14px;
-      border-left: 4px solid var(--pink);
+      border-left: 4px solid var(--accent);
     }
     h3 {
       font-size: 1.1rem;
       font-weight: 600;
-      color: var(--pink);
+      color: var(--accent);
       margin: 28px 0 10px;
       font-family: 'Fira Code', monospace;
     }
@@ -178,7 +170,7 @@
 
     /* AGENT CARDS */
     .agent-card {
-      background: var(--surface);
+      background: var(--bg2);
       border: var(--pixel);
       box-shadow: 4px 4px 0 #1a1a1a;
       padding: 28px 24px;
@@ -196,7 +188,7 @@
       justify-content: center;
       width: 44px;
       height: 44px;
-      background: var(--pink);
+      background: var(--accent);
       color: #fff;
       font-weight: 700;
       font-size: 1.1rem;
@@ -215,25 +207,25 @@
     }
     .agent-body { font-size: 0.95rem; color: var(--muted); }
     .agent-result {
-      background: var(--pink-light);
-      border: 1px solid var(--pink);
+      background: var(--bg2);
+      border: 1px solid var(--accent);
       padding: 12px 16px;
       margin-top: 14px;
       font-family: 'Fira Code', monospace;
       font-size: 0.82rem;
-      color: var(--pink);
+      color: var(--accent);
     }
-    .agent-result strong { color: var(--pink); }
+    .agent-result strong { color: var(--accent); }
 
     /* CALLOUT */
     .callout {
-      background: var(--surface);
+      background: var(--bg2);
       border: var(--pixel);
-      box-shadow: 4px 4px 0 var(--pink);
+      box-shadow: 4px 4px 0 var(--accent);
       padding: 20px 24px;
       margin: 28px 0;
     }
-    .callout strong { color: var(--pink); }
+    .callout strong { color: var(--accent); }
 
     /* CHECKLIST */
     .check-list { list-style: none; margin: 0 0 18px; }
@@ -248,16 +240,16 @@
       content: "▸";
       position: absolute;
       left: 0;
-      color: var(--pink);
+      color: var(--accent);
       font-weight: 700;
     }
 
     /* CTA BOX */
     .cta-box {
-      background: var(--text);
+      background: var(--fg);
       color: #fff;
       border: var(--pixel);
-      box-shadow: 6px 6px 0 var(--pink);
+      box-shadow: 6px 6px 0 var(--accent);
       padding: 40px 36px;
       text-align: center;
       margin: 48px 0;
@@ -272,21 +264,21 @@
     .cta-box p { color: rgba(255,255,255,.8); margin-bottom: 24px; }
     .cta-btn {
       display: inline-block;
-      background: var(--pink);
+      background: var(--accent);
       color: #fff;
       font-weight: 700;
       font-size: 0.95rem;
       padding: 14px 32px;
       border: var(--pixel);
-      box-shadow: 4px 4px 0 var(--pink-light);
+      box-shadow: 4px 4px 0 var(--bg2);
       text-decoration: none;
       transition: transform .1s, box-shadow .1s;
     }
-    .cta-btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--pink-light); text-decoration: none; }
+    .cta-btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--bg2); text-decoration: none; }
 
     /* FOOTER */
     footer {
-      background: var(--text);
+      background: var(--fg);
       color: rgba(255,255,255,.7);
       text-align: center;
       padding: 32px 24px;
@@ -303,7 +295,7 @@
       .cta-box { padding: 28px 20px; }
     }
   
-    .further-reading a { color: var(--pink); text-decoration: none; font-weight: 500; }
+    .further-reading a { color: var(--accent); text-decoration: none; font-weight: 500; }
     .further-reading a:hover { text-decoration: underline; }
     .further-reading ul li { margin-bottom: 0.4rem; }
   </style>
@@ -340,26 +332,22 @@
 </head>
 <body>
 
-<nav>
-  <div class="nav-logo-wrap">
-    <a href="/" class="nav-logo">get<span>micro</span>services<span>.com</span></a>
-    <span class="nav-tagline">// done-for-you automation agency</span>
-  </div>
-  <div class="nav-right">
-    <ul class="nav-links" id="navLinks">
-      <li><a href="/">Services</a></li>
-      <li><a href="/">How It Works</a></li>
-      <li><a href="/">Pricing</a></li>
-      <li><a href="/">FAQ</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/blog">Blog</a></li>
-    </ul>
-    <a href="/" class="nav-cta">Start Now</a>
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
+  <nav>
+  <a class="nav-logo" href="/">
+    <span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span>
+    <span style="font-family:'Fira Code',monospace;font-size:0.62rem;color:var(--muted);margin-top:3px;">// done-for-you automation agency</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+  </ul>
 </nav>
+
 
 <div class="mobile-nav" id="mobileNav">
   <ul id="navLinksMobile" style="list-style:none; display:flex; flex-direction:column; gap:12px;">
@@ -580,8 +568,8 @@
 </script>
 
 
-    <div class="further-reading pixel-box" style="margin-top:2.5rem; padding:1.5rem 2rem;">
-      <h2 style="font-size:1.15rem; margin-bottom:1rem; color:var(--pink); font-family:'Fira Code',monospace;">📖 Further Reading</h2>
+    <div class="further-reading" style="margin-top:2.5rem; padding:1.5rem 0;">
+      <h2 style="font-size:1.15rem; margin-bottom:1rem; color:var(--accent); font-family:'Fira Code',monospace;">📖 Further Reading</h2>
       <ul style="list-style:none; padding:0; margin:0;">
         <li><a href="/blog/ai-chatbot-for-small-business">AI Chatbots for Small Business: What Actually Works in 2026</a></li>
         <li><a href="/blog/3-tool-stack-client-reporting-process">The 3-Tool Stack That Runs Our Entire Client Reporting Process</a></li>
