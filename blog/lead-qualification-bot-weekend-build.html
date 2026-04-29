@@ -150,7 +150,7 @@
   <p> — the same principles apply to <a href="/blog/how-we-built-a-lead-qualification-bot">lead qualification</a> and beyond.<a href="/blog/how-to-automate-your-business" style="color:var(--accent);">how to automate your business</a> — the same principles apply to lead qualification and beyond.</p>
 
   <h2>The Scoring Model</h2>
-  <p>Before touching n8n, we spent an hour with the founder defining what a "good" lead looked like. We landed on five signals, each worth a different number of points:</p>
+  <p>Before touching <a href="/blog/n8n-vs-zapier-2026">n8n</a>, we spent an hour with the founder defining what a "good" lead looked like. We landed on five signals, each worth a different number of points:</p>
 
   <table class="score-table">
     <thead>
@@ -169,13 +169,12 @@
 
   <h2>The Workflow</h2>
   <div class="flow-box">
-    <span class="step">Trigger:</span> Typeform / Tally webhook — new submission<br>
+    <span class="step">Trigger:</span><a href="/blog/n8n-vs-zapier-2026">n8n</a> (JS node):<br>
     → <span class="step">n8n (JS node):</span> Parse fields, run scoring formula against config<br>
     → <span class="step">Switch node:</span> Route by score — Hot / Warm / Nurture<br>
     → <span class="step">Hot path:</span> Slack DM to founder + HubSpot contact (Hot tag)<br>
     → <span class="step">Warm path:</span> Add to HubSpot sequence + Slack #warm-leads channel<br> Add to <a href="/blog/ai-inbox-triage-for-busy-executives">email</a> drip campaign + tag in HubSpot<span class="step">Nurture path:</span> Add to email drip campaign + tag in HubSpot<br>
-    → <span class="step">All paths:</span> Log to Google Sheets with score + timestamp
-  </div>
+    → <span class="step">All paths:</span>Typeform has a native webhook option under Integrations. Tally does too, though the payload structure is slightly different — you'll need to map field IDs to readable names in the first <a href="/blog/n8n-vs-zapier-2026">n8n</a> node. We used a Set node to normalise the shape before the scoring logic so the formula works identically regardless of which form tool fires it.</div>
 
   <h2>Plugging In the Webhook</h2>
   <p>Typeform has a native webhook option under Integrations. Tally does too, though the payload structure is slightly different — you'll need to map field IDs to readable names in the first n8n node. We used a Set node to normalise the shape before the scoring logic so the formula works identically regardless of which form tool fires it.</p>
