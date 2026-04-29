@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Automate Notion with n8n: 5 Powerful Workflows – GetMicroservices Blog</title>
+  <meta name="description" content="5 practical n8n workflows to automate your Notion workspace — CRM tracking, project management, content calendars, backups, and cross-app integration."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/notion-automation"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:400;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;line-height:1;}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'< ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body h3{font-family:'Space Grotesk',sans-serif;font-size:0.95rem;margin:28px 0 12px;color:var(--fg);}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'>';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul li::before{content:'→';}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav{padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+
+    .further-reading a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .further-reading a:hover { text-decoration: underline; }
+    .further-reading ul li { margin-bottom: 0.4rem; }
+  </style>
+  <meta property="og:title" content="Automate Notion with n8n: 5 Powerful Workflows – GetMicroservices Blog"/>
+  <meta property="og:description" content="5 practical n8n workflows to automate your Notion workspace — CRM tracking, project management, content calendars, backups, and cross-app integration."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/blog/notion-automation"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/">
+    <span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span>
+    <span style="font-family:'Fira Code',monospace;font-size:0.62rem;color:var(--muted);margin-top:3px;">// done-for-you automation agency</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')" aria-label="Toggle dark mode">◐</button>
+</nav>
+<div class="article-header">
+  <a class="back-link" href="/blog/">Back to Blog</a>
+  <div class="article-meta">
+    <span class="meta-date">2026-04-29</span>
+    <span class="meta-tag">workflow</span>
+    <span class="meta-readtime">9 min read</span>
+  </div>
+  <h1>Automate Notion with n8n: 5 Powerful Workflows</h1>
+  <p class="lead">Notion is a great workspace — but it's even better when it talks to the rest of your stack. Here are 5 n8n workflows that make that happen, with step-by-step implementation notes.</p>
+</div>
+<div class="article-body">
+  <p>Notion is where teams live: documents, databases, wikis, project boards. But out of the box, it's a walled garden. Data goes in, but it doesn't flow <em>between</em> the apps you actually use — your CRM, your calendar, your email, your cloud storage.</p>
+
+  <p>That's where <strong>n8n</strong> comes in. With its native Notion nodes and webhook support, you can wire Notion into any automation workflow without code. This guide walks through 5 workflows we've built for real clients — copy them, adapt them, and make them yours.</p>
+
+  <p>If you're new to n8n, our <a href="/blog/webhook-explained">webhooks guide</a> covers the fundamentals, and the <a href="/blog/solopreneur-automation-stack">solopreneur automation stack</a> post will help you figure out what to automate first.</p>
+
+  <h2>Workflow 1: Automated CRM from Typeform → Notion</h2>
+
+  <p>Every lead that comes through your website should land in Notion automatically — without manual data entry. This workflow takes a Typeform submission and creates a new database entry in your Notion CRM.</p>
+
+  <p><strong>How it works:</strong></p>
+  <ul>
+    <li>A Typeform webhook fires when someone completes your enquiry form</li>
+    <li>n8n captures the payload and maps each field to your Notion database schema</li>
+    <li>A Notion Create node inserts a new row with lead name, email, company, and source</li>
+    <li>An optional Slack node notifies your team: "New lead from [source]"</li>
+  </ul>
+
+  <p><strong>Real impact:</strong> One consultancy client cut their lead response time from 4 hours to 7 minutes because the moment a lead hit their Notion CRM, an automated follow-up sequence kicked in via a <a href="/blog/ai-agents-small-business">simple AI agent</a>.</p>
+
+  <h3>Notion database setup</h3>
+  <p>Create a "Leads" database in Notion with columns: Name (title), Email (text), Company (text), Source (select), Status (select: New / Contacted / Qualified / Lost), Date (date). Once structured, n8n maps the Typeform fields directly to these columns.</p>
+
+  <h2>Workflow 2: Project Management Sync — Linear → Notion</h2>
+
+  <p>Many teams use Linear or GitHub Issues for development but want a higher-level view in Notion for stakeholder reporting. This workflow syncs issues into a Notion project tracker.</p>
+
+  <p><strong>How it works:</strong></p>
+  <ul>
+    <li>n8n polls Linear's API (or listens via webhook) for new or updated issues</li>
+    <li>Each issue creates or updates a row in your Notion "Sprint" database</li>
+    <li>Fields synced: issue title, assignee, status, priority, linked PR</li>
+    <li>When status changes to "Done" in Linear, the Notion row updates automatically</li>
+  </ul>
+
+  <p><strong>Why it matters:</strong> Your engineering team stays in their tools. Your stakeholders stay in Notion. n8n bridges the gap without anyone changing their workflow. This same pattern works for <a href="/blog/make-vs-zapier">Make and Zapier</a> too, but n8n's advantage is the two-way update — when Linear changes, Notion updates, and vice versa.</p>
+
+  <h2>Workflow 3: Content Calendar — Google Calendar → Notion &amp; Slack</h2>
+
+  <p>Content teams live in calendar views. This workflow reads your Google Calendar events tagged "Publish" and creates corresponding entries in a Notion content calendar database — then alerts the team in Slack.</p>
+
+  <p><strong>How it works:</strong></p>
+  <ul>
+    <li>A Google Calendar trigger runs daily and fetches the next 7 days of events</li>
+    <li>Filters for events with "Content" or "Publish" in the title or description</li>
+    <li>Creates Notion rows in a "Content Calendar" database with title, date, status</li>
+    <li>Sends a Slack digest: "📅 This week's content: 3 posts, 2 newsletters"</li>
+  </ul>
+
+  <p>If you're running multiple projects, you can extend this into a full <a href="/blog/ai-content-workflow">AI content workflow</a> — draft in Notion, generate with AI, schedule via the calendar. All connected through n8n.</p>
+
+  <h2>Workflow 4: Scheduled Database Backups — Notion → Google Sheets</h2>
+
+  <p>Notion databases are powerful but they don't version themselves. If someone accidentally deletes a row or changes a critical field, you want a recovery path. This workflow runs nightly backups of your key Notion databases into Google Sheets.</p>
+
+  <p><strong>How it works:</strong></p>
+  <ul>
+    <li>n8n's Schedule trigger runs at 2 AM daily</li>
+    <li>A Notion List node fetches all rows from your target database</li>
+    <li>Data is formatted into a clean table structure</li>
+    <li>A Google Sheets Append node writes the snapshot to a time-stamped sheet</li>
+    <li>Sheets are archived weekly — 30-day retention by default</li>
+  </ul>
+
+  <p>A client who runs a remote operations team told us this saved them twice in the first month alone. Someone deleted a vendor list. They restored it from the previous night's backup in 3 minutes.</p>
+
+  <h2>Workflow 5: Cross-App Integration — Gmail + Stripe → Notion</h2>
+
+  <p>This is the power move. Instead of Notion-to-Notion automation, this workflow wires <strong>multiple apps</strong> into a single Notion database, making it your single source of truth.</p>
+
+  <p><strong>How it works:</strong></p>
+  <ul>
+    <li>A Gmail trigger watches for invoice emails from Stripe</li>
+    <li>n8n parses the email body, extracts invoice number, amount, and customer email</li>
+    <li>A Stripe node fetches the customer details from the Stripe API</li>
+    <li>Creates a row in your Notion "Invoices" database with all fields populated</li>
+    <li>Sends a confirmation email back to the customer with a receipt link</li>
+  </ul>
+
+  <p>This is how you turn Notion into an operations hub. Invoices, customers, projects, and contacts all flowing into one place automatically — no manual updates, no copy-paste, no missed entries. Compare this to what you'd need with <a href="/blog/n8n-vs-zapier-2026">Zapier or Make</a> — you'd need multiple Zaps with higher-tier plans. n8n handles all of this in a single workflow on a self-hosted instance.</p>
+
+  <div class="result-box">
+    <div class="result-title">⚡ Key Takeaways</div>
+    <ul>
+      <li>Start with a single workflow — lead capture is usually the highest ROI</li>
+      <li>Structure your Notion databases first (columns, types) before wiring n8n</li>
+      <li>Build incrementally — one workflow, validate it, then add the next</li>
+      <li>The real power is multi-app: when Notion talks to Gmail, Stripe, and Slack simultaneously</li>
+    </ul>
+  </div>
+
+  <p>Notion is a fantastic canvas. But it's not an island. With n8n, your Notion workspace becomes the command centre for your entire operation — CRM, projects, content, backups, and cross-app data all flowing through a single, automated pipeline.</p>
+
+  <p>Ready to build this? <a href="/#contact" style="color:var(--accent);">We set up n8n + Notion automations for clients every week</a> — get in touch if you want it done without the trial and error.</p>
+</div>
+<footer>
+  <p>© 2026 <a href="/">GetMicroservices</a> · <a href="/blog/">Blog</a> · <a href="/#contact">Contact</a></p>
+</footer>
+
+    <div class="further-reading pixel-box" style="margin-top:2.5rem; padding:1.5rem 2rem;">
+      <h2 style="font-size:1.15rem; margin-bottom:1rem; color:var(--accent); font-family:'Fira Code',monospace;">📖 Further Reading</h2>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="/blog/webhook-explained">Webhooks Explained: Automate Anything</a></li>
+        <li><a href="/blog/solopreneur-automation-stack">The Solopreneur Automation Stack for 2026</a></li>
+        <li><a href="/blog/ai-content-workflow">How I Automate Content Creation with AI</a></li>
+      </ul>
+    </div>
+</body>
+</html>
