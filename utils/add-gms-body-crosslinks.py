@@ -8,7 +8,7 @@ import re
 import os
 import subprocess
 
-REPO = "/root/.openclaw/workspace/getmicroservices-site"
+REPO = "/root/.openclaw/workspace/gms"
 
 # All GMS slugs for reference
 ALL_SLUGS = [
