@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/chatgpt-api-automation"/>
+<title>Using ChatGPT API in Your Automation Workflows — getmicroservices</title>
+<meta name="description" content="How to integrate the ChatGPT API with n8n to build AI-powered automations — content generation, email drafting, data enrichment, and customer support triage."/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P3QLH1BY4');
+</script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  h3{font-size:17px;font-weight:600;letter-spacing:-.2px;margin:32px 0 14px;color:var(--fg);}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  code{font-family:var(--mono);font-size:13px;background:var(--bg2);padding:1px 5px;border-radius:2px;color:var(--accent);}
+  pre{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin:20px 0;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.6;color:var(--fg);}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+
+    .further-reading a { color: #00ff88; text-decoration: none; }
+    .further-reading a:hover { text-decoration: underline; opacity:0.8; }
+    .further-reading ul li { margin-bottom: 0.4rem; }
+  </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">Get<span class="accent">Micro</span><span class="yellow">Services</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#how">how it works</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/blog/">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+<div class="article">
+  <a class="back-link" href="/a/blog/">← all posts</a>
+  <div class="post-tag">AI</div>
+  <div class="post-meta">
+    <span>2026-04-30</span>
+    <span>8 min read</span>
+  </div>
+  <h1>Using ChatGPT API in Your Automation Workflows</h1>
+  <p class="post-lead">The ChatGPT API turns your automation from a rule-based machine into something that can think, write, and summarise. Here's how to wire it into n8n and what you can build with it.</p>
+
+  <p>Automation tools are great at moving data from A to B. But they struggle when the task needs judgement, interpretation, or creativity — the kind of thing humans do naturally. That's where the ChatGPT API changes everything.</p>
+
+  <p>Connect it to n8n and your automations stop being simple "if this then that" pipelines. They become systems that can <strong>read an <a href="/a/blog/ai-inbox-triage-for-busy-executives">email</a>, understand what it means, and draft a response</strong> — all without a human in the loop.</p>
+
+  <p>If you're already running n8n, you're minutes away from adding AI capabilities. This guide covers practical setups we've deployed for clients, the cost implications, and the gotchas you'll hit along the way.</p>
+
+  <h2>why the chatgpt api, not the chat interface</h2>
+
+  <p>The web chat is great for one-off questions. The API is built for automation. Here's what you get with the API that you can't do in the chat:</p>
+
+  <ul>
+    <li><strong>programmatic access</strong> — your n8n workflow sends prompts and gets responses, fully automated</li>
+    <li><strong>system prompts</strong> — set the tone, format, and constraints once, then every call follows the same rules</li>
+    <li><strong>streaming</strong> — receive tokens as they're generated, useful for real-time applications</li>
+    <li><strong>function calling</strong> — let the model trigger actions in your system based on what it decides</li>
+    <li><strong>cost control</strong> — choose models by price point (GPT-4o for quality, GPT-4o-mini for volume)</li>
+  </ul>
+
+  <p>If you're already experimenting with <a href="/a/blog/ai-agents-small-business">AI agents for your business</a>, the ChatGPT API is the engine that makes them capable beyond simple keyword matching.</p>
+
+  <h2>setting up the api in n8n</h2>
+
+  <p>You need two things: an OpenAI API key, and the n8n HTTP Request node. No special plugin required.</p>
+
+  <h3>step 1: get your api key</h3>
+  <p>Head to platform.openai.com/api-keys, create a new secret key, and store it in n8n as a credential. Use n8n's built-in OpenAI credential type if available, otherwise store it as a header in your HTTP Request node.</p>
+
+  <h3>step 2: build the api call in n8n</h3>
+  <p>The HTTP Request node makes a POST to <code>https://api.openai.com/v1/chat/completions</code> with this JSON body:</p>
+
+<pre>{
+  "model": "gpt-4o-mini",
+  "messages": [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "{{ $json.input }}"}
+  ],
+  "temperature": 0.7,
+  "max_tokens": 1000
+}
+</pre>
+
+  <p>The <code>system</code> message sets the behaviour. The <code>user</code> message is where you inject dynamic content using n8n expressions. The response comes back as JSON — extract <code>choices[0].message.content</code> to get the generated text.</p>
+
+  <h3>step 3: process the response</h3>
+  <p>. From there, you can feed it into any other n8n node — <a href="/a/blog/ai-inbox-triage-for-busy-executives">email</a>, Notion, Slack, whatever your workflow needs.<code>$.choices[0].message.content</code>. From there, you can feed it into any other n8n node — email, Notion, Slack, whatever your workflow needs.</p>
+
+  <p>For a deeper dive into how n8n handles HTTP calls and webhooks, check our <a href="/a/blog/webhook-explained">webhooks explained guide</a> — the same patterns apply here.</p>
+
+  <h2>1. automated <a href="/a/blog/ai-inbox-triage-for-busy-executives">email</a> response drafting</h2>
+
+  <p>Here are real automations we've built for clients, from simple to advanced. Each one uses the same core pattern: trigger → build prompt → call API → use response.</p>
+
+  <h3>1. automated email response drafting</h3>
+
+  <p>A support inbox gets 50-100 emails a day. Instead of having a human draft every reply, this workflow reads each new email, summarises the issue, and drafts a response — with the human just reviewing and hitting send.</p>
+
+  <p><strong>the workflow:</strong> Gmail trigger picks up new emails → ChatGPT API generates a response based on the email body and your company's support guidelines → the draft is written to a Google Doc for human review → a Slack notification alerts the team.</p>
+
+  <p>One client went from 4-hour response times to under 30 minutes using this setup. The key was a well-crafted system prompt that matched their brand voice and escalation rules.</p>
+
+  <h3>2. content brief generation from competitor urls</h3>
+
+  <p>Content teams need briefs. This workflow takes a competitor's blog post URL, scrapes the content, and uses ChatGPT to generate a content brief for your own version — including angle, outline, key points to cover, and SEO gaps.</p>
+
+  <p><strong>the workflow:</strong> A Google Sheet row with a URL → n8n fetches the page content → ChatGPT API analyses the content and generates a structured brief → the brief is written back to the Sheet in new columns.</p>
+
+  <p>If you're running a content engine, this pairs well with an <a href="/a/blog/ai-content-workflow">AI content workflow</a> — generate briefs at scale, then hand them off to writers or an automated drafting pipeline.</p>
+
+  <h3>3. lead enrichment from free-form text</h3>
+
+  <p>Your lead form has a "tell us about your project" field. It's free text — unstructured, full of context, hard to parse. ChatGPT can extract structured data from it.</p>
+
+  <p><strong>the workflow:</strong> Typeform or Webflow form submission → ChatGPT API receives the free-text field plus a system prompt that says "extract: company size, budget range, timeline, pain points. Return as JSON" → n8n parses the JSON response → a new entry is created in your CRM with structured fields.</p>
+
+  <p>This replaced a system that required 3 follow-up emails just to qualify a lead. Now it happens in seconds. Combined with <a href="/a/blog/automate-client-onboarding">automated client onboarding</a>, the entire pipeline from lead to active client runs without a single manual data entry.</p>
+
+  <h3>4. multi-language customer support translation</h3>
+
+  <p>If your customer base spans multiple languages but your support team only covers English, the ChatGPT API can act as a real-time translator with context awareness.</p>
+
+  <p><strong>the workflow:</strong> An incoming support ticket in Spanish → ChatGPT translates it to English while preserving technical terms and urgency → support agent responds in English → ChatGPT translates the response back to Spanish → the reply is sent to the customer.</p>
+
+  <p>The critical detail: use a system prompt that preserves formatting, code snippets, and product names. Basic machine translation services strip context. GPT-4o preserves it.</p>
+
+  <h3>5. automated seo meta tag generation</h3>
+
+  <p>If you publish frequently, writing meta titles and descriptions for every page becomes a bottleneck. This workflow generates them automatically from the page content.</p>
+
+  <p><strong>the workflow:</strong> A webhook fires when a new page is published → n8n receives the page URL and content → ChatGPT API generates: 3 title options, a meta description (under 160 chars), and 5 suggested focus keywords → the output is written to a CMS field or a Google Sheet for review.</p>
+
+  <p>We've tuned this one extensively. The trick is constraining the output — use <code>max_tokens: 200</code> and a system prompt that says "respond with JSON only, no explanations."</p>
+
+  <div class="result-box">
+    <div class="result-title">key takeaways</div>
+    <div class="result-item">start with GPT-4o-mini — it's 10x cheaper and handles 90% of automation tasks well</div>
+    <div class="result-item">invest time in your system prompts — they're the difference between useful output and garbage</div>
+    <div class="result-item">always validate API responses before using them downstream (missing content, malformed JSON)</div>
+    <div class="result-item">set max_tokens to avoid surprise bills — runaway generations cost real money</div>
+    <div class="result-item">cache common responses: if your workflow asks "summarise this" 100x a day, similar content gets similar results</div>
+  </div>
+
+  <h2>cost considerations</h2>
+
+  <p>GPT-4o-mini costs roughly $0.15 per 1M input tokens and $0.60 per 1M output tokens. For most automation use cases — email drafting, basic enrichment, short translations — you're looking at <strong>pennies per hundred runs</strong>. Even with hundreds of daily executions, most clients spend less than $50/month on API costs.</p>
+
+  <p>GPT-4o (the full model) is about 15x more expensive. Reserve it for tasks that genuinely need deep reasoning — complex data analysis, legal document review, nuanced content creation. Use GPT-4o-mini for everything else.</p>
+
+  <p>For context on what n8n + AI costs overall, see our <a href="/a/blog/n8n-vs-zapier-2026">n8n vs Zapier cost comparison</a> — the API costs are tiny compared to what you save by not running a fully manual operation.</p>
+
+  <h2>common gotchas</h2>
+
+  <p>We've made every mistake in this list so you don't have to:</p>
+
+  <ul>
+    <li><strong>token limits:</strong> GPT-4o-mini has a 128K context window, but if you're feeding it entire documents, you'll hit output token limits. Split large inputs into chunks.</li>
+    <li><strong>latency:</strong> API calls take 2-5 seconds on average. If your workflow needs real-time response, design for async processing or show a loading state.</li>
+    <li><strong>rate limits:</strong> OpenAI applies rate limits per API key. If you're running high-volume workflows (1000+ calls/hour), you'll need to stagger requests or use multiple keys.</li>
+    <li><strong>json mode:</strong> Use <code>"response_format": { "type": "json_object" }</code> when you need structured output. Without it, the model sometimes adds explanatory text around the JSON.</li>
+    <li><strong>error handling:</strong> The API returns errors for rate limits, content policy violations, and token overruns. Always add an error path in n8n.</li>
+  </ul>
+
+  <h2>when not to use the chatgpt api</h2>
+
+  <p>Not every automation needs AI. If you're moving a field from one app to another — name, email, phone number — a simple HTTP request does it cheaper and faster. The ChatGPT API adds value when the task requires <em>understanding</em> or <em>generation</em>. Classification, extraction, summarisation, drafting. If a regex or a lookup table solves the problem, use that instead.</p>
+
+  <p>Start with the minimal AI that does the job. Add complexity only when you've validated the workflow works. Most of the automations we build start with GPT-4o-mini and never need to upgrade.</p>
+
+  <p>Ready to add AI to your automation stack? <a href="/a/#contact">we build n8n + chatgpt api pipelines for clients every week →</a></p>
+</div>
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+</script>
+
+    <div class="further-reading" style="margin-top:2.5rem; padding:1.5rem 0; border-top:1px solid rgba(255,255,255,0.08);">
+      <h2 style="font-size:1.05rem; margin-bottom:1rem; color:#00ff88; font-family:'JetBrains Mono',monospace; letter-spacing:0.02em;">📖 Further Reading</h2>
+      <ul style="list-style:none; padding:0; margin:0;">
+        <li><a href="/a/blog/ai-agents-small-business">AI Agents for Small Business: 5 That Actually Work</a></li>
+        <li><a href="/a/blog/ai-content-workflow">How I Automate Content Creation with AI</a></li>
+        <li><a href="/a/blog/webhook-explained">Webhooks Explained: Automate Anything</a></li>
+      </ul>
+    </div>
+</body>
+</html>
