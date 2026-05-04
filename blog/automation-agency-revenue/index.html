@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How I Built a $10k/Month Automation Agency | GetMicroservices</title>
+  <meta name="description" content="How I built a $10k/month automation agency from scratch — the tools, pricing, client acquisition strategy, and lessons learned along the way.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How I Built a $10k/Month Automation Agency","description":"How I built a $10k/month automation agency from scratch.","url":"https://getmicroservices.com/blog/automation-agency-revenue","datePublished":"2026-05-04","dateModified":"2026-05-04","author":{"@type":"Organization","name":"GetMicroservices"},"publisher":{"@type":"Organization","name":"GetMicroservices"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://getmicroservices.com/blog/automation-agency-revenue"}}</script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How I Built a $10k/Month Automation Agency | GetMicroservices",
+  "description": "How I built a $10k/month automation agency from scratch \u2014 the tools, pricing, client acquisition strategy, and lessons learned along the way.",
+  "url": "",
+  "datePublished": "2026-05-04",
+  "dateModified": "2026-05-04",
+  "author": {
+    "@type": "Organization",
+    "name": "GetMicroservices",
+    "url": "https://getmicroservices.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "GetMicroservices",
+    "url": "https://getmicroservices.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": ""
+  }
+}
+  </script>
+</head>
+<body>
+  <div class="pixel-bg"></div>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="/" class="logo"><span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span><span class="tagline">// done-for-you automation agency</span></a>
+      <nav class="main-nav" id="navLinks">
+        <a href="/#services">Services</a><a href="/#how">How</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="/blog" class="nav-active">Blog</a><a href="/about">About</a><a href="/#contact" class="btn btn-primary">Start Now</a>
+      </nav>
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    </div>
+  </header>
+  <main class="blog-post">
+    <div class="container post-container">
+      <div class="post-meta"><span class="meta-tag">Business</span><span class="post-date">May 4, 2026</span><span class="read-time">☕ 9 min read</span></div>
+      <h1>How I Built a $10k/Month Automation Agency</h1>
+      <p class="lead">No MBA. No VC funding. No team of 20. Just n8n, some grit, and a lot of client outreach — here's exactly how I built it.</p>
+      <div class="post-content">
+        <p>Everyone wants to know the "secret" to building a profitable automation agency. Spoiler: there isn't one. There's a process, and I'm going to lay it out — the revenue numbers, the tools, the mistakes, the whole thing.</p>
+
+        <p>I started GetMicroservices in late 2024 with zero clients, a self-hosted n8n instance, and a very naive idea: "businesses need automation, I can build automations, this will be easy."</p>
+
+        <p>It wasn't easy. But it was worth it.</p>
+
+        <h2>Month 1-3: The "Hustle or Starve" Phase</h2>
+
+        <p>Let me be real about the early numbers:</p>
+        <ul>
+          <li><strong>Month 1:</strong> $0 revenue. Spent the entire month learning n8n inside out and building my first <a href="/blog/n8n-self-hosted-guide/">self-hosted setup</a>.</li>
+          <li><strong>Month 2:</strong> $800. Two small jobs — a Zapier migration and a Google Sheets automation.</li>
+          <li><strong>Month 3:</strong> $2,400. Three retainer clients at $800/month each.</li>
+        </ul>
+
+        <p>The breakthrough wasn't a viral post or a lucky break. It was <strong>direct outreach</strong>. I sent 200+ cold emails. Most went unanswered. But 3 converted into clients, and those clients gave me case studies for the next 10.</p>
+
+        <h2>What I Actually Sell</h2>
+
+        <p>Here's my pricing model, which took me way too long to figure out:</p>
+
+        <div style="background:#f5f3ee;border-left:4px solid #b5006a;padding:20px;margin:25px 0;border-radius:0 8px 8px 0;">
+          <p><strong>One-off projects:</strong> $1,500 - $5,000 depending on complexity</p>
+          <p><strong>Monthly retainers:</strong> $500 - $2,000 for ongoing maintenance + minor changes</p>
+          <p><strong>Consulting calls:</strong> $150/hour for strategy sessions</p>
+        </div>
+
+        <p>The key insight: <strong>retainers are everything</strong>. One-off projects pay the bills, but retainers build the business. Once you have 10 retainer clients at $1,000/month, you're at $10k/month and you can breathe.</p>
+
+        <h2>The Tech Stack That Scales</h2>
+
+        <p>I've tried everything. Here's what I actually use in production:</p>
+
+        <ul>
+          <li><strong><a href="/blog/n8n-vs-zapier-2026">n8n (self-hosted):</strong> The core engine. 90% of workflows run here.</li>
+          <li><strong>Make:</strong> For clients who want a managed solution or for visual prototyping</li>
+          <li><strong>Zapier:</strong> Only when a client insists or for super simple triggers</li>
+          <li><strong>PostgreSQL:</strong> Data storage and logging</li>
+          <li><strong>Railway/VPS:</strong> Hosting for n8n and client-facing dashboards</li>
+        </ul>
+
+        <p>Check my <a href="/blog/solopreneur-automation-stack/">full solopreneur stack breakdown</a> for the nitty-gritty details.</p>
+
+        <h2>Month 4-8: Scaling to $10k</h2>
+
+        <p>Here's the month-by-month breakdown:</p>
+        <ul>
+          <li><strong>Month 4:</strong> $4,200 (5 retainers + 1 project)</li>
+          <li><strong>Month 5:</strong> $5,800 (6 retainers + 2 projects)</li>
+          <li><strong>Month 6:</strong> $7,500 (8 retainers — word of mouth kicking in)</li>
+          <li><strong>Month 7:</strong> $9,200 (9 retainers + project)</li>
+          <li><strong>Month 8:</strong> $11,400 (11 retainers)</li>
+        </ul>
+
+        <p>The growth wasn't linear — it was exponential once the referral flywheel started spinning. Happy clients tell other business owners. Those business owners reach out. You close them. Repeat.</p>
+
+        <h2>Client Acquisition: What Actually Works</h2>
+
+        <p>I've tried everything. Here's what converts:</p>
+
+        <ol>
+          <li><strong>Cold email (40% of clients):</strong> Personalized, specific, shows you understand their business. Not "Hi, I do automation." More like "I noticed you're manually entering orders from Shopify into QuickBooks — I can automate that in 3 days."</li>
+          <li><strong>Referrals (35% of clients):</strong> Existing clients recommending you. This only works if you do good work and follow up.</li>
+          <li><strong>Content (25% of clients):</strong> Blog posts, case studies, and breakdowns of automations I've built. The <a href="/blog/webhook-explained/">technical how-to content</a> builds trust over time.</li>
+        </ol>
+
+        <p>What doesn't work: posting "automation is the future" on LinkedIn. Everyone says that. Nobody converts from it.</p>
+
+        <h2>The Mistakes That Cost Me Money</h2>
+
+        <p>Let me save you some pain:</p>
+
+        <ul>
+          <li><strong>Undercharging:</strong> I started at $300/month per retainer. Should have been $700+. Low prices attract high-maintenance clients.</li>
+          <li><strong>No scope contracts:</strong> "Unlimited changes" on retainers nearly killed me. Now I cap monthly hours.</li>
+          <li><strong>Building before selling:</strong> I wasted weeks building a productized service nobody wanted. <strong>Sell first, build second.</strong></li>
+          <li><strong>Ignoring <a href="/blog/automate-client-onboarding/">client onboarding</a>:</strong> Bad onboarding = scope creep + unhappy clients. Fixed this with a proper intake process.</li>
+          <li><strong>Trying to automate everything:</strong> Some clients just need a human to fix their Excel sheet. Not everything needs n8n.</li>
+        </ul>
+
+        <h2>Is $10k/month the Ceiling?</h2>
+
+        <p>No. And here's why: <strong>productization</strong>.</p>
+
+        <p>Once you've built the same automation 5 times (Shopify → accounting, CRM → email sequences, lead capture → CRM), you can productize it. Build it once, sell it 50 times. That's how you go from $10k to $30k.</p>
+
+        <p>I'm currently working on 3 productized automations:</p>
+        <ol>
+          <li><strong>Shopify Order Automation Suite:</strong> Auto-sync to Xero/QuickBooks, inventory alerts, shipping notifications</li>
+          <li><strong>Lead Nurture Engine:</strong> Multi-channel follow-up sequences powered by <a href="/blog/n8n-ai-agent-workflows">AI agents</a></li>
+          <li><strong>Client Reporting Dashboard:</strong> Auto-generated weekly/monthly reports from any data source</li>
+        </ol>
+
+        <p>Each one is priced at $2,000-3,000 setup + $300/month maintenance. Sell 10 of each and you're looking at $15k/month in recurring revenue alone.</p>
+
+        <h2>Getting Started If You Want to Replicate This</h2>
+
+        <ol>
+          <li><strong>Learn n8n deeply.</strong> Our <a href="/blog/n8n-self-hosted-guide/">self-hosting guide</a> is the best place to start.</li>
+          <li><strong>Pick 3 integrations</strong> and become the expert. CRM + email + accounting covers 80% of small business needs.</li>
+          <li><strong>Send 100 cold emails.</strong> Not generic. Specific. "I can automate X process you're doing manually."</li>
+          <li><strong>Price higher than you think.</strong> $500/month minimum for retainers.</li>
+          <li><strong>Document everything.</strong> Case studies = future sales.</li>
+        </ol>
+
+        <p>The opportunity is real. Businesses are drowning in manual work. You just have to be the person who solves it.</p>
+
+        <p>Want help getting started? <a href="/#contact">Let's talk.</a></p>
+      </div>
+      <div class="post-tags"><span class="tag">Business</span><span class="tag">Agency</span><span class="tag">n8n</span><span class="tag">Revenue</span><span class="tag">Automation</span></div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand"><span class="footer-logo">Get<span>Micro</span><span>Services</span></span><p>Fast, affordable automation for small businesses.</p></div>
+      <div class="footer-links">
+        <div class="footer-col"><h4>Services</h4><a href="/#services">All Services</a><a href="/#pricing">Pricing</a></div>
+        <div class="footer-col"><h4>Company</h4><a href="/about">About</a><a href="/#contact">Contact</a></div>
+        <div class="footer-col"><h4>Blog</h4><a href="/blog">All Posts</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><hr class="full-divider"><p>© 2026 GetMicroservices.com — built by humans. run by automations.</p></div>
+  </footer>
+  <script>function toggleMenu(){document.getElementById('navLinks').classList.toggle('active');}</script>
+</body>
+</html>
