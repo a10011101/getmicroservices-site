@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How to Build an AI Automation Agency (Step-by-Step) – GetMicroservices Blog</title>
+  <meta name="description" content="A practical guide to starting and growing an AI automation agency: services to offer, tools to use, how to price, and how to land your first clients."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/ai-automation-agency"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:400;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;line-height:1;}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'< ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'>';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul li::before{content:'→';}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav{padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  </style>
+  <meta property="og:title" content="How to Build an AI Automation Agency (Step-by-Step) – GetMicroservices Blog"/>
+  <meta property="og:description" content="A practical guide to starting and growing an AI automation agency: services to offer, tools to use, how to price, and how to land your first clients."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/blog/ai-automation-agency"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Build an AI Automation Agency (Step-by-Step)",
+  "description": "A practical guide to starting and growing an AI automation agency: services to offer, tools to use, how to price, and how to land your first clients.",
+  "url": "https://getmicroservices.com/blog/ai-automation-agency",
+  "datePublished": "2026-05-07",
+  "dateModified": "2026-05-07",
+  "author": {
+    "@type": "Organization",
+    "name": "GetMicroservices",
+    "url": "https://getmicroservices.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "GetMicroservices",
+    "url": "https://getmicroservices.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://getmicroservices.com/blog/ai-automation-agency"
+  }
+}
+  </script>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/">
+    <span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span>
+    <span style="font-family:'Fira Code',monospace;font-size:0.62rem;color:var(--muted);margin-top:3px;">// done-for-you automation agency</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')" aria-label="Toggle dark mode">◐</button>
+</nav>
+<div class="article-header">
+  <a class="back-link" href="/blog/">Back to Blog</a>
+  <div class="article-meta">
+    <span class="meta-date">2026-05-07</span>
+    <span class="meta-tag">Agency</span>
+    <span class="meta-readtime">10 min read</span>
+  </div>
+  <h1>How to Build an AI Automation Agency (Step-by-Step)</h1>
+  <p class="lead">A practical guide to starting and growing an AI automation agency: services to offer, tools to use, how to price, and how to land your first clients.</p>
+</div>
+<div class="article-body">
+  <p>The demand for automation expertise has never been higher. Businesses of every size are trying to cut manual work, move faster, and do more with fewer people. <strong>AI automation agencies</strong> sit right in the middle of that opportunity — and the barrier to entry is surprisingly low if you know where to start.</p>
+  <p>This guide is a step-by-step breakdown of what it actually takes to build one: from picking your niche and tools to pricing your services and closing your first client.</p>
+
+  <h2>Why Now Is the Right Time</h2>
+  <p>Automation tooling has matured fast. Tools like n8n, Make, and Zapier have made complex integrations accessible without deep engineering. Couple that with the rise of AI APIs — OpenAI, Anthropic, Perplexity — and you can build workflows that would have required a full dev team just three years ago.</p>
+  <p>Businesses know they need to automate. Most don't know how. That gap is your business. The market for done-for-you automation is growing and there are still very few specialists who combine workflow automation with practical AI integration.</p>
+
+  <h2>Step 1 — Pick a Niche</h2>
+  <p>Generalist agencies struggle to stand out. The fastest way to win clients is to specialize. Focus on one industry or one type of workflow, at least to start.</p>
+  <ul>
+    <li><strong>By industry:</strong> real estate agencies, law firms, e-commerce stores, recruitment firms, financial advisors</li>
+    <li><strong>By workflow type:</strong> lead qualification, client onboarding, invoicing and payments, reporting, social media scheduling</li>
+    <li><strong>By tool stack:</strong> become the go-to specialist for n8n, or HubSpot automations, or Notion + Slack + Gmail</li>
+  </ul>
+  <p>A niche doesn't trap you — it gets you in the door. Once you've delivered results for one type of client, referrals to similar businesses follow naturally.</p>
+
+  <h2>Step 2 — Build Your Tool Stack</h2>
+  <p>You don't need to master every tool. Pick a primary orchestration platform and know it well. Add AI and data layers as you go.</p>
+  <ul>
+    <li><strong>Workflow orchestration:</strong> n8n (self-hosted, most flexible), Make (visual, fast), Zapier (easiest to sell to non-technical clients)</li>
+    <li><strong>AI layer:</strong> OpenAI API for text and classification, Anthropic Claude for longer reasoning tasks, Perplexity for search-grounded outputs</li>
+    <li><strong>Data &amp; storage:</strong> Airtable, Google Sheets, Notion, or a Postgres instance depending on scale</li>
+    <li><strong>Delivery layer:</strong> Slack, email (Gmail/Outlook), SMS via Twilio, WhatsApp via the Cloud API</li>
+  </ul>
+  <p>For most early-stage agencies, <strong>n8n + OpenAI + Airtable</strong> covers the majority of client use cases. Master those three and you can solve a huge range of problems.</p>
+
+  <h2>Step 3 — Define Your Service Packages</h2>
+  <p>Packaging your services makes selling much easier. Clients don't want to buy "hours of your time." They want to buy an outcome.</p>
+  <ul>
+    <li><strong>Starter audit:</strong> map the client's current manual workflows, identify automation opportunities, deliver a prioritized roadmap — $500–$1,500</li>
+    <li><strong>Single workflow build:</strong> one fully built, tested, and documented automation — $1,500–$5,000 depending on complexity</li>
+    <li><strong>Monthly retainer:</strong> ongoing workflow maintenance, improvements, and new builds — $1,000–$4,000/month</li>
+    <li><strong>Full automation overhaul:</strong> map and automate the client's entire ops stack — $8,000–$25,000 project</li>
+  </ul>
+  <p>Most agencies find that retainers become the backbone of stable revenue once you've built trust with a client through a project engagement.</p>
+
+  <h2>Step 4 — Land Your First Clients</h2>
+  <p>The fastest path to your first client is <strong>your existing network</strong>. Think about who you already know who runs a business with obvious inefficiencies. Offer to do a free or heavily discounted audit. Use the output to build a case study.</p>
+  <p>Beyond warm outreach, a few channels consistently work for new automation agencies:</p>
+  <ul>
+    <li>LinkedIn content showing behind-the-scenes workflow builds — short videos and posts perform well</li>
+    <li>Cold email to a targeted list (e.g., 200 e-commerce brands doing $500k–$2M/year) with a specific pitch</li>
+    <li>Upwork or Toptal — lower margin but fast way to build early proof and reviews</li>
+    <li>Communities — Reddit (r/automation, r/n8n), Facebook groups for your target niche, Slack communities</li>
+    <li>Referral partnerships with web dev agencies, bookkeepers, or virtual assistant firms who serve overlapping clients</li>
+  </ul>
+
+  <h2>Step 5 — Deliver and Document Everything</h2>
+  <p>Your reputation is your pipeline. Delivering clean, documented work is what turns one client into three through referrals.</p>
+  <p>For every workflow you build, document it: what it does, what triggers it, what it connects to, and how to troubleshoot common failures. Most clients don't read it — but having it signals professionalism and prevents support headaches later.</p>
+  <ul>
+    <li>Use Loom videos to walk clients through completed workflows — faster than writing and easier for non-technical clients to understand</li>
+    <li>Set up error alerting from day one — a Slack message or email when a workflow fails is table stakes</li>
+    <li>Keep a changelog for each client's automations so you both know what changed and when</li>
+  </ul>
+
+  <h2>Step 6 — Scale the Agency</h2>
+  <p>Once you have two or three paying clients and a repeatable process, you can start thinking about scale. The two main levers are: <strong>productizing your delivery</strong> and <strong>bringing in help</strong>.</p>
+  <p>Productizing means turning common client workflows into templates — pre-built, lightly customized, fast to deploy. A lead qualification workflow for a real estate agency looks nearly identical across clients. Build it once, sell it many times.</p>
+  <p>For help, start with freelancers before hiring. Platforms like Toptal, Contra, and Upwork have solid no-code/automation specialists. Your job shifts to client management, scoping, and QA rather than building every workflow yourself.</p>
+
+  <h2>Common Mistakes That Kill New Agencies</h2>
+  <ul>
+    <li>Underpricing to win work — you attract bad-fit clients and build resentment fast</li>
+    <li>Skipping scoping — changes in requirements kill margins; define the deliverable in writing before starting</li>
+    <li>Building everything from scratch — templates and reusable components exist; use them</li>
+    <li>No ongoing monitoring — automations break when APIs update; you need visibility into what's running</li>
+    <li>Ignoring marketing — one good client doesn't mean the pipeline is full; keep outreach consistent</li>
+  </ul>
+
+  <div class="result-box">
+    <div class="result-title">⚡ Action Plan</div>
+    <ul>
+      <li>Pick a niche this week — industry or workflow type</li>
+      <li>Master one orchestration tool (n8n recommended for flexibility)</li>
+      <li>Build 2–3 sample workflows to show as portfolio pieces</li>
+      <li>Reach out to 10 warm contacts with a free audit offer</li>
+      <li>Package your services into 3 clear tiers with fixed prices</li>
+      <li>Deliver your first project with full documentation and error alerts</li>
+    </ul>
+  </div>
+
+  <p>The window for building a differentiated automation agency is still wide open — but it won't be forever. <a href="/#contact" style="color:var(--accent);">We help businesses implement automation properly</a>. If you want to understand how we structure client projects, get in touch and we'll walk you through it.</p>
+</div>
+<footer>
+  <p>© 2026 <a href="/">GetMicroservices</a> · <a href="/blog/">Blog</a> · <a href="/#contact">Contact</a></p>
+</footer>
+</body>
+</html>
