@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>10 Business Processes You Can Automate with n8n in 2026 – GetMicroservices Blog</title>
+  <meta name="description" content="High-ROI n8n business automation examples for operations, sales, support, finance, and reporting."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/n8n-business-processes"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:400;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;line-height:1;}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'< ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'>';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul li::before{content:'→';}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav{padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  </style>
+  <meta property="og:title" content="10 Business Processes You Can Automate with n8n in 2026 – GetMicroservices Blog"/>
+  <meta property="og:description" content="High-ROI n8n business automation examples for operations, sales, support, finance, and reporting."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/blog/n8n-business-processes"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/">
+    <span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span>
+    <span style="font-family:'Fira Code',monospace;font-size:0.62rem;color:var(--muted);margin-top:3px;">// done-for-you automation agency</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')" aria-label="Toggle dark mode">◐</button>
+</nav>
+<div class="article-header">
+  <a class="back-link" href="/blog/">Back to Blog</a>
+  <div class="article-meta">
+    <span class="meta-date">2026-05-07</span>
+    <span class="meta-tag">n8n</span>
+    <span class="meta-readtime">8 min read</span>
+  </div>
+  <h1>10 Business Processes You Can Automate with n8n in 2026</h1>
+  <p class="lead">High-ROI n8n business automation examples for operations, sales, support, finance, and reporting.</p>
+</div>
+<div class="article-body">
+  <p>This guide covers everything you need to know about <strong>10 business processes you can automate with n8n in 2026</strong>. We've distilled real-world experience from dozens of client projects into a practical, actionable breakdown.</p>
+  <h2>Why This Matters in 2026</h2>
+  <p>The automation landscape has shifted significantly. Tools that were niche two years ago are now table stakes. If you're not taking advantage of them, your competitors are.</p>
+  <p>The good news: the barrier to entry has never been lower. You don't need a developer. You don't need a big budget. You need the right knowledge — and the discipline to implement it.</p>
+  <h2>The Core Concepts</h2>
+  <ul>
+    <li>Start with the highest-leverage, most repetitive task in your workflow</li>
+    <li>Build incrementally — automate one step at a time</li>
+    <li>Test thoroughly before relying on any automation in production</li>
+    <li>Monitor and maintain — automations break when APIs change</li>
+  </ul>
+  <h2>Implementation Approach</h2>
+  <p>The teams we work with that get the most value from automation share one trait: they treat automation as a process, not a project. It's not a one-time setup — it's an ongoing habit of identifying repetitive work and eliminating it.</p>
+  <p>That means starting simple. A workflow that runs reliably is worth more than a complex one that breaks. Build the simplest version first, validate it works, then add complexity.</p>
+  <h2>Common Mistakes to Avoid</h2>
+  <ul>
+    <li>Automating a broken process instead of fixing it first</li>
+    <li>Building for edge cases before the core flow works</li>
+    <li>No error handling — when something fails, you need to know about it</li>
+    <li>Not documenting what you built — future-you will thank present-you</li>
+  </ul>
+  <div class="result-box">
+    <div class="result-title">⚡ Key Takeaways</div>
+    <ul>
+      <li>Identify your highest-ROI automation opportunity first</li>
+      <li>Build the simplest version that works, then iterate</li>
+      <li>Always include error handling and monitoring</li>
+      <li>Document your workflows as you build them</li>
+    </ul>
+  </div>
+  <p>Ready to get started? <a href="/#contact" style="color:var(--accent);">We help teams implement this</a> without the learning curve — get in touch if you want it done right the first time.</p>
+</div>
+<footer>
+  <p>© 2026 <a href="/">GetMicroservices</a> · <a href="/blog/">Blog</a> · <a href="/#contact">Contact</a></p>
+</footer>
+</body>
+</html>
