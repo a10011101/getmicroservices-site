@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/a/blog/ai-customer-support-bot-n8n"/>
+<title>How to Build an AI Customer Support Bot with n8n — getmicroservices</title>
+<meta name="description" content="Step-by-step guide to building an AI-powered customer support bot using n8n, ChatGPT, and your knowledge base."/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P3QLH1BY4');
+</script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">Get<span class="accent">Micro</span><span class="yellow">Services</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#how">how it works</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/blog/">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+<div class="article">
+  <a class="back-link" href="/a/blog/">← all posts</a>
+  <div class="post-tag">n8n</div>
+  <div class="post-meta">
+    <span>2026-05-13</span>
+    <span>8 min read</span>
+  </div>
+  <h1>How to Build an AI Customer Support Bot with n8n</h1>
+  <p class="post-lead">Step-by-step guide to building an AI-powered customer support bot using n8n, ChatGPT, and your knowledge base.</p>
+
+  <p>customer support is expensive. you hire agents, train them on the same 40 questions, and watch them answer "where's my order?" every single day. response times creep up, customers churn, and your best people burn out on repetitive tickets.</p>
+
+  <p>an <strong>AI customer support bot</strong> built on n8n handles the boring 70-80% automatically, escalates the rest to humans, and pulls answers from your actual data — not generic chatgpt waffle. here's exactly how to build one.</p>
+
+  <h2>what the bot does</h2>
+
+  <p>the bot sits between your customers and your team. when a ticket arrives — via email, chat widget, whatsapp, or a form — n8n catches it, searches your knowledge base for relevant context, asks chatgpt to draft a reply, and either sends it or queues it for a human to review.</p>
+
+  <p>the difference from a basic chatbot: <strong>it uses your actual data</strong>. your faq docs, product pages, past resolved tickets, internal runbooks. not random internet knowledge. the answers are accurate, on-brand, and specific to your business.</p>
+
+  <p>we covered the building blocks for this in our <a href="/a/blog/n8n-ai-agent-workflows" style="color:var(--accent);">AI agent workflows guide</a> — the support bot is one of the most practical use cases.</p>
+
+  <h2>architecture</h2>
+
+  <p>four components, all connected through n8n:</p>
+
+  <ul>
+    <li><strong>trigger layer</strong> — webhooks from chat widgets, email triggers (imap/gmail), or whatsapp business api. n8n normalises everything into a standard format.</li>
+    <li><strong>knowledge base</strong> — faq docs, help articles, product specs, resolved ticket history. stored in a vector database (pinecone, qdrant) or simpler setups can use google sheets or notion.</li>
+    <li><strong>AI processing</strong> — the chatgpt api node takes the customer question plus retrieved context and generates a response. you control the system prompt, tone, and guardrails.</li>
+    <li><strong>response + escalation</strong> — confident responses go out automatically. uncertain ones create a ticket in your helpdesk with the draft attached for human review.</li>
+  </ul>
+
+  <p>this approach handles questions it's never seen before, as long as the answer exists somewhere in your knowledge base. for more on how small businesses are using AI agents, check our breakdown of <a href="/a/blog/ai-agents-small-business" style="color:var(--accent);">AI agents that actually work</a>.</p>
+
+  <h2>setting up the n8n workflow</h2>
+
+  <p>start with the trigger. easiest entry point is a webhook — most chat platforms (tawk.to, crisp, intercom) can post to a webhook url. add a <strong>webhook</strong> node in n8n and paste the url into your chat platform's settings.</p>
+
+  <p>add a <strong>set</strong> node to normalise incoming data. extract the message, customer email/user id, and channel. keeps the rest of your workflow clean regardless of source.</p>
+
+  <p>next: knowledge base lookup. for simple setups, use <strong>google sheets</strong> or <strong>notion</strong> to search your faq. for something more powerful, connect to a vector database via http request — embed the question, search for similar entries, return the top 3-5 matches as context.</p>
+
+  <p>the <strong>openai</strong> node takes over. your system prompt should include: company name and tone, instructions to only answer from provided context, a directive to say "i don't know" when context doesn't cover it, and any formatting rules.</p>
+
+  <p>after the ai generates a response, add an <strong>if</strong> node to check confidence. if the response contains phrases like "i'm not sure" or "i don't have that information," route to escalation. otherwise, send automatically via the original channel's api.</p>
+
+  <h2>loading your knowledge base</h2>
+
+  <p>the bot is only as good as what you feed it:</p>
+
+  <ul>
+    <li><strong>faq pages</strong> — the obvious start. export as plain text, chunk into individual q&a pairs.</li>
+    <li><strong>help centre articles</strong> — longer troubleshooting content, policies, procedures. break into 200-500 word sections.</li>
+    <li><strong>resolved tickets</strong> — your past conversations are gold. export the last 6 months, strip pii, use the q&a pairs as examples.</li>
+    <li><strong>product docs</strong> — specs, pricing, shipping, returns. anything a customer might ask about.</li>
+  </ul>
+
+  <p>update the knowledge base weekly. n8n can automate this — schedule a workflow that pulls new articles from your cms or helpdesk and adds them to the database. stale data means wrong answers.</p>
+
+  <h2>escalation to humans</h2>
+
+  <p>the bot should never pretend to be human. make it clear the customer is talking to an ai, and give them a path to a real person at any point.</p>
+
+  <p>escalation triggers: customer explicitly asks for a human, the ai can't find a confident answer, the topic involves refunds or complaints (high-stakes), or the conversation goes back and forth more than 3 times without resolution.</p>
+
+  <p>when escalation fires, create a ticket with: the full conversation, the ai's draft response (so the agent doesn't start from scratch), customer context, and a priority level based on topic.</p>
+
+  <p>this is where n8n's flexibility shines compared to locked-in chatbot platforms. you decide exactly what triggers escalation and what the human sees. we break down these differences further in our <a href="/a/blog/n8n-vs-zapier-2026" style="color:var(--accent);">n8n vs zapier comparison</a>.</p>
+
+  <h2>testing and monitoring</h2>
+
+  <p>before going live, test with real tickets. take 50 recent support conversations, run them through the workflow, compare the ai's responses to what your agents actually sent. you'll find gaps fast — missing knowledge entries, unclear prompts, edge cases.</p>
+
+  <p>once live, monitor three things: <strong>resolution rate</strong> (what percentage the bot handles end-to-end), <strong>accuracy</strong> (spot-check 10 responses per day for the first month), and <strong>escalation rate</strong> (if it's above 40%, your knowledge base needs work).</p>
+
+  <p>add error handling to every node. if chatgpt is down, the knowledge base times out, or the response channel fails — n8n should catch it, log it, and route to a human automatically. silent failures in support mean ignored customers.</p>
+
+  <h2>common pitfalls</h2>
+
+  <ul>
+    <li><strong>over-automating too fast</strong> — start with the bot suggesting responses for human review. only switch to auto-send after 2 weeks of validated accuracy.</li>
+    <li><strong>thin knowledge base</strong> — 10 faq entries won't cut it. the bot will hallucinate for everything else. feed it generously or limit scope.</li>
+    <li><strong>no fallback</strong> — every "i don't know" should include a way to reach a human. a dead end is worse than no bot.</li>
+    <li><strong>ignoring tone</strong> — default chatgpt tone is generic. your system prompt needs to specify brand voice and how to handle sensitive topics.</li>
+  </ul>
+
+  <div class="result-box">
+    <div class="result-title">key takeaways</div>
+    <div class="result-item">use your own knowledge base — not generic chatgpt responses</div>
+    <div class="result-item">start with human-reviewed responses, automate only after validating accuracy</div>
+    <div class="result-item">build clear escalation paths — the bot should never trap a customer</div>
+    <div class="result-item">monitor resolution rate, accuracy, and escalation rate weekly</div>
+  </div>
+
+  <p>Need this implemented? <a href="/a/#contact">we build these workflows for clients →</a></p>
+</div>
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+</script>
+</body>
+</html>

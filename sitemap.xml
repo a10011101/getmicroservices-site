@@ -430,6 +430,18 @@
   </url>
 
   <url>
+    <loc>https://getmicroservices.com/blog/ai-customer-support-bot-n8n</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://getmicroservices.com/a/blog/ai-customer-support-bot-n8n</loc>
+    <lastmod>2026-05-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://getmicroservices.com/blog/n8n-social-media-automation</loc>
     <lastmod>2026-05-11</lastmod>
     <changefreq>weekly</changefreq>
