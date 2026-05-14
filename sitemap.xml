@@ -454,4 +454,17 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://getmicroservices.com/blog/self-host-n8n-cost</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://getmicroservices.com/a/blog/self-host-n8n-cost</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
