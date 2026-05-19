@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/blog/automation-agency-revenue/"/>
+<title>How I Built a $10k/Month Automation Agency — getmicroservices</title>
+<meta name="description" content="How I built a $10k/month automation agency from scratch — tools, pricing, client acquisition, lessons learned"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P3QLH1BY4');
+</script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  .flow-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px;margin:32px 0;}
+  .flow-nodes{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;}
+  .node-box{font-family:var(--mono);font-size:12px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;color:var(--dim);background:var(--bg);}
+  .flow-result{font-family:var(--mono);font-size:12px;color:var(--accent);margin-top:8px;}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How I Built a $10k/Month Automation Agency",
+  "description": "How I built a $10k/month automation agency from scratch — tools, pricing, client acquisition, lessons learned",
+  "url": "https://getmicroservices.com/blog/automation-agency-revenue/",
+  "datePublished": "2026-05-12",
+  "dateModified": "2026-05-12",
+  "author": {
+    "@type": "Organization",
+    "name": "GetMicroservices",
+    "url": "https://getmicroservices.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "GetMicroservices",
+    "url": "https://getmicroservices.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://getmicroservices.com/blog/automation-agency-revenue/"
+  }
+}
+  </script>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">get<span>micro</span>services<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#how">how it works</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/blog/">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+<div class="article">
+  <a class="back-link" href="/a/blog/">← all posts</a>
+  <div class="post-tag">agency</div>
+  <div class="post-meta">
+    <span>2026-05-12</span>
+    <span>9 min read</span>
+  </div>
+  <h1>How I Built a $10k/Month Automation Agency</h1>
+  <p class="post-lead">No MBA. No VC funding. No team of 20. Just n8n, some grit, and a lot of client outreach — here's exactly how I built it.</p>
+
+  <p>Everyone wants to know the "secret" to building a profitable automation agency. Spoiler: there isn't one. There's a process, and I'm going to lay it out — the revenue numbers, the tools, the mistakes, the whole thing.</p>
+
+  <p>I started GetMicroservices in late 2024 with zero clients, a self-hosted n8n instance, and a very naive idea: "businesses need automation, I can build automations, this will be easy."</p>
+
+  <p>It wasn't easy. But it was worth it.</p>
+
+  <h2>Month 1-3: The Hustle or Starve Phase</h2>
+
+  <p>Let me be real about the early numbers:</p>
+  <ul>
+    <li><strong>Month 1:</strong> $0 revenue. Spent the entire month learning n8n inside out and building my first <a href="/a/blog/n8n-self-hosted-guide">self-hosted setup</a>.</li>
+    <li><strong>Month 2:</strong> $800. Two small jobs — a Zapier migration and a Google Sheets automation.</li>
+    <li><strong>Month 3:</strong> $2,400. Three retainer clients at $800/month each.</li>
+  </ul>
+
+  <p>The breakthrough wasn't a viral post or a lucky break. It was <strong>direct outreach</strong>. I sent 200+ cold emails. Most went unanswered. But 3 converted into clients, and those clients gave me case studies for the next 10.</p>
+
+  <div class="flow-card">
+    <div class="flow-nodes">
+      <div class="node-box">cold outreach (200+ emails)</div>
+      <div class="node-box">→</div>
+      <div class="node-box">3 replies</div>
+      <div class="node-box">→</div>
+      <div class="node-box">2 small jobs ($800)</div>
+      <div class="node-box">→</div>
+      <div class="node-box">case studies</div>
+      <div class="node-box">→</div>
+      <div class="node-box">referral pipeline</div>
+    </div>
+    <div class="flow-result">result: $2,400/month by month 3</div>
+  </div>
+
+  <h2>What I Actually Sell</h2>
+
+  <p>Here's my pricing model, which took me way too long to figure out:</p>
+  <ul>
+    <li><strong>One-off projects:</strong> $1,500 – $5,000 depending on complexity</li>
+    <li><strong>Monthly retainers:</strong> $500 – $2,000 for ongoing maintenance + minor changes</li>
+    <li><strong>Consulting calls:</strong> $150/hour for strategy sessions</li>
+  </ul>
+
+  <p>The key insight: <strong>retainers are everything</strong>. One-off projects pay the bills, but retainers build the business. Once you have 10 retainer clients at $1,000/month, you're at $10k/month and you can breathe.</p>
+
+  <h2>Tech Stack That Scales</h2>
+
+  <p>I've tried everything. Here's what I actually use in production:</p>
+  <ul>
+    <li><strong><a href="/a/blog/n8n-vs-zapier-2026">n8n (self-hosted):</strong> The core engine. 90% of workflows run here.</li>
+    <li><strong>Make:</strong> For clients who want a managed solution or for visual prototyping</li>
+    <li><strong>Zapier:</strong> Only when a client insists or for super simple triggers</li>
+    <li><strong>PostgreSQL:</strong> Data storage and logging</li>
+    <li><strong>Railway/VPS:</strong> Hosting for n8n and client-facing dashboards</li>
+  </ul>
+
+  <p>Check the <a href="/a/blog/solopreneur-automation-stack">full solopreneur stack breakdown</a> for the nitty-gritty details.</p>
+
+  <div class="flow-card">
+    <div class="flow-nodes">
+      <div class="node-box">n8n (self-hosted)</div>
+      <div class="node-box">PostgreSQL</div>
+      <div class="node-box">Make</div>
+      <div class="node-box">Zapier</div>
+      <div class="node-box">Railway/VPS</div>
+    </div>
+    <div class="flow-result">90% of production workflows on n8n</div>
+  </div>
+
+  <h2>Month 4-8: Scaling to $10k</h2>
+
+  <p>Here's the month-by-month breakdown:</p>
+  <ul>
+    <li><strong>Month 4:</strong> $4,200 (5 retainers + 1 project)</li>
+    <li><strong>Month 5:</strong> $5,800 (6 retainers + 2 projects)</li>
+    <li><strong>Month 6:</strong> $7,500 (8 retainers — word of mouth kicking in)</li>
+    <li><strong>Month 7:</strong> $9,200 (9 retainers + project)</li>
+    <li><strong>Month 8:</strong> $11,400 (11 retainers)</li>
+  </ul>
+
+  <p>The growth wasn't linear — it was exponential once the referral flywheel started spinning. Happy clients tell other business owners. Those business owners reach out. You close them. Repeat.</p>
+
+  <h2>Client Acquisition: What Works</h2>
+
+  <p>I've tried everything. Here's what converts:</p>
+  <ul>
+    <li><strong>Cold email (40% of clients):</strong> Personalized, specific, shows you understand their business. Not "Hi, I do automation." More like "I noticed you're manually entering orders from Shopify into QuickBooks — I can automate that in 3 days."</li>
+    <li><strong>Referrals (35% of clients):</strong> Existing clients recommending you. This only works if you do good work and follow up.</li>
+    <li><strong>Content (25% of clients):</strong> Blog posts, case studies, and breakdowns of automations I've built. The <a href="/a/blog/webhook-explained">technical how-to content</a> builds trust over time.</li>
+  </ul>
+
+  <p>What doesn't work: posting "automation is the future" on LinkedIn. Everyone says that. Nobody converts from it.</p>
+
+  <h2>Mistakes That Cost Money</h2>
+
+  <p>Let me save you some pain:</p>
+  <ul>
+    <li><strong>Undercharging:</strong> I started at $300/month per retainer. Should have been $700+. Low prices attract high-maintenance clients.</li>
+    <li><strong>No scope contracts:</strong> "Unlimited changes" on retainers nearly killed me. Now I cap monthly hours.</li>
+    <li><strong>Building before selling:</strong> I wasted weeks building a productized service nobody wanted. <strong>Sell first, build second.</strong></li>
+    <li><strong>Ignoring <a href="/a/blog/automate-client-onboarding">client onboarding</a>:</strong> Bad onboarding = scope creep + unhappy clients. Fixed this with a proper intake process.</li>
+    <li><strong>Trying to automate everything:</strong> Some clients just need a human to fix their Excel sheet. Not everything needs n8n.</li>
+  </ul>
+
+  <h2>Is $10k/Month the Ceiling?</h2>
+
+  <p>No. And here's why: <strong>productization</strong>.</p>
+
+  <p>Once you've built the same automation 5 times (Shopify to accounting, CRM to email sequences, lead capture to CRM), you can productize it. Build it once, sell it 50 times. That's how you go from $10k to $30k.</p>
+
+  <p>I'm currently working on 3 productized automations:</p>
+  <ul>
+    <li><strong>Shopify Order Automation Suite:</strong> Auto-sync to Xero/QuickBooks, inventory alerts, shipping notifications</li>
+    <li><strong>Lead Nurture Engine:</strong> Multi-channel follow-up sequences powered by <a href="/a/blog/n8n-ai-agent-workflows">AI agents</a></li>
+    <li><strong>Client Reporting Dashboard:</strong> Auto-generated weekly/monthly reports from any data source</li>
+  </ul>
+
+  <p>Each one is priced at $2,000–3,000 setup + $300/month maintenance. Sell 10 of each and you're looking at $15k/month in recurring revenue alone.</p>
+
+  <div class="result-box">
+    <div class="result-title">getting started</div>
+    <div class="result-item">learn n8n deeply — self-host it, break it, fix it</div>
+    <div class="result-item">pick 3 integrations and become the expert (CRM + email + accounting covers 80%)</div>
+    <div class="result-item">send 100 cold emails — personalized, specific, outcome-focused</div>
+    <div class="result-item">price higher than you think — $500/month minimum for retainers</div>
+    <div class="result-item">document everything — case studies are your best sales tool</div>
+  </div>
+
+  <p>The opportunity is real. Businesses are drowning in manual work. You just have to be the person who solves it.</p>
+
+  <p><a href="/a/#contact">we help businesses implement automation properly →</a></p>
+</div>
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+</script>
+</body>
+</html>
