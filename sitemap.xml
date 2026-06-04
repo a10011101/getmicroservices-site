@@ -532,4 +532,17 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://getmicroservices.com/blog/ai-automation-services-for-small-business</loc>
+    <lastmod>2026-06-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://getmicroservices.com/a/blog/ai-automation-services-for-small-business</loc>
+    <lastmod>2026-06-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
