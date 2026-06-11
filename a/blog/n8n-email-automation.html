@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/blog/n8n-email-automation"/>
+<title>How to Automate Your Email with n8n (2026 Guide) — getmicroservices</title>
+<meta name="description" content="Learn how to build powerful email automation workflows with n8n — inbox triage, AI auto-replies, CRM sync, and more. Step-by-step 2026 guide."/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P3QLH1BY4');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Automate Your Email with n8n (2026 Guide)",
+  "description": "Learn how to build powerful email automation workflows with n8n — inbox triage, AI auto-replies, CRM sync, and more. Step-by-step 2026 guide.",
+  "url": "https://getmicroservices.com/blog/n8n-email-automation",
+  "datePublished": "2026-06-11",
+  "dateModified": "2026-06-11",
+  "author": {
+    "@type": "Organization",
+    "name": "GetMicroservices"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "GetMicroservices",
+    "url": "https://getmicroservices.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://getmicroservices.com/blog/n8n-email-automation"
+  }
+}
+</script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  code{font-family:var(--mono);font-size:13px;background:var(--bg2);border:1px solid var(--border);padding:2px 6px;border-radius:3px;color:var(--accent);}
+  .code-block{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);padding:20px 24px;margin:24px 0;font-family:var(--mono);font-size:13px;color:var(--fg);overflow-x:auto;line-height:1.7;white-space:pre;}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">getmicroservices<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#how">how it works</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/blog/">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+<div class="article">
+  <a class="back-link" href="/a/blog/">← all posts</a>
+  <div class="post-tag">guide</div>
+  <div class="post-meta">
+    <span>2026-06-11</span>
+    <span>9 min read</span>
+  </div>
+  <h1>How to Automate Your Email with n8n (2026 Guide)</h1>
+  <p class="post-lead">Email is the highest-ROI target for automation. Here's how to build a complete email automation system with n8n — from inbox triage to AI-powered replies and CRM sync.</p>
+
+  <p>If you only automate one thing this year, make it email. The average knowledge worker spends <strong>2.6 hours per day</strong> on email — much of it on tasks a well-configured <a href="/a/blog/n8n-self-hosted-guide">n8n workflow</a> can handle in milliseconds.</p>
+
+  <h2>why email first</h2>
+  <p>Email sits at the centre of almost every business process. Leads, client requests, invoices, support tickets — all email. <strong>Automating email multiplies the value of every other automation you build.</strong></p>
+  <p>Unlike social or CRM workflows, email automation has immediate, measurable impact: fewer missed leads, faster response times, less context-switching. With n8n you own the infrastructure — no per-task pricing, no data leaving your stack.</p>
+
+  <h2>the four workflows worth building first</h2>
+  <p>Don't automate everything at once. These four deliver the most ROI fastest.</p>
+
+  <h2>1. inbox triage — auto-label and route</h2>
+  <p>The common email problem isn't volume — it's not knowing what needs attention now. An n8n triage workflow reads incoming emails, classifies them with a simple AI prompt, and routes each one accordingly.</p>
+  <ul>
+    <li>trigger: gmail / imap node — fires on new email</li>
+    <li>filter: check sender, subject keywords, body snippet</li>
+    <li>ai node: classify as "lead", "support", "invoice", "newsletter", "other"</li>
+    <li>route: apply label or move to folder based on classification</li>
+    <li>optional: slack/telegram alert for "lead" or "urgent" categories</li>
+  </ul>
+  <p>Classification prompt is as simple as: <em>"Classify this email into one of: lead, support, invoice, newsletter, other. Reply with just the category."</em> — accuracy is typically 90%+ out of the box.</p>
+
+  <h2>2. ai draft generation</h2>
+  <p>Full auto-replies are risky for client-facing work. Draft generation is the safer approach: n8n reads the email, generates a reply, saves it as a Gmail draft ready for one-click review and send.</p>
+  <div class="code-block">// simplified workflow logic
+trigger: new email in "needs-reply" label
+→ extract: sender name, subject, body
+→ ai prompt: "draft a professional reply.
+   tone: friendly but concise. max 150 words."
+→ gmail: create draft with generated text
+→ telegram: notify "draft ready for [sender]"</div>
+  <p>Pair this with triage and you'll spend 5 minutes reviewing drafts instead of 45 minutes writing. Most drafts need only minor tweaks.</p>
+
+  <h2>3. lead capture → crm sync</h2>
+  <p>Every inbound enquiry should land in your CRM immediately. An <a href="/a/blog/ai-lead-generation-automation">n8n lead capture workflow</a> bridges that gap automatically.</p>
+  <ul>
+    <li>trigger: new email classified as "lead"</li>
+    <li>extract: name, email, company (ai parse from body)</li>
+    <li>deduplicate: check if contact exists in hubspot / airtable / notion</li>
+    <li>create: new contact record with source, timestamp, email snippet</li>
+    <li>notify: slack ping with deal summary and crm link</li>
+  </ul>
+  <p>The deduplication step is critical — without it, you get duplicate contacts for every follow-up. Use the HubSpot "search by email" node before creating.</p>
+
+  <h2>4. invoice and receipt processing</h2>
+  <p>Finance teams and solopreneurs alike waste hours logging receipts manually. <a href="/a/blog/automate-invoice-processing">Automating invoice processing</a> with n8n pays for itself within a week.</p>
+  <ul>
+    <li>trigger: new email with "invoice" or "receipt" label</li>
+    <li>extract attachment: pdf or image</li>
+    <li>ai parse: extract vendor, amount, date, currency</li>
+    <li>log: append row to google sheets or create airtable record</li>
+    <li>optional: forward to accounting software via webhook</li>
+  </ul>
+  <p>For PDFs, use the n8n PDF extract node or send file content to a vision-capable AI model. Accuracy is 95%+ on structured invoices from SaaS tools.</p>
+
+  <h2>setting up gmail in n8n</h2>
+  <p>Use <strong>OAuth2</strong> for Gmail, not IMAP — more reliable and no need to enable less-secure app access.</p>
+  <ul>
+    <li>in n8n: credentials → new → gmail oauth2</li>
+    <li>in google cloud console: create project, enable gmail api, create oauth2 credentials</li>
+    <li>scopes: gmail.readonly, gmail.modify, gmail.compose (for drafts)</li>
+    <li>callback url: https://your-n8n-domain.com/rest/oauth2-credential/callback</li>
+  </ul>
+  <p>For <a href="/a/blog/n8n-self-hosted-guide">self-hosted n8n</a>, the callback URL config is the most common setup error. Get it right first, then test with a simple "read last 5 emails" workflow before building anything complex.</p>
+
+  <h2>what goes wrong</h2>
+  <ul>
+    <li>no error handling — add error trigger nodes that notify when workflows fail</li>
+    <li>processing all email — filter to specific labels or senders first</li>
+    <li>auto-sending without review — draft mode until you trust the output</li>
+    <li>forgetting rate limits — gmail api has quotas; add wait nodes in bulk ops</li>
+    <li>not testing edge cases — blank subjects, forwarded emails, html-only bodies</li>
+  </ul>
+
+  <div class="result-box">
+    <div class="result-title">your email automation roadmap</div>
+    <div class="result-item">week 1: build triage workflow — auto-label by category</div>
+    <div class="result-item">week 2: add ai draft generation for common reply types</div>
+    <div class="result-item">week 3: connect leads to your crm automatically</div>
+    <div class="result-item">week 4: automate invoice/receipt logging to spreadsheet</div>
+    <div class="result-item">ongoing: refine ai prompts based on draft quality</div>
+  </div>
+
+  <p>Each workflow is modular — turn them on and off, adjust prompts, add new routes without touching anything else. Start with triage, prove the value, then expand.</p>
+
+  <p>Need this built for your stack? <a href="/a/#contact">we implement email automation systems for teams →</a></p>
+
+  <div id="further-reading" class="result-box">
+    <div class="result-title">further reading</div>
+    <div class="result-item"><a href="/a/blog/n8n-self-hosted-guide">self-hosting n8n: complete setup guide</a></div>
+    <div class="result-item"><a href="/a/blog/automate-invoice-processing">how to automate invoice processing with n8n</a></div>
+    <div class="result-item"><a href="/a/blog/ai-lead-generation-automation">ai lead generation automation: end-to-end guide</a></div>
+    <div class="result-item"><a href="/a/blog/webhook-explained">webhooks explained: automate anything</a></div>
+  </div>
+</div>
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+</script>
+</body>
+</html>
