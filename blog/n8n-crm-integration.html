@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How to Connect Your CRM to n8n: Automate Lead Management (2026) – GetMicroservices Blog</title>
+  <meta name="description" content="Learn how to integrate HubSpot, Pipedrive, and Notion CRM with n8n to automate lead capture, follow-ups, and pipeline management. Step-by-step 2026 guide."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/n8n-crm-integration"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav:not(.toc){position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:400;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;line-height:1;}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'< ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body a{color:var(--accent);}
+    .article-body a:hover{text-decoration:underline;}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'>';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .code-block{background:var(--bg3);border:2px solid var(--border);border-left:4px solid var(--accent);padding:16px 20px;margin:24px 0;font-family:'Fira Code',monospace;font-size:0.78rem;color:var(--fg);overflow-x:auto;line-height:1.7;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul li::before{content:'→';}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav:not(.toc){padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  </style>
+  <meta property="og:title" content="How to Connect Your CRM to n8n: Automate Lead Management (2026) – GetMicroservices Blog"/>
+  <meta property="og:description" content="Integrate HubSpot, Pipedrive, and Notion CRM with n8n to automate lead capture, follow-ups, and pipeline management."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/blog/n8n-crm-integration"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How to Connect Your CRM to n8n: Automate Lead Management (2026)",
+    "description": "Learn how to integrate HubSpot, Pipedrive, and Notion CRM with n8n to automate lead capture, follow-ups, and pipeline management. Step-by-step 2026 guide.",
+    "url": "https://getmicroservices.com/blog/n8n-crm-integration",
+    "datePublished": "2026-06-15",
+    "dateModified": "2026-06-15",
+    "author": {
+      "@type": "Organization",
+      "name": "GetMicroservices"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GetMicroservices",
+      "url": "https://getmicroservices.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://getmicroservices.com/blog/n8n-crm-integration"
+    }
+  }
+  </script>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/">
+    <span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span>
+    <span style="font-family:'Fira Code',monospace;font-size:0.62rem;color:var(--muted);margin-top:3px;">// done-for-you automation agency</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Start Now</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')" aria-label="Toggle dark mode">◐</button>
+</nav>
+<div class="article-header">
+  <a class="back-link" href="/blog/">Back to Blog</a>
+  <div class="article-meta">
+    <span class="meta-date">2026-06-15</span>
+    <span class="meta-tag">guide</span>
+    <span class="meta-readtime">10 min read</span>
+  </div>
+  <h1>How to Connect Your CRM to n8n: Automate Lead Management (2026)</h1>
+  <p class="lead">Your CRM is only as good as the data you put in it — and manual data entry is where leads go to die. Here's how to wire up HubSpot, Pipedrive, or Notion to n8n and automate your entire lead pipeline.</p>
+</div>
+<div class="article-body">
+  <p>Most small businesses lose 20–40% of their leads not because the product is wrong, but because follow-up is slow. A lead fills out a form, lands in an inbox, and doesn't make it into the CRM for 24 hours — by which point the moment has passed. <a href="/blog/ai-lead-generation-automation">n8n CRM integration</a> solves this at the infrastructure level: leads enter the pipeline instantly, automatically, without anyone touching a keyboard.</p>
+
+  <h2>Why CRM Automation Is the Highest-Leverage Workflow</h2>
+  <p>Revenue operations consultants consistently find the same bottleneck: it's not lead generation, it's lead handling. Once a prospect expresses interest, the speed and quality of follow-up is the biggest predictor of close rate. <strong>Companies that follow up within 5 minutes are 9x more likely to convert</strong> than those that respond after an hour.</p>
+  <p>n8n lets you build CRM workflows that respond in seconds, enrich contact data automatically, schedule follow-up tasks, and route hot leads to the right person — all without per-task pricing or data leaving your infrastructure.</p>
+
+  <h2>Which CRM Should You Integrate?</h2>
+  <p>n8n has native nodes for the most common CRMs. Here's how they compare for automation purposes:</p>
+  <ul>
+    <li><strong>HubSpot</strong> — best native n8n support; read/write contacts, deals, and tickets; free tier is generous</li>
+    <li><strong>Pipedrive</strong> — excellent for sales-focused pipelines; great API, native n8n node</li>
+    <li><strong>Notion</strong> — popular with solopreneurs as a lightweight CRM; native n8n node covers most use cases</li>
+    <li><strong>Airtable</strong> — flexible base-as-CRM approach; native n8n node with full record access</li>
+    <li><strong>Salesforce</strong> — enterprise option; n8n has a native node but setup is more involved</li>
+  </ul>
+  <p>For most <a href="/blog/solopreneur-automation-stack">solopreneur and small agency stacks</a>, HubSpot Free or Notion is the right starting point. Both have mature n8n nodes and clear documentation.</p>
+
+  <h2>Workflow 1: Form Submission → CRM Contact</h2>
+  <p>The foundational CRM automation: every form submission creates a contact record instantly. This replaces the "check the form, copy to CRM" manual loop entirely.</p>
+  <div class="code-block">// Trigger options (pick one)
+- Webhook node (form POST → n8n URL)
+- Typeform trigger node
+- Google Forms → Google Sheets → n8n watch trigger
+- n8n Form node (built-in hosted form)
+
+// Flow
+1. Trigger: receive form data
+2. Set node: map fields (name, email, company, message)
+3. HubSpot: search contact by email (deduplication)
+4. IF node: contact exists?
+   → YES: update existing contact properties
+   → NO: create new contact + add to pipeline stage
+5. Slack/Telegram: notify team with contact summary</div>
+  <p>The deduplication step (step 3) is non-negotiable. Without it, every follow-up email from the same lead creates a new duplicate contact. Use the HubSpot "Get Contact" node with email as the lookup key before deciding whether to create or update.</p>
+
+  <h2>Workflow 2: Email Lead → CRM Entry</h2>
+  <p>Not all leads come through forms. Many arrive as direct emails — and these are often the warmest ones. Connect this to your <a href="/blog/n8n-email-automation">email automation workflow</a> to capture them automatically.</p>
+  <ul>
+    <li>Trigger: new email classified as "lead" (via Gmail label or IMAP filter)</li>
+    <li>AI extract: use an OpenAI node to parse name, company, intent from email body</li>
+    <li>Enrich: optional — call a data enrichment API (Clearbit, Hunter) with the email address</li>
+    <li>CRM: create contact + deal in HubSpot or opportunity in Pipedrive</li>
+    <li>Task: create follow-up task assigned to the right rep, due in 2 hours</li>
+  </ul>
+  <p>The AI extraction prompt is simple: <em>"Extract from this email: sender full name, company name if mentioned, and a one-sentence summary of their request. Return JSON with keys: name, company, summary."</em> Accuracy on business emails is consistently above 90%.</p>
+
+  <h2>Workflow 3: CRM Stage Change → Automated Follow-Up Sequence</h2>
+  <p>Once a lead is in your CRM, the next challenge is consistent follow-up. Most salespeople send one email and forget. n8n can run a lightweight sequence automatically when a deal moves to a new pipeline stage.</p>
+  <div class="code-block">// HubSpot webhook → n8n
+Trigger: HubSpot deal stage updated to "Proposal Sent"
+
+→ Wait: 2 days
+→ Check: deal still in "Proposal Sent"?
+   → YES: send follow-up email via Gmail
+   → NO (moved forward or closed): stop sequence
+
+→ Wait: 3 more days
+→ Check: deal still in "Proposal Sent"?
+   → YES: send second follow-up + Slack alert to rep
+   → NO: stop sequence</div>
+  <p>This is a basic version of a drip sequence, but it runs entirely within n8n with no extra SaaS cost. The key is the conditional check before each step — you don't want to send automated follow-ups to deals that have already progressed.</p>
+
+  <h2>Workflow 4: New Deal Won → Onboarding Trigger</h2>
+  <p>CRM automation doesn't stop at the sale. When a deal is marked "Won", n8n can trigger your entire <a href="/blog/automate-client-onboarding">client onboarding workflow</a> automatically.</p>
+  <ul>
+    <li>Trigger: HubSpot deal stage updated to "Closed Won"</li>
+    <li>Create: client folder in Google Drive with templated documents</li>
+    <li>Send: welcome email with onboarding link and calendar booking URL</li>
+    <li>Create: project in Notion/Asana with standard task list</li>
+    <li>Notify: team Slack channel with new client details</li>
+    <li>Invoice: create and send invoice via Stripe or FreshBooks API</li>
+  </ul>
+  <p>This single workflow eliminates 45–90 minutes of manual work per new client. For agencies doing 4–8 clients per month, that's 6–12 hours saved monthly from one n8n workflow.</p>
+
+  <h2>Setting Up HubSpot in n8n (Step by Step)</h2>
+  <p>HubSpot is the most common CRM choice for n8n integrations. Here's how to connect them:</p>
+  <ul>
+    <li>In HubSpot: Settings → Integrations → Private Apps → Create Private App</li>
+    <li>Scopes needed: <code>crm.objects.contacts.read</code>, <code>crm.objects.contacts.write</code>, <code>crm.objects.deals.read</code>, <code>crm.objects.deals.write</code></li>
+    <li>Copy the access token from HubSpot</li>
+    <li>In n8n: Credentials → New → HubSpot API → paste access token</li>
+    <li>Test with a "Get Contact" node using a known email address</li>
+  </ul>
+  <p>Private Apps are HubSpot's recommended approach for n8n integrations — they're more secure than the older API key method and don't expire. Use them for all new integrations.</p>
+
+  <h2>Common Integration Mistakes to Avoid</h2>
+  <ul>
+    <li>Skipping deduplication — always search before creating; duplicates compound quickly</li>
+    <li>No error handling — add an error trigger node that alerts you when CRM writes fail</li>
+    <li>Over-automating follow-ups — automated sequences should feel personal; limit to 2–3 touches</li>
+    <li>Not logging automation activity — add a note to every CRM contact when n8n takes an action</li>
+    <li>Ignoring API rate limits — HubSpot free tier allows 100 requests per 10 seconds; add wait nodes for bulk operations</li>
+  </ul>
+
+  <h2>What to Build Next</h2>
+  <p>Once your core CRM integration is running, the natural next step is connecting it to your <a href="/blog/n8n-email-automation">email automation</a> and reporting stack. The combination of CRM + email + reporting gives you a complete revenue operations layer — all running on infrastructure you own and control.</p>
+  <p>If you'd rather have this built for you, <a href="/#contact">our team</a> sets up complete n8n CRM integration stacks for agencies and solopreneurs. Most setups take 1–2 weeks and run indefinitely without per-task fees.</p>
+
+  <div class="result-box">
+    <div class="result-title">⚡ CRM Automation Priority Order</div>
+    <ul>
+      <li>Week 1: Form/email → CRM contact creation with deduplication</li>
+      <li>Week 2: Deal stage changes → follow-up sequence triggers</li>
+      <li>Week 3: Won deals → onboarding workflow automation</li>
+      <li>Week 4: CRM data → reporting dashboard (Google Sheets or Metabase)</li>
+    </ul>
+  </div>
+  <div id="further-reading" class="result-box" style="border-color:var(--yellow)">
+    <div class="result-title">📚 Further Reading</div>
+    <ul>
+      <li><a href="/blog/n8n-email-automation" style="color:var(--accent);">How to Automate Your Email with n8n (2026 Guide)</a></li>
+      <li><a href="/blog/ai-lead-generation-automation" style="color:var(--accent);">AI Lead Generation Automation: End-to-End Guide</a></li>
+      <li><a href="/blog/automate-client-onboarding" style="color:var(--accent);">How to Automate Client Onboarding (No Code)</a></li>
+      <li><a href="/blog/solopreneur-automation-stack" style="color:var(--accent);">The Solopreneur Automation Stack for 2026</a></li>
+    </ul>
+  </div>
+</div>
+<footer>
+  <p>© 2026 <a href="/">GetMicroservices</a> · <a href="/blog/">Blog</a> · <a href="/privacy-policy.html">Privacy</a></p>
+</footer>
+<script>
+(function(){
+  const CONFIG = {
+    'getmicroservices.com': {
+      title: 'Free: 10 Automation Workflows That Save 10h/Week',
+      desc: 'Copy-paste n8n workflows for solopreneurs and agencies. No fluff.',
+      magnet: 'gms-10-workflows',
+      pdfUrl: 'https://getmicroservices.com/lead-magnets/10-automation-workflows.pdf',
+      webhook: 'https://n8n.getmicroservices.co/webhook/lead-magnet-cf9a4e2b'
+    }
+  };
+  const domain = window.location.hostname.replace('www.', '');
+  const cfg = CONFIG[domain] || CONFIG[Object.keys(CONFIG).find(d => domain.endsWith(d))];
+  if (!cfg) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'leadmagnet-wrap';
+  wrap.innerHTML = `
+    <style>
+      .leadmagnet-wrap{position:fixed;bottom:24px;right:24px;z-index:10000;font-family:'Space Grotesk',sans-serif;}
+      .leadmagnet-card{display:none;flex-direction:column;gap:10px;background:var(--bg2);border:3px solid var(--fg);padding:20px;width:280px;box-shadow:4px 4px 0 var(--fg);}
+      .leadmagnet-card.open{display:flex;}
+      .leadmagnet-close{align-self:flex-end;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--muted);}
+      .leadmagnet-card h3{font-size:0.88rem;color:var(--fg);line-height:1.4;}
+      .leadmagnet-card p{font-size:0.78rem;color:var(--muted);}
+      .leadmagnet-card input{padding:8px 10px;border:2px solid var(--border);background:var(--bg);color:var(--fg);font-size:0.82rem;font-family:inherit;}
+      .leadmagnet-card button#lmBtn{padding:8px 12px;background:var(--accent);border:2px solid var(--fg);color:#fff;font-weight:700;cursor:pointer;font-family:inherit;font-size:0.82rem;}
+      .leadmagnet-success{display:none;font-size:0.78rem;color:var(--green);}
+      .leadmagnet-success.show{display:block;}
+      .leadmagnet-pill{background:var(--accent);border:3px solid var(--fg);color:#fff;padding:10px 16px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:0.82rem;box-shadow:3px 3px 0 var(--fg);}
+    </style>
+    <div class="leadmagnet-card" id="lmCard">
+      <button class="leadmagnet-close" onclick="document.getElementById('lmCard').classList.remove('open')">×</button>
+      <h3>${cfg.title}</h3>
+      <p>${cfg.desc}</p>
+      <input type="text" id="lmName" placeholder="Your first name" required />
+      <input type="email" id="lmEmail" placeholder="Your email address" required />
+      <button id="lmBtn" onclick="lmSubmit()">Get Free PDF →</button>
+      <div class="leadmagnet-success" id="lmSuccess">✓ PDF sent! Check your inbox.</div>
+    </div>
+    <button class="leadmagnet-pill" onclick="document.getElementById('lmCard').classList.toggle('open')">
+      📘 Free Guide
+    </button>
+  `;
+  document.body.appendChild(wrap);
+  window.lmSubmit = async function() {
+    const name = document.getElementById('lmName').value.trim();
+    const email = document.getElementById('lmEmail').value.trim();
+    const btn = document.getElementById('lmBtn');
+    const success = document.getElementById('lmSuccess');
+    if (!name || !email) { return; }
+    if (!email.includes('@')) { return; }
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    try {
+      await fetch(cfg.webhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, email,
+          magnet: cfg.magnet,
+          pdfUrl: cfg.pdfUrl,
+          site: domain,
+          _token: '7f9d43fb7d9ac0b7a0f8f17ec4b08990791368a84f1bf860'
+        })
+      });
+    } catch(e) { /* silent */ }
+    success.classList.add('show');
+    btn.textContent = '✓ Sent!';
+    document.getElementById('lmName').value = '';
+    document.getElementById('lmEmail').value = '';
+    setTimeout(() => { btn.disabled = false; btn.textContent = 'Get Free PDF →'; }, 3000);
+  };
+})();
+</script>
+</body>
+</html>
