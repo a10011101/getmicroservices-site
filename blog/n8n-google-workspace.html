@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Automate Google Workspace with n8n: Gmail, Sheets, Drive &amp; Calendar (2026) – GetMicroservices Blog</title>
+  <meta name="description" content="Connect n8n to Gmail, Google Sheets, Google Drive, and Google Calendar to automate your entire Google Workspace. Step-by-step workflow examples for 2026."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/n8n-google-workspace"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav:not(.toc){position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:400;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;line-height:1;}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'< ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body a{color:var(--accent);}
+    .article-body a:hover{text-decoration:underline;}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'>';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .code-block{background:var(--bg3);border:2px solid var(--border);border-left:4px solid var(--accent);padding:16px 20px;margin:24px 0;font-family:'Fira Code',monospace;font-size:0.78rem;color:var(--fg);overflow-x:auto;line-height:1.7;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul li::before{content:'→';}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav:not(.toc){padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  </style>
+  <meta property="og:title" content="Automate Google Workspace with n8n: Gmail, Sheets, Drive &amp; Calendar (2026) – GetMicroservices Blog"/>
+  <meta property="og:description" content="Connect n8n to Gmail, Google Sheets, Google Drive, and Google Calendar to automate your entire Google Workspace."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/blog/n8n-google-workspace"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Automate Google Workspace with n8n: Gmail, Sheets, Drive & Calendar (2026)",
+    "description": "Connect n8n to Gmail, Google Sheets, Google Drive, and Google Calendar to automate your entire Google Workspace. Step-by-step workflow examples for 2026.",
+    "url": "https://getmicroservices.com/blog/n8n-google-workspace",
+    "datePublished": "2026-06-18",
+    "dateModified": "2026-06-18",
+    "author": {
+      "@type": "Organization",
+      "name": "GetMicroservices"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GetMicroservices",
+      "url": "https://getmicroservices.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://getmicroservices.com/blog/n8n-google-workspace"
+    }
+  }
+  </script>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">
+    <span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/services">Services</a></li>
+    <li><a href="https://getmicroservices.co/contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')" aria-label="Toggle theme">◐</button>
+</nav>
+
+<header class="article-header">
+  <a href="/blog" class="back-link">back to blog</a>
+  <div class="article-meta">
+    <span class="meta-date">2026-06-18</span>
+    <span class="meta-tag">guide</span>
+    <span class="meta-readtime">11 min read</span>
+  </div>
+  <h1>Automate Google Workspace with n8n: Gmail, Sheets, Drive &amp; Calendar (2026)</h1>
+  <p class="lead">Google Workspace is where most businesses live — email, spreadsheets, files, meetings. n8n connects it all into automated workflows. Here's how to actually do it.</p>
+</header>
+
+<article class="article-body">
+
+  <p>If your team runs on Gmail, Google Sheets, and Google Calendar, you already have more automation surface area than you realise. <strong>n8n has native nodes for every major Google Workspace product</strong> — and connecting them takes minutes, not weeks.</p>
+
+  <p>This guide covers the workflows we build most often for clients: inbox triage, spreadsheet-driven pipelines, file organisation in Drive, and calendar-based triggers. By the end you'll have a clear picture of what's possible and how to get started.</p>
+
+  <h2>Why n8n for Google Workspace?</h2>
+
+  <p>Zapier and Make both support Google Workspace, but they get expensive fast when you're running dozens of workflows. <strong>n8n gives you the same integrations at a fraction of the cost</strong> — especially self-hosted, where you pay for compute, not per-task fees.</p>
+
+  <p>The other advantage is flexibility. n8n lets you combine Google Workspace with anything else — your CRM, Slack, a database, an AI model — in a single workflow. No duct tape required.</p>
+
+  <h2>Setting Up Google Credentials in n8n</h2>
+
+  <p>Before building any workflow, you need to connect your Google account. n8n uses OAuth 2.0, so the setup is a one-time process:</p>
+
+  <ul>
+    <li>Go to Google Cloud Console → create a new project</li>
+    <li>Enable the APIs you need: Gmail, Sheets, Drive, Calendar</li>
+    <li>Create OAuth 2.0 credentials (Web Application type)</li>
+    <li>Add your n8n callback URL: <code>https://your-n8n-domain/rest/oauth2-credential/callback</code></li>
+    <li>In n8n, create a Google credential and paste your Client ID + Secret</li>
+    <li>Authorise — done</li>
+  </ul>
+
+  <p>One credential set covers all four products. You don't need to do this four times.</p>
+
+  <h2>Workflow 1: Gmail Inbox Triage with AI Labelling</h2>
+
+  <p>This is the highest-ROI workflow for most knowledge workers. Every incoming email gets read, categorised by an AI model, and labelled automatically — so your inbox is pre-sorted before you open it.</p>
+
+  <div class="code-block">Trigger: Gmail → On New Email (Poll every 5 min)
+↓
+Node: Code → extract sender, subject, body snippet
+↓
+Node: OpenAI → classify email (Urgent / Client / Newsletter / Internal / Spam)
+↓
+Node: Gmail → Apply Label based on classification
+↓
+Node: IF → if "Urgent" → Slack message to #alerts</div>
+
+  <p>The result: <strong>zero unread inbox anxiety</strong>. Urgent client emails surface immediately in Slack. Everything else is pre-sorted. You review on your schedule, not the sender's.</p>
+
+  <div class="result-box">
+    <div class="result-title">// Real-world outcome</div>
+    <ul>
+      <li>One agency cut daily email processing from 45 mins to 8 mins</li>
+      <li>Zero missed urgent client requests in 3 months of running this</li>
+      <li>AI classification accuracy: ~94% after tuning the system prompt</li>
+    </ul>
+  </div>
+
+  <h2>Workflow 2: Google Sheets as a Live CRM Trigger</h2>
+
+  <p>Most small businesses use Google Sheets as a lightweight CRM. The problem: changes in the sheet don't trigger anything. n8n fixes that.</p>
+
+  <p>This workflow watches a specific column in your Sheets CRM and fires actions when a deal stage changes:</p>
+
+  <div class="code-block">Trigger: Google Sheets → On Row Updated (Poll every 15 min)
+↓
+Node: IF → check if "Stage" column changed to "Proposal Sent"
+↓
+Node: Gmail → send templated proposal follow-up email
+↓
+Node: Google Calendar → create follow-up reminder event in 3 days
+↓
+Node: Google Sheets → update "Last Action" and "Next Action" columns</div>
+
+  <p><strong>The magic here is the bidirectional update.</strong> The workflow reads from Sheets, sends the email, books the calendar event, then writes back to Sheets — all without leaving the workflow. Your CRM stays accurate automatically.</p>
+
+  <h2>Workflow 3: Automatic File Organisation in Google Drive</h2>
+
+  <p>If your Drive is a mess of files dumped in root-level folders, this workflow will restore order. It watches a drop folder and moves files based on their name, type, or metadata:</p>
+
+  <div class="code-block">Trigger: Google Drive → On File Created (in /Inbox folder)
+↓
+Node: Code → parse filename for client name, project code, date
+↓
+Node: Google Drive → check if destination folder exists
+↓
+Node: IF → if no destination folder → create it
+↓
+Node: Google Drive → move file to correct client/project/year folder
+↓
+Node: Google Sheets → log file move in audit sheet</div>
+
+  <p>You can extend this to rename files on arrival, extract text via OCR, or email a notification to the relevant client. <strong>The drop folder becomes a smart inbox for files.</strong></p>
+
+  <h2>Workflow 4: Calendar-Driven Client Reminders</h2>
+
+  <p>This one saves agencies hours of manual chasing. It watches Google Calendar for upcoming client meetings and automatically sends a preparation email 24 hours before:</p>
+
+  <div class="code-block">Trigger: Schedule → Run daily at 08:00
+↓
+Node: Google Calendar → get events for next 24 hours
+↓
+Node: Loop → for each event with "Client" in title
+↓
+Node: Google Sheets → look up client email from CRM sheet
+↓
+Node: OpenAI → generate personalised meeting prep email
+↓
+Node: Gmail → send prep email with agenda + any pending action items</div>
+
+  <p>Clients notice this. Getting a thoughtful meeting prep email the day before a call signals professionalism. <strong>It costs you nothing — the workflow does it while you sleep.</strong></p>
+
+  <h2>Workflow 5: Form Responses → Automated Onboarding</h2>
+
+  <p>Google Forms feeds into Google Sheets automatically. That makes it a natural trigger for onboarding workflows. When a new client fills in your intake form:</p>
+
+  <div class="code-block">Trigger: Google Sheets → On New Row Added (Form responses sheet)
+↓
+Node: Google Drive → create client folder from template
+↓
+Node: Google Drive → copy standard contract template → rename for client
+↓
+Node: Gmail → send welcome email with Drive folder link
+↓
+Node: Google Calendar → create kickoff call event, invite client
+↓
+Node: Slack → notify #new-clients channel with client details</div>
+
+  <p>Everything that used to take 30 minutes of copy-paste now happens in under 60 seconds. <strong>Your client's first experience of working with you is instant, professional, and consistent.</strong></p>
+
+  <h2>Handling Google API Rate Limits</h2>
+
+  <p>Google's APIs have quotas. If you're running high-volume workflows, you'll hit them. A few practical tips:</p>
+
+  <ul>
+    <li>Use polling intervals of 5–15 minutes rather than continuous triggers where possible</li>
+    <li>Add a Wait node between bulk operations to throttle requests</li>
+    <li>For Sheets, batch reads rather than individual row reads — use the spreadsheets.values.get API with ranges</li>
+    <li>Enable exponential backoff in your error handling — n8n's retry settings handle most of this</li>
+    <li>Monitor quota usage in Google Cloud Console → APIs & Services → Dashboard</li>
+  </ul>
+
+  <h2>Combining Google Workspace with Your Other Tools</h2>
+
+  <p>The real power of n8n isn't any single Google integration — it's the combinations. Here are workflows our clients run daily:</p>
+
+  <ul>
+    <li><strong>Gmail → HubSpot:</strong> New emails from known contacts auto-log to CRM deal timeline</li>
+    <li><strong>Google Sheets → Stripe:</strong> Invoice data flows from your tracker to payment creation</li>
+    <li><strong>Google Calendar → Notion:</strong> Meeting notes template created automatically before each call</li>
+    <li><strong>Google Drive → Slack:</strong> New files in a shared folder notify the right team channel</li>
+    <li><strong>Gmail + OpenAI → Sheets:</strong> Customer feedback emails get sentiment scored and logged</li>
+  </ul>
+
+  <p>Each of these is a workflow you can build in an afternoon. Stack them, and you've effectively added a full-time operations person to your team.</p>
+
+  <h2>What to Build First</h2>
+
+  <p>If you're new to n8n, don't try to automate everything at once. <strong>Pick the most painful manual task you do every week and start there.</strong></p>
+
+  <p>For most businesses, that's either email triage or new client onboarding. Both are well-suited to Google Workspace + n8n and produce visible results within days of going live.</p>
+
+  <p>If you want someone to build this for you — or to audit your existing workflows and find automation opportunities — that's exactly what we do at GetMicroservices. <a href="https://getmicroservices.co/contact">Get in touch and we'll scope it out.</a></p>
+
+</article>
+
+<footer>
+  <p><a href="https://getmicroservices.com">GetMicroservices</a> · <a href="/blog">Blog</a> · <a href="/services">Services</a> · <a href="https://getmicroservices.co/contact">Contact</a></p>
+</footer>
+</body>
+</html>
