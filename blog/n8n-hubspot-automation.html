@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HubSpot Automation with n8n: Complete Integration Guide (2026) - GetMicroservices Blog</title>
+  <meta name="description" content="Connect HubSpot to n8n and automate your CRM workflows - lead nurturing, deal tracking, contact sync, and sales notifications. Step-by-step guide for 2026."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/n8n-hubspot-automation"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav:not(.toc){position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:400;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;line-height:1;}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'&lt; ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body a{color:var(--accent);}
+    .article-body a:hover{text-decoration:underline;}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'&gt;';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .code-block{background:var(--bg3);border:2px solid var(--border);border-left:4px solid var(--accent);padding:16px 20px;margin:24px 0;font-family:'Fira Code',monospace;font-size:0.78rem;color:var(--fg);overflow-x:auto;line-height:1.7;white-space:pre;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul li::before{content:'&#8594;';}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav:not(.toc){padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  </style>
+  <meta property="og:title" content="HubSpot Automation with n8n: Complete Integration Guide (2026) - GetMicroservices Blog"/>
+  <meta property="og:description" content="Connect HubSpot to n8n and automate your CRM workflows - lead nurturing, deal tracking, contact sync, and sales notifications. Step-by-step guide for 2026."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/blog/n8n-hubspot-automation"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "HubSpot Automation with n8n: Complete Integration Guide (2026)",
+    "description": "Connect HubSpot to n8n and automate your CRM workflows - lead nurturing, deal tracking, contact sync, and sales notifications. Step-by-step guide for 2026.",
+    "url": "https://getmicroservices.com/blog/n8n-hubspot-automation",
+    "datePublished": "2026-06-25",
+    "dateModified": "2026-06-25",
+    "author": {
+      "@type": "Organization",
+      "name": "GetMicroservices"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GetMicroservices",
+      "url": "https://getmicroservices.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://getmicroservices.com/blog/n8n-hubspot-automation"
+    }
+  }
+  </script>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">
+    <span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')" aria-label="Toggle theme">&#9680;</button>
+</nav>
+
+<header class="article-header">
+  <a href="/blog" class="back-link">back to blog</a>
+  <div class="article-meta">
+    <span class="meta-date">2026-06-25</span>
+    <span class="meta-tag">guide</span>
+    <span class="meta-readtime">11 min read</span>
+  </div>
+  <h1>HubSpot Automation with n8n: Complete Integration Guide (2026)</h1>
+  <p class="lead">HubSpot is powerful. n8n makes it limitless. Connect your CRM to every tool in your stack and automate lead nurturing, deal tracking, and sales ops without writing a single line of custom code.</p>
+</header>
+
+<article class="article-body">
+
+  <p>HubSpot is one of the most widely used CRMs in the world - and it already has a decent automation layer built in. So why bother connecting it to n8n? <strong>Because HubSpot's native workflows only talk to HubSpot.</strong> n8n connects HubSpot to everything else: your billing system, your project management tool, your support desk, your Slack workspace, your data warehouse.</p>
+
+  <p>This guide covers eight automation workflows we regularly build for clients using HubSpot as their CRM. Every one solves a real problem that HubSpot's built-in workflows can't touch.</p>
+
+  <h2>Connecting HubSpot to n8n</h2>
+
+  <p>n8n has a dedicated HubSpot node with full support for contacts, companies, deals, tickets, and custom properties. Authentication uses OAuth2 - the cleanest option - or a Private App API key if you prefer a simpler setup.</p>
+
+  <p>To get started:</p>
+
+  <ul>
+    <li><strong>OAuth2 setup:</strong> In HubSpot, go to Settings then Integrations then Private Apps. Create a new app, select the scopes you need, generate an access token, paste it into n8n's HubSpot credential</li>
+    <li><strong>Trigger events:</strong> Use HubSpot's Webhook settings to fire events into n8n when contacts, deals, or tickets are created or updated</li>
+    <li><strong>Polling alternative:</strong> If webhooks aren't available on your plan, use n8n's Schedule trigger plus HubSpot node in "Get All" mode with a filter on lastmodifieddate</li>
+  </ul>
+
+  <p>The scopes you'll need vary by workflow, but for most use cases: crm.objects.contacts.read/write, crm.objects.deals.read/write, and crm.objects.owners.read cover you for 90% of scenarios.</p>
+
+  <h2>Workflow 1: New Contact to Multi-Channel Onboarding</h2>
+
+  <p>When a new contact enters HubSpot, you want more than just an automated email. You want them welcomed across every channel simultaneously - email to the contact, Slack notification to the owner, a task in your PM tool, and a row in your tracking sheet.</p>
+
+  <div class="code-block">Trigger: HubSpot Webhook -- contact.creation
+  Node: HubSpot -- get full contact record + company data
+  Node: Code -- determine lead tier (enterprise / SMB / self-serve)
+  Node: Gmail / SendGrid -- send personalised welcome email
+  Node: Slack -- notify assigned rep with contact summary
+  Node: Notion / Asana -- create onboarding task with due dates
+  Node: Google Sheets -- log to pipeline tracker with timestamp</div>
+
+  <p>The tiering step is crucial. An enterprise lead should get a different email, a Slack ping to your senior AE, and a high-priority task. A self-serve signup gets the automated nurture sequence. <strong>One trigger, intelligent branching, no manual sorting required.</strong></p>
+
+  <h2>Workflow 2: Deal Stage Change to Automated Next Steps</h2>
+
+  <p>Every time a deal moves stages in HubSpot, a chain of actions should follow automatically. Most sales teams do this manually. n8n makes it zero-touch.</p>
+
+  <div class="code-block">Trigger: HubSpot Webhook -- deal.propertyChange (dealstage)
+  Node: Switch -- branch by new deal stage
+
+  [Proposal Sent]
+    Node: PandaDoc -- generate and send proposal document
+    Node: Slack -- notify rep: "Proposal sent to {company}"
+
+  [Closed Won]
+    Node: Stripe -- create customer + subscription record
+    Node: Gmail -- send welcome email with onboarding link
+    Node: Notion -- create client project workspace
+    Node: Slack -- post to #wins channel with deal value
+
+  [Closed Lost]
+    Node: HubSpot -- set re-engage sequence for +90 days
+    Node: Google Sheets -- log to lost deals tracker with reason</div>
+
+  <p>The Closed Won branch is where the real value is. <strong>The moment a deal closes in HubSpot, a Stripe customer is created, an onboarding email goes out, and a project workspace appears in Notion</strong> - all before the rep has even refreshed their browser.</p>
+
+  <h2>Workflow 3: Lead Score Threshold to Instant Sales Alert</h2>
+
+  <p>HubSpot's lead scoring is powerful, but its alerting is weak. When a contact crosses a score threshold - indicating high buying intent - your sales rep needs to know immediately, with full context.</p>
+
+  <div class="code-block">Trigger: HubSpot Webhook -- contact.propertyChange (hubspotscore)
+  Node: IF -- filter: new score >= 80 AND previous score &lt; 80
+  Node: HubSpot -- get contact + associated deals + company
+  Node: HTTP Request -- Clearbit enrich (company size, industry)
+  Node: Code -- build alert payload with score breakdown
+  Node: Slack -- post to #hot-leads with full context summary
+  Node: HubSpot -- create task: "Call contact within 2 hours"</div>
+
+  <p>The Clearbit enrichment step turns a score change notification into a full sales brief. Your rep sees company size, industry, estimated ARR, which pages the contact visited, and which emails they opened. <strong>They're calling informed, not cold.</strong></p>
+
+  <h2>Workflow 4: Bidirectional Contact Sync (HubSpot and Other Tools)</h2>
+
+  <p>If you use HubSpot alongside another tool - an accounting system, a project management platform, a customer success tool - keeping contacts in sync manually is error-prone and time-consuming. n8n handles bidirectional sync reliably.</p>
+
+  <div class="code-block">Trigger: HubSpot Webhook -- contact.propertyChange (any field)
+  Node: Code -- map HubSpot fields to target system fields
+  Node: HTTP Request -- upsert contact in target system (Xero / Pipedrive / etc.)
+  Node: IF -- check if target system returned a new record ID
+  Node: HubSpot -- write back target system ID to custom HubSpot property
+
+  [Reverse direction - target system to HubSpot]
+  Trigger: Webhook from target system -- contact update event
+  Node: HubSpot -- search contact by email
+  Node: HubSpot -- update contact properties from source data</div>
+
+  <p>The key to reliable bidirectional sync is <strong>storing the external system's ID as a custom property in HubSpot</strong>. This prevents duplicate creation on subsequent updates and lets you look up records by a stable identifier rather than email (which changes).</p>
+
+  <h2>Workflow 5: Automated Follow-Up Sequences Based on Behaviour</h2>
+
+  <p>HubSpot Sequences are great for structured outreach, but they don't react to real-time signals. n8n can trigger personalised follow-ups the moment a meaningful event occurs.</p>
+
+  <div class="code-block">Trigger: HubSpot Webhook -- contact.propertyChange (hs_email_last_open_date)
+  Node: HubSpot -- get contact + email engagement history
+  Node: Code -- check: opened email within last 30 min?
+  Node: IF -- has active deal in pipeline? (yes / no branch)
+
+  [Yes - has deal]
+    Node: HubSpot -- get deal owner
+    Node: Slack -- "Hot signal: {Name} just opened your proposal email"
+    Node: HubSpot -- create task: "Call now while intent is high"
+
+  [No - nurture contact]
+    Node: HubSpot -- enroll in re-engagement sequence
+    Node: Gmail -- send personalised check-in email 2 hours later</div>
+
+  <p>Timing matters enormously in sales. A contact opening your email is a live signal that they're thinking about you right now. <strong>A rep who calls within 5 minutes of an email open converts at 3x the rate of one who calls the next day.</strong> This workflow makes sub-5-minute response standard.</p>
+
+  <h2>Workflow 6: Win/Loss Analysis Automation</h2>
+
+  <p>Understanding why you win and lose deals is gold - but collecting that data consistently is painful. n8n automates the collection and aggregation.</p>
+
+  <div class="code-block">Trigger: HubSpot Webhook -- deal.propertyChange (dealstage = Closed Won/Lost)
+  Node: HubSpot -- get full deal record (value, owner, close date, contact)
+  Node: IF -- Won or Lost?
+
+  [Won]
+    Node: Gmail -- send win survey to deal contact (Typeform link)
+    Node: Google Sheets -- log to Win Analysis sheet
+    Node: Slack -- post to #wins with deal details
+
+  [Lost]
+    Node: Gmail -- send brief loss survey to deal owner
+    Node: OpenAI -- if closedreason property set, classify reason category
+    Node: Google Sheets -- log to Loss Analysis sheet with reason category
+    Node: HubSpot -- update deal with categorised loss reason
+
+  [Both]
+    Node: Code -- update running win rate calculation
+    Node: Google Sheets -- update dashboard metrics tab</div>
+
+  <p>The OpenAI classification step is what makes this scalable. Instead of free-text loss reasons that are impossible to aggregate, every "decision went to competitor" or "budget cut" gets mapped to a consistent category. <strong>After 30 deals, you have clean data. After 100, you have strategy.</strong></p>
+
+  <h2>Workflow 7: HubSpot to Data Warehouse Sync</h2>
+
+  <p>If you're doing any serious reporting or business intelligence, you need your CRM data in a warehouse - not just in HubSpot's dashboards. n8n can run nightly ETL jobs that push clean data to BigQuery, Postgres, or Airtable.</p>
+
+  <div class="code-block">Trigger: Schedule -- daily at 02:00 UTC
+  Node: HubSpot -- get all deals modified in last 24 hours
+  Node: HubSpot -- get all contacts modified in last 24 hours
+  Node: Code -- transform + flatten nested HubSpot objects
+  Node: Code -- deduplicate against existing warehouse records
+  Node: HTTP Request / Postgres -- upsert to target data warehouse
+  Node: Slack -- "Nightly sync complete: 47 deals, 312 contacts updated"</div>
+
+  <p>The transformation step is critical. HubSpot's API returns deals with associations as nested arrays. Your warehouse wants flat rows. The Code node in n8n gives you full JavaScript to reshape data exactly as needed - <strong>no brittle CSV exports, no third-party ETL tools to pay for.</strong></p>
+
+  <h2>Workflow 8: Automated Reporting to Stakeholders</h2>
+
+  <p>Executives and clients don't want to log into HubSpot. They want a clean summary in their inbox every Monday morning. n8n generates and sends it automatically.</p>
+
+  <div class="code-block">Trigger: Schedule -- every Monday at 08:00
+  Node: HubSpot -- get deals closed last week (won + lost)
+  Node: HubSpot -- get new contacts created last week
+  Node: HubSpot -- get pipeline value by stage
+  Node: Code -- calculate metrics: close rate, avg deal size, pipeline velocity
+  Node: Code -- generate HTML email with metrics table
+  Node: Gmail -- send to stakeholder list with personalised subject
+  Node: Google Sheets -- append weekly metrics to history sheet</div>
+
+  <p>The history sheet is the underrated part. After 12 weeks, you have a clean trend line. After a year, you can spot seasonality, measure the impact of process changes, and forecast with real data rather than gut feel.</p>
+
+  <div class="result-box">
+    <div class="result-title">// Time savings we have measured across clients</div>
+    <ul>
+      <li>Post-close setup time (Stripe + project creation): 2 hours to under 2 minutes</li>
+      <li>Lead routing and notification delay: 4 hours to under 60 seconds</li>
+      <li>Weekly reporting prep time: 3 hours to zero (fully automated)</li>
+      <li>Contact sync errors across tools: reduced by over 90 percent</li>
+    </ul>
+  </div>
+
+  <h2>Common Mistakes When Connecting HubSpot to n8n</h2>
+
+  <p>These are the patterns we see trip up teams who are new to HubSpot automation:</p>
+
+  <ul>
+    <li><strong>Triggering on every property change:</strong> HubSpot fires a webhook for every single field update. Use the IF node to filter aggressively - most changes are system noise, not actionable events</li>
+    <li><strong>Not handling HubSpot's rate limits:</strong> The free/starter API tier allows 100 requests per 10 seconds. Add Wait nodes when processing bulk contact lists</li>
+    <li><strong>Ignoring association data:</strong> Contacts link to companies link to deals link to tickets. Always pull associated records - a contact without their deal context is half the story</li>
+    <li><strong>Using email as a join key:</strong> Emails change. Store HubSpot's internal record ID in every downstream system and use that as your primary key for lookups</li>
+    <li><strong>Not testing with real data:</strong> HubSpot's test contacts don't have realistic association data. Use a real sandbox contact to validate your workflow properly before deploying</li>
+  </ul>
+
+  <h2>Where to Start</h2>
+
+  <p>If you're new to n8n and HubSpot integration, start with Workflow 2 - the deal stage change automation. It has the highest visible impact (your team sees the win celebrations in Slack, the instant Stripe creation) and gives you confidence that the integration works before you build anything more complex.</p>
+
+  <p>From there, Workflow 3 (hot lead alerts) typically delivers the fastest revenue impact. <strong>Sales speed matters more than most teams realise</strong> - and sub-60-second response time to high-intent signals is a genuine competitive advantage that most HubSpot setups can't achieve natively.</p>
+
+  <p>If you want this built and running rather than DIY'd, we do exactly this for agencies and SaaS teams. <a href="https://getmicroservices.com/#contact">Get in touch and we'll scope it out.</a></p>
+
+  <div id="further-reading" class="result-box" style="border-color:var(--yellow)">
+    <div class="result-title">&#128218; Further Reading</div>
+    <ul>
+      <li><a href="/blog/n8n-crm-integration" style="color:var(--accent);">How to Connect Your CRM to n8n: Automate Lead Management</a></li>
+      <li><a href="/blog/n8n-slack-automation" style="color:var(--accent);">How to Automate Slack with n8n: 7 Workflows That Save Hours (2026)</a></li>
+      <li><a href="/blog/ai-lead-generation-automation" style="color:var(--accent);">AI Lead Generation Automation: Build a 24/7 Pipeline</a></li>
+      <li><a href="/blog/automate-client-onboarding" style="color:var(--accent);">How to Automate Client Onboarding (No Code)</a></li>
+    </ul>
+  </div>
+
+</article>
+
+<footer>
+  <p><a href="https://getmicroservices.com">GetMicroservices</a> &middot; <a href="/blog">Blog</a> &middot; <a href="/#services">Services</a> &middot; <a href="https://getmicroservices.com/#contact">Contact</a></p>
+</footer>
+</body>
+</html>
