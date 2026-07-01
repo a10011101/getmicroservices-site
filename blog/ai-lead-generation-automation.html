@@ -93,7 +93,7 @@
   <p class="lead">Build AI lead generation automations that find, enrich, score, and route prospects without spreadsheet chaos.</p>
 </div>
 <div class="article-body">
-  <p>Manual lead generation is a grind: hours searching LinkedIn, copying emails into spreadsheets, qualifying people who will never buy. The teams closing deals fastest have replaced that grind with <strong>AI lead generation automations</strong> that prospect, enrich, score, and route without anyone touching a keyboard. This guide breaks down exactly how to build that system.</p>
+  <p>Manual lead generation is a grind: hours searching LinkedIn, copying <a href="/blog/ai-inbox-triage-for-busy-executives">email</a>s into spreadsheets, qualifying people who will never buy. The teams closing deals fastest have replaced that grind with <strong>AI lead generation automations</strong> that prospect, enrich, score, and route without anyone touching a keyboard. This guide breaks down exactly how to build that system.</p>
 
   <h2>Why This Matters in 2026</h2>
   <p>The gap between teams using AI-assisted prospecting and those doing it manually is widening fast. Tools like Apollo.io, Clay, and Hunter.io now surface contact data, buying signals, and firmographic detail that would have taken a full-time researcher a week to compile. A properly configured automation pipeline does it in minutes for a fraction of the cost.</p>
@@ -105,7 +105,7 @@
   <p>For most agencies, a hybrid works best: Apollo for outbound prospecting (filtered by industry, company size, and tech stack), combined with inbound form captures that auto-enrich on submission. Wire both into the same n8n or Make workflow so all leads land in one place regardless of source.</p>
   <p>The n8n HTTP Request node handles Apollo API calls cleanly. Set a schedule trigger to pull new contacts matching your saved search every morning at 7am, then push each result into a staging sheet or Airtable base for enrichment and scoring.</p>
 
-  <h2>Enriching Lead Data with AI</h2>
+  <h2>Raw lead data is rarely enough to personalize outreach. You typically get a name, <a href="/blog/ai-inbox-triage-for-busy-executives">email</a>The most cost-effective enrichment stack for 2026 combines Clearbit (for firmographics), Hunter.io (for <a href="/blog/ai-inbox-triage-for-busy-executives">email</a> verification), and a GPT-4o call to summarize a prospect's LinkedIn headline and recent posts into a one-sentence personalization note. That note drops straight into your outreach template.</h2>
   <p>Raw lead data is rarely enough to personalize outreach. You typically get a name, email, and job title. Enrichment layers on the data that actually drives relevance: recent funding rounds, tech stack, headcount changes, job postings, LinkedIn activity, and intent signals.</p>
   <p>The most cost-effective enrichment stack for 2026 combines Clearbit (for firmographics), Hunter.io (for email verification), and a GPT-4o call to summarize a prospect's LinkedIn headline and recent posts into a one-sentence personalization note. That note drops straight into your outreach template.</p>
   <p>In n8n, this looks like a chain: Apollo node returns contact, Clearbit Enrichment node adds company data, HTTP Request node hits Hunter for email verification, then an OpenAI node generates the personalization snippet. Total cost per lead: under three cents. Total time: under ten seconds.</p>

@@ -102,7 +102,7 @@
   <p>In n8n, a Switch node branches on the invoice total. Under $500: auto-post to the accounting system. $500-$5,000: send an approval request to the manager via Slack using the Block Kit format with Approve and Reject buttons. Over $5,000: same flow but routed to the CFO. When the approver clicks Approve, a webhook triggers the next step. When they click Reject, the workflow notifies the requestor with the reason.</p>
   <p>Set a reminder trigger for approvals that have not been actioned within 24 hours. The workflow checks pending approvals on a schedule and sends a nudge message if any are overdue. This replaces the manual follow-up that finance teams do every morning.</p>
 
-  <h2>connecting to your accounting stack</h2>
+  <h2>connecting to your accounting <a href="/a/blog/solopreneur-automation-stack">stack</a></h2>
   <p>The final step is posting approved invoices to your accounting system. QuickBooks Online, Xero, and FreshBooks all have APIs that n8n supports natively. Pass the structured invoice data to a Create Bill node in QuickBooks or an equivalent operation in Xero. The invoice appears in your accounting system already coded and ready for payment scheduling.</p>
   <p>For payment chasing, the same workflow runs in reverse. Query QuickBooks for overdue receivables every morning. For each overdue invoice, check whether a reminder has been sent in the last seven days. If not, send a templated email from your accounts receivable address with the invoice number, amount, and a payment link. Log the reminder date so the workflow skips that customer for the next seven days.</p>
 
