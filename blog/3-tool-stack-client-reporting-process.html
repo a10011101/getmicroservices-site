@@ -5,8 +5,8 @@
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The 3-Tool Stack That Runs Our Entire Client Reporting Process – GetMicroservices Blog</title>
-  <meta name="description" content="We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack — that's the whole stack."/>
+  <title>The 3-Tool Stack Behind Our Client Reporting Process</title>
+  <meta name="description" content="We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack - that's the whole stack."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -66,19 +66,19 @@
   </style>
 
   <meta property="og:title" content="The 3-Tool Stack That Runs Our Entire Client Reporting Process – GetMicroservices Blog"/>
-  <meta property="og:description" content="We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack — that"/>
+  <meta property="og:description" content="We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack - that"/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/blog/3-tool-stack-client-reporting-process"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:title" content="The 3-Tool Stack That Runs Our Entire Client Reporting Process – GetMicroservices Blog"/>
-  <meta name="twitter:description" content="We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack — that"/>
+  <meta name="twitter:description" content="We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack - that"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "The 3-Tool Stack That Runs Our Entire Client Reporting Process – GetMicroservices Blog",
-  "description": "We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack — that",
+  "description": "We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack - that",
   "datePublished": "2026-03-30",
   "publisher": {
     "@type": "Organization",
@@ -135,27 +135,27 @@
     <span class="meta-date">2026-03-30</span>
   </div>
   <h1>The 3-Tool Stack That Runs Our Entire Client Reporting Process</h1>
-  <p class="lead">We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack — that's the whole stack. Here's exactly how it works.</p>
+  <p class="lead">We replaced a 3-hour weekly reporting ritual with a fully automated pipeline. Google Sheets, n8n, and Slack - that's the whole stack. Here's exactly how it works.</p>
 </div>
 
 <div class="article-body">
   <h2>The <a href="/blog/google-sheets-automation-examples">Reporting</a>Every agency knows this pain. Friday afternoon, someone is manually pulling numbers from five different places, pasting them into a <a href="/blog/google-sheets-automation-examples">spreadsheet</a>, formatting a summary, and emailing it to a list of clients who may or may not read it. </h2>
   <p>Every agency knows this pain. Friday afternoon, someone is manually pulling numbers from five different places, pasting them into a spreadsheet, formatting a summary, and emailing it to a list of clients who may or may not read it. <strong>turning <a href="/blog/google-sheets-automation-examples">Google Sheets</a> into a Slack digest</strong></p>
-  <p>We've seen this at every scale — solo consultants, 10-person agencies, in-house marketing teams. Our post on <a href="/blog/google-sheets-slack-digest-ops-teams" style="color:var(--accent);">turning Google Sheets into a Slack digest</a> covers a similar approach for operations teams. The problem isn't the data. It's the assembly. And assembly is exactly what automation is built for.</p>
+  <p>We've seen this at every scale - solo consultants, 10-person agencies, in-house marketing teams. Our post on <a href="/blog/google-sheets-slack-digest-ops-teams" style="color:var(--accent);">turning Google Sheets into a Slack digest</a> covers a similar approach for operations teams. The problem isn't the data. It's the assembly. And assembly is exactly what automation is built for.</p>
 
   <h2>The Three Tools</h2>
-  <p>We didn't introduce any new software. The client already had all three tools — they were just using them in isolation:</p>
+  <p>We didn't introduce any new software. The client already had all three tools - they were just using them in isolation:</p>
   <ul>
-    <li><strong>Google Sheets</strong> — the single source of truth for all KPIs, updated by various integrations throughout the week</li>
-    <li><strong><a href="/blog/n8n-vs-zapier-2026">n8n</a></strong> — the orchestration layer that reads the sheet, formats the report, and fires the delivery</li>
-    <li><strong>Slack + email</strong> — delivery channels: Slack for internal teams, email for external clients</li>
+    <li><strong>Google Sheets</strong> - the single source of truth for all KPIs, updated by various integrations throughout the week</li>
+    <li><strong><a href="/blog/n8n-vs-zapier-2026">n8n</a></strong> - the orchestration layer that reads the sheet, formats the report, and fires the delivery</li>
+    <li><strong>Slack + email</strong> - delivery channels: Slack for internal teams, email for external clients</li>
   </ul>
 
   <h2>Every Monday at 8:00 AM, a cron trigger fires in <a href="/blog/n8n-vs-zapier-2026">n8n</a>. For an e-commerce version of the same pattern, see </h2>
-  <p>Every Monday at 8:00 AM, a cron trigger fires in n8n. For an e-commerce version of the same pattern, see <a href="/blog/competitor-price-monitoring-bot" style="color:var(--accent);">our competitor price monitoring bot</a> that delivers daily digests to Slack before trading starts. It reads the previous week's data range from Google Sheets — traffic, conversions, revenue, tasks completed, whatever the client tracks. A few JavaScript nodes clean and format the numbers. Then it builds two outputs: a Slack block message for the internal team, and an HTML email for the client.</p>
+  <p>Every Monday at 8:00 AM, a cron trigger fires in n8n. For an e-commerce version of the same pattern, see <a href="/blog/competitor-price-monitoring-bot" style="color:var(--accent);">our competitor price monitoring bot</a> that delivers daily digests to Slack before trading starts. It reads the previous week's data range from Google Sheets - traffic, conversions, revenue, tasks completed, whatever the client tracks. A few JavaScript nodes clean and format the numbers. Then it builds two outputs: a Slack block message for the internal team, and an HTML email for the client.</p>
 
   <div class="flow-box">
-    <span class="step">Trigger:</span> Cron — every Monday 08:00<br><a href="/blog/n8n-vs-zapier-2026">n8n</a> (JS node):<span class="step">Google Sheets:</span> Read KPI range for last 7 days<br>
+    <span class="step">Trigger:</span> Cron - every Monday 08:00<br><a href="/blog/n8n-vs-zapier-2026">n8n</a> (JS node):<span class="step">Google Sheets:</span> Read KPI range for last 7 days<br>
     → <span class="step">n8n (JS node):</span> Format numbers, calculate deltas, flag anomalies<br>
     → <span class="step">Slack:</span> Post formatted summary to #weekly-report channel<br>
     → <span class="step">Gmail:</span> Send branded HTML report to client distribution list<br>
@@ -164,7 +164,7 @@
 
   <h2>The Formatting Layer</h2>
   <p>This is where most people give up. Raw Sheets data looks awful in an email. The n8n JavaScript node does the heavy lifting: it rounds numbers, adds % deltas vs the prior week, highlights anything that moved more than 15% in either direction, and injects everything into an HTML template string.</p>
-  <p>The Slack message uses Block Kit — a structured JSON format that renders as a clean card with bold metrics and colour-coded arrows. <strong>The whole formatting step is under 40 lines of JavaScript.</strong> No external libraries, no separate templating engine.</p>
+  <p>The Slack message uses Block Kit - a structured JSON format that renders as a clean card with bold metrics and colour-coded arrows. <strong>The whole formatting step is under 40 lines of JavaScript.</strong> No external libraries, no separate templating engine.</p>
 
   <h2>Handling Edge Cases</h2>
   <p>What if the Sheets data is incomplete? What if a metric column is blank? We added a validation node that checks for empty cells before formatting. If anything looks wrong, it pings a Slack alert to the internal ops channel instead of sending a broken report to the client. The delivery is suppressed until someone manually approves it.</p>
@@ -183,7 +183,7 @@
   </div>
 
   <h2>What It Actually Cost to Build</h2>
-  <p>Seven hours total. Three hours designing the Sheets schema and agreeing on which metrics mattered. Two hours building the <a href="/blog/n8n-ai-agent-workflows">n8n workflow</a>. Two hours refining the email template and testing delivery. The tools are all free or already in the client's stack — the only cost was the build time.</p>
+  <p>Seven hours total. Three hours designing the Sheets schema and agreeing on which metrics mattered. Two hours building the <a href="/blog/n8n-ai-agent-workflows">n8n workflow</a>. Two hours refining the email template and testing delivery. The tools are all free or already in the client's stack - the only cost was the build time.</p>
   <p>If you want this running before your next client call, <a href="/" style="color:var(--accent);">get in touch</a>. It's one of our most common fixed-price builds.</p>
 </div>
 

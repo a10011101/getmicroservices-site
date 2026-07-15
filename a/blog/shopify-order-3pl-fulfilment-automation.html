@@ -10,8 +10,8 @@
 <meta name="robots" content="noindex, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/shopify-order-3pl-fulfilment-automation"/>
-<title>Shopify → 3PL Fulfilment Automation: From 6-Hour Lag to 10 Minutes — getmicroservices</title>
-<meta name="description" content="A DTC brand was manually copy-pasting 500 Shopify orders a month into their 3PL portal. Here's the n8n pipeline we built to eliminate that entirely."/>
+<title>Shopify to 3PL Fulfilment Automation in 10 Minutes</title>
+<meta name="description" content="Automate Shopify order fulfilment with n8n. We built a 3PL handoff workflow that cut fulfilment lag from 6 hours to under 10 minutes for a 500-order/month brand."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -198,19 +198,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <meta property="og:title" content="Shopify → 3PL Fulfilment Automation: From 6-Hour Lag to 10 Minutes — getmicroservices"/>
+  <meta property="og:title" content="Shopify → 3PL Fulfilment Automation: From 6-Hour Lag to 10 Minutes - getmicroservices"/>
   <meta property="og:description" content="A DTC brand was manually copy-pasting 500 Shopify orders a month into their 3PL portal. Here"/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/a/blog/shopify-order-3pl-fulfilment-automation"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="Shopify → 3PL Fulfilment Automation: From 6-Hour Lag to 10 Minutes — getmicroservices"/>
+  <meta name="twitter:title" content="Shopify → 3PL Fulfilment Automation: From 6-Hour Lag to 10 Minutes - getmicroservices"/>
   <meta name="twitter:description" content="A DTC brand was manually copy-pasting 500 Shopify orders a month into their 3PL portal. Here"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Shopify → 3PL Fulfilment Automation: From 6-Hour Lag to 10 Minutes — getmicroservices",
+  "headline": "Shopify → 3PL Fulfilment Automation: From 6-Hour Lag to 10 Minutes - getmicroservices",
   "description": "A DTC brand was manually copy-pasting 500 Shopify orders a month into their 3PL portal. Here",
   "datePublished": "2026-04-09",
   "publisher": {
@@ -240,7 +240,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "Shopify → 3PL Fulfilment Automation: From 6-Hour Lag to 10 Minutes — getmicroservices",
+      "name": "Shopify → 3PL Fulfilment Automation: From 6-Hour Lag to 10 Minutes - getmicroservices",
       "item": "https://getmicroservices.com/a/blog/shopify-order-3pl-fulfilment-automation"
     }
   ]
@@ -282,16 +282,16 @@
     <span>Mar 31, 2026</span>
     <span>6 min read</span>
   </div>
-  <p class="post-lead">A DTC skincare brand was manually copy-pasting every Shopify order into their 3PL portal — 500 times a month. Here's the n8n pipeline we built to make that a problem of the past.</p>
+  <p class="post-lead">A DTC skincare brand was manually copy-pasting every Shopify order into their 3PL portal - 500 times a month. Here's the n8n pipeline we built to make that a problem of the past.</p>
 
   <h2>The problem</h2>
-  <p>James runs a direct-to-consumer skincare brand doing around 500 orders a month through Shopify. Their 3PL handles warehousing and shipping. Sounds like a clean setup — until you ask how orders get from Shopify to the 3PL.</p>
+  <p>James runs a direct-to-consumer skincare brand doing around 500 orders a month through Shopify. Their 3PL handles warehousing and shipping. Sounds like a clean setup - until you ask how orders get from Shopify to the 3PL.</p>
   <p>The answer: someone logs into Shopify, copies the order details, logs into the 3PL portal, and pastes them in. Manually. For every order. <strong>That's 3–4 hours of ops work every single day.</strong></p>
   <p>"We have a 3PL with a perfectly good API," their ops lead told us. "And we're typing addresses into a web form fifteen times a day." They'd had two fulfilment errors in the previous month from typos. A wrong digit in a postcode. One order shipped to a completely different city.</p>
   <p>Nobody had prioritised the fix because the business was growing fast and there were always more urgent fires. Classic ops debt.</p>
 
   <h2>What we built</h2>
-  <p>A five-step n8n pipeline that handles the full order handoff — trigger to tracking number — with zero human steps for routine orders:</p>
+  <p>A five-step n8n pipeline that handles the full order handoff - trigger to tracking number - with zero human steps for routine orders:</p>
 
   <div class="flow-card">
     <div class="flow-label">shopify → 3pl fulfilment pipeline</div>
@@ -319,21 +319,21 @@
     <div class="flow-result">↳ order paid → 3PL receives it in &lt;10 min → tracking written back to Shopify → Slack alert only on exceptions</div>
   </div>
 
-  <p>The SKU mapper is a Google Sheet that translates Shopify variant IDs to 3PL warehouse codes. The ops team owns it — when new products launch, they add a row. No code involved.</p>
+  <p>The SKU mapper is a Google Sheet that translates Shopify variant IDs to 3PL warehouse codes. The ops team owns it - when new products launch, they add a row. No code involved.</p>
   <p>The validator checks three things before the 3PL API call: does the SKU exist in the warehouse catalog, does the address pass a basic format check, is the item flagged as in stock. Anything that fails routes to a Slack channel with a link to the order. An exception takes about 5 minutes to handle manually. Everything else is invisible.</p>
-  <p>Tracking sync is a separate scheduled workflow that polls the 3PL every two hours, grabs new tracking numbers, and writes them to the Shopify order. That fires Shopify's native shipping email — so customers get their tracking notification automatically, earlier than before.</p>
+  <p>Tracking sync is a separate scheduled workflow that polls the 3PL every two hours, grabs new tracking numbers, and writes them to the Shopify order. That fires Shopify's native shipping email - so customers get their tracking notification automatically, earlier than before.</p>
 
   <h2>The details that matter</h2>
   <p>A few non-obvious pieces we had to build:</p>
   <ul>
-    <li><strong>Bundle handling</strong> — some Shopify products are bundles that map to multiple 3PL SKUs. We added an expansion step that splits one line item into many before the API call.</li>
-    <li><strong>International customs</strong> — the 3PL needs HS codes and declared values for cross-border shipments. A second Sheet tab maps product categories to HS codes; the workflow looks this up per item.</li>
-    <li><strong>Idempotency</strong> — Shopify can send the same webhook more than once. We track order IDs that have already been submitted so the 3PL never gets a duplicate.</li>
+    <li><strong>Bundle handling</strong> - some Shopify products are bundles that map to multiple 3PL SKUs. We added an expansion step that splits one line item into many before the API call.</li>
+    <li><strong>International customs</strong> - the 3PL needs HS codes and declared values for cross-border shipments. A second Sheet tab maps product categories to HS codes; the workflow looks this up per item.</li>
+    <li><strong>Idempotency</strong> - Shopify can send the same webhook more than once. We track order IDs that have already been submitted so the 3PL never gets a duplicate.</li>
   </ul>
   <p>None of these are exotic problems, but they're invisible until you run real orders. That's why we always test with live data in staging before flipping to production.</p>
 
   <h2>The stack</h2>
-  <p>n8n as the workflow engine, running on a $12/month VPS. Google Sheets for the SKU and HS code mappings — ops-editable, no engineering required. Shopify webhooks as the trigger. The 3PL's REST API as the destination. Slack for exception alerts.</p>
+  <p>n8n as the workflow engine, running on a $12/month VPS. Google Sheets for the SKU and HS code mappings - ops-editable, no engineering required. Shopify webhooks as the trigger. The 3PL's REST API as the destination. Slack for exception alerts.</p>
   <p>No new software for the team to learn. No monthly platform fee per order. The brand got the full workflow export, the Sheets templates, and a Loom walkthrough. Self-sufficient from day one.</p>
   <p><strong>Build time: 4 days.</strong> The 3PL's API documentation was patchy, which cost us half a day. Everything else was clean.</p>
 
@@ -345,10 +345,10 @@
     <div class="result-item">3–4 hours/day of manual ops work eliminated</div>
     <div class="result-item">Fulfilment error rate dropped to zero for automated orders</div>
     <div class="result-item">~3% of orders flagged as exceptions; each resolved in under 5 minutes</div>
-    <div class="result-item">"Where's my order" support tickets down noticeably — tracking emails go out same day now</div>
+    <div class="result-item">"Where's my order" support tickets down noticeably - tracking emails go out same day now</div>
   </div>
 
-  <p>The ops lead put it well: "I only see a Slack message when something actually needs me. I don't think about orders anymore." That's what a well-built automation should feel like — not a dashboard to monitor, just a problem that stopped existing.</p>
+  <p>The ops lead put it well: "I only see a Slack message when something actually needs me. I don't think about orders anymore." That's what a well-built automation should feel like - not a dashboard to monitor, just a problem that stopped existing.</p>
 
   <div class="post-cta">
     <p>Still manually pushing orders to your 3PL? We can probably fix that in a week.</p>

@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How We Built an AI Inbox Triage System for a Busy Executive – GetMicroservices Blog</title>
+  <title>How We Built an AI Inbox Triage System for a Busy Executive</title>
   <meta name="description" content="Cut email overload with an AI inbox triage system. We built an n8n + GPT-4o-mini workflow that routes, summarises, and escalates emails automatically." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -253,7 +253,7 @@
     <span class="meta-readtime">6 min read</span>
   </div>
   <h1>How We Built an AI Inbox Triage System for a Busy Executive</h1>
-  <p class="lead">A consultancy founder was spending 2+ hours a day on email — mostly deciding what to read, what to forward, and what to ignore. We automated all three with n8n and GPT-4o-mini. Now it takes him 15 minutes.</p>
+  <p class="lead">A consultancy founder was spending 2+ hours a day on email - mostly deciding what to read, what to forward, and what to ignore. We automated all three with n8n and GPT-4o-mini. Now it takes him 15 minutes.</p>
 </div>
 
 <!-- ARTICLE BODY -->
@@ -262,25 +262,25 @@
   <h2>The Problem</h2>
   <p>James runs a 12-person digital consultancy. At any given time he has three active client projects, a sales pipeline, a team of project managers, and a business development function that generates a constant stream of inbound enquiries. His inbox is the connective tissue of all of it.</p>
   <p>When we spoke to him, he described something a lot of founders recognise: the inbox had become a full-time job in itself. <strong>200 to 250 emails a day</strong>, a mix of client escalations, supplier invoices, sales pitches, team updates, and newsletters. Every morning he'd sit down and spend 90 minutes sorting through it. Then again in the afternoon. Then check one more time before bed "just in case."</p>
-  <p>"The problem isn't volume," he told us. For a related approach to customer-facing automation, see <a href="/blog/ai-chatbot-for-small-business" style="color:var(--accent);">how AI chatbots for small business</a> handle repetitive queries with a similar classification pattern. "It's cognitive load. I can't just delete everything that looks unimportant — sometimes an important email has a vague subject line. So I end up reading things I didn't need to read, and I'm still anxious I missed something."</p>
+  <p>"The problem isn't volume," he told us. For a related approach to customer-facing automation, see <a href="/blog/ai-chatbot-for-small-business" style="color:var(--accent);">how AI chatbots for small business</a> handle repetitive queries with a similar classification pattern. "It's cognitive load. I can't just delete everything that looks unimportant - sometimes an important email has a vague subject line. So I end up reading things I didn't need to read, and I'm still anxious I missed something."</p>
   <p>He'd tried inbox zero systems, priority flags, filters. None of them solved the core problem: he still had to read and evaluate each email himself before he could act on it.</p>
 
   <h2>What He Actually Needed</h2>
   <p>After mapping his inbox categories, it became clear there were really four kinds of email: urgent client issues, delegatable tasks, read-later info, and noise. For a broader look at AI classification use cases, read <a href="/blog/how-to-integrate-ai-into-your-business" style="color:var(--accent);">how to integrate AI into your business</a>.</p>
   <ul>
     <li><strong>Urgent:</strong> client escalations, payment issues, anything with a deadline in the next 24 hours</li>
-    <li><strong>Delegate:</strong> things his team could handle without him — supplier queries, routine project updates, scheduling</li>
-    <li><strong>Read later:</strong> useful but not time-sensitive — industry newsletters, reports, proposals to review</li>
+    <li><strong>Delegate:</strong> things his team could handle without him - supplier queries, routine project updates, scheduling</li>
+    <li><strong>Read later:</strong> useful but not time-sensitive - industry newsletters, reports, proposals to review</li>
     <li><strong>Archive:</strong> notifications, receipts, automated system emails he never needed to see</li>
   </ul>
-  <p>He was manually making that classification for every single email. We needed to make the system do it for him — and surface only the stuff that actually needed his eyes.</p>
+  <p>He was manually making that classification for every single email. We needed to make the system do it for him - and surface only the stuff that actually needed his eyes.</p>
 
   <h2>What We Built</h2>
-  <p>The solution: a Gmail-connected <a href="/blog/n8n-ai-agent-workflows">n8n workflow</a> that reads each incoming email, passes it to GPT-4o-mini for classification, then routes it automatically — applying labels, forwarding delegatable items, pinging a Slack channel for urgent ones, and silently archiving noise.</p>
+  <p>The solution: a Gmail-connected <a href="/blog/n8n-ai-agent-workflows">n8n workflow</a> that reads each incoming email, passes it to GPT-4o-mini for classification, then routes it automatically - applying labels, forwarding delegatable items, pinging a Slack channel for urgent ones, and silently archiving noise.</p>
 
   <!-- WORKFLOW DIAGRAM -->
   <div class="workflow-diagram">
-    <div class="workflow-label">AI inbox triage workflow — n8n + GPT-4o-mini + Gmail + Slack</div>
+    <div class="workflow-label">AI inbox triage workflow - n8n + GPT-4o-mini + Gmail + Slack</div>
     <div class="workflow-nodes">
       <div class="wf-node">
         <div class="wf-box"><span class="wf-icon">📧</span><div><div class="wf-name">Gmail Trigger</div><div class="wf-type">New email webhook</div></div></div>
@@ -305,8 +305,8 @@
     <div class="workflow-result">↳ Every email classified in ~3 seconds → urgent ones pinged to Slack with a one-line summary → everything else labelled and sorted automatically</div>
   </div>
 
-  <p>The AI classifier receives the sender, subject line, and first 400 characters of the email body. For automated follow-ups to incoming leads, see <a href="/blog/lead-qualification-bot-weekend-build" style="color:var(--accent);">our lead qualification bot</a> that scores and routes prospects automatically. It returns a category (urgent / delegate / read-later / archive) plus a one-sentence summary. That summary is what James sees in Slack — so he can decide in five seconds whether to act, without opening his email client at all.</p>
-  <p>Delegatable emails get forwarded to the right team member automatically, based on a simple routing table we set up in a Google Sheet. James can update that table himself — no code required.</p>
+  <p>The AI classifier receives the sender, subject line, and first 400 characters of the email body. For automated follow-ups to incoming leads, see <a href="/blog/lead-qualification-bot-weekend-build" style="color:var(--accent);">our lead qualification bot</a> that scores and routes prospects automatically. It returns a category (urgent / delegate / read-later / archive) plus a one-sentence summary. That summary is what James sees in Slack - so he can decide in five seconds whether to act, without opening his email client at all.</p>
+  <p>Delegatable emails get forwarded to the right team member automatically, based on a simple routing table we set up in a Google Sheet. James can update that table himself - no code required.</p>
   <p>Everything else gets a Gmail label applied and is moved out of the primary inbox. His inbox now shows only the handful of items classified as urgent or unclassifiable. The rest is neatly sorted and waiting when he wants it.</p>
   <p>We also added a daily digest: at 5 PM, n8n compiles a summary of everything classified as "read later" that day and sends it as a single Slack message. One glance, nothing missed.</p>
   <p>The entire workflow cost pennies to run. GPT-4o-mini processing 200 emails a day works out to roughly <strong>$1.50/month</strong> in API costs. The n8n instance runs on the same $12/month VPS he already had for another project.</p>
@@ -314,21 +314,21 @@
   <h2>The Result</h2>
 
   <div class="result-box">
-    <div class="result-label">// measured results — 6 weeks post-launch</div>
+    <div class="result-label">// measured results - 6 weeks post-launch</div>
     <ul>
       <li>Email time dropped from 2+ hours/day to 15 minutes average</li>
       <li>Response time on urgent emails: from 3–4 hours to under 30 minutes</li>
       <li>Zero critical emails missed in 6 weeks of operation</li>
       <li>Team handles 60% of emails without escalating to James</li>
-      <li>API cost: ~$1.50/month — less than a cup of coffee</li>
+      <li>API cost: ~$1.50/month - less than a cup of coffee</li>
     </ul>
   </div>
 
-  <p>The thing James mentioned most in our follow-up call wasn't the time saved — it was the mental relief. "I used to have this low-level anxiety all day that I'd missed something. Now I know that if anything urgent comes in, I'll get a Slack ping. If I don't get a ping, nothing needs my attention. That's genuinely changed how I work."</p>
-  <p>He also noted that the classification isn't perfect — maybe one in fifty emails gets miscategorised. But that's fine. A misclassified "read later" that should have been "urgent" still gets caught by the Slack digest. The system doesn't need to be perfect; it just needs to be better than doing it manually, which it absolutely is.</p>
+  <p>The thing James mentioned most in our follow-up call wasn't the time saved - it was the mental relief. "I used to have this low-level anxiety all day that I'd missed something. Now I know that if anything urgent comes in, I'll get a Slack ping. If I don't get a ping, nothing needs my attention. That's genuinely changed how I work."</p>
+  <p>He also noted that the classification isn't perfect - maybe one in fifty emails gets miscategorised. But that's fine. A misclassified "read later" that should have been "urgent" still gets caught by the Slack digest. The system doesn't need to be perfect; it just needs to be better than doing it manually, which it absolutely is.</p>
 
   <h2>What This Cost to Build</h2>
-  <p>We built this under our Starter tier — one focused automation, four integrations (Gmail, OpenAI, Slack, Google Sheets), delivered in under a week. James had the workflow running in production within 4 days of our first call. He got the full n8n workflow exported, the routing sheet template, and a short Loom walkthrough so he could adjust the classifier prompt himself as his needs change.</p>
+  <p>We built this under our Starter tier - one focused automation, four integrations (Gmail, OpenAI, Slack, Google Sheets), delivered in under a week. James had the workflow running in production within 4 days of our first call. He got the full n8n workflow exported, the routing sheet template, and a short Loom walkthrough so he could adjust the classifier prompt himself as his needs change.</p>
   <p>If your inbox is eating your calendar, <a href="/" style="color: var(--accent);">let's talk</a>. The call is free and we'll tell you honestly whether this kind of automation makes sense for your setup.</p>
 
 

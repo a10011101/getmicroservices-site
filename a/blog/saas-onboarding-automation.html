@@ -10,8 +10,8 @@
 <meta name="robots" content="noindex, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/saas-onboarding-automation"/>
-<title>How We Cut SaaS Trial Churn by 34% With Automated Onboarding — getmicroservices</title>
-<meta name="description" content="A solo-founder SaaS was losing 60% of trial users in week one. Here's the behaviour-driven onboarding sequence we built and what it changed."/>
+<title>SaaS Onboarding Automation That Cut Churn by 34%</title>
+<meta name="description" content="A B2B SaaS startup was losing 60% of trial signups in week one. We built an automated onboarding sequence with n8n that cut early churn by a third."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -200,13 +200,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <meta property="og:title" content="How We Cut SaaS Trial Churn by 34% With Automated Onboarding — getmicroservices"/>
+  <meta property="og:title" content="How We Cut SaaS Trial Churn by 34% With Automated Onboarding - getmicroservices"/>
   <meta property="og:description" content="A solo-founder SaaS was losing 60% of trial users in week one. Here's the behaviour-driven onboarding sequence we built and what it changed."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/a/blog/saas-onboarding-automation"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="How We Cut SaaS Trial Churn by 34% With Automated Onboarding — getmicroservices"/>
+  <meta name="twitter:title" content="How We Cut SaaS Trial Churn by 34% With Automated Onboarding - getmicroservices"/>
   <meta name="twitter:description" content="A solo-founder SaaS was losing 60% of trial users in week one. Here's the behaviour-driven onboarding sequence we built and what it changed."/>
 <script type="application/ld+json">
 {
@@ -287,17 +287,17 @@
   <p class="post-lead">A solo-founder SaaS was losing 60% of trial signups in the first five days. The product wasn't the problem. The silence after signup was. Here's what we built and what changed.</p>
 
   <h2>The problem</h2>
-  <p>Callum builds a project management tool for small agencies. Good product — paid user retention was solid. But trial conversions were stuck at 12%, and almost every drop-off happened before day five.</p>
+  <p>Callum builds a project management tool for small agencies. Good product - paid user retention was solid. But trial conversions were stuck at 12%, and almost every drop-off happened before day five.</p>
   <p>The pattern showed up clearly in the data: users signed up, opened the welcome email, logged in once or twice, then vanished. When Callum emailed churned trialists to ask why, the answers were consistent: <strong>"I didn't know where to start."</strong> One user put it more bluntly: "I meant to explore it but I forgot about it."</p>
   <p>His onboarding was a single welcome email at signup, then nothing until a "trial ends in 3 days" reminder. No nudges, no guidance, no acknowledgment that a real human had just signed up.</p>
-  <p>He knew it needed fixing. He didn't have time to fix it manually — he was the only person in the company.</p>
+  <p>He knew it needed fixing. He didn't have time to fix it manually - he was the only person in the company.</p>
 
   <h2>The milestone that mattered</h2>
   <p>Before building anything, we dug into Callum's analytics to find the activation point. It turned out users who linked a client project <em>and</em> assigned at least one task converted at 4× the baseline rate. Callum called it "the connected moment."</p>
   <p>Only 29% of trial users were reaching it. The job of the onboarding sequence was simple: get more users to that milestone, faster, without Callum doing anything manually.</p>
   <p>We designed a seven-touch behaviour-driven sequence:</p>
   <ul class="body-list">
-    <li>Immediate welcome — single CTA, no feature dump</li>
+    <li>Immediate welcome - single CTA, no feature dump</li>
     <li>Day 1: if no project created, send a "here's how to start in 2 minutes" nudge</li>
     <li>Day 3: if project exists but no tasks, send a task-creation tip</li>
     <li>Day 3 (alternate): if completely inactive, send a personal-feel "are you stuck?" email</li>
@@ -310,7 +310,7 @@
   <h2>What we built</h2>
 
   <div class="flow-card">
-    <div class="flow-label">saas onboarding automation — n8n + postmark + stripe</div>
+    <div class="flow-label">saas onboarding automation - n8n + postmark + stripe</div>
     <div class="flow-nodes">
       <div class="flow-node">
         <div class="node-box"><span class="node-icon">🆕</span><div><div class="node-name">New Signup</div><div class="node-type">Webhook trigger</div></div></div>
@@ -340,25 +340,25 @@
   </div>
 
   <p>Stack: <strong>n8n</strong> as the workflow engine, <strong>Postmark</strong> for email delivery, Callum's product API for activity checks, <strong>Stripe</strong> payment links embedded directly in conversion emails. Everything runs on a $6/month VPS.</p>
-  <p>We also built a lightweight Notion table — populated by n8n — showing each active trial user's current stage and whether they'd hit the activation milestone. Updates itself. No manual work.</p>
+  <p>We also built a lightweight Notion table - populated by n8n - showing each active trial user's current stage and whether they'd hit the activation milestone. Updates itself. No manual work.</p>
   <p><strong>Build time: 4 days.</strong> The n8n wiring was one day. The rest was iterating on email copy with Callum and testing the activity-check logic against his staging environment.</p>
 
   <h2>A note on the emails</h2>
-  <p>The welcome email we replaced was 400 words of feature bullets with a header image and three CTAs. We cut it to 90 words, plain text, one link. The "are you stuck?" email at day 3 was written to read like Callum had personally noticed the user hadn't logged in — because that framing converts at roughly 2× the rate of an obviously automated newsletter.</p>
+  <p>The welcome email we replaced was 400 words of feature bullets with a header image and three CTAs. We cut it to 90 words, plain text, one link. The "are you stuck?" email at day 3 was written to read like Callum had personally noticed the user hadn't logged in - because that framing converts at roughly 2× the rate of an obviously automated newsletter.</p>
   <p>Open rates went from 22% to 41% in the first two weeks. Most of that was the shift to plain text and better subject lines. Automation let us deliver the right message; copy made people actually read it.</p>
 
   <h2>The result</h2>
 
   <div class="result-box">
     <div class="result-title">60-day post-launch cohort</div>
-    <div class="result-item">Trial-to-paid conversion: 12% → 18.3% — a 53% relative lift</div>
+    <div class="result-item">Trial-to-paid conversion: 12% → 18.3% - a 53% relative lift</div>
     <div class="result-item">Early churn (days 1–5) down 34%</div>
     <div class="result-item">"Connected moment" hit rate: 29% → 61% of trial users</div>
     <div class="result-item">Callum's onboarding time: ~4 hrs/week → ~20 min/week</div>
     <div class="result-item">Win-back sequence recovered 11% of non-converters at day 14</div>
   </div>
 
-  <p>The economics compound. A 6-point conversion lift isn't just more customers this month — it's more customers every month, at zero marginal cost, as long as the sequence runs. The automation paid for itself in under 18 days based on the additional MRR from the first cohort.</p>
+  <p>The economics compound. A 6-point conversion lift isn't just more customers this month - it's more customers every month, at zero marginal cost, as long as the sequence runs. The automation paid for itself in under 18 days based on the additional MRR from the first cohort.</p>
   <p>Callum at the 30-day mark: <em>"I've been getting Slack pings all week when users hit the connected moment. I used to not even notice if someone was actually using the product. Now I see it happen in real time."</em></p>
 
   <h2>What actually made it work</h2>

@@ -10,8 +10,8 @@
 <meta name="robots" content="noindex, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/google-sheets-slack-digest-ops-teams"/>
-<title>Google Sheets → Slack Digest: How We Saved an Ops Team 2.5 Hours Every Monday — getmicroservices</title>
-<meta name="description" content="An e-commerce ops team was manually compiling 5 spreadsheets into a Slack update every week. We automated it in two and a half days with n8n."/>
+<title>Google Sheets to Slack Digest: 2.5 Hours Saved Weekly</title>
+<meta name="description" content="An e-commerce ops team was spending 2.5 hours every Monday manually compiling spreadsheet data into a Slack update. We automated the whole thing with n8n."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -194,19 +194,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <meta property="og:title" content="Google Sheets → Slack Digest: How We Saved an Ops Team 2.5 Hours Every Monday — getmicroservices"/>
+  <meta property="og:title" content="Google Sheets → Slack Digest: How We Saved an Ops Team 2.5 Hours Every Monday - getmicroservices"/>
   <meta property="og:description" content="An e-commerce ops team was manually compiling 5 spreadsheets into a Slack update every week. We automated it in two and a half days with n8n."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/a/blog/google-sheets-slack-digest-ops-teams"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="Google Sheets → Slack Digest: How We Saved an Ops Team 2.5 Hours Every Monday — getmicroservices"/>
+  <meta name="twitter:title" content="Google Sheets → Slack Digest: How We Saved an Ops Team 2.5 Hours Every Monday - getmicroservices"/>
   <meta name="twitter:description" content="An e-commerce ops team was manually compiling 5 spreadsheets into a Slack update every week. We automated it in two and a half days with n8n."/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Google Sheets → Slack Digest: How We Saved an Ops Team 2.5 Hours Every Monday — getmicroservices",
+  "headline": "Google Sheets → Slack Digest: How We Saved an Ops Team 2.5 Hours Every Monday - getmicroservices",
   "description": "An e-commerce ops team was manually compiling 5 spreadsheets into a Slack update every week. We automated it in two and a half days with n8n.",
   "datePublished": "2026-04-09",
   "publisher": {
@@ -236,7 +236,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "Google Sheets → Slack Digest: How We Saved an Ops Team 2.5 Hours Every Monday — getmicroservices",
+      "name": "Google Sheets → Slack Digest: How We Saved an Ops Team 2.5 Hours Every Monday - getmicroservices",
       "item": "https://getmicroservices.com/a/blog/google-sheets-slack-digest-ops-teams"
     }
   ]
@@ -281,8 +281,8 @@
   <p class="post-lead">An e-commerce ops team was manually pulling numbers from five spreadsheets and writing up a Slack digest every Monday morning. Two and a half hours, every single week. Here's exactly what we built to eliminate it.</p>
 
   <h2>The problem</h2>
-  <p>Ravi runs operations for an e-commerce brand doing around £800k/year. Every Monday, before the 9am standup, he opened five Google Sheets — orders, inventory, returns, ad spend, support tickets — pulled the key numbers, calculated week-on-week changes, wrote it all up in a formatted Slack message, and posted it to #ops-digest.</p>
-  <p><strong>Two and a half hours. Every Monday. Without fail.</strong> If Ravi was on leave, someone else had to do it — which meant briefing them, hoping they pulled the right cells, and usually the digest arriving late. On public holidays, it sometimes didn't happen at all.</p>
+  <p>Ravi runs operations for an e-commerce brand doing around £800k/year. Every Monday, before the 9am standup, he opened five Google Sheets - orders, inventory, returns, ad spend, support tickets - pulled the key numbers, calculated week-on-week changes, wrote it all up in a formatted Slack message, and posted it to #ops-digest.</p>
+  <p><strong>Two and a half hours. Every Monday. Without fail.</strong> If Ravi was on leave, someone else had to do it - which meant briefing them, hoping they pulled the right cells, and usually the digest arriving late. On public holidays, it sometimes didn't happen at all.</p>
   <p>"The data's all there," he said. "I just have to move it from five places into one. Every week. It feels like something a computer should be doing."</p>
   <p>He was right.</p>
 
@@ -290,7 +290,7 @@
   <p>One n8n workflow. Triggered every Monday at 07:45am. Reads all five sheets, calculates the metrics, formats the Slack message, posts it by 08:00am. Done.</p>
 
   <div class="flow-card">
-    <div class="flow-label">weekly ops digest — 5 sheets → slack, every monday 08:00am</div>
+    <div class="flow-label">weekly ops digest - 5 sheets → slack, every monday 08:00am</div>
     <div class="flow-nodes">
       <div class="flow-node">
         <div class="node-box"><span class="node-icon">⏰</span><div><div class="node-name">Cron Trigger</div><div class="node-type">Mon 07:45am</div></div></div>
@@ -316,27 +316,27 @@
   </div>
 
   <p>All five sheets are read in parallel so the whole workflow completes in under 15 seconds. Each sheet has a dedicated processing block that knows which columns to read and what to calculate: total orders, fulfilment rate, return rate, ad spend vs. revenue ratio, open vs. closed support tickets.</p>
-  <p>The metric engine then calculates week-on-week deltas automatically. The Slack message uses Block Kit formatting — sections, dividers, green/amber/red indicators — so the team can scan it in 30 seconds and know exactly what's moved since last week.</p>
+  <p>The metric engine then calculates week-on-week deltas automatically. The Slack message uses Block Kit formatting - sections, dividers, green/amber/red indicators - so the team can scan it in 30 seconds and know exactly what's moved since last week.</p>
   <p>We also added a validation step: if any sheet hasn't been modified in the past 7 days, the relevant section gets a warning flag in the Slack message. That way the team knows to double-check before acting on the data, rather than trusting stale numbers.</p>
-  <p>The workflow snapshots each Monday's metrics to a lightweight history tab. No external database, no new tools — just a tab in one of the existing sheets. Enough to support week-on-week comparison indefinitely.</p>
+  <p>The workflow snapshots each Monday's metrics to a lightweight history tab. No external database, no new tools - just a tab in one of the existing sheets. Enough to support week-on-week comparison indefinitely.</p>
 
   <h2>The build</h2>
-  <p>We used <strong>n8n</strong> as the workflow engine. It handles the cron schedule, the Google Sheets OAuth reads, the metric calculations, the Slack API call, and the history writes. It runs on a $12/month VPS — the same one Ravi was already using for another automation we'd built him previously.</p>
-  <p>The Slack formatting took the longest — half a day — because Block Kit is fussier than it looks. But the result is a message that looks like it was written by hand, with proper sections, emoji indicators, and clean number formatting.</p>
+  <p>We used <strong>n8n</strong> as the workflow engine. It handles the cron schedule, the Google Sheets OAuth reads, the metric calculations, the Slack API call, and the history writes. It runs on a $12/month VPS - the same one Ravi was already using for another automation we'd built him previously.</p>
+  <p>The Slack formatting took the longest - half a day - because Block Kit is fussier than it looks. But the result is a message that looks like it was written by hand, with proper sections, emoji indicators, and clean number formatting.</p>
   <p><strong>Total build: two and a half days.</strong> Day one was the sheet reads and metric calculations. Half a day was Slack formatting. Day two was testing with real data and fixing edge cases (empty cells, sheets updated mid-morning, the first run with no prior week to compare against).</p>
 
   <h2>The result</h2>
 
   <div class="result-box">
     <div class="result-title">after 6 weeks</div>
-    <div class="result-item">2.5 hours saved every Monday — Ravi now spends 0 minutes on the digest</div>
+    <div class="result-item">2.5 hours saved every Monday - Ravi now spends 0 minutes on the digest</div>
     <div class="result-item">Digest arrives at 08:00am sharp, regardless of who's in the office</div>
     <div class="result-item">Week-on-week delta caught a returns spike 2 weeks before anyone would have noticed</div>
     <div class="result-item">Standup prep time dropped from 20 minutes to under 5</div>
-    <div class="result-item">Zero ongoing SaaS cost — runs on existing infrastructure</div>
+    <div class="result-item">Zero ongoing SaaS cost - runs on existing infrastructure</div>
   </div>
 
-  <p>The delta feature turned out to be the most valuable part. In week three, the return rate indicator went amber — a supplier had shipped a bad batch. Without the automation, that would have sat buried in a sheet until someone went looking. With the automated digest, the team caught it before the next reorder.</p>
+  <p>The delta feature turned out to be the most valuable part. In week three, the return rate indicator went amber - a supplier had shipped a bad batch. Without the automation, that would have sat buried in a sheet until someone went looking. With the automated digest, the team caught it before the next reorder.</p>
   <p>"The numbers used to sit in the sheets until someone found them," Ravi told us after month one. "Now they come to us. It sounds obvious, but it changes how the team operates."</p>
 
   <div class="post-cta">

@@ -10,8 +10,8 @@
 <meta name="robots" content="noindex, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/how-we-automated-a-booking-system-in-3-days"/>
-<title>How We Automated a Spa's Booking System in 3 Days — getmicroservices</title>
-<meta name="description" content="A massage business was losing 3 hours a day to WhatsApp scheduling. Here's exactly what we built and how it works."/>
+<title>How We Automated a Booking System in 3 Days</title>
+<meta name="description" content="A spa owner was spending 3 hours a day managing WhatsApp bookings. We automated the whole thing with n8n, a Telegram bot, and Google Sheets."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -195,19 +195,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <meta property="og:title" content="How We Automated a Spa's Booking System in 3 Days — getmicroservices"/>
+  <meta property="og:title" content="How We Automated a Spa's Booking System in 3 Days - getmicroservices"/>
   <meta property="og:description" content="A massage business was losing 3 hours a day to WhatsApp scheduling. Here"/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/a/blog/how-we-automated-a-booking-system-in-3-days"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="How We Automated a Spa's Booking System in 3 Days — getmicroservices"/>
+  <meta name="twitter:title" content="How We Automated a Spa's Booking System in 3 Days - getmicroservices"/>
   <meta name="twitter:description" content="A massage business was losing 3 hours a day to WhatsApp scheduling. Here"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "How We Automated a Spa's Booking System in 3 Days — getmicroservices",
+  "headline": "How We Automated a Spa's Booking System in 3 Days - getmicroservices",
   "description": "A massage business was losing 3 hours a day to WhatsApp scheduling. Here",
   "datePublished": "2026-04-09",
   "publisher": {
@@ -237,7 +237,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "How We Automated a Spa's Booking System in 3 Days — getmicroservices",
+      "name": "How We Automated a Spa's Booking System in 3 Days - getmicroservices",
       "item": "https://getmicroservices.com/a/blog/how-we-automated-a-booking-system-in-3-days"
     }
   ]
@@ -283,14 +283,14 @@
 
   <h2>The problem</h2>
   <p>Elena runs a small spa with four therapists. For three years, her entire booking system was a WhatsApp group and a paper calendar on the front desk. Every booking was a back-and-forth: client messages, staff checks availability, staff replies, client confirms, staff writes it in the book.</p>
-  <p>On a quiet day that's manageable. But the spa was doing 20–30 bookings a day, across multiple services and therapists with different schedules. <strong>Elena was spending 2–3 hours every single day just managing the calendar.</strong> Evenings too — clients book after hours, and unanswered messages meant lost customers.</p>
-  <p>She'd looked at booking software. Too expensive, too complex, too much to learn, and her clients were already on WhatsApp — she didn't want to ask them to use an app or a website.</p>
+  <p>On a quiet day that's manageable. But the spa was doing 20–30 bookings a day, across multiple services and therapists with different schedules. <strong>Elena was spending 2–3 hours every single day just managing the calendar.</strong> Evenings too - clients book after hours, and unanswered messages meant lost customers.</p>
+  <p>She'd looked at booking software. Too expensive, too complex, too much to learn, and her clients were already on WhatsApp - she didn't want to ask them to use an app or a website.</p>
 
   <h2>What we built</h2>
   <p>The solution was a Telegram bot connected to Google Sheets via n8n. Here's the full flow:</p>
 
   <div class="flow-card">
-    <div class="flow-label">booking automation — spa, 4 therapists</div>
+    <div class="flow-label">booking automation - spa, 4 therapists</div>
     <div class="flow-nodes">
       <div class="flow-node">
         <div class="node-box"><span class="node-icon">💬</span><div><div class="node-name">WhatsApp / Telegram</div><div class="node-type">Client message</div></div></div>
@@ -315,13 +315,13 @@
     <div class="flow-result">↳ Client books in under 60 seconds. Staff get instant notification. Google Sheet stays in sync. Zero manual steps.</div>
   </div>
 
-  <p>The bot handles natural language — clients can message "I want a massage Saturday afternoon" and the bot understands, checks the sheet, and offers available slots. No rigid menus, no forms.</p>
-  <p>Staff manage everything through a simple Google Sheet — their schedule, service durations, breaks. No new software to learn. The sheet they already used became the source of truth.</p>
+  <p>The bot handles natural language - clients can message "I want a massage Saturday afternoon" and the bot understands, checks the sheet, and offers available slots. No rigid menus, no forms.</p>
+  <p>Staff manage everything through a simple Google Sheet - their schedule, service durations, breaks. No new software to learn. The sheet they already used became the source of truth.</p>
   <p>Reminders go out automatically 24 hours and 2 hours before each appointment. Cancellations free up the slot instantly and notify the team.</p>
 
   <h2>The build</h2>
-  <p>We used <strong>n8n</strong> as the workflow engine — it handles the Telegram webhook, the Google Sheets reads/writes, and all the logic in between. The whole thing runs on a $6/month VPS that we set up as part of the project.</p>
-  <p>No proprietary platform. No monthly SaaS fee. Elena got the full workflow files, the server setup guide, and a 20-minute Loom walkthrough. If she ever wants to change something, she can — or she can come back to us.</p>
+  <p>We used <strong>n8n</strong> as the workflow engine - it handles the Telegram webhook, the Google Sheets reads/writes, and all the logic in between. The whole thing runs on a $6/month VPS that we set up as part of the project.</p>
+  <p>No proprietary platform. No monthly SaaS fee. Elena got the full workflow files, the server setup guide, and a 20-minute Loom walkthrough. If she ever wants to change something, she can - or she can come back to us.</p>
   <p><strong>Total build time: 3 days.</strong> Day 1 was the core booking flow. Day 2 was reminders and cancellations. Day 3 was testing with real clients and fixing edge cases.</p>
 
   <h2>The result</h2>
@@ -329,12 +329,12 @@
   <div class="result-box">
     <div class="result-title">after 30 days</div>
     <div class="result-item">Booking time dropped from 3+ hours/day to under 15 minutes of oversight</div>
-    <div class="result-item">Zero missed after-hours bookings — bot works 24/7</div>
+    <div class="result-item">Zero missed after-hours bookings - bot works 24/7</div>
     <div class="result-item">No-show rate dropped 40% after adding automated reminders</div>
     <div class="result-item">Elena's first message to us: "I got my evenings back"</div>
   </div>
 
-  <p>The total cost was $490 — our single flow tier. Elena had been losing roughly that much every week in unboooked slots from slow response times. The ROI was week one.</p>
+  <p>The total cost was $490 - our single flow tier. Elena had been losing roughly that much every week in unboooked slots from slow response times. The ROI was week one.</p>
 
   <div class="post-cta">
     <p>Got a manual process eating your time? We can probably automate it.</p>

@@ -9,8 +9,18 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/n8n-email-automation"/>
-<title>How to Automate Your Email with n8n (2026 Guide) — getmicroservices</title>
-<meta name="description" content="Learn how to build powerful email automation workflows with n8n — inbox triage, AI auto-replies, CRM sync, and more. Step-by-step 2026 guide."/>
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://getmicroservices.com/blog/n8n-email-automation" />
+  <meta property="og:title" content="How to Automate Your Email with n8n (2026 Guide)" />
+  <meta property="og:description" content="Learn how to build powerful email automation workflows with n8n - inbox triage, AI auto-replies, CRM sync, and more. Step-by-step 2026 guide." />
+  <meta property="og:image" content="https://getmicroservices.com/logo.jpg" />
+  <meta property="og:site_name" content="GetMicroservices" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How to Automate Your Email with n8n (2026 Guide)" />
+  <meta name="twitter:description" content="Learn how to build powerful email automation workflows with n8n - inbox triage, AI auto-replies, CRM sync, and more. Step-by-step 2026 guide." />
+  <meta name="twitter:image" content="https://getmicroservices.com/logo.jpg" />
+<title>How to Automate Your Email with n8n (2026 Guide)</title>
+<meta name="description" content="Learn how to build powerful email automation workflows with n8n - inbox triage, AI auto-replies, CRM sync, and more. Step-by-step 2026 guide."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -23,7 +33,7 @@
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "How to Automate Your Email with n8n (2026 Guide)",
-  "description": "Learn how to build powerful email automation workflows with n8n — inbox triage, AI auto-replies, CRM sync, and more. Step-by-step 2026 guide.",
+  "description": "Learn how to build powerful email automation workflows with n8n - inbox triage, AI auto-replies, CRM sync, and more. Step-by-step 2026 guide.",
   "url": "https://getmicroservices.com/blog/n8n-email-automation",
   "datePublished": "2026-06-11",
   "dateModified": "2026-06-11",
@@ -104,27 +114,27 @@
     <span>9 min read</span>
   </div>
   <h1>How to Automate Your Email with n8n (2026 Guide)</h1>
-  <p class="post-lead">Email is the highest-ROI target for automation. Here's how to build a complete email automation system with n8n — from inbox triage to AI-powered replies and CRM sync.</p>
+  <p class="post-lead">Email is the highest-ROI target for automation. Here's how to build a complete email automation system with n8n - from inbox triage to AI-powered replies and CRM sync.</p>
 
-  <p>If you only automate one thing this year, make it email. The average knowledge worker spends <strong>2.6 hours per day</strong> on email — much of it on tasks a well-configured <a href="/a/blog/n8n-self-hosted-guide">n8n workflow</a> can handle in milliseconds.</p>
+  <p>If you only automate one thing this year, make it email. The average knowledge worker spends <strong>2.6 hours per day</strong> on email - much of it on tasks a well-configured <a href="/a/blog/n8n-self-hosted-guide">n8n workflow</a> can handle in milliseconds.</p>
 
   <h2>why email first</h2>
-  <p>Email sits at the centre of almost every business process. Leads, client requests, invoices, support tickets — all email. <strong>Automating email multiplies the value of every other automation you build.</strong></p>
-  <p>Unlike social or CRM workflows, email automation has immediate, measurable impact: fewer missed leads, faster response times, less context-switching. With n8n you own the infrastructure — no per-task pricing, no data leaving your stack.</p>
+  <p>Email sits at the centre of almost every business process. Leads, client requests, invoices, support tickets - all email. <strong>Automating email multiplies the value of every other automation you build.</strong></p>
+  <p>Unlike social or CRM workflows, email automation has immediate, measurable impact: fewer missed leads, faster response times, less context-switching. With n8n you own the infrastructure - no per-task pricing, no data leaving your stack.</p>
 
   <h2>the four workflows worth building first</h2>
   <p>Don't automate everything at once. These four deliver the most ROI fastest.</p>
 
-  <h2>1. inbox triage — auto-label and route</h2>
-  <p>The common email problem isn't volume — it's not knowing what needs attention now. An n8n triage workflow reads incoming emails, classifies them with a simple AI prompt, and routes each one accordingly.</p>
+  <h2>1. inbox triage - auto-label and route</h2>
+  <p>The common email problem isn't volume - it's not knowing what needs attention now. An n8n triage workflow reads incoming emails, classifies them with a simple AI prompt, and routes each one accordingly.</p>
   <ul>
-    <li>trigger: gmail / imap node — fires on new email</li>
+    <li>trigger: gmail / imap node - fires on new email</li>
     <li>filter: check sender, subject keywords, body snippet</li>
     <li>ai node: classify as "lead", "support", "invoice", "newsletter", "other"</li>
     <li>route: apply label or move to folder based on classification</li>
     <li>optional: slack/telegram alert for "lead" or "urgent" categories</li>
   </ul>
-  <p>Classification prompt is as simple as: <em>"Classify this email into one of: lead, support, invoice, newsletter, other. Reply with just the category."</em> — accuracy is typically 90%+ out of the box.</p>
+  <p>Classification prompt is as simple as: <em>"Classify this email into one of: lead, support, invoice, newsletter, other. Reply with just the category."</em> - accuracy is typically 90%+ out of the box.</p>
 
   <h2>2. ai draft generation</h2>
   <p>Full auto-replies are risky for client-facing work. Draft generation is the safer approach: n8n reads the email, generates a reply, saves it as a Gmail draft ready for one-click review and send.</p>
@@ -146,7 +156,7 @@ trigger: new email in "needs-reply" label
     <li>create: new contact record with source, timestamp, email snippet</li>
     <li>notify: slack ping with deal summary and crm link</li>
   </ul>
-  <p>The deduplication step is critical — without it, you get duplicate contacts for every follow-up. Use the HubSpot "search by email" node before creating.</p>
+  <p>The deduplication step is critical - without it, you get duplicate contacts for every follow-up. Use the HubSpot "search by email" node before creating.</p>
 
   <h2>4. invoice and receipt processing</h2>
   <p>Finance teams and solopreneurs alike waste hours logging receipts manually. <a href="/a/blog/automate-invoice-processing">Automating invoice processing</a> with n8n pays for itself within a week.</p>
@@ -160,7 +170,7 @@ trigger: new email in "needs-reply" label
   <p>For PDFs, use the n8n PDF extract node or send file content to a vision-capable AI model. Accuracy is 95%+ on structured invoices from SaaS tools.</p>
 
   <h2>setting up gmail in n8n</h2>
-  <p>Use <strong>OAuth2</strong> for Gmail, not IMAP — more reliable and no need to enable less-secure app access.</p>
+  <p>Use <strong>OAuth2</strong> for Gmail, not IMAP - more reliable and no need to enable less-secure app access.</p>
   <ul>
     <li>in n8n: credentials → new → gmail oauth2</li>
     <li>in google cloud console: create project, enable gmail api, create oauth2 credentials</li>
@@ -171,23 +181,23 @@ trigger: new email in "needs-reply" label
 
   <h2>what goes wrong</h2>
   <ul>
-    <li>no error handling — add error trigger nodes that notify when workflows fail</li>
-    <li>processing all email — filter to specific labels or senders first</li>
-    <li>auto-sending without review — draft mode until you trust the output</li>
-    <li>forgetting rate limits — gmail api has quotas; add wait nodes in bulk ops</li>
-    <li>not testing edge cases — blank subjects, forwarded emails, html-only bodies</li>
+    <li>no error handling - add error trigger nodes that notify when workflows fail</li>
+    <li>processing all email - filter to specific labels or senders first</li>
+    <li>auto-sending without review - draft mode until you trust the output</li>
+    <li>forgetting rate limits - gmail api has quotas; add wait nodes in bulk ops</li>
+    <li>not testing edge cases - blank subjects, forwarded emails, html-only bodies</li>
   </ul>
 
   <div class="result-box">
     <div class="result-title">your email automation roadmap</div>
-    <div class="result-item">week 1: build triage workflow — auto-label by category</div>
+    <div class="result-item">week 1: build triage workflow - auto-label by category</div>
     <div class="result-item">week 2: add ai draft generation for common reply types</div>
     <div class="result-item">week 3: connect leads to your crm automatically</div>
     <div class="result-item">week 4: automate invoice/receipt logging to spreadsheet</div>
     <div class="result-item">ongoing: refine ai prompts based on draft quality</div>
   </div>
 
-  <p>Each workflow is modular — turn them on and off, adjust prompts, add new routes without touching anything else. Start with triage, prove the value, then expand.</p>
+  <p>Each workflow is modular - turn them on and off, adjust prompts, add new routes without touching anything else. Start with triage, prove the value, then expand.</p>
 
   <p>Need this built for your stack? <a href="/a/#contact">we implement email automation systems for teams →</a></p>
 

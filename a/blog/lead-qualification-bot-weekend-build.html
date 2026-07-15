@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/lead-qualification-bot-weekend-build"/>
-<title>How We Built a Lead Qualification Bot in a Weekend — getmicroservices</title>
+<title>How We Built a Lead Qualification Bot in a Weekend</title>
 <meta name="description" content="A Typeform webhook, 90 minutes of n8n work, and a scoring formula. By Monday morning, every new lead was automatically graded, routed, and sitting in the CRM."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
@@ -75,19 +75,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <meta property="og:title" content="How We Built a Lead Qualification Bot in a Weekend — getmicroservices"/>
+  <meta property="og:title" content="How We Built a Lead Qualification Bot in a Weekend - getmicroservices"/>
   <meta property="og:description" content="A Typeform webhook, 90 minutes of n8n work, and a scoring formula. By Monday morning, every new lead was automatically graded, routed, and sitting in the CRM."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/a/blog/lead-qualification-bot-weekend-build"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="How We Built a Lead Qualification Bot in a Weekend — getmicroservices"/>
+  <meta name="twitter:title" content="How We Built a Lead Qualification Bot in a Weekend - getmicroservices"/>
   <meta name="twitter:description" content="A Typeform webhook, 90 minutes of n8n work, and a scoring formula. By Monday morning, every new lead was automatically graded, routed, and sitting in the CRM."/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "How We Built a Lead Qualification Bot in a Weekend — getmicroservices",
+  "headline": "How We Built a Lead Qualification Bot in a Weekend - getmicroservices",
   "description": "A Typeform webhook, 90 minutes of n8n work, and a scoring formula. By Monday morning, every new lead was automatically graded, routed, and sitting in the CRM.",
   "datePublished": "2026-03-30",
   "publisher": {
@@ -117,7 +117,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "How We Built a Lead Qualification Bot in a Weekend — getmicroservices",
+      "name": "How We Built a Lead Qualification Bot in a Weekend - getmicroservices",
       "item": "https://getmicroservices.com/a/blog/lead-qualification-bot-weekend-build"
     }
   ]
@@ -151,10 +151,10 @@
     <span>6 min read</span>
   </div>
   <h1>How We Built a Lead Qualification Bot in a Weekend</h1>
-  <p class="post-lead">A Typeform webhook, 90 minutes of n8n work, and a scoring formula. By Monday morning, every new lead was automatically graded, routed, and sitting in the CRM — without a human touching it.</p>
+  <p class="post-lead">A Typeform webhook, 90 minutes of n8n work, and a scoring formula. By Monday morning, every new lead was automatically graded, routed, and sitting in the CRM - without a human touching it.</p>
 
   <h2>The Problem With Manual Lead <a href="/a/blog/ai-inbox-triage-for-busy-executives">Triage</a></h2>
-  <p>A SaaS founder was spending two hours every morning reviewing intake form submissions. The form data was all there — company size, budget range, use case — but someone had to read it, make a judgement, and route it. <strong>The information for a decision already existed. The decision itself didn't need a human.</strong></p>
+  <p>A SaaS founder was spending two hours every morning reviewing intake form submissions. The form data was all there - company size, budget range, use case - but someone had to read it, make a judgement, and route it. <strong>The information for a decision already existed. The decision itself didn't need a human.</strong></p>
 
   <h2>The Scoring Model</h2>
   <p>Before touching <a href="/a/blog/n8n-vs-zapier-2026">n8n</a>, we spent an hour defining what a "good" lead looked like. Five signals, each worth a different number of points:</p>
@@ -172,10 +172,10 @@
     </tbody>
   </table>
 
-  <p>Score ≥ 70 = Hot. 40–69 = Warm. Below 40 = Nurture. Weights stored in a Sheets config tab — no developer needed to adjust them.</p>
+  <p>Score ≥ 70 = Hot. 40–69 = Warm. Below 40 = Nurture. Weights stored in a Sheets config tab - no developer needed to adjust them.</p>
 
-  <h2>The Workflow</h2><a href="/a/blog/n8n-vs-zapier-2026">n8n</a> workflow — <div class="flow-card">
-    <div class="flow-label">n8n workflow — <a href="/a/blog/how-we-built-a-lead-qualification-bot">lead qualification</a> bot</div>
+  <h2>The Workflow</h2><a href="/a/blog/n8n-vs-zapier-2026">n8n</a> workflow - <div class="flow-card">
+    <div class="flow-label">n8n workflow - <a href="/a/blog/how-we-built-a-lead-qualification-bot">lead qualification</a> bot</div>
     <div class="flow-nodes">
       <div class="node-box"><span class="node-name">Typeform / Tally</span><span class="node-sub">webhook trigger</span></div><a href="/a/blog/n8n-vs-zapier-2026">n8n</a> JS Node<div class="flow-arrow">→</div>
       <div class="node-box"><span class="node-name">n8n JS Node</span><span class="node-sub">score formula</span></div>
@@ -192,18 +192,18 @@
   </div>
 
   <h2>Plugging In the Webhook</h2>
-  <p>Typeform and Tally both support native webhooks. Payload structures differ slightly — a Set node normalises the shape before the scoring logic, so the formula works identically regardless of which form tool fires it.</p>
-  <p>The scoring JavaScript is ~25 lines. Weights are read from a Google Sheets config tab. <strong>This single decision saved the most back-and-forth later</strong> — the founder tweaks weights without opening n8n.</p>
+  <p>Typeform and Tally both support native webhooks. Payload structures differ slightly - a Set node normalises the shape before the scoring logic, so the formula works identically regardless of which form tool fires it.</p>
+  <p>The scoring JavaScript is ~25 lines. Weights are read from a Google Sheets config tab. <strong>This single decision saved the most back-and-forth later</strong> - the founder tweaks weights without opening n8n.</p>
 
   <h2>The CRM Step</h2>
-  <p>HubSpot's n8n node creates or updates a contact, sets lead score as a custom property, and applies a tag. Deduplication by email — check if contact exists, branch on new vs. update. <strong>Two lines. Most people skip this and end up with duplicate contacts.</strong></p>
+  <p>HubSpot's n8n node creates or updates a contact, sets lead score as a custom property, and applies a tag. Deduplication by email - check if contact exists, branch on new vs. update. <strong>Two lines. Most people skip this and end up with duplicate contacts.</strong></p>
 
   <h2>Weekend Build Log</h2>
   <ul>
-    <li>Saturday AM — scoring model defined, webhook tested, n8n skeleton built</li>
-    <li>Saturday PM — HubSpot integration, Slack notifications, Sheets logging</li>
-    <li>Sunday — edge cases, error handling, missing fields, duplicate leads</li>
-    <li>Sunday evening — live on production, founder watching DMs roll in</li>
+    <li>Saturday AM - scoring model defined, webhook tested, n8n skeleton built</li>
+    <li>Saturday PM - HubSpot integration, Slack notifications, Sheets logging</li>
+    <li>Sunday - edge cases, error handling, missing fields, duplicate leads</li>
+    <li>Sunday evening - live on production, founder watching DMs roll in</li>
   </ul>
 
   <h2>The Result</h2>
@@ -212,12 +212,12 @@
     <div class="result-item">Lead triage time: 2 hours/day → zero</div>
     <div class="result-item">Hot leads reach founder within 60 seconds of form submission</div>
     <div class="result-item">Warm and nurture leads auto-enrolled in the right sequences</div>
-    <div class="result-item">Scoring weights adjustable via Sheets — no developer needed</div>
+    <div class="result-item">Scoring weights adjustable via Sheets - no developer needed</div>
     <div class="result-item">~44 hours/month returned to the founder</div>
   </div>
 
   <h2>Build It Yourself?</h2>
-  <p>The hardest part isn't the code — it's the scoring model. Spend an hour with whoever handles sales and nail down what signals actually predict a closed deal. Once you have that, the n8n build is straightforward.</p>
+  <p>The hardest part isn't the code - it's the scoring model. Spend an hour with whoever handles sales and nail down what signals actually predict a closed deal. Once you have that, the n8n build is straightforward.</p>
   <p>. <a href="/a/blog/how-we-built-a-lead-qualification-bot">Lead qualification</a> bots are one of our most requested projects.<a href="/a/#contact">we can build it for you</a>. Lead qualification bots are one of our most requested projects.</p>
 </div>
 

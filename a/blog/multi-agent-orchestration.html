@@ -8,9 +8,19 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<link rel="canonical" href="https://getmicroservices.com/a/blog/multi-agent-orchestration"/>
-<title>Multi-Agent Orchestration with n8n: Supervisor, Worker, Critic Patterns — getmicroservices</title>
-<meta name="description" content="How to build supervisor-worker-critic multi-agent systems in n8n that don't hallucinate or loop forever."/>
+<link rel="canonical" href="https://getmicroservices.com/blog/multi-agent-orchestration"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://getmicroservices.com/blog/multi-agent-orchestration" />
+  <meta property="og:title" content="Multi-Agent Orchestration in n8n: 3 Patterns That Work" />
+  <meta property="og:description" content="How to build supervisor, worker, and critic multi-agent systems in n8n that do not hallucinate or loop forever. Patterns, guardrails, and real examples." />
+  <meta property="og:image" content="https://getmicroservices.com/logo.jpg" />
+  <meta property="og:site_name" content="GetMicroservices" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Multi-Agent Orchestration in n8n: 3 Patterns That Work" />
+  <meta name="twitter:description" content="How to build supervisor, worker, and critic multi-agent systems in n8n that do not hallucinate or loop forever. Patterns, guardrails, and real examples." />
+  <meta name="twitter:image" content="https://getmicroservices.com/logo.jpg" />
+<title>Multi-Agent Orchestration in n8n: 3 Patterns That Work</title>
+<meta name="description" content="How to build supervisor, worker, and critic multi-agent systems in n8n that do not hallucinate or loop forever. Patterns, guardrails, and real examples."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -80,7 +90,7 @@
   <h1>Multi-Agent Orchestration with n8n: Supervisor, Worker, Critic Patterns</h1>
   <p class="post-lead">How to build supervisor-worker-critic multi-agent systems in n8n that don't hallucinate or loop forever.</p>
 
-  <p>Real-world breakdown of <strong>multi-agent orchestration with n8n: supervisor, worker, critic patterns</strong>. No fluff — just what works, based on actual client projects.</p>
+  <p>Real-world breakdown of <strong>multi-agent orchestration with n8n: supervisor, worker, critic patterns</strong>. No fluff - just what works, based on actual client projects.</p>
 
   <h2>why it matters now</h2>
   <p>The automation landscape has shifted. Tools that were niche two years ago are table stakes today. Teams not using them are leaving significant time and money on the table.</p>
@@ -89,9 +99,9 @@
   <h2>core principles</h2>
   <ul>
     <li>start with the highest-leverage repetitive task</li>
-    <li>build incrementally — one step at a time</li>
+    <li>build incrementally - one step at a time</li>
     <li>test before relying on anything in production</li>
-    <li>monitor continuously — apis change and break things</li>
+    <li>monitor continuously - apis change and break things</li>
   </ul>
 
   <h2>implementation</h2>
@@ -102,7 +112,7 @@
   <ul>
     <li>automating a broken process instead of fixing it first</li>
     <li>building edge cases before core flow works</li>
-    <li>no error handling — when it fails, you need to know</li>
+    <li>no error handling - when it fails, you need to know</li>
     <li>not documenting what you built</li>
   </ul>
 

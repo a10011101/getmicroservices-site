@@ -5,7 +5,7 @@
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>How We Built a Lead Qualification Bot in a Weekend – GetMicroservices Blog</title>
+  <title>How We Built a Lead Qualification Bot in a Weekend</title>
   <meta name="description" content="A Typeform webhook, 90 minutes of n8n work, and a scoring formula. By Monday morning, every new lead was automatically graded, routed, and sitting in the CRM."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -139,15 +139,15 @@
     <span class="meta-date">2026-03-30</span>
   </div>
   <h1>How We Built a Lead Qualification Bot in a Weekend</h1>
-  <p class="lead">A Typeform webhook, 90 minutes of n8n work, and a scoring formula. By Monday morning, every new lead was automatically graded, routed, and sitting in the CRM — without a human touching it.</p>
+  <p class="lead">A Typeform webhook, 90 minutes of n8n work, and a scoring formula. By Monday morning, every new lead was automatically graded, routed, and sitting in the CRM - without a human touching it.</p>
 </div>
 
 <div class="article-body">
   <h2>The Problem With Manual Lead <a href="/blog/ai-inbox-triage-for-busy-executives">Triage</a></h2>
-  <p>A SaaS founder was spending two hours every morning reviewing intake form submissions. Some leads were enterprise deals worth chasing hard. Others were students on free plans. The form data was all there — company size, budget range, use case — but someone had to read it, make a judgement, and route it to the right person.</p>
-  <p><strong>The information for a decision already existed. For a comprehensive approach, read <a href="/blog/how-to-automate-your-business" style="color:var(--accent);">how to automate your business</a> — the same principles apply to <a href="/blog/how-we-built-a-lead-qualification-bot">lead qualification</a> and beyond.</p>
+  <p>A SaaS founder was spending two hours every morning reviewing intake form submissions. Some leads were enterprise deals worth chasing hard. Others were students on free plans. The form data was all there - company size, budget range, use case - but someone had to read it, make a judgement, and route it to the right person.</p>
+  <p><strong>The information for a decision already existed. For a comprehensive approach, read <a href="/blog/how-to-automate-your-business" style="color:var(--accent);">how to automate your business</a> - the same principles apply to <a href="/blog/how-we-built-a-lead-qualification-bot">lead qualification</a> and beyond.</p>
   <p><strong>The information for a decision already existed. The decision itself didn't need a human.</strong></p>
-  <p> — the same principles apply to <a href="/blog/how-we-built-a-lead-qualification-bot">lead qualification</a> and beyond.<a href="/blog/how-to-automate-your-business" style="color:var(--accent);">how to automate your business</a> — the same principles apply to lead qualification and beyond.</p>
+  <p> - the same principles apply to <a href="/blog/how-we-built-a-lead-qualification-bot">lead qualification</a> and beyond.<a href="/blog/how-to-automate-your-business" style="color:var(--accent);">how to automate your business</a> - the same principles apply to lead qualification and beyond.</p>
 
   <h2>The Scoring Model</h2>
   <p>Before touching <a href="/blog/n8n-vs-zapier-2026">n8n</a>, we spent an hour with the founder defining what a "good" lead looked like. We landed on five signals, each worth a different number of points:</p>
@@ -171,15 +171,15 @@
   <div class="flow-box">
     <span class="step">Trigger:</span><a href="/blog/n8n-vs-zapier-2026">n8n</a> (JS node):<br>
     → <span class="step">n8n (JS node):</span> Parse fields, run scoring formula against config<br>
-    → <span class="step">Switch node:</span> Route by score — Hot / Warm / Nurture<br>
+    → <span class="step">Switch node:</span> Route by score - Hot / Warm / Nurture<br>
     → <span class="step">Hot path:</span> Slack DM to founder + HubSpot contact (Hot tag)<br>
     → <span class="step">Warm path:</span> Add to HubSpot sequence + Slack #warm-leads channel<br> Add to <a href="/blog/ai-inbox-triage-for-busy-executives">email</a> drip campaign + tag in HubSpot<span class="step">Nurture path:</span> Add to email drip campaign + tag in HubSpot<br>
-    → <span class="step">All paths:</span>Typeform has a native webhook option under Integrations. Tally does too, though the payload structure is slightly different — you'll need to map field IDs to readable names in the first <a href="/blog/n8n-vs-zapier-2026">n8n</a> node. We used a Set node to normalise the shape before the scoring logic so the formula works identically regardless of which form tool fires it.</div>
+    → <span class="step">All paths:</span>Typeform has a native webhook option under Integrations. Tally does too, though the payload structure is slightly different - you'll need to map field IDs to readable names in the first <a href="/blog/n8n-vs-zapier-2026">n8n</a> node. We used a Set node to normalise the shape before the scoring logic so the formula works identically regardless of which form tool fires it.</div>
 
   <h2>Plugging In the Webhook</h2>
-  <p>Typeform has a native webhook option under Integrations. Tally does too, though the payload structure is slightly different — you'll need to map field IDs to readable names in the first n8n node. We used a Set node to normalise the shape before the scoring logic so the formula works identically regardless of which form tool fires it.</p>
-  <p>The scoring JavaScript is about 25 lines. It reads weights from a Google Sheets "config" tab so the founder can adjust them without opening n8n. This was the single decision that saved the most back-and-forth later.</p>The deduplication check is two lines — check by <a href="/blog/ai-inbox-triage-for-busy-executives">email</a>, branch on exists/new.<h2>The CRM Step</h2>
-  <p>We used HubSpot's n8n node to create or update a contact, set the lead score as a custom property, and apply a tag. If the contact already existed (returning lead), the workflow updated rather than duplicated. <strong>The deduplication check is two lines — check by email, branch on exists/new.</strong> This is the step most people skip and regret.</p>
+  <p>Typeform has a native webhook option under Integrations. Tally does too, though the payload structure is slightly different - you'll need to map field IDs to readable names in the first n8n node. We used a Set node to normalise the shape before the scoring logic so the formula works identically regardless of which form tool fires it.</p>
+  <p>The scoring JavaScript is about 25 lines. It reads weights from a Google Sheets "config" tab so the founder can adjust them without opening n8n. This was the single decision that saved the most back-and-forth later.</p>The deduplication check is two lines - check by <a href="/blog/ai-inbox-triage-for-busy-executives">email</a>, branch on exists/new.<h2>The CRM Step</h2>
+  <p>We used HubSpot's n8n node to create or update a contact, set the lead score as a custom property, and apply a tag. If the contact already existed (returning lead), the workflow updated rather than duplicated. <strong>The deduplication check is two lines - check by email, branch on exists/new.</strong> This is the step most people skip and regret.</p>
 
   <h2>What We Built in a Weekend</h2>
   <ul>
@@ -196,7 +196,7 @@
       <li>Lead triage time: 2 hours/day → zero</li>
       <li>Hot leads reach founder within 60 seconds of form submission</li>
       <li>Warm and nurture leads automatically enrolled in the right sequences</li>
-      <li>Scoring weights adjustable via Sheets — no developer needed</li>
+      <li>Scoring weights adjustable via Sheets - no developer needed</li>
       <li>~44 hours/month returned to the founder</li>
     </ul>
   </div>

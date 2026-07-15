@@ -10,8 +10,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Automating Invoice Chasing: How One Freelancer Recovered £8,000 in Late Payments – GetMicroservices Blog</title>
-  <meta name="description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks — without a single uncomfortable phone call."/>
+  <title>Invoice Chasing Automation That Recovered £8,000</title>
+  <meta name="description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks - without a single uncomfortable phone call."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -72,19 +72,19 @@
   </style>
 
   <meta property="og:title" content="Automating Invoice Chasing: How One Freelancer Recovered £8,000 in Late Payments – GetMicroservices Blog"/>
-  <meta property="og:description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks — without a single uncomfortable phone call."/>
+  <meta property="og:description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks - without a single uncomfortable phone call."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/blog/automating-invoice-chasing-recovered-8000"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:title" content="Automating Invoice Chasing: How One Freelancer Recovered £8,000 in Late Payments – GetMicroservices Blog"/>
-  <meta name="twitter:description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks — without a single uncomfortable phone call."/>
+  <meta name="twitter:description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks - without a single uncomfortable phone call."/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "Automating Invoice Chasing: How One Freelancer Recovered £8,000 in Late Payments – GetMicroservices Blog",
-  "description": "Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks — without a single uncomfortable phone call.",
+  "description": "Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks - without a single uncomfortable phone call.",
   "datePublished": "2026-03-26",
   "publisher": {
     "@type": "Organization",
@@ -141,17 +141,17 @@
     <span class="meta-date">2026-03-26</span>
   </div>
   <h1>Automating Invoice Chasing: How One Freelancer Recovered £8,000 in Late Payments</h1>
-  <p class="lead">A freelance designer had £8,000 sitting in overdue invoices. She knew chasing was necessary, but the awkwardness was making her avoid it. We built a system that did it for her — professionally, persistently, and automatically.</p>
+  <p class="lead">A freelance designer had £8,000 sitting in overdue invoices. She knew chasing was necessary, but the awkwardness was making her avoid it. We built a system that did it for her - professionally, persistently, and automatically.</p>
 </div>
 
 <div class="article-body">
   <h2>The Problem With Manual Chasing</h2>
-  <p>Most freelancers have the same issue: the <a href="/blog/automate-invoice-processing">invoice</a>Our client had six overdue <a href="/blog/automate-invoice-processing">invoice</a>s ranging from £400 to £2,200. For a broader look at keeping your systems connected, see </p>automated <a href="/blog/automate-invoice-processing">invoice</a> chasing at scale<p>Our client had six overdue invoices ranging from £400 to £2,200. For a broader look at keeping your systems connected, see <a href="/blog/why-your-crm-and-stripe-dont-talk" style="color:var(--accent);">why your CRM and Stripe don’t talk</a> and how to fix it. We also built a full-scale version for a 50-client agency — read about <a href="/blog/how-we-automated-invoice-chasing" style="color:var(--accent);">automated invoice chasing at scale</a>. For a broader look at keeping your systems connected, read our post on <a href="/blog/why-your-crm-and-stripe-dont-talk" style="color:var(--accent);">why your CRM and Stripe don’t talk</a> and how to fix it. The oldest was 94 days old. She'd sent one follow-up email to each client and then avoided it. <strong>Total outstanding: £8,340.</strong></p>
+  <p>Most freelancers have the same issue: the <a href="/blog/automate-invoice-processing">invoice</a>Our client had six overdue <a href="/blog/automate-invoice-processing">invoice</a>s ranging from £400 to £2,200. For a broader look at keeping your systems connected, see </p>automated <a href="/blog/automate-invoice-processing">invoice</a> chasing at scale<p>Our client had six overdue invoices ranging from £400 to £2,200. For a broader look at keeping your systems connected, see <a href="/blog/why-your-crm-and-stripe-dont-talk" style="color:var(--accent);">why your CRM and Stripe don’t talk</a> and how to fix it. We also built a full-scale version for a 50-client agency - read about <a href="/blog/how-we-automated-invoice-chasing" style="color:var(--accent);">automated invoice chasing at scale</a>. For a broader look at keeping your systems connected, read our post on <a href="/blog/why-your-crm-and-stripe-dont-talk" style="color:var(--accent);">why your CRM and Stripe don’t talk</a> and how to fix it. The oldest was 94 days old. She'd sent one follow-up email to each client and then avoided it. <strong>Total outstanding: £8,340.</strong></p>
 
   <h2>The System We Built</h2>
   <p>We used <a href="/blog/n8n-vs-zapier-2026">n8n</a> connected to Stripe (her billing tool) and Gmail. The workflow runs every morning, checks Stripe for unpaid invoices past their due date, and sends escalating reminder emails based on how overdue the invoice is.</p>
 
-  <div class="flow-box"> <a href="/blog/n8n-vs-zapier-2026">n8n</a> Cron — runs daily at 08:00<span class="step">Trigger:</span> n8n Cron — runs daily at 08:00<br><a href="/blog/n8n-vs-zapier-2026">n8n</a> Function:<span class="step">Stripe:</span> List all invoices with status = 'open' + due_date &lt; today<br>
+  <div class="flow-box"> <a href="/blog/n8n-vs-zapier-2026">n8n</a> Cron - runs daily at 08:00<span class="step">Trigger:</span> n8n Cron - runs daily at 08:00<br><a href="/blog/n8n-vs-zapier-2026">n8n</a> Function:<span class="step">Stripe:</span> List all invoices with status = 'open' + due_date &lt; today<br>
     → <span class="step">n8n Function:</span> Calculate days overdue, assign escalation tier<br>
     → <span class="step">n8n IF node:</span> Route by tier (7d / 14d / 30d / 45d+)<br>
     → <span class="step">Gmail:</span> Send personalised email for that tier<br>
@@ -162,7 +162,7 @@
   <p>This is where the real work was. We wrote four email templates that escalate in tone without ever becoming hostile:</p>
   <ul>
     <li><strong>Tier 1 (7–13 days overdue):</strong> Friendly nudge. "Just checking this didn't get lost in your inbox."</li>
-    <li><strong>Tier 2 (14–29 days overdue):</strong> Polite but clear. "Invoice #123 is now 14 days past due — please let me know if there's an issue."</li>
+    <li><strong>Tier 2 (14–29 days overdue):</strong> Polite but clear. "Invoice #123 is now 14 days past due - please let me know if there's an issue."</li>
     <li><strong>Tier 3 (30–44 days overdue):</strong> Firm. "This invoice is now significantly overdue. Please action by Friday or contact me to arrange payment."</li>
     <li><strong>Tier 4 (45+ days overdue):</strong> Final notice tone. References potential escalation to a collections process.</li>
   </ul>
@@ -173,26 +173,26 @@
   </div>
 
   <h2>What Happened</h2>
-  <p>Within the first week, three of the six overdue clients paid. Two of them responded to the Tier 1 nudge — they'd genuinely forgotten. One responded to the Tier 2 email with an apology and same-day payment. The remaining three needed Tier 3 messages before responding.</p>
-  <p>The £2,200 oldest invoice (94 days) took a Tier 4 message and a manual follow-up call she made herself — but the automated escalation created the urgency that made her finally pick up the phone.</p>
+  <p>Within the first week, three of the six overdue clients paid. Two of them responded to the Tier 1 nudge - they'd genuinely forgotten. One responded to the Tier 2 email with an apology and same-day payment. The remaining three needed Tier 3 messages before responding.</p>
+  <p>The £2,200 oldest invoice (94 days) took a Tier 4 message and a manual follow-up call she made herself - but the automated escalation created the urgency that made her finally pick up the phone.</p>
 
   <div class="result-box">
-    <div class="result-title">// outcome — 6 weeks post-launch</div>
+    <div class="result-title">// outcome - 6 weeks post-launch</div>
     <ul>
       <li>£8,340 in outstanding invoices recovered</li>
       <li>Zero awkward manual chasing emails written</li>
       <li>Average days-to-payment dropped from 52 → 18</li>
-      <li>System still running — catches new overdue invoices automatically</li>
+      <li>System still running - catches new overdue invoices automatically</li>
       <li>Time saved: ~3 hours/month on invoice admin</li>
     </ul>
   </div>
 
   <h2>The Technical Nuances</h2>
-  <p>Stripe's invoice API is well-documented but has a few gotchas. The <code style="font-family:'Fira Code',monospace;background:var(--bg3);padding:2px 6px;">due_date</code> field is only populated if you set payment terms explicitly — if you use Stripe's default, invoices may not have a due_date at all. We handled this by falling back to <code style="font-family:'Fira Code',monospace;background:var(--bg3);padding:2px 6px;">created + 30 days</code> when due_date is null.</p>
+  <p>Stripe's invoice API is well-documented but has a few gotchas. The <code style="font-family:'Fira Code',monospace;background:var(--bg3);padding:2px 6px;">due_date</code> field is only populated if you set payment terms explicitly - if you use Stripe's default, invoices may not have a due_date at all. We handled this by falling back to <code style="font-family:'Fira Code',monospace;background:var(--bg3);padding:2px 6px;">created + 30 days</code> when due_date is null.</p>
   <p>The Gmail node needed OAuth setup, which is straightforward but requires a Google Cloud project. The whole system was running in under a day. Ongoing maintenance: essentially zero.</p>
 
   <h2>Can You Build This?</h2>
-  <p>If you're comfortable with n8n and the Stripe API, yes — this is a solid weekend project. The email templates take the most thought. If you'd rather not spend the weekend on it, <a href="/" style="color:var(--accent);">we build this kind of system for a fixed price</a>, and it typically pays for itself within the first recovered invoice.</p>
+  <p>If you're comfortable with n8n and the Stripe API, yes - this is a solid weekend project. The email templates take the most thought. If you'd rather not spend the weekend on it, <a href="/" style="color:var(--accent);">we build this kind of system for a fixed price</a>, and it typically pays for itself within the first recovered invoice.</p>
 </div>
 
 <footer>

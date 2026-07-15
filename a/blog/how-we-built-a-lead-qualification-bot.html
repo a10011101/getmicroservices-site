@@ -10,8 +10,8 @@
 <meta name="robots" content="noindex, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/how-we-built-a-lead-qualification-bot"/>
-<title>How We Built a Lead Qualification Bot That Books Calls Automatically — getmicroservices</title>
-<meta name="description" content="A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies leads first — saving 5+ hours of wasted calls per week."/>
+<title>A Lead Qualification Bot That Books Calls on Autopilot</title>
+<meta name="description" content="Stop wasting calls on bad-fit leads. We built an n8n lead qualification bot that scores prospects and only books the good ones - saving 5+ hours a week."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -205,20 +205,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <meta property="og:title" content="How We Built a Lead Qualification Bot That Books Calls Automatically — getmicroservices"/>
-  <meta property="og:description" content="A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies leads first — saving 5+ hours of wasted calls per week."/>
+  <meta property="og:title" content="How We Built a Lead Qualification Bot That Books Calls Automatically - getmicroservices"/>
+  <meta property="og:description" content="A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies leads first - saving 5+ hours of wasted calls per week."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/a/blog/how-we-built-a-lead-qualification-bot"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="How We Built a Lead Qualification Bot That Books Calls Automatically — getmicroservices"/>
-  <meta name="twitter:description" content="A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies leads first — saving 5+ hours of wasted calls per week."/>
+  <meta name="twitter:title" content="How We Built a Lead Qualification Bot That Books Calls Automatically - getmicroservices"/>
+  <meta name="twitter:description" content="A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies leads first - saving 5+ hours of wasted calls per week."/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "How We Built a Lead Qualification Bot That Books Calls Automatically — getmicroservices",
-  "description": "A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies leads first — saving 5+ hours of wasted calls per week.",
+  "headline": "How We Built a Lead Qualification Bot That Books Calls Automatically - getmicroservices",
+  "description": "A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies leads first - saving 5+ hours of wasted calls per week.",
   "datePublished": "2026-04-09",
   "publisher": {
     "@type": "Organization",
@@ -247,7 +247,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "How We Built a Lead Qualification Bot That Books Calls Automatically — getmicroservices",
+      "name": "How We Built a Lead Qualification Bot That Books Calls Automatically - getmicroservices",
       "item": "https://getmicroservices.com/a/blog/how-we-built-a-lead-qualification-bot"
     }
   ]
@@ -289,18 +289,18 @@
     <span>Mar 29, 2026</span>
     <span>5 min read</span>
   </div>
-  <p class="post-lead">A B2B agency was jumping on discovery calls with whoever filled out their contact form — qualified or not. We built a bot that asks the right questions first, scores the lead, and only books a Calendly call if it's worth anyone's time.</p>
+  <p class="post-lead">A B2B agency was jumping on discovery calls with whoever filled out their contact form - qualified or not. We built a bot that asks the right questions first, scores the lead, and only books a Calendly call if it's worth anyone's time.</p>
 
   <h2>The problem</h2>
-  <p>Marko runs a B2B agency offering done-for-you marketing services. His website contact form was working — leads were coming in. The problem was what happened next.</p>
+  <p>Marko runs a B2B agency offering done-for-you marketing services. His website contact form was working - leads were coming in. The problem was what happened next.</p>
   <p>Every form submission triggered a manual 30-minute discovery call. No pre-screening, no filters. A solo founder with a $500 budget got the same slot as a funded startup ready to spend $5k/month. <strong>Marko was burning 6–8 hours a week on calls that went nowhere.</strong></p>
-  <p>He'd tried adding a budget field to the form. People either skipped it or lied. What he needed wasn't a better form — he needed a conversation that felt human enough to get honest answers, but automated enough to run without him.</p>
+  <p>He'd tried adding a budget field to the form. People either skipped it or lied. What he needed wasn't a better form - he needed a conversation that felt human enough to get honest answers, but automated enough to run without him.</p>
 
   <h2>What we built</h2>
   <p>We built a qualification bot using n8n and the Telegram Bot API, triggered the moment a lead submits the contact form. Here's the full flow:</p>
 
   <div class="flow-card">
-    <div class="flow-label">lead qualification automation — B2B agency</div>
+    <div class="flow-label">lead qualification automation - B2B agency</div>
     <div class="flow-nodes">
       <div class="flow-node">
         <div class="node-box"><span class="node-icon">📋</span><div><div class="node-name">Contact Form</div><div class="node-type">Lead submits</div></div></div>
@@ -325,12 +325,12 @@
     <div class="flow-result">↳ Only qualified leads reach Marko's calendar. Everyone else enters a nurture sequence automatically.</div>
   </div>
 
-  <p>The bot sends a short Telegram message to the lead within 60 seconds of form submission — while their interest is still hot. It asks four questions: company size, current monthly marketing spend, main challenge, and timeline to start. Conversational, not interrogative.</p>
-  <p>Each answer feeds a simple scoring model. Leads above the threshold get a Calendly link and a warm message. Leads below the threshold get a polished "not quite yet" email that keeps the door open without wasting Marko's time. Marko gets a Slack ping either way — a brief summary of the lead and their score.</p>
+  <p>The bot sends a short Telegram message to the lead within 60 seconds of form submission - while their interest is still hot. It asks four questions: company size, current monthly marketing spend, main challenge, and timeline to start. Conversational, not interrogative.</p>
+  <p>Each answer feeds a simple scoring model. Leads above the threshold get a Calendly link and a warm message. Leads below the threshold get a polished "not quite yet" email that keeps the door open without wasting Marko's time. Marko gets a Slack ping either way - a brief summary of the lead and their score.</p>
 
   <h2>The build</h2>
-  <p>The stack was deliberately simple: <strong>n8n</strong> as the workflow engine, the <strong>Telegram Bot API</strong> for the conversation layer, and the <strong>Calendly API</strong> to generate one-time booking links on the fly. No custom backend, no database — everything routes through n8n's built-in data handling.</p>
-  <p>We self-hosted n8n on a $6/month VPS. Marko owns the full workflow and can adjust the scoring thresholds himself — we documented it clearly enough that he doesn't need us for tuning.</p>
+  <p>The stack was deliberately simple: <strong>n8n</strong> as the workflow engine, the <strong>Telegram Bot API</strong> for the conversation layer, and the <strong>Calendly API</strong> to generate one-time booking links on the fly. No custom backend, no database - everything routes through n8n's built-in data handling.</p>
+  <p>We self-hosted n8n on a $6/month VPS. Marko owns the full workflow and can adjust the scoring thresholds himself - we documented it clearly enough that he doesn't need us for tuning.</p>
   <p>The qualifying questions were the part that took the most thought. We went through three iterations before landing on four questions that felt natural to answer and gave enough signal to score reliably. The tech was the easy part.</p>
   <p><strong>Total build time: 2.5 days.</strong> Day 1: webhook → Telegram flow + question sequence. Day 2: scoring logic, Calendly integration, Slack notifications. Half of day 3: testing with real form submissions and refining edge cases.</p>
 
@@ -339,12 +339,12 @@
   <div class="result-box">
     <div class="result-title">after 4 weeks</div>
     <div class="result-item">5+ hours of unqualified discovery calls eliminated every week</div>
-    <div class="result-item">Close rate on booked calls jumped from 22% to 41% — only real fits getting through</div>
+    <div class="result-item">Close rate on booked calls jumped from 22% to 41% - only real fits getting through</div>
     <div class="result-item">Lead response time dropped from 4–6 hours to under 60 seconds</div>
     <div class="result-item">Marko's first message: "I had my first zero-call Monday in two years"</div>
   </div>
 
-  <p>The unqualified leads don't disappear — they go into a nurture sequence that re-engages them when their situation changes. Two leads who scored below threshold in week one became paying clients six weeks later.</p>
+  <p>The unqualified leads don't disappear - they go into a nurture sequence that re-engages them when their situation changes. Two leads who scored below threshold in week one became paying clients six weeks later.</p>
   <p>The project was $490. Marko was spending roughly that in billable hours every week on dead-end calls. Week one paid for it.</p>
 
   <div class="post-cta">

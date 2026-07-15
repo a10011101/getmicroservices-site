@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How We Automated Invoice Chasing for a 50-Client Agency – GetMicroservices Blog</title>
+  <title>How We Automated Invoice Chasing for a 50-Client Agency</title>
   <meta name="description" content="Automate invoice chasing with n8n. We built a workflow that detects overdue invoices, sends personalised chase emails, and recovered 15% more revenue in month one." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -174,19 +174,19 @@
   </style>
 
   <meta property="og:title" content="How We Automated Invoice Chasing for a 50-Client Agency – GetMicroservices Blog"/>
-  <meta property="og:description" content="An agency owner was manually emailing overdue invoices every week — 3-4 hours every Friday. We automated detection, personalised chase emails, and Slack alerts. 15% revenue recovered in month one."/>
+  <meta property="og:description" content="An agency owner was manually emailing overdue invoices every week - 3-4 hours every Friday. We automated detection, personalised chase emails, and Slack alerts. 15% revenue recovered in month one."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/blog/how-we-automated-invoice-chasing"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:title" content="How We Automated Invoice Chasing for a 50-Client Agency – GetMicroservices Blog"/>
-  <meta name="twitter:description" content="An agency owner was manually emailing overdue invoices every week — 3-4 hours every Friday. We automated detection, personalised chase emails, and Slack alerts. 15% revenue recovered in month one."/>
+  <meta name="twitter:description" content="An agency owner was manually emailing overdue invoices every week - 3-4 hours every Friday. We automated detection, personalised chase emails, and Slack alerts. 15% revenue recovered in month one."/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "How We Automated Invoice Chasing for a 50-Client Agency – GetMicroservices Blog",
-  "description": "An agency owner was manually emailing overdue invoices every week — 3-4 hours every Friday. We automated detection, personalised chase emails, and Slack alerts. 15% revenue recovered in month one.",
+  "description": "An agency owner was manually emailing overdue invoices every week - 3-4 hours every Friday. We automated detection, personalised chase emails, and Slack alerts. 15% revenue recovered in month one.",
   "datePublished": "2026-04-09",
   "publisher": {
     "@type": "Organization",
@@ -253,22 +253,22 @@
     <span class="meta-readtime">5 min read</span>
   </div>
   <h1>How We Automated Invoice Chasing for a 50-Client Agency</h1>
-  <p class="lead">Every Friday for years, an agency owner spent 3–4 hours writing overdue invoice emails by hand. We built an n8n workflow that detects overdue invoices, sends personalised chase emails via Gmail, and fires a Slack alert — automatically. Fifteen percent of overdue revenue recovered in the first month.</p>
+  <p class="lead">Every Friday for years, an agency owner spent 3–4 hours writing overdue invoice emails by hand. We built an n8n workflow that detects overdue invoices, sends personalised chase emails via Gmail, and fires a Slack alert - automatically. Fifteen percent of overdue revenue recovered in the first month.</p>
 </div>
 
 <!-- ARTICLE BODY -->
 <article class="article-body">
 
   <h2>The Problem</h2>
-  <p>James runs a digital marketing agency with around 50 active clients at any given time. Invoicing was fine — he had a system. Chasing was not. Every Friday afternoon he would open a spreadsheet, filter for unpaid <a href="/blog/automate-invoice-processing">recovered £8,000 in unpaid <a href="/blog/automate-invoice-processing">invoice</a>s</a>"Friday was basically ruined," he told us. "Three, sometimes four hours just writing the same emails. 'Hi [Name], just following up on <a href="/blog/automate-invoice-processing">invoice</a> #123...' I'd been doing it for three years."<a href="/blog/automating-invoice-chasing-recovered-8000" style="color:var(--accent);">recovered £8,000 in unpaid invoices</a> for a freelancer using the same approach.</p>
+  <p>James runs a digital marketing agency with around 50 active clients at any given time. Invoicing was fine - he had a system. Chasing was not. Every Friday afternoon he would open a spreadsheet, filter for unpaid <a href="/blog/automate-invoice-processing">recovered £8,000 in unpaid <a href="/blog/automate-invoice-processing">invoice</a>s</a>"Friday was basically ruined," he told us. "Three, sometimes four hours just writing the same emails. 'Hi [Name], just following up on <a href="/blog/automate-invoice-processing">invoice</a> #123...' I'd been doing it for three years."<a href="/blog/automating-invoice-chasing-recovered-8000" style="color:var(--accent);">recovered £8,000 in unpaid invoices</a> for a freelancer using the same approach.</p>
   <p>"Friday was basically ruined," he told us. "Three, sometimes four hours just writing the same emails. 'Hi [Name], just following up on invoice #123...' I'd been doing it for three years."</p>
-  <p>Beyond the time loss, there were real <a href="/blog/automation-agency-revenue">revenue</a> consequences. Invoices that slipped past the first Friday chase sometimes didn't get followed up again for two or three weeks — by which point clients had moved on mentally and the money felt harder to collect. <strong>His average debtor days had crept up to 47.</strong> A similar logic applies to CRM systems that need syncing — see <a href="/blog/why-your-crm-and-stripe-dont-talk" style="color:var(--accent);">why your CRM and Stripe don’t talk</a> for a related integration case study.</p>
+  <p>Beyond the time loss, there were real <a href="/blog/automation-agency-revenue">revenue</a> consequences. Invoices that slipped past the first Friday chase sometimes didn't get followed up again for two or three weeks - by which point clients had moved on mentally and the money felt harder to collect. <strong>His average debtor days had crept up to 47.</strong> A similar logic applies to CRM systems that need syncing - see <a href="/blog/why-your-crm-and-stripe-dont-talk" style="color:var(--accent);">why your CRM and Stripe don’t talk</a> for a related integration case study.</p>
 
   <h2>What He Actually Needed</h2>
   <p>After a quick call, the brief was straightforward. James needed three things:</p>
   <ul>
     <li>Automatic detection of overdue invoices from his existing invoice system</li>
-    <li>Personalised chase emails sent via Gmail — not a generic template, something that felt like it came from him</li>
+    <li>Personalised chase emails sent via Gmail - not a generic template, something that felt like it came from him</li>
     <li>A Slack alert so he could see what had been sent without logging in anywhere</li>
   </ul>
   <p>He wasn't looking for a new invoicing tool or an accounts receivable platform with a £200/month price tag. He wanted his existing setup to just… do the work it wasn't doing. <a href="/blog/n8n-vs-zapier-2026">n8n</a> was the right tool for this: it connects to any API, runs on a schedule, and doesn't require building anything from scratch.</p>
@@ -276,8 +276,8 @@
   <h2>What We Built</h2>
   <p>Here's the full <a href="/blog/n8n-business-processes">workflow</a> we shipped:</p>
 
-  <!-- WORKFLOW DIAGRAM -->invoice chasing automation workflow — <a href="/blog/n8n-vs-zapier-2026">n8n</a> + Gmail + Slack<div class="workflow-diagram">
-    <div class="workflow-label">invoice chasing automation workflow — n8n + Gmail + Slack</div>
+  <!-- WORKFLOW DIAGRAM -->invoice chasing automation workflow - <a href="/blog/n8n-vs-zapier-2026">n8n</a> + Gmail + Slack<div class="workflow-diagram">
+    <div class="workflow-label">invoice chasing automation workflow - n8n + Gmail + Slack</div>
     <div class="workflow-nodes">
       <div class="wf-node">
         <div class="wf-box"><span class="wf-icon">🧾</span><div><div class="wf-name">Invoice System</div><div class="wf-type">Data source</div></div></div>
@@ -306,30 +306,30 @@
     <div class="workflow-result">↳ Runs automatically Monday + Thursday → checks every unpaid invoice → sends personalised email → posts Slack summary</div>
   </div>
 
-  <p>The workflow fires twice a week — Monday morning and Thursday afternoon. It pulls the full list of open invoices from his invoice system via API, filters for anything more than 7 days past due, and segments by how long overdue: 7–14 days gets a polite nudge, 15–30 days gets a firmer reminder, and 30+ days triggers a different template that flags the invoice as requiring urgent attention.</p>
-  <p>The email generator node personalises each message using the client name, invoice number, amount, and due date pulled live from the API. The tone matches what James would have written himself — we built the templates from a dozen of his actual chase emails, so the voice is consistent. Clients don't know it's automated.</p>
+  <p>The workflow fires twice a week - Monday morning and Thursday afternoon. It pulls the full list of open invoices from his invoice system via API, filters for anything more than 7 days past due, and segments by how long overdue: 7–14 days gets a polite nudge, 15–30 days gets a firmer reminder, and 30+ days triggers a different template that flags the invoice as requiring urgent attention.</p>
+  <p>The email generator node personalises each message using the client name, invoice number, amount, and due date pulled live from the API. The tone matches what James would have written himself - we built the templates from a dozen of his actual chase emails, so the voice is consistent. Clients don't know it's automated.</p>
   <p>After each send batch, a Slack message drops into the <code>#invoices</code> channel with a quick summary: how many chases went out, total value outstanding, and any invoice that's been chased more than three times (flagged for a personal call). James can see the whole picture in 10 seconds every Monday morning instead of spending Friday afternoon buried in email.</p>
   <p>The build took about two and a half days. One day setting up the API connections and n8n flow, one day on email template logic and personalisation, half a day testing edge cases with real invoice data.</p>
 
   <h2>The Result</h2>
 
   <div class="result-box">
-    <div class="result-label">// measured results — 4 weeks post-launch</div>
+    <div class="result-label">// measured results - 4 weeks post-launch</div>
     <ul>
-      <li>3–4 hours every Friday reclaimed — James now spends under 10 minutes reviewing the Slack digest</li>
+      <li>3–4 hours every Friday reclaimed - James now spends under 10 minutes reviewing the Slack digest</li>
       <li>15% of previously-overdue revenue collected in the first month</li>
       <li>Average debtor days dropped from 47 to 31</li>
-      <li>Chase frequency increased from once a week to twice — without any extra effort</li>
-      <li>No monthly SaaS fee — just the n8n instance already in use ($12/mo VPS)</li>
+      <li>Chase frequency increased from once a week to twice - without any extra effort</li>
+      <li>No monthly SaaS fee - just the n8n instance already in use ($12/mo VPS)</li>
     </ul>
   </div>
 
-  <p>The 15% figure surprised James. "I assumed most of those invoices would come in eventually," he said. "But some of them were genuinely just… waiting for someone to ask. Clients aren't sitting there thinking about our invoice — they're thinking about their own stuff. A polite email at the right time is all it takes."</p>
-  <p>The other thing worth noting: the consistency matters. Manual chasing is inconsistent by nature — some Fridays he had time, some he didn't. The automation runs at exactly the same time, every week, regardless of what else is happening. That regularity on its own seems to have changed how clients perceive the invoicing process.</p>
+  <p>The 15% figure surprised James. "I assumed most of those invoices would come in eventually," he said. "But some of them were genuinely just… waiting for someone to ask. Clients aren't sitting there thinking about our invoice - they're thinking about their own stuff. A polite email at the right time is all it takes."</p>
+  <p>The other thing worth noting: the consistency matters. Manual chasing is inconsistent by nature - some Fridays he had time, some he didn't. The automation runs at exactly the same time, every week, regardless of what else is happening. That regularity on its own seems to have changed how clients perceive the invoicing process.</p>
 
   <h2>What This Actually Cost</h2>
-  <p>This was a focused, single-workflow build — scoped under our Starter plan. James paid a fixed price, received the full n8n workflow exported and documented, and has been running it independently since day one. No ongoing fees to us, no retainer, no black box.</p>
-  <p>If your business has a similar problem — revenue sitting uncollected because nobody has time to chase it — <a href="/" style="color: var(--accent);">get in touch</a>. The call is free and we'll tell you honestly whether automation is the right move.</p>
+  <p>This was a focused, single-workflow build - scoped under our Starter plan. James paid a fixed price, received the full n8n workflow exported and documented, and has been running it independently since day one. No ongoing fees to us, no retainer, no black box.</p>
+  <p>If your business has a similar problem - revenue sitting uncollected because nobody has time to chase it - <a href="/" style="color: var(--accent);">get in touch</a>. The call is free and we'll tell you honestly whether automation is the right move.</p>
 
 
     <div class="further-reading pixel-box" style="margin-top:2.5rem; padding:1.5rem 2rem;">

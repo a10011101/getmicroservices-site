@@ -9,8 +9,18 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/chatgpt-api-automation"/>
-<title>Using ChatGPT API in Your Automation Workflows — getmicroservices</title>
-<meta name="description" content="How to integrate the ChatGPT API with n8n to build AI-powered automations — content generation, email drafting, data enrichment, and customer support triage."/>
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://getmicroservices.com/blog/chatgpt-api-automation" />
+  <meta property="og:title" content="Using ChatGPT API in Your Automation Workflows" />
+  <meta property="og:description" content="How to integrate the ChatGPT API with n8n to build AI-powered automations - content generation, email drafting, data enrichment, and customer support triage." />
+  <meta property="og:image" content="https://getmicroservices.com/logo.jpg" />
+  <meta property="og:site_name" content="GetMicroservices" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Using ChatGPT API in Your Automation Workflows" />
+  <meta name="twitter:description" content="How to integrate the ChatGPT API with n8n to build AI-powered automations - content generation, email drafting, data enrichment, and customer support triage." />
+  <meta name="twitter:image" content="https://getmicroservices.com/logo.jpg" />
+<title>Using ChatGPT API in Your Automation Workflows</title>
+<meta name="description" content="How to integrate the ChatGPT API with n8n to build AI-powered automations - content generation, email drafting, data enrichment, and customer support triage."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -113,9 +123,9 @@
   <h1>Using ChatGPT API in Your Automation Workflows</h1>
   <p class="post-lead">The ChatGPT API turns your automation from a rule-based machine into something that can think, write, and summarise. Here's how to wire it into n8n and what you can build with it.</p>
 
-  <p>Automation tools are great at moving data from A to B. But they struggle when the task needs judgement, interpretation, or creativity — the kind of thing humans do naturally. That's where the ChatGPT API changes everything.</p>
+  <p>Automation tools are great at moving data from A to B. But they struggle when the task needs judgement, interpretation, or creativity - the kind of thing humans do naturally. That's where the ChatGPT API changes everything.</p>
 
-  <p>Connect it to n8n and your automations stop being simple "if this then that" pipelines. They become systems that can <strong>read an <a href="/a/blog/ai-inbox-triage-for-busy-executives">email</a>, understand what it means, and draft a response</strong> — all without a human in the loop.</p>
+  <p>Connect it to n8n and your automations stop being simple "if this then that" pipelines. They become systems that can <strong>read an <a href="/a/blog/ai-inbox-triage-for-busy-executives">email</a>, understand what it means, and draft a response</strong> - all without a human in the loop.</p>
 
   <p>If you're already running n8n, you're minutes away from adding AI capabilities. This guide covers practical setups we've deployed for clients, the cost implications, and the gotchas you'll hit along the way.</p>
 
@@ -124,11 +134,11 @@
   <p>The web chat is great for one-off questions. The API is built for automation. Here's what you get with the API that you can't do in the chat:</p>
 
   <ul>
-    <li><strong>programmatic access</strong> — your n8n workflow sends prompts and gets responses, fully automated</li>
-    <li><strong>system prompts</strong> — set the tone, format, and constraints once, then every call follows the same rules</li>
-    <li><strong>streaming</strong> — receive tokens as they're generated, useful for real-time applications</li>
-    <li><strong>function calling</strong> — let the model trigger actions in your system based on what it decides</li>
-    <li><strong>cost control</strong> — choose models by price point (GPT-4o for quality, GPT-4o-mini for volume)</li>
+    <li><strong>programmatic access</strong> - your n8n workflow sends prompts and gets responses, fully automated</li>
+    <li><strong>system prompts</strong> - set the tone, format, and constraints once, then every call follows the same rules</li>
+    <li><strong>streaming</strong> - receive tokens as they're generated, useful for real-time applications</li>
+    <li><strong>function calling</strong> - let the model trigger actions in your system based on what it decides</li>
+    <li><strong>cost control</strong> - choose models by price point (GPT-4o for quality, GPT-4o-mini for volume)</li>
   </ul>
 
   <p>If you're already experimenting with <a href="/a/blog/ai-agents-small-business">AI agents for your business</a>, the ChatGPT API is the engine that makes them capable beyond simple keyword matching.</p>
@@ -154,12 +164,12 @@
 }
 </pre>
 
-  <p>The <code>system</code> message sets the behaviour. The <code>user</code> message is where you inject dynamic content using n8n expressions. The response comes back as JSON — extract <code>choices[0].message.content</code> to get the generated text.</p>
+  <p>The <code>system</code> message sets the behaviour. The <code>user</code> message is where you inject dynamic content using n8n expressions. The response comes back as JSON - extract <code>choices[0].message.content</code> to get the generated text.</p>
 
   <h3>step 3: process the response</h3>
-  <p>. From there, you can feed it into any other n8n node — <a href="/a/blog/ai-inbox-triage-for-busy-executives">email</a>, Notion, Slack, whatever your workflow needs.<code>$.choices[0].message.content</code>. From there, you can feed it into any other n8n node — email, Notion, Slack, whatever your workflow needs.</p>
+  <p>. From there, you can feed it into any other n8n node - <a href="/a/blog/ai-inbox-triage-for-busy-executives">email</a>, Notion, Slack, whatever your workflow needs.<code>$.choices[0].message.content</code>. From there, you can feed it into any other n8n node - email, Notion, Slack, whatever your workflow needs.</p>
 
-  <p>For a deeper dive into how n8n handles HTTP calls and webhooks, check our <a href="/a/blog/webhook-explained">webhooks explained guide</a> — the same patterns apply here.</p>
+  <p>For a deeper dive into how n8n handles HTTP calls and webhooks, check our <a href="/a/blog/webhook-explained">webhooks explained guide</a> - the same patterns apply here.</p>
 
   <h2>1. automated <a href="/a/blog/ai-inbox-triage-for-busy-executives">email</a> response drafting</h2>
 
@@ -167,7 +177,7 @@
 
   <h3>1. automated email response drafting</h3>
 
-  <p>A support inbox gets 50-100 emails a day. Instead of having a human draft every reply, this workflow reads each new email, summarises the issue, and drafts a response — with the human just reviewing and hitting send.</p>
+  <p>A support inbox gets 50-100 emails a day. Instead of having a human draft every reply, this workflow reads each new email, summarises the issue, and drafts a response - with the human just reviewing and hitting send.</p>
 
   <p><strong>the workflow:</strong> Gmail trigger picks up new emails → ChatGPT API generates a response based on the email body and your company's support guidelines → the draft is written to a Google Doc for human review → a Slack notification alerts the team.</p>
 
@@ -175,15 +185,15 @@
 
   <h3>2. content brief generation from competitor urls</h3>
 
-  <p>Content teams need briefs. This workflow takes a competitor's blog post URL, scrapes the content, and uses ChatGPT to generate a content brief for your own version — including angle, outline, key points to cover, and SEO gaps.</p>
+  <p>Content teams need briefs. This workflow takes a competitor's blog post URL, scrapes the content, and uses ChatGPT to generate a content brief for your own version - including angle, outline, key points to cover, and SEO gaps.</p>
 
   <p><strong>the workflow:</strong> A Google Sheet row with a URL → n8n fetches the page content → ChatGPT API analyses the content and generates a structured brief → the brief is written back to the Sheet in new columns.</p>
 
-  <p>If you're running a content engine, this pairs well with an <a href="/a/blog/ai-content-workflow">AI content workflow</a> — generate briefs at scale, then hand them off to writers or an automated drafting pipeline.</p>
+  <p>If you're running a content engine, this pairs well with an <a href="/a/blog/ai-content-workflow">AI content workflow</a> - generate briefs at scale, then hand them off to writers or an automated drafting pipeline.</p>
 
   <h3>3. lead enrichment from free-form text</h3>
 
-  <p>Your lead form has a "tell us about your project" field. It's free text — unstructured, full of context, hard to parse. ChatGPT can extract structured data from it.</p>
+  <p>Your lead form has a "tell us about your project" field. It's free text - unstructured, full of context, hard to parse. ChatGPT can extract structured data from it.</p>
 
   <p><strong>the workflow:</strong> Typeform or Webflow form submission → ChatGPT API receives the free-text field plus a system prompt that says "extract: company size, budget range, timeline, pain points. Return as JSON" → n8n parses the JSON response → a new entry is created in your CRM with structured fields.</p>
 
@@ -203,24 +213,24 @@
 
   <p><strong>the workflow:</strong> A webhook fires when a new page is published → n8n receives the page URL and content → ChatGPT API generates: 3 title options, a meta description (under 160 chars), and 5 suggested focus keywords → the output is written to a CMS field or a Google Sheet for review.</p>
 
-  <p>We've tuned this one extensively. The trick is constraining the output — use <code>max_tokens: 200</code> and a system prompt that says "respond with JSON only, no explanations."</p>
+  <p>We've tuned this one extensively. The trick is constraining the output - use <code>max_tokens: 200</code> and a system prompt that says "respond with JSON only, no explanations."</p>
 
   <div class="result-box">
     <div class="result-title">key takeaways</div>
-    <div class="result-item">start with GPT-4o-mini — it's 10x cheaper and handles 90% of automation tasks well</div>
-    <div class="result-item">invest time in your system prompts — they're the difference between useful output and garbage</div>
+    <div class="result-item">start with GPT-4o-mini - it's 10x cheaper and handles 90% of automation tasks well</div>
+    <div class="result-item">invest time in your system prompts - they're the difference between useful output and garbage</div>
     <div class="result-item">always validate API responses before using them downstream (missing content, malformed JSON)</div>
-    <div class="result-item">set max_tokens to avoid surprise bills — runaway generations cost real money</div>
+    <div class="result-item">set max_tokens to avoid surprise bills - runaway generations cost real money</div>
     <div class="result-item">cache common responses: if your workflow asks "summarise this" 100x a day, similar content gets similar results</div>
   </div>
 
   <h2>cost considerations</h2>
 
-  <p>GPT-4o-mini costs roughly $0.15 per 1M input tokens and $0.60 per 1M output tokens. For most automation use cases — email drafting, basic enrichment, short translations — you're looking at <strong>pennies per hundred runs</strong>. Even with hundreds of daily executions, most clients spend less than $50/month on API costs.</p>
+  <p>GPT-4o-mini costs roughly $0.15 per 1M input tokens and $0.60 per 1M output tokens. For most automation use cases - email drafting, basic enrichment, short translations - you're looking at <strong>pennies per hundred runs</strong>. Even with hundreds of daily executions, most clients spend less than $50/month on API costs.</p>
 
-  <p>GPT-4o (the full model) is about 15x more expensive. Reserve it for tasks that genuinely need deep reasoning — complex data analysis, legal document review, nuanced content creation. Use GPT-4o-mini for everything else.</p>
+  <p>GPT-4o (the full model) is about 15x more expensive. Reserve it for tasks that genuinely need deep reasoning - complex data analysis, legal document review, nuanced content creation. Use GPT-4o-mini for everything else.</p>
 
-  <p>For context on what n8n + AI costs overall, see our <a href="/a/blog/n8n-vs-zapier-2026">n8n vs Zapier cost comparison</a> — the API costs are tiny compared to what you save by not running a fully manual operation.</p>
+  <p>For context on what n8n + AI costs overall, see our <a href="/a/blog/n8n-vs-zapier-2026">n8n vs Zapier cost comparison</a> - the API costs are tiny compared to what you save by not running a fully manual operation.</p>
 
   <h2>common gotchas</h2>
 
@@ -236,7 +246,7 @@
 
   <h2>when not to use the chatgpt api</h2>
 
-  <p>Not every automation needs AI. If you're moving a field from one app to another — name, email, phone number — a simple HTTP request does it cheaper and faster. The ChatGPT API adds value when the task requires <em>understanding</em> or <em>generation</em>. Classification, extraction, summarisation, drafting. If a regex or a lookup table solves the problem, use that instead.</p>
+  <p>Not every automation needs AI. If you're moving a field from one app to another - name, email, phone number - a simple HTTP request does it cheaper and faster. The ChatGPT API adds value when the task requires <em>understanding</em> or <em>generation</em>. Classification, extraction, summarisation, drafting. If a regex or a lookup table solves the problem, use that instead.</p>
 
   <p>Start with the minimal AI that does the job. Add complexity only when you've validated the workflow works. Most of the automations we build start with GPT-4o-mini and never need to upgrade.</p>
 

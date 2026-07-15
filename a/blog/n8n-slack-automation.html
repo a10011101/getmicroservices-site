@@ -9,7 +9,17 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/n8n-slack-automation"/>
-<title>How to Automate Slack with n8n: 7 Workflows That Save Hours (2026) — getmicroservices</title>
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://getmicroservices.com/blog/n8n-slack-automation" />
+  <meta property="og:title" content="Automate Slack with n8n: 7 Workflows That Save Hours" />
+  <meta property="og:description" content="Use n8n to automate Slack notifications, alerts, slash commands, and team workflows. Step-by-step guide with 7 real-world workflow examples for 2026." />
+  <meta property="og:image" content="https://getmicroservices.com/logo.jpg" />
+  <meta property="og:site_name" content="GetMicroservices" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Automate Slack with n8n: 7 Workflows That Save Hours" />
+  <meta name="twitter:description" content="Use n8n to automate Slack notifications, alerts, slash commands, and team workflows. Step-by-step guide with 7 real-world workflow examples for 2026." />
+  <meta name="twitter:image" content="https://getmicroservices.com/logo.jpg" />
+<title>Automate Slack with n8n: 7 Workflows That Save Hours</title>
 <meta name="description" content="Use n8n to automate Slack notifications, alerts, slash commands, and team workflows. Step-by-step guide with 7 real-world workflow examples for 2026."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
@@ -93,8 +103,8 @@
   <a href="/a/" class="nav-logo">Get<span class="accent">Micro</span><span class="yellow">Services</span></a>
   <ul class="nav-links">
     <li><a href="/a/blog/">blog</a></li>
-    <li><a href="/services">services</a></li>
-    <li><a href="https://getmicroservices.co/contact" class="nav-cta">get a quote</a></li>
+    <li><a href="/#services">services</a></li>
+    <li><a href="/#contact" class="nav-cta">get a quote</a></li>
   </ul>
 </nav>
 
@@ -108,9 +118,9 @@
   </div>
 
   <h1>How to Automate Slack with n8n: 7 Workflows That Save Hours (2026)</h1>
-  <p class="post-lead">Slack is where your team lives. n8n turns it into a live command centre — sending alerts, routing requests, and triggering actions without anyone lifting a finger.</p>
+  <p class="post-lead">Slack is where your team lives. n8n turns it into a live command centre - sending alerts, routing requests, and triggering actions without anyone lifting a finger.</p>
 
-  <p>Most teams use Slack as a messaging app. The smarter ones use it as an automation surface. <strong>With n8n's Slack node, you can send messages, read channels, respond to slash commands, and trigger entire workflows</strong> — all without writing a custom bot from scratch.</p>
+  <p>Most teams use Slack as a messaging app. The smarter ones use it as an automation surface. <strong>With n8n's Slack node, you can send messages, read channels, respond to slash commands, and trigger entire workflows</strong> - all without writing a custom bot from scratch.</p>
 
   <p>This guide covers seven workflows we've built for clients across agencies, SaaS teams, and solo operators. Each one has a clear trigger, a clear output, and a measurable time saving.</p>
 
@@ -120,16 +130,16 @@
 
   <ul>
     <li><strong>OAuth (Recommended):</strong> Create a Slack App in api.slack.com, add the required Bot Token Scopes, install to workspace, and paste the Bot Token into n8n credentials</li>
-    <li><strong>Webhook (Simpler):</strong> Create an Incoming Webhook in Slack settings — paste the URL into n8n's HTTP Request node. Send-only, no reading.</li>
+    <li><strong>Webhook (Simpler):</strong> Create an Incoming Webhook in Slack settings - paste the URL into n8n's HTTP Request node. Send-only, no reading.</li>
   </ul>
 
   <p>For most workflows here, you'll want the OAuth route. The scopes you'll need: <code>chat:write</code>, <code>channels:read</code>, <code>reactions:write</code>, and <code>users:read</code>. If you're triggering from Slack slash commands, also add <code>commands</code>.</p>
 
   <h2>Workflow 1: Instant Alerts for Critical Business Events</h2>
 
-  <p>This is the most common use case and the one that delivers the fastest ROI. Any critical event in your stack — a payment failure, a new enterprise lead, a server alert — fires a formatted Slack message to the right channel instantly.</p>
+  <p>This is the most common use case and the one that delivers the fastest ROI. Any critical event in your stack - a payment failure, a new enterprise lead, a server alert - fires a formatted Slack message to the right channel instantly.</p>
 
-  <div class="code-block">Trigger: Webhook (from any source — Stripe, PagerDuty, HubSpot, etc.)
+  <div class="code-block">Trigger: Webhook (from any source - Stripe, PagerDuty, HubSpot, etc.)
 ↓
 Node: IF → filter by severity (critical / warning / info)
 ↓
@@ -143,7 +153,7 @@ Node: Slack → add 🚨 reaction if critical severity</div>
 
   <div class="result-box">
     <div class="result-title">// what a good alert looks like</div>
-    <div class="result-item">🚨 Payment Failed — Acme Corp ($4,200/mo)</div>
+    <div class="result-item">🚨 Payment Failed - Acme Corp ($4,200/mo)</div>
     <div class="result-item">Error: Card declined (insufficient funds)</div>
     <div class="result-item">Customer since: March 2024 | MRR at risk: $4,200</div>
     <div class="result-item">[View in Stripe →] [Email Customer →] [Snooze 24h →]</div>
@@ -151,7 +161,7 @@ Node: Slack → add 🚨 reaction if critical severity</div>
 
   <h2>Workflow 2: New Lead → Slack Notification with Context</h2>
 
-  <p>When a high-intent lead lands — via a form, your CRM, or a demo booking — your sales team should know immediately. Not via email. Via Slack, with full context attached.</p>
+  <p>When a high-intent lead lands - via a form, your CRM, or a demo booking - your sales team should know immediately. Not via email. Via Slack, with full context attached.</p>
 
   <div class="code-block">Trigger: Webhook from Typeform / HubSpot / Calendly
 ↓
@@ -169,7 +179,7 @@ Node: Google Sheets → log lead in pipeline tracker</div>
 
   <h2>Workflow 3: Slack Slash Command → Trigger Any Workflow</h2>
 
-  <p>This is where n8n gets genuinely powerful. You can expose any workflow as a Slack slash command — so your team can trigger complex automations without opening a single other tool.</p>
+  <p>This is where n8n gets genuinely powerful. You can expose any workflow as a Slack slash command - so your team can trigger complex automations without opening a single other tool.</p>
 
   <div class="code-block">Trigger: Slack slash command (/report, /status, /invoice, etc.)
 ↓
@@ -205,7 +215,7 @@ Node: Slack → post to #standup channel</div>
 
   <h2>Workflow 5: Customer Support Routing</h2>
 
-  <p>When a support ticket arrives — via email, Intercom, or a web form — n8n can classify it, assign it, and post it to the right Slack channel with priority context. No more manually forwarding emails.</p>
+  <p>When a support ticket arrives - via email, Intercom, or a web form - n8n can classify it, assign it, and post it to the right Slack channel with priority context. No more manually forwarding emails.</p>
 
   <div class="code-block">Trigger: Email (IMAP) or Webhook from Intercom / Zendesk
 ↓
@@ -237,7 +247,7 @@ Node: [Action] → execute approved action OR notify requestor of rejection
 ↓
 Node: Slack → update original message with decision + actor</div>
 
-  <p>Use cases: content publish approvals, contractor invoice sign-offs, new employee access requests, expense approvals. <strong>The entire flow lives in Slack — no one needs to open a separate approval tool.</strong></p>
+  <p>Use cases: content publish approvals, contractor invoice sign-offs, new employee access requests, expense approvals. <strong>The entire flow lives in Slack - no one needs to open a separate approval tool.</strong></p>
 
   <div class="result-box">
     <div class="result-title">// time savings we've measured</div>
@@ -276,11 +286,11 @@ Node: Slack → post to #team-feed with source emoji prefix
 
   <h2>Where to Start</h2>
 
-  <p>If your team uses Slack daily and you've never automated it with n8n, start with Workflow 1 — the critical alerts pipeline. <strong>Pick one event your team currently discovers too late</strong> (a failed payment, a downed service, a high-value lead going cold) and build that first.</p>
+  <p>If your team uses Slack daily and you've never automated it with n8n, start with Workflow 1 - the critical alerts pipeline. <strong>Pick one event your team currently discovers too late</strong> (a failed payment, a downed service, a high-value lead going cold) and build that first.</p>
 
-  <p>Once it's running, you'll start seeing the other workflows as obvious. Each one is a solved problem — you just need to wire it up.</p>
+  <p>Once it's running, you'll start seeing the other workflows as obvious. Each one is a solved problem - you just need to wire it up.</p>
 
-  <p>If you'd rather have us build it — or if you want an audit of your current Slack setup to find automation gaps — that's exactly what we do. <a href="https://getmicroservices.co/contact">Get in touch and we'll map it out.</a></p>
+  <p>If you'd rather have us build it - or if you want an audit of your current Slack setup to find automation gaps - that's exactly what we do. <a href="/#contact">Get in touch and we'll map it out.</a></p>
 
   <div id="further-reading" class="result-box" style="margin-top:40px">
     <div class="result-title">further reading</div>
@@ -297,8 +307,8 @@ Node: Slack → post to #team-feed with source emoji prefix
   <span class="footer-logo">getmicroservices</span>
   <div class="footer-links">
     <a href="/a/blog/">blog</a>
-    <a href="/services">services</a>
-    <a href="https://getmicroservices.co/contact">contact</a>
+    <a href="/#services">services</a>
+    <a href="/#contact">contact</a>
     <a href="https://getmicroservices.com">main site</a>
   </div>
 </footer>

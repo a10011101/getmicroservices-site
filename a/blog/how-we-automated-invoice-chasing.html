@@ -10,8 +10,8 @@
 <meta name="robots" content="noindex, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/how-we-automated-invoice-chasing"/>
-<title>How We Automated Invoice Chasing for a 50-Client Agency — getmicroservices</title>
-<meta name="description" content="An agency owner was manually emailing overdue invoices every week. We automated the whole process — detection, personalised emails, and Slack alerts."/>
+<title>How We Automated Invoice Chasing for a 50-Client Agency</title>
+<meta name="description" content="Automate invoice chasing with n8n. We built a workflow that detects overdue invoices, sends personalised chase emails, and recovered 15% more revenue in month one."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -195,20 +195,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <meta property="og:title" content="How We Automated Invoice Chasing for a 50-Client Agency — getmicroservices"/>
-  <meta property="og:description" content="An agency owner was manually emailing overdue invoices every week. We automated the whole process — detection, personalised emails, and Slack alerts."/>
+  <meta property="og:title" content="How We Automated Invoice Chasing for a 50-Client Agency - getmicroservices"/>
+  <meta property="og:description" content="An agency owner was manually emailing overdue invoices every week. We automated the whole process - detection, personalised emails, and Slack alerts."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/a/blog/how-we-automated-invoice-chasing"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="How We Automated Invoice Chasing for a 50-Client Agency — getmicroservices"/>
-  <meta name="twitter:description" content="An agency owner was manually emailing overdue invoices every week. We automated the whole process — detection, personalised emails, and Slack alerts."/>
+  <meta name="twitter:title" content="How We Automated Invoice Chasing for a 50-Client Agency - getmicroservices"/>
+  <meta name="twitter:description" content="An agency owner was manually emailing overdue invoices every week. We automated the whole process - detection, personalised emails, and Slack alerts."/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "How We Automated Invoice Chasing for a 50-Client Agency — getmicroservices",
-  "description": "An agency owner was manually emailing overdue invoices every week. We automated the whole process — detection, personalised emails, and Slack alerts.",
+  "headline": "How We Automated Invoice Chasing for a 50-Client Agency - getmicroservices",
+  "description": "An agency owner was manually emailing overdue invoices every week. We automated the whole process - detection, personalised emails, and Slack alerts.",
   "datePublished": "2026-04-09",
   "publisher": {
     "@type": "Organization",
@@ -237,7 +237,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "How We Automated Invoice Chasing for a 50-Client Agency — getmicroservices",
+      "name": "How We Automated Invoice Chasing for a 50-Client Agency - getmicroservices",
       "item": "https://getmicroservices.com/a/blog/how-we-automated-invoice-chasing"
     }
   ]
@@ -279,19 +279,19 @@
     <span>Mar 29, 2026</span>
     <span>5 min read</span>
   </div>
-  <p class="post-lead">An agency owner was manually emailing overdue invoices every week. We automated the whole process — detection, personalised emails, and Slack alerts. Recovered 15% of overdue revenue in the first month.</p>
+  <p class="post-lead">An agency owner was manually emailing overdue invoices every week. We automated the whole process - detection, personalised emails, and Slack alerts. Recovered 15% of overdue revenue in the first month.</p>
 
   <h2>The problem</h2>
-  <p>Marcus runs a digital marketing agency with around 50 active clients. Every Friday he'd sit down and go through his invoicing system, figure out who was overdue, then draft individual emails to each one. On a bad week that was a dozen emails — each one slightly awkward to write, each one mentally draining.</p>
+  <p>Marcus runs a digital marketing agency with around 50 active clients. Every Friday he'd sit down and go through his invoicing system, figure out who was overdue, then draft individual emails to each one. On a bad week that was a dozen emails - each one slightly awkward to write, each one mentally draining.</p>
   <p><strong>It was taking 3–4 hours every single week.</strong> Not because the task is complex, but because it's tedious and emotionally loaded. You're essentially asking someone to pay you. You don't want to sound aggressive. You don't want to be ignored. So you agonise over the wording, individualise each one, and hope for the best.</p>
-  <p>Some invoices were slipping through entirely — clients 60 or 90 days overdue that Marcus had simply forgotten to chase. Others he'd chased once, got no reply, and moved on. The lost revenue was accumulating quietly in the background.</p>
+  <p>Some invoices were slipping through entirely - clients 60 or 90 days overdue that Marcus had simply forgotten to chase. Others he'd chased once, got no reply, and moved on. The lost revenue was accumulating quietly in the background.</p>
   <p>He needed a system that would handle the chasing automatically, keep it personal enough to not feel like spam, and alert him when something needed human attention.</p>
 
   <h2>What we built</h2>
   <p>The solution was an n8n workflow that runs on a schedule, checks invoice status against Stripe, detects overdue payments, generates personalised chase emails, sends them via Gmail, and posts a Slack notification to Marcus for every email sent.</p>
 
   <div class="flow-card">
-    <div class="flow-label">invoice chasing automation — agency, 50 clients</div>
+    <div class="flow-label">invoice chasing automation - agency, 50 clients</div>
     <div class="flow-nodes">
       <div class="flow-node">
         <div class="node-box"><span class="node-icon">📋</span><div><div class="node-name">Invoice System</div><div class="node-type">Stripe / custom</div></div></div>
@@ -321,26 +321,26 @@
   </div>
 
   <p>The workflow runs every morning at 9am. It pulls all open invoices from Stripe, filters for anything overdue by 7, 14, or 30+ days, and applies a different email template to each tier. A 7-day overdue gets a gentle nudge. A 30-day gets a firmer follow-up with the invoice PDF attached.</p>
-  <p>Each email is built with the client's name, invoice number, amount, and due date pulled directly from Stripe. They look like Marcus wrote them — because the template was written in his voice. Clients have no idea there's automation involved.</p>
+  <p>Each email is built with the client's name, invoice number, amount, and due date pulled directly from Stripe. They look like Marcus wrote them - because the template was written in his voice. Clients have no idea there's automation involved.</p>
   <p>The Slack notification logs every send: client name, invoice amount, how many days overdue, and which template was used. If Marcus wants to step in and handle something personally, he has the full context right there.</p>
 
   <h2>The build</h2>
-  <p>We used <strong>n8n</strong> as the workflow engine, the <strong>Stripe API</strong> to pull invoice data, and <strong>Gmail API</strong> (OAuth, from Marcus's own account) to send the emails. The Slack integration was a simple webhook — five minutes to set up.</p>
+  <p>We used <strong>n8n</strong> as the workflow engine, the <strong>Stripe API</strong> to pull invoice data, and <strong>Gmail API</strong> (OAuth, from Marcus's own account) to send the emails. The Slack integration was a simple webhook - five minutes to set up.</p>
   <p>The whole thing runs on a <strong>$6/month VPS</strong> that we provisioned and configured as part of the project. n8n self-hosted, no per-execution fees, no platform lock-in. Marcus got the workflow files, the server details, and a Loom walkthrough he can revisit whenever.</p>
-  <p>We also built a small Google Sheet as a "suppression list" — if Marcus wants to pause chasing for a specific client (maybe they're in a dispute, or he's in conversation with them), he adds their email to the sheet and the workflow skips them automatically.</p>
+  <p>We also built a small Google Sheet as a "suppression list" - if Marcus wants to pause chasing for a specific client (maybe they're in a dispute, or he's in conversation with them), he adds their email to the sheet and the workflow skips them automatically.</p>
   <p><strong>Total build time: 2.5 days.</strong> Day 1 was the Stripe integration and overdue detection logic. Day 2 was email generation, Gmail send, and the Slack notifications. Half of day 3 was edge cases, testing with real invoice data, and the suppression list feature.</p>
 
   <h2>The result</h2>
 
   <div class="result-box">
     <div class="result-title">after 30 days</div>
-    <div class="result-item">3–4 hours of weekly manual chasing reduced to zero — Marcus reviews Slack, that's it</div>
+    <div class="result-item">3–4 hours of weekly manual chasing reduced to zero - Marcus reviews Slack, that's it</div>
     <div class="result-item">15% of outstanding overdue revenue recovered in the first month alone</div>
     <div class="result-item">11 invoices that had been ignored for 60+ days were chased and paid within two weeks</div>
-    <div class="result-item">Zero client complaints — emails read as personal, not automated</div>
+    <div class="result-item">Zero client complaints - emails read as personal, not automated</div>
   </div>
 
-  <p>The project cost was $490 — our single flow tier. Marcus was losing more than that every month in invoices he simply wasn't chasing. The system paid for itself in the first week it ran.</p>
+  <p>The project cost was $490 - our single flow tier. Marcus was losing more than that every month in invoices he simply wasn't chasing. The system paid for itself in the first week it ran.</p>
   <p>He told us afterwards: <strong>"I didn't realise how much mental energy that task was taking until it was gone."</strong> That's the part that's hard to put a number on.</p>
 
   <div class="post-cta">

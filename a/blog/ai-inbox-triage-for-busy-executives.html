@@ -10,8 +10,8 @@
 <meta name="robots" content="noindex, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/ai-inbox-triage-for-busy-executives"/>
-<title>AI Inbox Triage for a Busy Founder — getmicroservices</title>
-<meta name="description" content="A consultancy founder was spending 2+ hours a day on email. We built an AI triage pipeline that classifies, routes, and summarises — down to 15 minutes a day."/>
+<title>How We Built an AI Inbox Triage System for a Busy Executive</title>
+<meta name="description" content="Cut email overload with an AI inbox triage system. We built an n8n + GPT-4o-mini workflow that routes, summarises, and escalates emails automatically."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -198,20 +198,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <meta property="og:title" content="AI Inbox Triage for a Busy Founder — getmicroservices"/>
-  <meta property="og:description" content="A consultancy founder was spending 2+ hours a day on email. We built an AI triage pipeline that classifies, routes, and summarises — down to 15 minutes a day."/>
+  <meta property="og:title" content="AI Inbox Triage for a Busy Founder - getmicroservices"/>
+  <meta property="og:description" content="A consultancy founder was spending 2+ hours a day on email. We built an AI triage pipeline that classifies, routes, and summarises - down to 15 minutes a day."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/a/blog/ai-inbox-triage-for-busy-executives"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="AI Inbox Triage for a Busy Founder — getmicroservices"/>
-  <meta name="twitter:description" content="A consultancy founder was spending 2+ hours a day on email. We built an AI triage pipeline that classifies, routes, and summarises — down to 15 minutes a day."/>
+  <meta name="twitter:title" content="AI Inbox Triage for a Busy Founder - getmicroservices"/>
+  <meta name="twitter:description" content="A consultancy founder was spending 2+ hours a day on email. We built an AI triage pipeline that classifies, routes, and summarises - down to 15 minutes a day."/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "AI Inbox Triage for a Busy Founder — getmicroservices",
-  "description": "A consultancy founder was spending 2+ hours a day on email. We built an AI triage pipeline that classifies, routes, and summarises — down to 15 minutes a day.",
+  "headline": "AI Inbox Triage for a Busy Founder - getmicroservices",
+  "description": "A consultancy founder was spending 2+ hours a day on email. We built an AI triage pipeline that classifies, routes, and summarises - down to 15 minutes a day.",
   "datePublished": "2026-04-09",
   "publisher": {
     "@type": "Organization",
@@ -240,7 +240,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "AI Inbox Triage for a Busy Founder — getmicroservices",
+      "name": "AI Inbox Triage for a Busy Founder - getmicroservices",
       "item": "https://getmicroservices.com/a/blog/ai-inbox-triage-for-busy-executives"
     }
   ]
@@ -285,15 +285,15 @@
   <p class="post-lead">A consultancy founder was spending 2+ hours a day just deciding what to read, what to forward, and what to ignore. We built an AI pipeline to do all three automatically. Now his inbox takes 15 minutes a day.</p>
 
   <h2>The problem</h2>
-  <p>James runs a 12-person digital consultancy. Client projects, sales pipeline, BD inbound, supplier threads, team updates — all of it flows through one Gmail account. At peak, 200–250 emails a day.</p>
-  <p>The real problem wasn't volume. It was decision fatigue. <strong>Every email required him to read it before he could decide whether it was worth reading.</strong> Filters and folders didn't help — a critical client message might have a vague subject line. So he read everything, just in case. 90 minutes every morning. Again in the afternoon. A last check before bed.</p>
+  <p>James runs a 12-person digital consultancy. Client projects, sales pipeline, BD inbound, supplier threads, team updates - all of it flows through one Gmail account. At peak, 200–250 emails a day.</p>
+  <p>The real problem wasn't volume. It was decision fatigue. <strong>Every email required him to read it before he could decide whether it was worth reading.</strong> Filters and folders didn't help - a critical client message might have a vague subject line. So he read everything, just in case. 90 minutes every morning. Again in the afternoon. A last check before bed.</p>
   <p>He'd tried inbox-zero systems, priority flags, hired a VA to help sort things. Nothing stuck. The classification problem was still on his plate.</p>
 
   <h2>What we built</h2>
-  <p>A Gmail-connected n8n workflow that intercepts each incoming email, classifies it with GPT-4o-mini, and routes it automatically — no human in the loop. Here's the full pipeline:</p>
+  <p>A Gmail-connected n8n workflow that intercepts each incoming email, classifies it with GPT-4o-mini, and routes it automatically - no human in the loop. Here's the full pipeline:</p>
 
   <div class="flow-card">
-    <div class="flow-label">AI inbox triage — n8n + GPT-4o-mini + Gmail + Slack</div>
+    <div class="flow-label">AI inbox triage - n8n + GPT-4o-mini + Gmail + Slack</div>
     <div class="flow-nodes">
       <div class="flow-node">
         <div class="node-box"><span class="node-icon">📧</span><div><div class="node-name">Gmail trigger</div><div class="node-type">New email webhook</div></div></div>
@@ -318,13 +318,13 @@
     <div class="flow-result">↳ Every email classified in ~3s → urgent ones pinged to Slack with a one-line summary → everything else labelled and sorted, silently</div>
   </div>
 
-  <p>The classifier receives sender, subject, and the first 400 characters of the body. It returns one of four categories — urgent, delegate, read-later, archive — plus a one-sentence summary. That summary is what James sees in Slack. He can decide in five seconds whether to act, without opening Gmail at all.</p>
-  <p>Delegatable emails get forwarded automatically to the right team member based on a routing table in a Google Sheet. James owns that table — no code required to update it.</p>
+  <p>The classifier receives sender, subject, and the first 400 characters of the body. It returns one of four categories - urgent, delegate, read-later, archive - plus a one-sentence summary. That summary is what James sees in Slack. He can decide in five seconds whether to act, without opening Gmail at all.</p>
+  <p>Delegatable emails get forwarded automatically to the right team member based on a routing table in a Google Sheet. James owns that table - no code required to update it.</p>
   <p>At 5 PM each day, n8n compiles a digest of everything tagged read-later and sends it as one Slack message. One glance, nothing missed.</p>
   <p>Running cost: roughly <strong>$1.50/month</strong> in OpenAI API usage for 200 emails/day. The workflow runs on a VPS he already had.</p>
 
   <h2>The edge cases</h2>
-  <p>The classifier isn't perfect — maybe one in fifty emails gets miscategorised. That's fine. A misclassified urgent item that lands in read-later still appears in the 5 PM digest. The system doesn't need to be perfect; it needs to be better than doing it manually. It is, by a large margin.</p>
+  <p>The classifier isn't perfect - maybe one in fifty emails gets miscategorised. That's fine. A misclassified urgent item that lands in read-later still appears in the 5 PM digest. The system doesn't need to be perfect; it needs to be better than doing it manually. It is, by a large margin.</p>
   <p>We also built in a confidence threshold: if the model returns low confidence on a classification, the email gets tagged "review" and surfaced in the digest regardless. Belt and braces.</p>
 
   <h2>The result</h2>
@@ -338,7 +338,7 @@
     <div class="result-item">Total running cost: ~$1.50/month in API fees</div>
   </div>
 
-  <p>What James mentioned most wasn't the time saved — it was the anxiety that disappeared. "I used to check email constantly because I was afraid I'd missed something. Now I know that if anything urgent arrives, I'll get a Slack ping. If I don't get a ping, nothing needs me. That's a completely different way to work."</p>
+  <p>What James mentioned most wasn't the time saved - it was the anxiety that disappeared. "I used to check email constantly because I was afraid I'd missed something. Now I know that if anything urgent arrives, I'll get a Slack ping. If I don't get a ping, nothing needs me. That's a completely different way to work."</p>
 
   <div class="post-cta">
     <p>If email is eating your calendar, we can probably fix it in a week.</p>

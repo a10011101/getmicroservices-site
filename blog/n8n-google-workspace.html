@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Automate Google Workspace with n8n: Gmail, Sheets, Drive &amp; Calendar (2026) – GetMicroservices Blog</title>
+  <title>Automate Google Workspace with n8n (2026 Guide)</title>
   <meta name="description" content="Connect n8n to Gmail, Google Sheets, Google Drive, and Google Calendar to automate your entire Google Workspace. Step-by-step workflow examples for 2026."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -101,8 +101,8 @@
   </a>
   <ul class="nav-links">
     <li><a href="/blog">Blog</a></li>
-    <li><a href="/services">Services</a></li>
-    <li><a href="https://getmicroservices.co/contact" class="nav-cta">Get a Quote</a></li>
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#contact" class="nav-cta">Get a Quote</a></li>
   </ul>
   <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')" aria-label="Toggle theme">◐</button>
 </nav>
@@ -115,20 +115,20 @@
     <span class="meta-readtime">11 min read</span>
   </div>
   <h1>Automate Google Workspace with n8n: Gmail, Sheets, Drive &amp; Calendar (2026)</h1>
-  <p class="lead">Google Workspace is where most businesses live — email, spreadsheets, files, meetings. n8n connects it all into automated workflows. Here's how to actually do it.</p>
+  <p class="lead">Google Workspace is where most businesses live - email, spreadsheets, files, meetings. n8n connects it all into automated workflows. Here's how to actually do it.</p>
 </header>
 
 <article class="article-body">
 
-  <p>If your team runs on Gmail, Google Sheets, and Google Calendar, you already have more automation surface area than you realise. <strong>n8n has native nodes for every major Google Workspace product</strong> — and connecting them takes minutes, not weeks.</p>
+  <p>If your team runs on Gmail, Google Sheets, and Google Calendar, you already have more automation surface area than you realise. <strong>n8n has native nodes for every major Google Workspace product</strong> - and connecting them takes minutes, not weeks.</p>
 
   <p>This guide covers the workflows we build most often for clients: inbox triage, spreadsheet-driven pipelines, file organisation in Drive, and calendar-based triggers. By the end you'll have a clear picture of what's possible and how to get started.</p>
 
   <h2>Why n8n for Google Workspace?</h2>
 
-  <p>Zapier and Make both support Google Workspace, but they get expensive fast when you're running dozens of workflows. <strong>n8n gives you the same integrations at a fraction of the cost</strong> — especially self-hosted, where you pay for compute, not per-task fees.</p>
+  <p>Zapier and Make both support Google Workspace, but they get expensive fast when you're running dozens of workflows. <strong>n8n gives you the same integrations at a fraction of the cost</strong> - especially self-hosted, where you pay for compute, not per-task fees.</p>
 
-  <p>The other advantage is flexibility. n8n lets you combine Google Workspace with anything else — your CRM, Slack, a database, an AI model — in a single workflow. No duct tape required.</p>
+  <p>The other advantage is flexibility. n8n lets you combine Google Workspace with anything else - your CRM, Slack, a database, an AI model - in a single workflow. No duct tape required.</p>
 
   <h2>Setting Up Google Credentials in n8n</h2>
 
@@ -140,14 +140,14 @@
     <li>Create OAuth 2.0 credentials (Web Application type)</li>
     <li>Add your n8n callback URL: <code>https://your-n8n-domain/rest/oauth2-credential/callback</code></li>
     <li>In n8n, create a Google credential and paste your Client ID + Secret</li>
-    <li>Authorise — done</li>
+    <li>Authorise - done</li>
   </ul>
 
   <p>One credential set covers all four products. You don't need to do this four times.</p>
 
   <h2>Workflow 1: Gmail Inbox Triage with AI Labelling</h2>
 
-  <p>This is the highest-ROI workflow for most knowledge workers. Every incoming email gets read, categorised by an AI model, and labelled automatically — so your inbox is pre-sorted before you open it.</p>
+  <p>This is the highest-ROI workflow for most knowledge workers. Every incoming email gets read, categorised by an AI model, and labelled automatically - so your inbox is pre-sorted before you open it.</p>
 
   <div class="code-block">Trigger: Gmail → On New Email (Poll every 5 min)
 ↓
@@ -186,7 +186,7 @@ Node: Google Calendar → create follow-up reminder event in 3 days
 ↓
 Node: Google Sheets → update "Last Action" and "Next Action" columns</div>
 
-  <p><strong>The magic here is the bidirectional update.</strong> The workflow reads from Sheets, sends the email, books the calendar event, then writes back to Sheets — all without leaving the workflow. Your CRM stays accurate automatically.</p>
+  <p><strong>The magic here is the bidirectional update.</strong> The workflow reads from Sheets, sends the email, books the calendar event, then writes back to Sheets - all without leaving the workflow. Your CRM stays accurate automatically.</p>
 
   <h2>Workflow 3: Automatic File Organisation in Google Drive</h2>
 
@@ -222,7 +222,7 @@ Node: OpenAI → generate personalised meeting prep email
 ↓
 Node: Gmail → send prep email with agenda + any pending action items</div>
 
-  <p>Clients notice this. Getting a thoughtful meeting prep email the day before a call signals professionalism. <strong>It costs you nothing — the workflow does it while you sleep.</strong></p>
+  <p>Clients notice this. Getting a thoughtful meeting prep email the day before a call signals professionalism. <strong>It costs you nothing - the workflow does it while you sleep.</strong></p>
 
   <h2>Workflow 5: Form Responses → Automated Onboarding</h2>
 
@@ -249,14 +249,14 @@ Node: Slack → notify #new-clients channel with client details</div>
   <ul>
     <li>Use polling intervals of 5–15 minutes rather than continuous triggers where possible</li>
     <li>Add a Wait node between bulk operations to throttle requests</li>
-    <li>For Sheets, batch reads rather than individual row reads — use the spreadsheets.values.get API with ranges</li>
-    <li>Enable exponential backoff in your error handling — n8n's retry settings handle most of this</li>
+    <li>For Sheets, batch reads rather than individual row reads - use the spreadsheets.values.get API with ranges</li>
+    <li>Enable exponential backoff in your error handling - n8n's retry settings handle most of this</li>
     <li>Monitor quota usage in Google Cloud Console → APIs & Services → Dashboard</li>
   </ul>
 
   <h2>Combining Google Workspace with Your Other Tools</h2>
 
-  <p>The real power of n8n isn't any single Google integration — it's the combinations. Here are workflows our clients run daily:</p>
+  <p>The real power of n8n isn't any single Google integration - it's the combinations. Here are workflows our clients run daily:</p>
 
   <ul>
     <li><strong>Gmail → HubSpot:</strong> New emails from known contacts auto-log to CRM deal timeline</li>
@@ -274,12 +274,13 @@ Node: Slack → notify #new-clients channel with client details</div>
 
   <p>For most businesses, that's either email triage or new client onboarding. Both are well-suited to Google Workspace + n8n and produce visible results within days of going live.</p>
 
-  <p>If you want someone to build this for you — or to audit your existing workflows and find automation opportunities — that's exactly what we do at GetMicroservices. <a href="https://getmicroservices.co/contact">Get in touch and we'll scope it out.</a></p>
+  <p>If you want someone to build this for you - or to audit your existing workflows and find automation opportunities - that's exactly what we do at GetMicroservices. <a href="/#contact">Get in touch and we'll scope it out.</a></p>
 
+  <p><strong>Related reading:</strong> <a href="/blog/n8n-slack-automation">automating Slack with n8n</a>, <a href="/blog/google-sheets-automation-examples">Google Sheets automation examples</a> and <a href="/blog/n8n-email-automation">n8n email automation</a>.</p>
 </article>
 
 <footer>
-  <p><a href="https://getmicroservices.com">GetMicroservices</a> · <a href="/blog">Blog</a> · <a href="/services">Services</a> · <a href="https://getmicroservices.co/contact">Contact</a></p>
+  <p><a href="https://getmicroservices.com">GetMicroservices</a> · <a href="/blog">Blog</a> · <a href="/#services">Services</a> · <a href="/#contact">Contact</a></p>
 </footer>
 </body>
 </html>

@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Self-Hosting n8n: Complete Setup Guide (2026) – GetMicroservices Blog</title>
+  <title>Self-Hosting n8n: Complete Setup Guide (2026)</title>
   <meta name="description" content="Step-by-step guide to self-hosting n8n on a VPS in 2026. Docker, HTTPS, Caddy, and production best practices. Own your automation infrastructure."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -124,25 +124,25 @@
     <span class="meta-readtime">9 min read</span>
   </div>
   <h1>Self-Hosting n8n: Complete Setup Guide (2026)</h1>
-  <p class="lead">Skip the cloud subscription. Run n8n on your own VPS for under $10/month — with Docker, Caddy for HTTPS, and production-ready config. This is exactly how we set it up for clients.</p>
+  <p class="lead">Skip the cloud subscription. Run n8n on your own VPS for under $10/month - with Docker, Caddy for HTTPS, and production-ready config. This is exactly how we set it up for clients.</p>
 </div>
 
 <div class="article-body">
 
-  <p>We've self-hosted <a href="/blog/n8n-vs-zapier-2026">n8n</a> for dozens of clients over the past two years. The cloud version is fine for testing, but once you hit real workflow volume, the pricing jumps fast. Self-hosting puts you in control: <strong>unlimited workflows, unlimited executions, your data stays on your server.</strong>This guide covers the exact setup we use in production — not a "hello world" demo. By the end you'll have <a href="/blog/n8n-vs-zapier-2026">n8n</a> running on a proper domain with HTTPS, auto-restart, and basic security hardening.</p>
+  <p>We've self-hosted <a href="/blog/n8n-vs-zapier-2026">n8n</a> for dozens of clients over the past two years. The cloud version is fine for testing, but once you hit real workflow volume, the pricing jumps fast. Self-hosting puts you in control: <strong>unlimited workflows, unlimited executions, your data stays on your server.</strong>This guide covers the exact setup we use in production - not a "hello world" demo. By the end you'll have <a href="/blog/n8n-vs-zapier-2026">n8n</a> running on a proper domain with HTTPS, auto-restart, and basic security hardening.</p>
 
-  <p>This guide covers the exact setup we use in production — not a "hello world" demo. By the end you'll have n8n running on a proper domain with HTTPS, auto-restart, and basic security hardening.</p>
+  <p>This guide covers the exact setup we use in production - not a "hello world" demo. By the end you'll have n8n running on a proper domain with HTTPS, auto-restart, and basic security hardening.</p>
 
   <h2>What You Need Before You Start</h2>
 
   <ul>
-    <li>A VPS with at least 1GB RAM (2GB recommended) — DigitalOcean, Hetzner, or Vultr all work</li>
+    <li>A VPS with at least 1GB RAM (2GB recommended) - DigitalOcean, Hetzner, or Vultr all work</li>
     <li>A domain name with DNS access</li>
     <li>Ubuntu 22.04 LTS (what this guide uses)</li>
     <li>Basic comfort with SSH and the command line</li>
   </ul>
 
-  <p>We typically use <strong>Hetzner CX21</strong> (2 vCPU, 4GB RAM, €4.15/mo) for client setups — it's overkill for most workflows but leaves headroom for growth. DigitalOcean's $6/mo droplet works fine for lighter use.</p>
+  <p>We typically use <strong>Hetzner CX21</strong> (2 vCPU, 4GB RAM, €4.15/mo) for client setups - it's overkill for most workflows but leaves headroom for growth. DigitalOcean's $6/mo droplet works fine for lighter use.</p>
 
   <h2>Step 1: Install Docker &amp; Docker Compose</h2>
 
@@ -172,7 +172,7 @@
     <span class="step">TTL:</span> 300
   </div>
 
-  <p>Wait 5–10 minutes for DNS to propagate. Confirm with <code style="font-family:'Fira Code',monospace;color:var(--accent);">dig n8n.yourdomain.com +short</code> — it should return your server IP.</p>
+  <p>Wait 5–10 minutes for DNS to propagate. Confirm with <code style="font-family:'Fira Code',monospace;color:var(--accent);">dig n8n.yourdomain.com +short</code> - it should return your server IP.</p>
 
   <h2>Step 3: Create the Docker Compose File</h2>
 
@@ -213,7 +213,7 @@
 
   <h2>Step 4: Set Up Caddy for HTTPS</h2>
 
-  <p>Caddy handles HTTPS automatically — no certbot needed. Install it:</p>
+  <p>Caddy handles HTTPS automatically - no certbot needed. Install it:</p>
 
   <div class="flow-box">
     sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https<br/>
@@ -267,14 +267,14 @@
 
   <ul>
     <li><strong>UFW firewall:</strong> <code style="font-family:'Fira Code',monospace;color:var(--accent);">sudo ufw allow 22,80,443/tcp &amp;&amp; sudo ufw enable</code></li>
-    <li><strong>Fail2ban:</strong> protects SSH from brute-force — <code style="font-family:'Fira Code',monospace;color:var(--accent);">sudo apt install fail2ban</code></li>
+    <li><strong>Fail2ban:</strong> protects SSH from brute-force - <code style="font-family:'Fira Code',monospace;color:var(--accent);">sudo apt install fail2ban</code></li>
     <li><strong>Automatic backups:</strong> set up a cron job to dump the Docker volume to S3 or Backblaze B2 weekly</li>
     <li><strong>Pin the n8n version:</strong> replace <code style="font-family:'Fira Code',monospace;color:var(--accent);">n8nio/n8n:latest</code> with a specific version (e.g. <code style="font-family:'Fira Code',monospace;color:var(--accent);">n8nio/n8n:1.40.0</code>) to prevent surprise breaking changes</li>
-    <li><strong>Enable 2FA:</strong> n8n has built-in TOTP support in settings — enable it</li>
+    <li><strong>Enable 2FA:</strong> n8n has built-in TOTP support in settings - enable it</li>
   </ul>
 
-  <h2>Adding a <a href="/blog/n8n-social-media-automation">Post</a>By default n8n uses SQLite — fine for small use, but under heavy load (1000+ executions/day) you'll want <a href="/blog/n8n-social-media-automation">Post</a>greSQL. Update your compose file:</h2>
-    &nbsp;&nbsp;<a href="/blog/n8n-social-media-automation">post</a>gres:<p>By default n8n uses SQLite — fine for small use, but under heavy load (1000+ executions/day) you'll want PostgreSQL. Update your compose file:</p>
+  <h2>Adding a <a href="/blog/n8n-social-media-automation">Post</a>By default n8n uses SQLite - fine for small use, but under heavy load (1000+ executions/day) you'll want <a href="/blog/n8n-social-media-automation">Post</a>greSQL. Update your compose file:</h2>
+    &nbsp;&nbsp;<a href="/blog/n8n-social-media-automation">post</a>gres:<p>By default n8n uses SQLite - fine for small use, but under heavy load (1000+ executions/day) you'll want PostgreSQL. Update your compose file:</p>
 
   <div class="flow-box">
     services:<br/>
@@ -309,11 +309,11 @@
     docker compose up -d
   </div>
 
-  <p>The old container is replaced with zero workflow data loss (it's stored in the volume). We run updates on client servers monthly — check the n8n changelog first for breaking changes.</p>
+  <p>The old container is replaced with zero workflow data loss (it's stored in the volume). We run updates on client servers monthly - check the n8n changelog first for breaking changes.</p>
 
   <h2>Monitoring &amp; Alerts</h2>
 
-  <p>n8n has built-in workflow execution logging under Settings → Log Streaming. For server-level monitoring, we use <strong>Uptime Kuma</strong> — another Docker container that pings your n8n URL and sends Telegram/Slack alerts if it goes down. Free, self-hosted, five minutes to set up.</p>
+  <p>n8n has built-in workflow execution logging under Settings → Log Streaming. For server-level monitoring, we use <strong>Uptime Kuma</strong> - another Docker container that pings your n8n URL and sends Telegram/Slack alerts if it goes down. Free, self-hosted, five minutes to set up.</p>
 
   <div class="flow-box">
     docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data louislam/uptime-kuma:1
@@ -352,7 +352,7 @@
     </tbody>
   </table>
 
-  <p>For our agency clients, self-hosting typically pays for itself within the first month. The only real cost is your time setting it up — which is why this guide exists.</p>
+  <p>For our agency clients, self-hosting typically pays for itself within the first month. The only real cost is your time setting it up - which is why this guide exists.</p>
 
   <h2>When to Use Cloud Instead</h2>
 

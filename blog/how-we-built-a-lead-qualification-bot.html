@@ -9,8 +9,8 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="canonical" href="https://getmicroservices.com/blog/how-we-built-a-lead-qualification-bot" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How We Built a Lead Qualification Bot That Books Calls Automatically — GetMicroservices</title>
-  <meta name="description" content="Stop wasting calls on bad-fit leads. We built an n8n lead qualification bot that scores prospects and only books the good ones — saving 5+ hours a week." />
+  <title>A Lead Qualification Bot That Books Calls on Autopilot</title>
+  <meta name="description" content="Stop wasting calls on bad-fit leads. We built an n8n lead qualification bot that scores prospects and only books the good ones - saving 5+ hours a week." />
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -111,20 +111,20 @@
     .further-reading ul li { margin-bottom: 0.4rem; }
   </style>
 
-  <meta property="og:title" content="How We Built a Lead Qualification Bot That Books Calls Automatically — GetMicroservices"/>
-  <meta property="og:description" content="A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies first and only books the good ones — saving 5+ hours a week."/>
+  <meta property="og:title" content="How We Built a Lead Qualification Bot That Books Calls Automatically - GetMicroservices"/>
+  <meta property="og:description" content="A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies first and only books the good ones - saving 5+ hours a week."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/blog/how-we-built-a-lead-qualification-bot"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="How We Built a Lead Qualification Bot That Books Calls Automatically — GetMicroservices"/>
-  <meta name="twitter:description" content="A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies first and only books the good ones — saving 5+ hours a week."/>
+  <meta name="twitter:title" content="How We Built a Lead Qualification Bot That Books Calls Automatically - GetMicroservices"/>
+  <meta name="twitter:description" content="A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies first and only books the good ones - saving 5+ hours a week."/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "How We Built a Lead Qualification Bot That Books Calls Automatically — GetMicroservices",
-  "description": "A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies first and only books the good ones — saving 5+ hours a week.",
+  "headline": "How We Built a Lead Qualification Bot That Books Calls Automatically - GetMicroservices",
+  "description": "A B2B agency was jumping on discovery calls with unqualified leads. We built a Telegram/n8n bot that qualifies first and only books the good ones - saving 5+ hours a week.",
   "datePublished": "2026-03-29",
   "publisher": {
     "@type": "Organization",
@@ -153,7 +153,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "How We Built a Lead Qualification Bot That Books Calls Automatically — GetMicroservices",
+      "name": "How We Built a Lead Qualification Bot That Books Calls Automatically - GetMicroservices",
       "item": "https://getmicroservices.com/blog/how-we-built-a-lead-qualification-bot"
     }
   ]
@@ -199,30 +199,30 @@
       <span class="meta-readtime">5 min read</span>
     </div>
     <h1>How We Built a Lead Qualification Bot That Books Calls Automatically</h1>
-    <p class="lead">A B2B agency was burning hours every week on discovery calls with leads who were never going to buy. We built a Telegram bot backed by n8n that screens every inbound lead, scores them, and only puts the good ones on the calendar — automatically.</p>
+    <p class="lead">A B2B agency was burning hours every week on discovery calls with leads who were never going to buy. We built a Telegram bot backed by n8n that screens every inbound lead, scores them, and only puts the good ones on the calendar - automatically.</p>
   </header>
 
   <article class="article-body">
 
     <h2>The Problem</h2>
-    <p>The client runs a B2B digital agency — retainer-based, average deal size around £4k/month. Their contact form was generating 15–20 inquiries a week. Sounds great. The reality? <strong>Most of them were students, competitors, or "just curious" freelancers.</strong> Their sales team was hopping on 30-minute discovery calls with anyone who submitted a form and had a pulse.</p>
+    <p>The client runs a B2B digital agency - retainer-based, average deal size around £4k/month. Their contact form was generating 15–20 inquiries a week. Sounds great. The reality? <strong>Most of them were students, competitors, or "just curious" freelancers.</strong> Their sales team was hopping on 30-minute discovery calls with anyone who submitted a form and had a pulse.</p>
     <p>By the time we came in, they'd calculated the damage: roughly <strong>6–8 wasted calls per week</strong>, each taking 30–45 minutes including prep and follow-up. That's 4–5 hours of senior sales time down the drain, every single week, with zero revenue attached.</p>
-    <p>They'd tried a Typeform qualification survey — open rates were under 30%. They'd tried a "book a call" Calendly link gated by a manual <a href="/blog/ai-inbox-triage-for-busy-executives">email</a> reply — too slow, leads went cold. What they actually needed was something that felt fast, personal, and frictionless, but still filtered hard enough to protect the calendar.</p>
+    <p>They'd tried a Typeform qualification survey - open rates were under 30%. They'd tried a "book a call" Calendly link gated by a manual <a href="/blog/ai-inbox-triage-for-busy-executives">email</a> reply - too slow, leads went cold. What they actually needed was something that felt fast, personal, and frictionless, but still filtered hard enough to protect the calendar.</p>
 
     <h2>The Solution: A Telegram Bot That Qualifies Before It Books</h2>
-    <p>We built a two-part system: a <strong>Telegram bot for the conversation layer</strong>. When a lead submits the contact form, instead of a generic "we'll be in touch" <a href="/blog/ai-inbox-triage-for-busy-executives">email</a>, they get an instant Telegram message: <strong><a href="/blog/n8n-vs-zapier-2026">n8n</a> for the logic layer</strong>. When a lead submits the contact form, instead of a generic "we'll be in touch" email, they get an instant Telegram message: <em>"Hey — quick 3-question check before we book your call. Takes 60 seconds."</em></p>
+    <p>We built a two-part system: a <strong>Telegram bot for the conversation layer</strong>. When a lead submits the contact form, instead of a generic "we'll be in touch" <a href="/blog/ai-inbox-triage-for-busy-executives">email</a>, they get an instant Telegram message: <strong><a href="/blog/n8n-vs-zapier-2026">n8n</a> for the logic layer</strong>. When a lead submits the contact form, instead of a generic "we'll be in touch" email, they get an instant Telegram message: <em>"Hey - quick 3-question check before we book your call. Takes 60 seconds."</em></p>
     <p>The bot walks them through three qualifying questions:</p>
     <ul>
       <li>What's your monthly marketing budget? (bucketed: &lt;£500 / £500–2k / £2k–10k / £10k+)</li>
       <li>What's the main thing you're trying to solve in the next 90 days?</li>
       <li>Are you the decision-maker, or will others need to be involved?</li>Each answer feeds a simple scoring model in <a href="/blog/n8n-vs-zapier-2026">n8n</a>. Budget under £2k → zero points. Clear problem statement → 2 points. Decision-maker → 3 points. </ul>
     <p>Each answer feeds a simple scoring model in n8n. Budget under £2k → zero points. Clear problem statement → 2 points. Decision-maker → 3 points. <strong>Score 4+ out of 7 and you get the Calendly link.</strong> Below that, the bot sends a polite "we're not the right fit yet" message with a link to their resource hub instead.</p>
-    <p>The whole conversation takes under 90 seconds. Response rate jumped to over 70% — versus the 28% they were getting with the Typeform.</p>
+    <p>The whole conversation takes under 90 seconds. Response rate jumped to over 70% - versus the 28% they were getting with the Typeform.</p>
 
     <h2>How the Stack Fits Together</h2>
 
     <div class="workflow-diagram">
-      <div class="workflow-label">automation_flow.json — lead qualification pipeline</div>
+      <div class="workflow-label">automation_flow.json - lead qualification pipeline</div>
       <div class="workflow-nodes">
         <div class="wf-node">
           <div class="wf-box">
@@ -286,30 +286,30 @@
       <div class="workflow-result">// qualified leads → Calendly booking | unqualified → nurture sequence | all leads → Sheets CRM log</div>
     </div>
 
-    <p>Every lead — qualified or not — gets logged to a Google Sheet with their name, email, score, answers, and timestamp. The client's sales team starts each day with a pre-filtered view. No more <a href="/blog/ai-inbox-triage-for-busy-executives">inbox</a> archaeology.<strong>qualified leads get the Calendly link inline inside Telegram</strong>, unqualified ones get a soft decline plus a resource link.</p>
-    <p>Every lead — qualified or not — gets logged to a Google Sheet with their name, email, score, answers, and timestamp. The client's sales team starts each day with a pre-filtered view. No more inbox archaeology.</p>
+    <p>Every lead - qualified or not - gets logged to a Google Sheet with their name, email, score, answers, and timestamp. The client's sales team starts each day with a pre-filtered view. No more <a href="/blog/ai-inbox-triage-for-busy-executives">inbox</a> archaeology.<strong>qualified leads get the Calendly link inline inside Telegram</strong>, unqualified ones get a soft decline plus a resource link.</p>
+    <p>Every lead - qualified or not - gets logged to a Google Sheet with their name, email, score, answers, and timestamp. The client's sales team starts each day with a pre-filtered view. No more inbox archaeology.</p>
 
     <h2>The Scoring Model (Kept Deliberately Simple)</h2>
     <p>We've seen clients over-engineer qualification scoring with 15-point rubrics and weighted matrices. This one uses three signals that correlate tightly with closed deals in their specific pipeline:</p>
     <ul>
-      <li><strong>Budget fit</strong> — £2k–10k gets 2pts, £10k+ gets 3pts. Under £2k gets 0.</li>
-      <li><strong>Problem clarity</strong> — n8n runs a simple keyword check on the free-text answer. "Scaling", "pipeline", "growth", "revenue" → 2pts. Generic non-answers → 0pts.</li>
-      <li><strong>Decision authority</strong> — sole decision-maker → 2pts, "needs sign-off" → 1pt, "just researching" → 0pts.</li>
+      <li><strong>Budget fit</strong> - £2k–10k gets 2pts, £10k+ gets 3pts. Under £2k gets 0.</li>
+      <li><strong>Problem clarity</strong> - n8n runs a simple keyword check on the free-text answer. "Scaling", "pipeline", "growth", "revenue" → 2pts. Generic non-answers → 0pts.</li>
+      <li><strong>Decision authority</strong> - sole decision-maker → 2pts, "needs sign-off" → 1pt, "just researching" → 0pts.</li>
     </ul>
     <p>Threshold: 4 out of 7. After 30 days they reviewed the sheet and found that <strong>every deal they closed had scored 5 or above.</strong> They tightened the threshold to 5. Still works.</p>
 
     <h2>What About the Unqualified Leads?</h2>
-    <p>We didn't just drop them. Low-scorers go into a lightweight nurture loop: they get added to a Mailchimp sequence (via n8n's Mailchimp node) that sends three emails over six weeks — a case study, a pricing guide, and a "when you're ready" invite. Two of their first-month conversions came from leads that initially scored a 2 and re-engaged three weeks later with a bigger budget.</p>
-    <p>The bot response for low-scorers also matters. We spent time on the copy — it doesn't say "you didn't qualify." It says: <em>"Based on what you've shared, we'd probably be overkill for where you are right now — but we've put together a free guide on [X] that might help. We'll check back in a few weeks."</em> Honest. Non-patronising. Brand-safe.</p>
+    <p>We didn't just drop them. Low-scorers go into a lightweight nurture loop: they get added to a Mailchimp sequence (via n8n's Mailchimp node) that sends three emails over six weeks - a case study, a pricing guide, and a "when you're ready" invite. Two of their first-month conversions came from leads that initially scored a 2 and re-engaged three weeks later with a bigger budget.</p>
+    <p>The bot response for low-scorers also matters. We spent time on the copy - it doesn't say "you didn't qualify." It says: <em>"Based on what you've shared, we'd probably be overkill for where you are right now - but we've put together a free guide on [X] that might help. We'll check back in a few weeks."</em> Honest. Non-patronising. Brand-safe.</p>
 
     <h2>Build Time and What It Cost</h2>
-    <p>End-to-end: <strong>2.5 days of build time</strong>. That includes the Telegram bot setup, the n8n workflow (12 nodes), the scoring logic, the Google Sheets integration, the Mailchimp nurture hook, and testing with real leads from their backlog. Running costs are essentially zero — n8n self-hosted on their existing VPS, Telegram Bot API is free, Google Sheets is free, Mailchimp on their existing plan.</p>
+    <p>End-to-end: <strong>2.5 days of build time</strong>. That includes the Telegram bot setup, the n8n workflow (12 nodes), the scoring logic, the Google Sheets integration, the Mailchimp nurture hook, and testing with real leads from their backlog. Running costs are essentially zero - n8n self-hosted on their existing VPS, Telegram Bot API is free, Google Sheets is free, Mailchimp on their existing plan.</p>
     <p>The only ongoing cost is the Calendly Pro plan they were already paying for. We just made it earn its keep.</p>
 
     <div class="result-box">
-      <div class="result-label">// results — first 30 days post-launch</div>
+      <div class="result-label">// results - first 30 days post-launch</div>
       <ul>
-        <li>Discovery call volume dropped from 8/week to 3/week — all high-fit leads</li>
+        <li>Discovery call volume dropped from 8/week to 3/week - all high-fit leads</li>
         <li>5+ hours of senior sales time reclaimed per week</li>
         <li>Lead-to-call conversion rate up 22% (higher intent going in)</li>
         <li>2 closed deals from the nurture sequence in month one</li>
@@ -319,13 +319,13 @@
     </div>
 
     <h2>Why This Works (and Where It Doesn't)</h2>
-    <p>Telegram has a 90%+ open rate compared to email's 20–30%. When you move the qualification conversation to a channel people actually check, completion rates follow. The bot format also <strong>feels like a conversation, not a form</strong> — that's the psychological unlock. People will answer three quick messages where they'd abandon a six-field survey.</p>
-    <p>That said: this model assumes your leads have Telegram, or are willing to install it. For some B2B verticals (enterprise, regulated industries, older demographics) that's a genuine friction point. In those cases we'd swap Telegram for WhatsApp Business API or an SMS-based equivalent — same n8n logic, different transport layer. The architecture is the same; only the messaging node changes.</p>
-    <p>The scoring model also needs a review every quarter. Lead quality signals drift as your ICP evolves. Build the review into your ops calendar — it takes 20 minutes and keeps the filter sharp.</p>
+    <p>Telegram has a 90%+ open rate compared to email's 20–30%. When you move the qualification conversation to a channel people actually check, completion rates follow. The bot format also <strong>feels like a conversation, not a form</strong> - that's the psychological unlock. People will answer three quick messages where they'd abandon a six-field survey.</p>
+    <p>That said: this model assumes your leads have Telegram, or are willing to install it. For some B2B verticals (enterprise, regulated industries, older demographics) that's a genuine friction point. In those cases we'd swap Telegram for WhatsApp Business API or an SMS-based equivalent - same n8n logic, different transport layer. The architecture is the same; only the messaging node changes.</p>
+    <p>The scoring model also needs a review every quarter. Lead quality signals drift as your ICP evolves. Build the review into your ops calendar - it takes 20 minutes and keeps the filter sharp.</p>
 
     <h2>The Takeaway</h2>
     <p>If your sales process involves any kind of discovery call, you almost certainly have a qualification problem. Most teams solve it with manual email back-and-forth or a form nobody fills out. <strong>Neither respects the lead's time or yours.</strong></p>
-    <p>A bot that qualifies in 90 seconds, scores automatically, and books only the right ones isn't a luxury — it's a basic efficiency fix. The tech exists, it's cheap to run, and the build time is measured in days, not months. The only thing blocking most teams is knowing it's possible.</p>
+    <p>A bot that qualifies in 90 seconds, scores automatically, and books only the right ones isn't a luxury - it's a basic efficiency fix. The tech exists, it's cheap to run, and the build time is measured in days, not months. The only thing blocking most teams is knowing it's possible.</p>
     <p>Now you know.</p>
 
   
@@ -342,7 +342,7 @@
   <section class="article-cta">
     <div class="cta-inner">
       <h2>Wasting time on the wrong calls?</h2>
-      <p>We'll build you a qualification bot that filters leads automatically — so your calendar only fills with people who can actually buy. Done in days, not months.</p>
+      <p>We'll build you a qualification bot that filters leads automatically - so your calendar only fills with people who can actually buy. Done in days, not months.</p>
       <a href="/" class="btn-primary">Let's talk →</a>
     </div>
   </section>
@@ -381,7 +381,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 getmicroservices.com — All rights reserved.</p>
+      <p>© 2026 getmicroservices.com - All rights reserved.</p>
       <div class="footer-socials">
         <a href="#">Twitter</a>
         <a href="#">LinkedIn</a>

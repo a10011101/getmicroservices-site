@@ -10,8 +10,8 @@
 <meta name="robots" content="noindex, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/competitor-price-monitoring-bot"/>
-<title>Competitor Price Monitoring Bot That Runs Every Morning — getmicroservices</title>
-<meta name="description" content="An online retailer was spending 2 hours a day manually checking competitor prices. We built an n8n pipeline that scrapes, compares, and delivers a Slack digest before the trading day starts."/>
+<title>Competitor Price Monitoring Bot That Runs Every Morning</title>
+<meta name="description" content="Stop checking competitor prices manually. We built an automated price monitoring bot that runs every morning and sends a Slack digest before 7 AM."/>
 <style>
   * { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-touch-callout: none; }
   input, textarea { -webkit-user-select: text; -moz-user-select: text; user-select: text; -webkit-touch-callout: default; }
@@ -191,19 +191,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <meta property="og:title" content="Competitor Price Monitoring Bot That Runs Every Morning — getmicroservices"/>
+  <meta property="og:title" content="Competitor Price Monitoring Bot That Runs Every Morning - getmicroservices"/>
   <meta property="og:description" content="An online retailer was spending 2 hours a day manually checking competitor prices. We built an n8n pipeline that scrapes, compares, and delivers a Slack digest before the trading day starts."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/a/blog/competitor-price-monitoring-bot"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="Competitor Price Monitoring Bot That Runs Every Morning — getmicroservices"/>
+  <meta name="twitter:title" content="Competitor Price Monitoring Bot That Runs Every Morning - getmicroservices"/>
   <meta name="twitter:description" content="An online retailer was spending 2 hours a day manually checking competitor prices. We built an n8n pipeline that scrapes, compares, and delivers a Slack digest before the trading day starts."/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Competitor Price Monitoring Bot That Runs Every Morning — getmicroservices",
+  "headline": "Competitor Price Monitoring Bot That Runs Every Morning - getmicroservices",
   "description": "An online retailer was spending 2 hours a day manually checking competitor prices. We built an n8n pipeline that scrapes, compares, and delivers a Slack digest before the trading day starts.",
   "datePublished": "2026-04-13",
   "publisher": {
@@ -233,7 +233,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "Competitor Price Monitoring Bot That Runs Every Morning — getmicroservices",
+      "name": "Competitor Price Monitoring Bot That Runs Every Morning - getmicroservices",
       "item": "https://getmicroservices.com/a/blog/competitor-price-monitoring-bot"
     }
   ]
@@ -275,18 +275,18 @@
     <span>Apr 13, 2026</span>
     <span>5 min read</span>
   </div>
-  <p class="post-lead">An online electronics retailer was spending 2 hours every morning manually checking competitor prices across 250 SKUs. We built an n8n pipeline that scrapes, compares, and delivers a Slack digest before the trading day starts — and found 12% of their margin sitting on the table.</p>
+  <p class="post-lead">An online electronics retailer was spending 2 hours every morning manually checking competitor prices across 250 SKUs. We built an n8n pipeline that scrapes, compares, and delivers a Slack digest before the trading day starts - and found 12% of their margin sitting on the table.</p>
 
   <h2>The problem</h2>
-  <p>James runs a five-person online electronics shop. Every morning, someone on his team would open a spreadsheet, manually visit four competitor websites, find matching products, and log the prices. It took about two hours. On the days they skipped it — bank holidays, busy periods — they were flying blind.</p>
+  <p>James runs a five-person online electronics shop. Every morning, someone on his team would open a spreadsheet, manually visit four competitor websites, find matching products, and log the prices. It took about two hours. On the days they skipped it - bank holidays, busy periods - they were flying blind.</p>
   <p><strong>Twice in six months they'd missed a competitor running a weekend flash sale</strong> and watched conversion drop without understanding why until Monday morning. By then it was too late.</p>
-  <p>Proper repricing tools exist, but they're built for Amazon and priced accordingly. James didn't need dynamic repricing. He needed visibility — fast enough to act on it.</p>
+  <p>Proper repricing tools exist, but they're built for Amazon and priced accordingly. James didn't need dynamic repricing. He needed visibility - fast enough to act on it.</p>
 
   <h2>What we built</h2>
   <p>A fully automated price monitoring pipeline on n8n. Here's the flow:</p>
 
   <div class="flow-card">
-    <div class="flow-label">price monitor — n8n, runs daily at 06:00</div>
+    <div class="flow-label">price monitor - n8n, runs daily at 06:00</div>
     <div class="flow-nodes">
       <div class="flow-node">
         <div class="node-box"><span class="node-icon">⏰</span><div><div class="node-name">Cron Trigger</div><div class="node-type">06:00 daily</div></div></div>
@@ -315,31 +315,31 @@
     <div class="flow-result">↳ Team wakes up to a Slack message: top 10 price gaps, any new competitor drops, and a "clear" signal if nothing material changed</div>
   </div>
 
-  <p>The scraper hits four competitor sites at 6 AM using plain HTTP requests and CSS selectors — no headless browser needed since prices are server-rendered. Each scraped price is matched against a Google Sheet mapping table (competitor URL → James's SKU) and compared with live Shopify prices via the Admin API.</p>
-  <p>Items where a competitor is more than 3% cheaper get flagged as exposure. Items where James is cheaper than all competitors get tagged as potential margin upside. Everything logs to a rolling Google Sheet — one row per SKU per day — giving him a 90-day price history he'd never had before.</p>
+  <p>The scraper hits four competitor sites at 6 AM using plain HTTP requests and CSS selectors - no headless browser needed since prices are server-rendered. Each scraped price is matched against a Google Sheet mapping table (competitor URL → James's SKU) and compared with live Shopify prices via the Admin API.</p>
+  <p>Items where a competitor is more than 3% cheaper get flagged as exposure. Items where James is cheaper than all competitors get tagged as potential margin upside. Everything logs to a rolling Google Sheet - one row per SKU per day - giving him a 90-day price history he'd never had before.</p>
   <p>The Slack message lands at 6:30 AM. On quiet days it's two lines. On the day a competitor ran a 15% category flash sale at 7 PM, the midnight re-run caught it and the team matched prices before Friday opened.</p>
 
   <h2>The edge cases</h2>
   <p>A few things that aren't obvious until you're building it:</p>
   <ul>
-    <li><strong>Out-of-stock items</strong> — when a competitor hides price on OOS products, we treat it as "unknown" not zero, so it doesn't corrupt the comparison.</li>
-    <li><strong>Bundled pricing</strong> — one competitor lists some items in multi-packs. The mapping table includes a unit-price multiplier so comparisons stay apples-to-apples.</li>
-    <li><strong>Site redesigns</strong> — we checksum the scraped HTML structure. If it changes significantly, n8n sends an alert before the next run instead of returning garbage data silently.</li>
-    <li><strong>Rate limiting</strong> — randomised 2–6 second delay between requests, rotating user-agent. Polite, not aggressive.</li>
+    <li><strong>Out-of-stock items</strong> - when a competitor hides price on OOS products, we treat it as "unknown" not zero, so it doesn't corrupt the comparison.</li>
+    <li><strong>Bundled pricing</strong> - one competitor lists some items in multi-packs. The mapping table includes a unit-price multiplier so comparisons stay apples-to-apples.</li>
+    <li><strong>Site redesigns</strong> - we checksum the scraped HTML structure. If it changes significantly, n8n sends an alert before the next run instead of returning garbage data silently.</li>
+    <li><strong>Rate limiting</strong> - randomised 2–6 second delay between requests, rotating user-agent. Polite, not aggressive.</li>
   </ul>
 
   <h2>The result</h2>
 
   <div class="result-box">
     <div class="result-title">after 6 weeks</div>
-    <div class="result-item">~2 hours/day saved — zero manual checking since launch</div>
-    <div class="result-item">12% average margin improvement — 42 SKUs repriced after discovering they were underpriced vs. all competitors</div>
-    <div class="result-item">Flash sale caught in real-time — matched competitor promotion within 90 minutes</div>
+    <div class="result-item">~2 hours/day saved - zero manual checking since launch</div>
+    <div class="result-item">12% average margin improvement - 42 SKUs repriced after discovering they were underpriced vs. all competitors</div>
+    <div class="result-item">Flash sale caught in real-time - matched competitor promotion within 90 minutes</div>
     <div class="result-item">90-day price history now available on every SKU</div>
     <div class="result-item">Runs on the same $12/month VPS as their other n8n workflows</div>
   </div>
 
-  <p>The margin finding was the real surprise. By surfacing SKUs where James was cheaper than all four competitors — often by 10–20% — he raised prices on 42 products in the first three weeks. Conversion didn't move. Revenue did.</p>
+  <p>The margin finding was the real surprise. By surfacing SKUs where James was cheaper than all four competitors - often by 10–20% - he raised prices on 42 products in the first three weeks. Conversion didn't move. Revenue did.</p>
   <p>"I'd been leaving money on the table for two years without knowing it," he told us. "The bot paid for itself in week one."</p>
 
   <h2>The build</h2>

@@ -15,8 +15,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How We Built a WhatsApp Bot for a Restaurant in 48 Hours – GetMicroservices Blog</title>
-  <meta name="description" content="A busy restaurant was drowning in reservation calls and menu questions on WhatsApp. We built a bot that handles both — fully automated, no monthly SaaS fees." />
+  <title>WhatsApp Restaurant Bot: Reservations in 48 Hours</title>
+  <meta name="description" content="A busy restaurant was drowning in reservation calls and menu questions on WhatsApp. We built a bot that handles both - fully automated, no monthly SaaS fees." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -174,19 +174,19 @@
   </style>
 
   <meta property="og:title" content="How We Built a WhatsApp Bot for a Restaurant in 48 Hours – GetMicroservices Blog"/>
-  <meta property="og:description" content="A busy restaurant was drowning in reservation calls and menu questions on WhatsApp. We built a bot that handles both — fully automated, no monthly SaaS fees."/>
+  <meta property="og:description" content="A busy restaurant was drowning in reservation calls and menu questions on WhatsApp. We built a bot that handles both - fully automated, no monthly SaaS fees."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/blog/whatsapp-restaurant-bot-reservations-menu"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:title" content="How We Built a WhatsApp Bot for a Restaurant in 48 Hours – GetMicroservices Blog"/>
-  <meta name="twitter:description" content="A busy restaurant was drowning in reservation calls and menu questions on WhatsApp. We built a bot that handles both — fully automated, no monthly SaaS fees."/>
+  <meta name="twitter:description" content="A busy restaurant was drowning in reservation calls and menu questions on WhatsApp. We built a bot that handles both - fully automated, no monthly SaaS fees."/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "How We Built a WhatsApp Bot for a Restaurant in 48 Hours – GetMicroservices Blog",
-  "description": "A busy restaurant was drowning in reservation calls and menu questions on WhatsApp. We built a bot that handles both — fully automated, no monthly SaaS fees.",
+  "description": "A busy restaurant was drowning in reservation calls and menu questions on WhatsApp. We built a bot that handles both - fully automated, no monthly SaaS fees.",
   "datePublished": "2026-04-09",
   "publisher": {
     "@type": "Organization",
@@ -253,7 +253,7 @@
     <span class="meta-readtime">6 min read</span>
   </div>
   <h1>How We Built a WhatsApp Bot for a Restaurant in 48 Hours</h1>
-  <p class="lead">A 40-seat restaurant was fielding 80+ WhatsApp messages a day — reservations, menu questions, allergy queries, opening hours. Staff were spending hours on their phones instead of the floor. We automated it in two days.</p>
+  <p class="lead">A 40-seat restaurant was fielding 80+ WhatsApp messages a day - reservations, menu questions, allergy queries, opening hours. Staff were spending hours on their phones instead of the floor. We automated it in two days.</p>
 </div>
 
 <!-- ARTICLE BODY -->
@@ -262,7 +262,7 @@
   <h2>The Problem</h2>
   <p>Dimitri manages a busy Mediterranean restaurant in a tourist-heavy area. For a booking system built on Telegram, see <a href="/blog/how-we-automated-a-booking-system-in-3-days" style="color:var(--accent);">how we automated a booking system in 3 days</a>.</p>
   <p>Dimitri manages a busy Mediterranean restaurant in a tourist-heavy area. His WhatsApp number is printed on every menu, every table card, and on their Google Maps listing. Which means it's open season: questions come in from 7am until midnight, seven days a week.</p>
-  <p>When we first spoke, he walked us through what a typical day looked like. His front-of-house staff were fielding messages between seating guests: "Do you have vegetarian options?", "Can we book a table for 6 on Saturday?", "What time do you close?", "Is there parking nearby?". Each message takes 30–60 seconds to answer — but across 80+ messages a day with three staff sharing the phone, it added up to <strong>nearly 2 hours of lost floor time every single day</strong>.</p>
+  <p>When we first spoke, he walked us through what a typical day looked like. His front-of-house staff were fielding messages between seating guests: "Do you have vegetarian options?", "Can we book a table for 6 on Saturday?", "What time do you close?", "Is there parking nearby?". Each message takes 30–60 seconds to answer - but across 80+ messages a day with three staff sharing the phone, it added up to <strong>nearly 2 hours of lost floor time every single day</strong>.</p>
   <p>He'd tried just leaving messages on read until quieter moments, but that was killing his Google ranking. As covered in <a href="/blog/ai-chatbot-for-small-business" style="color:var(--accent);">our AI chatbot guide for small businesses</a>, handling repetitive customer messages is one of the highest-ROI automation use cases. Slow response rate on WhatsApp Business shows up in local search. He was stuck: respond fast and lose floor time, or protect the floor and lose visibility.</p>
 
   <h2>What He Actually Needed</h2>
@@ -273,13 +273,13 @@
     <li>Basic info (hours, location, parking, dress code)</li>
     <li>Special requests (birthday setups, private hire)</li>
   </ul>
-  <p>Only the fourth category genuinely needed a human. The first three — easily 85% of all messages — could be handled automatically, instantly, and probably better than a rushed staff member typing on a phone between customers.</p>
+  <p>Only the fourth category genuinely needed a human. The first three - easily 85% of all messages - could be handled automatically, instantly, and probably better than a rushed staff member typing on a phone between customers.</p>
 
   <h2>What We Built</h2>
   <p>The solution is a WhatsApp Business API bot powered by <a href="/blog/n8n-vs-zapier-2026">n8n</a>, with Google Sheets as the reservation ledger and a simple static knowledge base for menu and FAQ responses. Here's the full flow:</p>
 
-  <!-- WORKFLOW DIAGRAM -->restaurant WhatsApp bot — <a href="/blog/n8n-vs-zapier-2026">n8n</a> + WhatsApp Business API<div class="workflow-diagram">
-    <div class="workflow-label">restaurant WhatsApp bot — n8n + WhatsApp Business API</div>
+  <!-- WORKFLOW DIAGRAM -->restaurant WhatsApp bot - <a href="/blog/n8n-vs-zapier-2026">n8n</a> + WhatsApp Business API<div class="workflow-diagram">
+    <div class="workflow-label">restaurant WhatsApp bot - n8n + WhatsApp Business API</div>
     <div class="workflow-nodes">
       <div class="wf-node">
         <div class="wf-box"><span class="wf-icon">💬</span><div><div class="wf-name">WhatsApp Message</div><div class="wf-type">Inbound webhook</div></div></div>
@@ -304,41 +304,41 @@
     <div class="workflow-result">↳ Guest messages WhatsApp → classified in &lt;2 seconds → confirmed or answered instantly → staff only notified for reservations &amp; escalations</div>
   </div>
 
-  <p>The intent classifier reads the incoming message and routes it to one of four branches. Menu and info questions get an immediate templated reply pulled from a simple JSON knowledge base — allergen info, opening hours, location, dress code. Dimitri updates this file himself when the menu changes; it takes about two minutes.</p>
-  <p>The whole stack runs on <a href="/blog/n8n-vs-zapier-2026">n8n</a> hosted on a $6/month VPS. WhatsApp Business API access was set up through Meta's Cloud API — no third-party subscription required, just a verified business account. </p>
-  <p>Anything the classifier isn't confident about — unusual requests, complaints, complex queries — gets flagged with a "human needed" tag and forwarded to the manager's personal WhatsApp with the full context. Response time on those drops from "whenever someone checks the shared phone" to instant.</p>
-  <p>The whole stack runs on n8n hosted on a $6/month VPS. WhatsApp Business API access was set up through Meta's Cloud API — no third-party subscription required, just a verified business account. <strong>Total build: 48 hours across two days.</strong></p>
+  <p>The intent classifier reads the incoming message and routes it to one of four branches. Menu and info questions get an immediate templated reply pulled from a simple JSON knowledge base - allergen info, opening hours, location, dress code. Dimitri updates this file himself when the menu changes; it takes about two minutes.</p>
+  <p>The whole stack runs on <a href="/blog/n8n-vs-zapier-2026">n8n</a> hosted on a $6/month VPS. WhatsApp Business API access was set up through Meta's Cloud API - no third-party subscription required, just a verified business account. </p>
+  <p>Anything the classifier isn't confident about - unusual requests, complaints, complex queries - gets flagged with a "human needed" tag and forwarded to the manager's personal WhatsApp with the full context. Response time on those drops from "whenever someone checks the shared phone" to instant.</p>
+  <p>The whole stack runs on n8n hosted on a $6/month VPS. WhatsApp Business API access was set up through Meta's Cloud API - no third-party subscription required, just a verified business account. <strong>Total build: 48 hours across two days.</strong></p>
 
   <h2>The Edge Cases That Mattered</h2>
   <p>The core flow took about 6 hours. The remaining 42 were spent on the things that make or break a customer-facing bot:</p>
   <ul>
-    <li>Handling ambiguous messages ("can we come in?" — bot asks for clarification politely)</li>
+    <li>Handling ambiguous messages ("can we come in?" - bot asks for clarification politely)</li>
     <li>Same-day booking logic (different availability rules after 5pm)</li>
-    <li>Party sizes over 10 — these auto-escalate to manager with a note about private hire</li>
-    <li>Repeat messengers who've already confirmed — bot recognises the number and skips re-intro</li>
-    <li>Out-of-hours responses — different message tone after midnight, sets expectation of morning reply for complex queries</li>
+    <li>Party sizes over 10 - these auto-escalate to manager with a note about private hire</li>
+    <li>Repeat messengers who've already confirmed - bot recognises the number and skips re-intro</li>
+    <li>Out-of-hours responses - different message tone after midnight, sets expectation of morning reply for complex queries</li>
   </ul>
   <p>None of these are technically hard. But skipping them is what turns a promising bot into an embarrassing one. We've seen restaurants try to DIY this with Zapier and a basic keyword filter, and the guest experience is rough. A bot that confidently misunderstands you is worse than no bot at all.</p>
 
   <h2>The Result</h2>
 
   <div class="result-box">
-    <div class="result-label">// measured results — 6 weeks post-launch</div>
+    <div class="result-label">// measured results - 6 weeks post-launch</div>
     <ul>
-      <li>85% of messages now handled fully automatically — no staff time required</li>
+      <li>85% of messages now handled fully automatically - no staff time required</li>
       <li>Average first-response time: 2 seconds (was 28 minutes during service)</li>
       <li>WhatsApp Business response rate: now showing "Very responsive" on Google listing</li>
       <li>Staff reclaimed ~1.5 hours of floor time per day</li>
       <li>Reservation no-shows down 35% after adding automated reminder 2 hours before</li>
-      <li>Zero monthly SaaS fees — just the VPS ($6/mo) and Meta's free API tier</li>
+      <li>Zero monthly SaaS fees - just the VPS ($6/mo) and Meta's free API tier</li>
     </ul>
   </div>
 
-  <p>The thing Dimitri keeps mentioning: guests actually comment on how fast they got a reply. "People assume there's someone on the phone constantly. They're pleasantly surprised — and that sets a good tone before they've even walked in."</p>
-  <p>That perception shift matters. A fast, accurate response to "do you have gluten-free options?" isn't just convenient — it signals that the restaurant is professional and attentive. The bot has become part of the brand experience.</p>
+  <p>The thing Dimitri keeps mentioning: guests actually comment on how fast they got a reply. "People assume there's someone on the phone constantly. They're pleasantly surprised - and that sets a good tone before they've even walked in."</p>
+  <p>That perception shift matters. A fast, accurate response to "do you have gluten-free options?" isn't just convenient - it signals that the restaurant is professional and attentive. The bot has become part of the brand experience.</p>
 
   <h2>What This Cost</h2>
-  <p>This was scoped under our Growth plan — two connected flows (reservation + FAQ), WhatsApp API setup, custom knowledge base, and the Telegram escalation layer. Dimitri got full documentation, the n8n workflow JSON, and a 30-minute handover call. He's been running independently since week one.</p>
+  <p>This was scoped under our Growth plan - two connected flows (reservation + FAQ), WhatsApp API setup, custom knowledge base, and the Telegram escalation layer. Dimitri got full documentation, the n8n workflow JSON, and a 30-minute handover call. He's been running independently since week one.</p>
   <p>If your restaurant, bar, or hospitality business is drowning in the same kind of messages, <a href="/" style="color: var(--accent);">let's talk</a>. The call is free and we'll tell you honestly what's worth automating and what isn't.</p>
 
 

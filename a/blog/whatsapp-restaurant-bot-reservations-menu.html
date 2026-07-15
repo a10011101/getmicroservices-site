@@ -10,8 +10,8 @@
 <meta name="robots" content="noindex, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/whatsapp-restaurant-bot-reservations-menu"/>
-<title>WhatsApp Bot for a Restaurant: Reservations + Menu in 48 Hours — getmicroservices</title>
-<meta name="description" content="A busy restaurant was handling 80+ WhatsApp messages a day manually. Here's how we automated reservations, menu queries, and FAQ responses in 48 hours."/>
+<title>WhatsApp Restaurant Bot: Reservations in 48 Hours</title>
+<meta name="description" content="A busy restaurant was drowning in reservation calls and menu questions on WhatsApp. We built a bot that handles both - fully automated, no monthly SaaS fees."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -198,19 +198,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <meta property="og:title" content="WhatsApp Bot for a Restaurant: Reservations + Menu in 48 Hours — getmicroservices"/>
+  <meta property="og:title" content="WhatsApp Bot for a Restaurant: Reservations + Menu in 48 Hours - getmicroservices"/>
   <meta property="og:description" content="A busy restaurant was handling 80+ WhatsApp messages a day manually. Here"/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/a/blog/whatsapp-restaurant-bot-reservations-menu"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="WhatsApp Bot for a Restaurant: Reservations + Menu in 48 Hours — getmicroservices"/>
+  <meta name="twitter:title" content="WhatsApp Bot for a Restaurant: Reservations + Menu in 48 Hours - getmicroservices"/>
   <meta name="twitter:description" content="A busy restaurant was handling 80+ WhatsApp messages a day manually. Here"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "WhatsApp Bot for a Restaurant: Reservations + Menu in 48 Hours — getmicroservices",
+  "headline": "WhatsApp Bot for a Restaurant: Reservations + Menu in 48 Hours - getmicroservices",
   "description": "A busy restaurant was handling 80+ WhatsApp messages a day manually. Here",
   "datePublished": "2026-04-09",
   "publisher": {
@@ -240,7 +240,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "WhatsApp Bot for a Restaurant: Reservations + Menu in 48 Hours — getmicroservices",
+      "name": "WhatsApp Bot for a Restaurant: Reservations + Menu in 48 Hours - getmicroservices",
       "item": "https://getmicroservices.com/a/blog/whatsapp-restaurant-bot-reservations-menu"
     }
   ]
@@ -282,28 +282,28 @@
     <span>Apr 5, 2026</span>
     <span>6 min read</span>
   </div>
-  <p class="post-lead">A 40-seat restaurant was handling 80+ WhatsApp messages a day by hand — reservations, menu queries, hours, allergies. Staff were losing 2 hours of floor time to a shared phone. Here's exactly what we built to fix it.</p>
+  <p class="post-lead">A 40-seat restaurant was handling 80+ WhatsApp messages a day by hand - reservations, menu queries, hours, allergies. Staff were losing 2 hours of floor time to a shared phone. Here's exactly what we built to fix it.</p>
 
   <h2>The situation</h2>
-  <p>Dimitri runs a Mediterranean restaurant in a busy area. His WhatsApp number is on every menu, every table card, and his Google Maps listing. The channel works — guests use it — but it had become a full-time job.</p>
+  <p>Dimitri runs a Mediterranean restaurant in a busy area. His WhatsApp number is on every menu, every table card, and his Google Maps listing. The channel works - guests use it - but it had become a full-time job.</p>
   <p>Peak service, his front-of-house staff were stepping off the floor to answer: "Do you have a vegan option?", "Can I book a table for four on Friday?", "What time do you close?". Each reply takes 30–60 seconds. Across 80 messages a day, that's <strong>nearly 2 hours of lost floor time, every single day</strong>.</p>
   <p>Ignoring messages wasn't an option either. WhatsApp Business tracks response rates, and that metric feeds Google's local search ranking. Slow to respond = less visible. He was stuck in a loop: answer fast and lose staff time, or protect the floor and lose discoverability.</p>
 
   <h2>What we mapped</h2>
   <p>We logged a week of incoming messages and categorised every one. The breakdown was stark:</p>
   <ul>
-    <li>Reservation requests — 38%</li>
-    <li>Menu and dietary questions — 31%</li>
-    <li>Basic info (hours, parking, location) — 17%</li>
-    <li>Special requests requiring human judgment — 14%</li>
+    <li>Reservation requests - 38%</li>
+    <li>Menu and dietary questions - 31%</li>
+    <li>Basic info (hours, parking, location) - 17%</li>
+    <li>Special requests requiring human judgment - 14%</li>
   </ul>
-  <p>86% of messages could be handled automatically. That last 14% — private hire inquiries, complaints, unusual requests — still needed a human. But routing only those to staff would cut the interruption load by almost 6x.</p>
+  <p>86% of messages could be handled automatically. That last 14% - private hire inquiries, complaints, unusual requests - still needed a human. But routing only those to staff would cut the interruption load by almost 6x.</p>
 
   <h2>What we built</h2>
   <p>A WhatsApp Business API bot running on n8n, with Google Sheets as the reservation store and a JSON knowledge base for menu and FAQ content. Full flow:</p>
 
   <div class="flow-card">
-    <div class="flow-label">restaurant whatsapp bot — n8n + whatsapp business api</div>
+    <div class="flow-label">restaurant whatsapp bot - n8n + whatsapp business api</div>
     <div class="flow-nodes">
       <div class="flow-node">
         <div class="node-box"><span class="node-icon">💬</span><div><div class="node-name">WhatsApp Inbound</div><div class="node-type">Webhook trigger</div></div></div>
@@ -328,9 +328,9 @@
     <div class="flow-result">↳ message in → classified in &lt;2s → answered instantly or escalated with full context → staff Telegram ping for reservations + edge cases only</div>
   </div>
 
-  <p>The intent classifier reads the raw message and assigns a category. For menu and info queries, it pulls from a JSON knowledge base — allergens, dietary options, hours, location, dress code. Dimitri updates this file himself when the menu changes. It takes about 90 seconds.</p>
-  <p>Reservation requests kick off a guided conversation: the bot collects date, time, and party size, checks Google Sheets for slot availability, and confirms or offers alternatives. Every booking writes to the sheet and fires a Telegram notification to the manager — no need to monitor the WhatsApp thread.</p>
-  <p>Anything that doesn't fit cleanly — unusual requests, ambiguous intent, anything the classifier scores below 80% confidence — gets escalated. The staff member receives a Telegram message with the full conversation context and a one-tap "reply" button that opens the WhatsApp thread. Human time is spent only where it's actually needed.</p>
+  <p>The intent classifier reads the raw message and assigns a category. For menu and info queries, it pulls from a JSON knowledge base - allergens, dietary options, hours, location, dress code. Dimitri updates this file himself when the menu changes. It takes about 90 seconds.</p>
+  <p>Reservation requests kick off a guided conversation: the bot collects date, time, and party size, checks Google Sheets for slot availability, and confirms or offers alternatives. Every booking writes to the sheet and fires a Telegram notification to the manager - no need to monitor the WhatsApp thread.</p>
+  <p>Anything that doesn't fit cleanly - unusual requests, ambiguous intent, anything the classifier scores below 80% confidence - gets escalated. The staff member receives a Telegram message with the full conversation context and a one-tap "reply" button that opens the WhatsApp thread. Human time is spent only where it's actually needed.</p>
 
   <h2>The details that mattered</h2>
   <p>Core flow: ~6 hours. The rest of the 48 was edge cases and polish:</p>
@@ -345,26 +345,26 @@
   <p>A bot that confidently misunderstands a guest is worse than no bot at all. Getting these details right is the difference between something that helps and something that creates complaints.</p>
 
   <h2>The stack</h2>
-  <p><strong>n8n</strong> handles all the orchestration — webhook intake, classification logic, Sheets reads/writes, WhatsApp replies, Telegram alerts. It runs on a $6/month VPS we provisioned as part of the build. WhatsApp Business API access uses Meta's Cloud API directly — no third-party platform subscription, just a verified business account (free tier covers volumes like this comfortably).</p>
+  <p><strong>n8n</strong> handles all the orchestration - webhook intake, classification logic, Sheets reads/writes, WhatsApp replies, Telegram alerts. It runs on a $6/month VPS we provisioned as part of the build. WhatsApp Business API access uses Meta's Cloud API directly - no third-party platform subscription, just a verified business account (free tier covers volumes like this comfortably).</p>
   <p>Dimitri owns everything. He has the n8n workflow JSON, the server access, the knowledge base file, and a Loom walkthrough of how to update menu content. No ongoing dependency on us unless he wants to add something new.</p>
 
   <h2>The result</h2>
 
   <div class="result-box">
     <div class="result-title">after 6 weeks</div>
-    <div class="result-item">85% of messages handled automatically — zero staff time</div>
+    <div class="result-item">85% of messages handled automatically - zero staff time</div>
     <div class="result-item">Average first-response time: 2 seconds (was 28 minutes during service)</div>
     <div class="result-item">WhatsApp Business now shows "Very responsive" on Google listing</div>
     <div class="result-item">~1.5 hours of floor time reclaimed per day</div>
     <div class="result-item">No-show rate dropped 35% after automated reminders went live</div>
-    <div class="result-item">Running cost: $6/month VPS + Meta free tier — no SaaS fees</div>
+    <div class="result-item">Running cost: $6/month VPS + Meta free tier - no SaaS fees</div>
   </div>
 
-  <p>Dimitri told us guests started commenting on how fast they got a reply. "They assume there's someone on the phone the whole time. It sets a good tone before they've even walked in." That first impression matters — and it's now fully automated.</p>
+  <p>Dimitri told us guests started commenting on how fast they got a reply. "They assume there's someone on the phone the whole time. It sets a good tone before they've even walked in." That first impression matters - and it's now fully automated.</p>
   <p>The ROI math was simple: he was losing roughly 10 covers a week to slow response times and missed after-hours messages. At his average spend per cover, the build paid for itself inside the first two weeks.</p>
 
   <div class="post-cta">
-    <p>Hospitality, services, retail — if your customers message you, we can automate the routine 80% and escalate the rest.</p>
+    <p>Hospitality, services, retail - if your customers message you, we can automate the routine 80% and escalate the rest.</p>
     <a href="/a/#contact" class="btn-cta">[ let's talk ]</a>
   </div>
 
@@ -372,7 +372,7 @@
     <div class="further-reading" style="margin-top:2.5rem; padding:1.5rem 0; border-top:1px solid rgba(255,255,255,0.08);">
       <h2 style="font-size:1.05rem; margin-bottom:1rem; color:#00ff88; font-family:'JetBrains Mono',monospace; letter-spacing:0.02em;">📖 Further Reading</h2>
       <ul style="list-style:none; padding:0; margin:0;">
-        <li><a href="/a/blog/why-your-crm-and-stripe-dont-talk">Why Your CRM and Stripe Don't Talk — and How We Fixed It in 48 Hours</a></li>
+        <li><a href="/a/blog/why-your-crm-and-stripe-dont-talk">Why Your CRM and Stripe Don't Talk - and How We Fixed It in 48 Hours</a></li>
         <li><a href="/a/blog/webhook-explained">Webhooks Explained: Automate Anything</a></li>
         <li><a href="/a/blog/why-zapier-gets-expensive-fast">Why Zapier Gets Expensive Fast (and What We Use Instead)</a></li>
       </ul>

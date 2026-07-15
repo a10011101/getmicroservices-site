@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How We Turned 5 Google Sheets Into a Monday Morning Slack Digest – GetMicroservices Blog</title>
+  <title>Google Sheets to Slack Digest: 2.5 Hours Saved Weekly</title>
   <meta name="description" content="An e-commerce ops team was spending 2.5 hours every Monday manually compiling spreadsheet data into a Slack update. We automated the whole thing with n8n." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -253,21 +253,21 @@
     <span class="meta-readtime">5 min read</span>
   </div>
   <h1>How We Turned 5 Google Sheets Into a Monday Morning Slack Digest</h1>
-  <p class="lead">An e-commerce ops team was spending 2.5 hours every Monday manually copying numbers from spreadsheets into a Slack update. We automated the entire thing with n8n — it now runs itself at 8am sharp, every week.</p>
+  <p class="lead">An e-commerce ops team was spending 2.5 hours every Monday manually copying numbers from spreadsheets into a Slack update. We automated the entire thing with n8n - it now runs itself at 8am sharp, every week.</p>
 </div>
 
 <!-- ARTICLE BODY -->
 <article class="article-body">
 
   <h2>The Problem</h2>
-  <p>Ravi runs operations for a mid-sized e-commerce brand doing around £800k/year in revenue. We applied the same ops <a href="/blog/google-sheets-automation-examples">reporting</a>, delivering daily digests to Slack. Every Monday morning, he and his team started the week the same way: opening five different <a href="/blog/google-sheets-automation-examples">Google Sheets</a> — orders, inventory, returns, ad spend, and support tickets — pulling the relevant numbers, doing some quick maths, writing them up in a formatted message, and posting it to the #ops-digest Slack channel before the 9am standup.<a href="/blog/competitor-price-monitoring-bot" style="color:var(--accent);">our competitor price monitoring bot</a>, delivering daily digests to Slack. Every Monday morning, he and his team started the week the same way: opening five different Google Sheets — orders, inventory, returns, ad spend, and support tickets — pulling the relevant numbers, doing some quick maths, writing them up in a formatted message, and posting it to the #ops-digest Slack channel before the 9am standup.</p>the 3-tool stack that runs our client <a href="/blog/google-sheets-automation-examples">reporting</a><p>The whole ritual took <strong>between 2 and 2.5 hours</strong>, every single Monday, without fail. For a similar approach using just three tools, check out <a href="/blog/3-tool-stack-client-reporting-process" style="color:var(--accent);">the 3-tool stack that runs our client reporting</a>. When Ravi was on leave, someone else had to do it, which meant explaining the process, hoping the numbers were pulled correctly, and usually the digest arriving late. On a holiday Monday, it sometimes didn't happen at all.</p>
+  <p>Ravi runs operations for a mid-sized e-commerce brand doing around £800k/year in revenue. We applied the same ops <a href="/blog/google-sheets-automation-examples">reporting</a>, delivering daily digests to Slack. Every Monday morning, he and his team started the week the same way: opening five different <a href="/blog/google-sheets-automation-examples">Google Sheets</a> - orders, inventory, returns, ad spend, and support tickets - pulling the relevant numbers, doing some quick maths, writing them up in a formatted message, and posting it to the #ops-digest Slack channel before the 9am standup.<a href="/blog/competitor-price-monitoring-bot" style="color:var(--accent);">our competitor price monitoring bot</a>, delivering daily digests to Slack. Every Monday morning, he and his team started the week the same way: opening five different Google Sheets - orders, inventory, returns, ad spend, and support tickets - pulling the relevant numbers, doing some quick maths, writing them up in a formatted message, and posting it to the #ops-digest Slack channel before the 9am standup.</p>the 3-tool stack that runs our client <a href="/blog/google-sheets-automation-examples">reporting</a><p>The whole ritual took <strong>between 2 and 2.5 hours</strong>, every single Monday, without fail. For a similar approach using just three tools, check out <a href="/blog/3-tool-stack-client-reporting-process" style="color:var(--accent);">the 3-tool stack that runs our client reporting</a>. When Ravi was on leave, someone else had to do it, which meant explaining the process, hoping the numbers were pulled correctly, and usually the digest arriving late. On a holiday Monday, it sometimes didn't happen at all.</p>
   <p>"It's not hard work," he told us. "It's just relentless. Every week, same steps, same sheets, same channel. I keep thinking there must be a better way, but I haven't had time to figure it out."</p>
-  <p>Sound familiar? Manual reporting is one of the most common time sinks we see in ops teams. The data already exists — it's just sitting in the wrong format, in the wrong place.</p>
+  <p>Sound familiar? Manual reporting is one of the most common time sinks we see in ops teams. The data already exists - it's just sitting in the wrong format, in the wrong place.</p>
 
   <h2>What He Actually Needed</h2>
   <p>Ravi didn't need a BI tool or a new dashboard platform. He needed three things:</p>
   <ul>
-    <li>The data pulled automatically from the existing sheets — no migration, no new tools</li>
+    <li>The data pulled automatically from the existing sheets - no migration, no new tools</li>
     <li>Key metrics calculated and formatted cleanly</li>
     <li>A Slack message posted to the right channel at the right time, every week</li>
   </ul>
@@ -276,8 +276,8 @@
   <h2>What We Built</h2>
   <p>The solution was a single <a href="/blog/n8n-vs-zapier-2026">n8n</a> workflow triggered every Monday at 07:45am. Here's how it flows:</p>
 
-  <!-- WORKFLOW DIAGRAM -->weekly ops digest — Google Sheets → Slack via <a href="/blog/n8n-vs-zapier-2026">n8n</a><div class="workflow-diagram">
-    <div class="workflow-label">weekly ops digest — Google Sheets → Slack via n8n</div>
+  <!-- WORKFLOW DIAGRAM -->weekly ops digest - Google Sheets → Slack via <a href="/blog/n8n-vs-zapier-2026">n8n</a><div class="workflow-diagram">
+    <div class="workflow-label">weekly ops digest - Google Sheets → Slack via n8n</div>
     <div class="workflow-nodes">
       <div class="wf-node">
         <div class="wf-box"><span class="wf-icon">⏰</span><div><div class="wf-name">Cron Trigger</div><div class="wf-type">Mon 07:45am</div></div></div>
@@ -302,33 +302,33 @@
     <div class="workflow-result">↳ 5 sheets read in parallel → metrics calculated with week-on-week delta → formatted Slack message posted at 08:00am → team ready for standup</div>
   </div>
 
-  <p>The workflow reads all five sheets in parallel to keep runtime under 15 seconds. Each sheet has a dedicated sub-flow that knows which columns to pull and which calculations to run — total orders, fulfilment rate, return rate, ad spend vs. revenue ratio, open support tickets vs. closed.</p>
+  <p>The workflow reads all five sheets in parallel to keep runtime under 15 seconds. Each sheet has a dedicated sub-flow that knows which columns to pull and which calculations to run - total orders, fulfilment rate, return rate, ad spend vs. revenue ratio, open support tickets vs. closed.</p>
   <p>The metric engine then calculates week-on-week deltas automatically. If orders are up 12% versus last Monday, the Slack message shows a green arrow and the number. If return rate has ticked up, it's flagged in amber. The team sees at a glance what's moved, not just what the current number is.</p>
-  <p>The Slack message uses native Block Kit formatting — sections, dividers, emoji status indicators — so it looks clean and is easy to scan in under 30 seconds. We also added a "data as of" timestamp so the team knows exactly which date range is being reported.</p>
+  <p>The Slack message uses native Block Kit formatting - sections, dividers, emoji status indicators - so it looks clean and is easy to scan in under 30 seconds. We also added a "data as of" timestamp so the team knows exactly which date range is being reported.</p>
   <p>The whole build took <strong>two and a half days</strong>: one day setting up the sheet reads and metric calculations, half a day getting the Slack formatting right, one day testing with real data and edge cases (empty cells, sheets not yet updated by Monday morning, public holidays).</p>
 
   <h2>Edge Cases We Had to Handle</h2>
   <p>One thing that always comes up with reporting automations: what happens when the data isn't ready? Ravi's team updates their sheets throughout the week, but occasionally a sheet wasn't fully updated by Monday morning. We added a validation step that checks whether each sheet was last modified within the past 7 days. If not, the Slack message includes a small warning flag next to that section so the team knows to double-check manually before acting on it.</p>
-  <p>We also handled the week-on-week comparison carefully. The first run had no previous week to compare against, so we seeded it with the prior week's numbers manually. After that, the workflow stores a snapshot of each Monday's metrics in a separate "history" tab — lightweight, readable, and available if the team ever wants to build a chart.</p>
+  <p>We also handled the week-on-week comparison carefully. The first run had no previous week to compare against, so we seeded it with the prior week's numbers manually. After that, the workflow stores a snapshot of each Monday's metrics in a separate "history" tab - lightweight, readable, and available if the team ever wants to build a chart.</p>
 
   <h2>The Result</h2>
 
   <div class="result-box">
-    <div class="result-label">// measured results — 6 weeks post-launch</div>
+    <div class="result-label">// measured results - 6 weeks post-launch</div>
     <ul>
-      <li>2.5 hours saved every Monday — Ravi now spends 0 minutes on the digest</li>
+      <li>2.5 hours saved every Monday - Ravi now spends 0 minutes on the digest</li>
       <li>Digest arrives at 08:00am sharp, regardless of who is in the office</li>
       <li>Week-on-week delta surfaced issues 2 weeks early that would have been missed</li>
       <li>Team standup prep time dropped from 20 minutes to under 5 minutes</li>
-      <li>No ongoing SaaS cost — runs on the same $12/mo VPS as their other automations</li>
+      <li>No ongoing SaaS cost - runs on the same $12/mo VPS as their other automations</li>
     </ul>
   </div>
 
-  <p>The delta feature turned out to be the most valuable part. In week three, the return rate flag caught a product with a sudden spike in returns — a supplier had shipped a bad batch. Without the automation, that would have been buried in a spreadsheet until someone went looking for it. With the automated digest highlighting it in amber, the team caught it before the next reorder.</p>
-  <p>We built this under our Starter plan — one focused workflow, a handful of integrations, delivered in under a week. Ravi got the <a href="/blog/n8n-vs-zapier-2026">n8n</a> workflow exported, the Google Sheets structure documented, and a short Loom explaining how to adjust the metric calculations if the business changes. No retainer, no ongoing fee to us.</p>
+  <p>The delta feature turned out to be the most valuable part. In week three, the return rate flag caught a product with a sudden spike in returns - a supplier had shipped a bad batch. Without the automation, that would have been buried in a spreadsheet until someone went looking for it. With the automated digest highlighting it in amber, the team caught it before the next reorder.</p>
+  <p>We built this under our Starter plan - one focused workflow, a handful of integrations, delivered in under a week. Ravi got the <a href="/blog/n8n-vs-zapier-2026">n8n</a> workflow exported, the Google Sheets structure documented, and a short Loom explaining how to adjust the metric calculations if the business changes. No retainer, no ongoing fee to us.</p>
 
   <h2>What This Actually Cost</h2>
-  <p>We built this under our Starter plan — one focused workflow, a handful of integrations, delivered in under a week. Ravi got the n8n workflow exported, the Google Sheets structure documented, and a short Loom explaining how to adjust the metric calculations if the business changes. No retainer, no ongoing fee to us.</p>
+  <p>We built this under our Starter plan - one focused workflow, a handful of integrations, delivered in under a week. Ravi got the n8n workflow exported, the Google Sheets structure documented, and a short Loom explaining how to adjust the metric calculations if the business changes. No retainer, no ongoing fee to us.</p>
   <p>If your team is spending hours every week manually compiling data that already exists in a spreadsheet somewhere, <a href="/" style="color: var(--accent);">get in touch</a>. This kind of automation is usually faster to build than people expect.</p>
 
 

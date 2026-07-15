@@ -9,8 +9,18 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/ai-customer-support-bot-n8n"/>
-<title>How to Build an AI Customer Support Bot with n8n — getmicroservices</title>
-<meta name="description" content="Step-by-step guide to building an AI-powered customer support bot using n8n, ChatGPT, and your knowledge base."/>
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://getmicroservices.com/blog/ai-customer-support-bot-n8n" />
+  <meta property="og:title" content="How to Build an AI Customer Support Bot with n8n" />
+  <meta property="og:description" content="Build an AI customer support bot with n8n and ChatGPT. Automate ticket responses using your knowledge base - without losing the human touch." />
+  <meta property="og:image" content="https://getmicroservices.com/logo.jpg" />
+  <meta property="og:site_name" content="GetMicroservices" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How to Build an AI Customer Support Bot with n8n" />
+  <meta name="twitter:description" content="Build an AI customer support bot with n8n and ChatGPT. Automate ticket responses using your knowledge base - without losing the human touch." />
+  <meta name="twitter:image" content="https://getmicroservices.com/logo.jpg" />
+<title>How to Build an AI Customer Support Bot with n8n</title>
+<meta name="description" content="Build an AI customer support bot with n8n and ChatGPT. Automate ticket responses using your knowledge base - without losing the human touch."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -108,36 +118,36 @@
 
   <p>customer support is expensive. you hire agents, train them on the same 40 questions, and watch them answer "where's my order?" every single day. response times creep up, customers churn, and your best people burn out on repetitive tickets.</p>
 
-  <p>an <strong>AI customer support bot</strong> built on n8n handles the boring 70-80% automatically, escalates the rest to humans, and pulls answers from your actual data — not generic chatgpt waffle. here's exactly how to build one.</p>
+  <p>an <strong>AI customer support bot</strong> built on n8n handles the boring 70-80% automatically, escalates the rest to humans, and pulls answers from your actual data - not generic chatgpt waffle. here's exactly how to build one.</p>
 
   <h2>what the bot does</h2>
 
-  <p>the bot sits between your customers and your team. when a ticket arrives — via email, chat widget, whatsapp, or a form — n8n catches it, searches your knowledge base for relevant context, asks chatgpt to draft a reply, and either sends it or queues it for a human to review.</p>
+  <p>the bot sits between your customers and your team. when a ticket arrives - via email, chat widget, whatsapp, or a form - n8n catches it, searches your knowledge base for relevant context, asks chatgpt to draft a reply, and either sends it or queues it for a human to review.</p>
 
   <p>the difference from a basic chatbot: <strong>it uses your actual data</strong>. your faq docs, product pages, past resolved tickets, internal runbooks. not random internet knowledge. the answers are accurate, on-brand, and specific to your business.</p>
 
-  <p>we covered the building blocks for this in our <a href="/a/blog/n8n-ai-agent-workflows" style="color:var(--accent);">AI agent workflows guide</a> — the support bot is one of the most practical use cases.</p>
+  <p>we covered the building blocks for this in our <a href="/a/blog/n8n-ai-agent-workflows" style="color:var(--accent);">AI agent workflows guide</a> - the support bot is one of the most practical use cases.</p>
 
   <h2>architecture</h2>
 
   <p>four components, all connected through n8n:</p>
 
   <ul>
-    <li><strong>trigger layer</strong> — webhooks from chat widgets, email triggers (imap/gmail), or whatsapp business api. n8n normalises everything into a standard format.</li>
-    <li><strong>knowledge base</strong> — faq docs, help articles, product specs, resolved ticket history. stored in a vector database (pinecone, qdrant) or simpler setups can use google sheets or notion.</li>
-    <li><strong>AI processing</strong> — the chatgpt api node takes the customer question plus retrieved context and generates a response. you control the system prompt, tone, and guardrails.</li>
-    <li><strong>response + escalation</strong> — confident responses go out automatically. uncertain ones create a ticket in your helpdesk with the draft attached for human review.</li>
+    <li><strong>trigger layer</strong> - webhooks from chat widgets, email triggers (imap/gmail), or whatsapp business api. n8n normalises everything into a standard format.</li>
+    <li><strong>knowledge base</strong> - faq docs, help articles, product specs, resolved ticket history. stored in a vector database (pinecone, qdrant) or simpler setups can use google sheets or notion.</li>
+    <li><strong>AI processing</strong> - the chatgpt api node takes the customer question plus retrieved context and generates a response. you control the system prompt, tone, and guardrails.</li>
+    <li><strong>response + escalation</strong> - confident responses go out automatically. uncertain ones create a ticket in your helpdesk with the draft attached for human review.</li>
   </ul>
 
   <p>this approach handles questions it's never seen before, as long as the answer exists somewhere in your knowledge base. for more on how small businesses are using AI agents, check our breakdown of <a href="/a/blog/ai-agents-small-business" style="color:var(--accent);">AI agents that actually work</a>.</p>
 
   <h2>setting up the n8n workflow</h2>
 
-  <p>start with the trigger. easiest entry point is a webhook — most chat platforms (tawk.to, crisp, intercom) can post to a webhook url. add a <strong>webhook</strong> node in n8n and paste the url into your chat platform's settings.</p>
+  <p>start with the trigger. easiest entry point is a webhook - most chat platforms (tawk.to, crisp, intercom) can post to a webhook url. add a <strong>webhook</strong> node in n8n and paste the url into your chat platform's settings.</p>
 
   <p>add a <strong>set</strong> node to normalise incoming data. extract the message, customer email/user id, and channel. keeps the rest of your workflow clean regardless of source.</p>
 
-  <p>next: knowledge base lookup. for simple setups, use <strong>google sheets</strong> or <strong>notion</strong> to search your faq. for something more powerful, connect to a vector database via http request — embed the question, search for similar entries, return the top 3-5 matches as context.</p>
+  <p>next: knowledge base lookup. for simple setups, use <strong>google sheets</strong> or <strong>notion</strong> to search your faq. for something more powerful, connect to a vector database via http request - embed the question, search for similar entries, return the top 3-5 matches as context.</p>
 
   <p>the <strong>openai</strong> node takes over. your system prompt should include: company name and tone, instructions to only answer from provided context, a directive to say "i don't know" when context doesn't cover it, and any formatting rules.</p>
 
@@ -148,13 +158,13 @@
   <p>the bot is only as good as what you feed it:</p>
 
   <ul>
-    <li><strong>faq pages</strong> — the obvious start. export as plain text, chunk into individual q&a pairs.</li>
-    <li><strong>help centre articles</strong> — longer troubleshooting content, policies, procedures. break into 200-500 word sections.</li>
-    <li><strong>resolved tickets</strong> — your past conversations are gold. export the last 6 months, strip pii, use the q&a pairs as examples.</li>
-    <li><strong>product docs</strong> — specs, pricing, shipping, returns. anything a customer might ask about.</li>
+    <li><strong>faq pages</strong> - the obvious start. export as plain text, chunk into individual q&a pairs.</li>
+    <li><strong>help centre articles</strong> - longer troubleshooting content, policies, procedures. break into 200-500 word sections.</li>
+    <li><strong>resolved tickets</strong> - your past conversations are gold. export the last 6 months, strip pii, use the q&a pairs as examples.</li>
+    <li><strong>product docs</strong> - specs, pricing, shipping, returns. anything a customer might ask about.</li>
   </ul>
 
-  <p>update the knowledge base weekly. n8n can automate this — schedule a workflow that pulls new articles from your cms or helpdesk and adds them to the database. stale data means wrong answers.</p>
+  <p>update the knowledge base weekly. n8n can automate this - schedule a workflow that pulls new articles from your cms or helpdesk and adds them to the database. stale data means wrong answers.</p>
 
   <h2>escalation to humans</h2>
 
@@ -168,26 +178,26 @@
 
   <h2>testing and monitoring</h2>
 
-  <p>before going live, test with real tickets. take 50 recent support conversations, run them through the workflow, compare the ai's responses to what your agents actually sent. you'll find gaps fast — missing knowledge entries, unclear prompts, edge cases.</p>
+  <p>before going live, test with real tickets. take 50 recent support conversations, run them through the workflow, compare the ai's responses to what your agents actually sent. you'll find gaps fast - missing knowledge entries, unclear prompts, edge cases.</p>
 
   <p>once live, monitor three things: <strong>resolution rate</strong> (what percentage the bot handles end-to-end), <strong>accuracy</strong> (spot-check 10 responses per day for the first month), and <strong>escalation rate</strong> (if it's above 40%, your knowledge base needs work).</p>
 
-  <p>add error handling to every node. if chatgpt is down, the knowledge base times out, or the response channel fails — n8n should catch it, log it, and route to a human automatically. silent failures in support mean ignored customers.</p>
+  <p>add error handling to every node. if chatgpt is down, the knowledge base times out, or the response channel fails - n8n should catch it, log it, and route to a human automatically. silent failures in support mean ignored customers.</p>
 
   <h2>common pitfalls</h2>
 
   <ul>
-    <li><strong>over-automating too fast</strong> — start with the bot suggesting responses for human review. only switch to auto-send after 2 weeks of validated accuracy.</li>
-    <li><strong>thin knowledge base</strong> — 10 faq entries won't cut it. the bot will hallucinate for everything else. feed it generously or limit scope.</li>
-    <li><strong>no fallback</strong> — every "i don't know" should include a way to reach a human. a dead end is worse than no bot.</li>
-    <li><strong>ignoring tone</strong> — default chatgpt tone is generic. your system prompt needs to specify brand voice and how to handle sensitive topics.</li>
+    <li><strong>over-automating too fast</strong> - start with the bot suggesting responses for human review. only switch to auto-send after 2 weeks of validated accuracy.</li>
+    <li><strong>thin knowledge base</strong> - 10 faq entries won't cut it. the bot will hallucinate for everything else. feed it generously or limit scope.</li>
+    <li><strong>no fallback</strong> - every "i don't know" should include a way to reach a human. a dead end is worse than no bot.</li>
+    <li><strong>ignoring tone</strong> - default chatgpt tone is generic. your system prompt needs to specify brand voice and how to handle sensitive topics.</li>
   </ul>
 
   <div class="result-box">
     <div class="result-title">key takeaways</div>
-    <div class="result-item">use your own knowledge base — not generic chatgpt responses</div>
+    <div class="result-item">use your own knowledge base - not generic chatgpt responses</div>
     <div class="result-item">start with human-reviewed responses, automate only after validating accuracy</div>
-    <div class="result-item">build clear escalation paths — the bot should never trap a customer</div>
+    <div class="result-item">build clear escalation paths - the bot should never trap a customer</div>
     <div class="result-item">monitor resolution rate, accuracy, and escalation rate weekly</div>
   </div>
 

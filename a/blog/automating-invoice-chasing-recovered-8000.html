@@ -10,8 +10,8 @@
 <meta name="robots" content="noindex, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/blog/automating-invoice-chasing-recovered-8000"/>
-<title>Automating Invoice Chasing: How One Freelancer Recovered £8,000 — getmicroservices</title>
-<meta name="description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks — without a single uncomfortable phone call."/>
+<title>Invoice Chasing Automation That Recovered £8,000</title>
+<meta name="description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks - without a single uncomfortable phone call."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -78,20 +78,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <meta property="og:title" content="Automating Invoice Chasing: How One Freelancer Recovered £8,000 — getmicroservices"/>
-  <meta property="og:description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks — without a single uncomfortable phone call."/>
+  <meta property="og:title" content="Automating Invoice Chasing: How One Freelancer Recovered £8,000 - getmicroservices"/>
+  <meta property="og:description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks - without a single uncomfortable phone call."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://getmicroservices.com/a/blog/automating-invoice-chasing-recovered-8000"/>
   <meta property="og:site_name" content="GetMicroservices"/>
   <meta name="twitter:card" content="summary"/>
-  <meta name="twitter:title" content="Automating Invoice Chasing: How One Freelancer Recovered £8,000 — getmicroservices"/>
-  <meta name="twitter:description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks — without a single uncomfortable phone call."/>
+  <meta name="twitter:title" content="Automating Invoice Chasing: How One Freelancer Recovered £8,000 - getmicroservices"/>
+  <meta name="twitter:description" content="Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks - without a single uncomfortable phone call."/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Automating Invoice Chasing: How One Freelancer Recovered £8,000 — getmicroservices",
-  "description": "Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks — without a single uncomfortable phone call.",
+  "headline": "Automating Invoice Chasing: How One Freelancer Recovered £8,000 - getmicroservices",
+  "description": "Late invoices were piling up. We built an n8n workflow that recovered £8,000 in 6 weeks - without a single uncomfortable phone call.",
   "datePublished": "2026-03-26",
   "publisher": {
     "@type": "Organization",
@@ -120,7 +120,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "Automating Invoice Chasing: How One Freelancer Recovered £8,000 — getmicroservices",
+      "name": "Automating Invoice Chasing: How One Freelancer Recovered £8,000 - getmicroservices",
       "item": "https://getmicroservices.com/a/blog/automating-invoice-chasing-recovered-8000"
     }
   ]
@@ -154,14 +154,14 @@
     <span>6 min read</span>
   </div>
   <h1>Automating Invoice Chasing: How One Freelancer Recovered £8,000 in Late Payments</h1>
-  <p class="post-lead">A freelance designer had £8,340 sitting in overdue invoices. Manual chasing felt too awkward to do consistently. We built a system that did it for her — professionally, persistently, and automatically.</p>
+  <p class="post-lead">A freelance designer had £8,340 sitting in overdue invoices. Manual chasing felt too awkward to do consistently. We built a system that did it for her - professionally, persistently, and automatically.</p>
 
   <h2>The Problem With Manual <a href="/a/blog/how-we-automated-invoice-chasing">Chasing</a></h2>
   <p>Most freelancers have the same issue: the <a href="/a/blog/automate-invoice-processing">invoice</a>Our client had six overdue <a href="/a/blog/automate-invoice-processing">invoice</a>s ranging from £400 to £2,200. The oldest was 94 days old. </p>
   <p>Our client had six overdue invoices ranging from £400 to £2,200. The oldest was 94 days old. <strong>Total outstanding: £8,340.</strong></p>
 
-  <h2><a href="/a/blog/automate-invoice-processing">invoice</a> chasing</h2><a href="/a/blog/n8n-vs-zapier-2026">n8n</a> <a href="/a/blog/how-we-automated-invoice-chasing">invoice chasing</a><a href="/a/blog/n8n-vs-zapier-2026">n8n</a> invoice chasing — daily cron<div class="flow-card">
-    <div class="flow-label">n8n invoice chasing — daily cron</div>
+  <h2><a href="/a/blog/automate-invoice-processing">invoice</a> chasing</h2><a href="/a/blog/n8n-vs-zapier-2026">n8n</a> <a href="/a/blog/how-we-automated-invoice-chasing">invoice chasing</a><a href="/a/blog/n8n-vs-zapier-2026">n8n</a> invoice chasing - daily cron<div class="flow-card">
+    <div class="flow-label">n8n invoice chasing - daily cron</div>
     <div class="flow-nodes">
       <div class="node-box"><span class="node-name">Cron</span><span class="node-sub">08:00 daily</span></div>
       <div class="flow-arrow">→</div>
@@ -181,10 +181,10 @@
   <h2>The Escalation Tiers</h2>
   <p>Four email templates that escalate in tone without becoming hostile:</p>
   <ul>
-    <li><strong>Tier 1 (7–13 days):</strong> Friendly nudge — "Just checking this didn't get lost in your inbox."</li>
-    <li><strong>Tier 2 (14–29 days):</strong> Polite but clear — invoice number, amount, payment link included.</li>
-    <li><strong>Tier 3 (30–44 days):</strong> Firm — references overdue status, requests action by a specific date.</li>
-    <li><strong>Tier 4 (45+ days):</strong> Final notice — mentions potential escalation to a collections process.</li>
+    <li><strong>Tier 1 (7–13 days):</strong> Friendly nudge - "Just checking this didn't get lost in your inbox."</li>
+    <li><strong>Tier 2 (14–29 days):</strong> Polite but clear - invoice number, amount, payment link included.</li>
+    <li><strong>Tier 3 (30–44 days):</strong> Firm - references overdue status, requests action by a specific date.</li>
+    <li><strong>Tier 4 (45+ days):</strong> Final notice - mentions potential escalation to a collections process.</li>
   </ul>
 
   <div class="callout">
@@ -192,21 +192,21 @@
   </div>
 
   <h2>Technical Notes</h2>
-  <p>Stripe's <code>due_date</code> field is only set if you configure payment terms explicitly. We fell back to <code>created + 30 days</code> when it's null. The Gmail OAuth setup needs a Google Cloud project — straightforward, took about an hour.</p>
+  <p>Stripe's <code>due_date</code> field is only set if you configure payment terms explicitly. We fell back to <code>created + 30 days</code> when it's null. The Gmail OAuth setup needs a Google Cloud project - straightforward, took about an hour.</p>
 
   <h2>What Happened</h2>
-  <p>Within the first week, three of six overdue clients paid. Two responded to Tier 1 — they'd genuinely forgotten. One responded to Tier 2 with a same-day payment. The remaining three needed Tier 3. The 94-day invoice took a Tier 4 message plus a manual call, but the automated escalation created the urgency that made her finally pick up the phone.</p>
+  <p>Within the first week, three of six overdue clients paid. Two responded to Tier 1 - they'd genuinely forgotten. One responded to Tier 2 with a same-day payment. The remaining three needed Tier 3. The 94-day invoice took a Tier 4 message plus a manual call, but the automated escalation created the urgency that made her finally pick up the phone.</p>
 
   <div class="result-box">
     <div class="result-title">Zero awkward manual <a href="/a/blog/how-we-automated-invoice-chasing">chasing</a> emails written</div>
     <div class="result-item">£8,340 in outstanding invoices recovered</div>
     <div class="result-item">Zero awkward manual chasing emails written</div>
     <div class="result-item">Average days-to-payment: 52 → 18</div>
-    <div class="result-item">System still running — catches new overdue invoices automatically</div>
+    <div class="result-item">System still running - catches new overdue invoices automatically</div>
     <div class="result-item">~3 hours/month saved on invoice admin</div>
   </div>
 
-  <p>If you want this running for your freelance or agency business, <a href="/a/#contact">we build it for a fixed price</a> — typically recovered within the first invoice it chases.</p>
+  <p>If you want this running for your freelance or agency business, <a href="/a/#contact">we build it for a fixed price</a> - typically recovered within the first invoice it chases.</p>
 </div>
 
 <hr class="full-divider"/>
