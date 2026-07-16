@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/blog/n8n-rag-pipelines"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://getmicroservices.com/blog/n8n-rag-pipelines" />
+  <meta property="og:title" content="n8n RAG Pipelines: Build AI That Actually Knows Your Business" />
+  <meta property="og:description" content="How to build retrieval-augmented generation (RAG) pipelines in n8n. Turn your docs, SOPs, and product knowledge into an AI that answers like a subject-matter expert." />
+  <meta property="og:image" content="https://getmicroservices.com/logo.jpg" />
+  <meta property="og:site_name" content="GetMicroservices" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="n8n RAG Pipelines: Build AI That Actually Knows Your Business" />
+  <meta name="twitter:description" content="How to build retrieval-augmented generation (RAG) pipelines in n8n. Turn your docs, SOPs, and product knowledge into an AI that answers like a subject-matter expert." />
+  <meta name="twitter:image" content="https://getmicroservices.com/logo.jpg" />
+<title>n8n RAG Pipelines: Build AI That Actually Knows Your Business</title>
+<meta name="description" content="How to build retrieval-augmented generation (RAG) pipelines in n8n. Turn your docs, SOPs, and product knowledge into an AI that answers like a subject-matter expert."/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P3QLH1BY4');
+</script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  code{font-family:var(--mono);font-size:0.85em;background:var(--bg3);padding:2px 6px;border-radius:3px;color:var(--accent);}
+  .code-block{background:var(--bg3);border:1px solid var(--border);font-family:var(--mono);font-size:13px;padding:20px;margin:20px 0;overflow-x:auto;color:var(--fg);line-height:1.7;border-radius:4px;}
+  .code-block .comment{color:#444;}
+  .code-block .key{color:var(--accent);}
+  .code-block .val{color:#7ec8e3;}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  .warn-box{background:var(--bg2);border:1px solid rgba(255,200,0,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .warn-title{font-family:var(--mono);font-size:11px;color:#ffc800;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  .footer-logo{font-family:var(--mono);font-size:13px;color:var(--accent);}
+  .footer-right{font-family:var(--mono);font-size:11px;color:var(--dim);}
+  @media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}.article{padding:100px 20px 60px;}footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "n8n RAG Pipelines: Build AI That Actually Knows Your Business",
+  "description": "How to build retrieval-augmented generation (RAG) pipelines in n8n. Turn your docs, SOPs, and product knowledge into an AI that answers like a subject-matter expert.",
+  "url": "https://getmicroservices.com/blog/n8n-rag-pipelines",
+  "datePublished": "2026-07-16",
+  "dateModified": "2026-07-16",
+  "author": {"@type": "Organization","name": "GetMicroservices"},
+  "publisher": {"@type": "Organization","name": "GetMicroservices","url": "https://getmicroservices.com"},
+  "image": "https://getmicroservices.com/logo.jpg",
+  "mainEntityOfPage": {"@type": "WebPage","@id": "https://getmicroservices.com/blog/n8n-rag-pipelines"}
+}
+</script>
+</head>
+<body>
+<nav id="nav">
+  <a class="nav-logo" href="/a/">Get<span>Micro</span>Services</a>
+  <ul class="nav-links">
+    <li><a href="/a/#services">services</a></li>
+    <li><a href="/a/#how">how it works</a></li>
+    <li><a href="/a/#pricing">pricing</a></li>
+    <li><a href="/a/blog/">blog</a></li>
+    <li><a href="/a/#contact" class="nav-cta">[ start project ]</a></li>
+  </ul>
+</nav>
+<div class="article">
+  <a class="back-link" href="/a/blog/">← all posts</a>
+  <div class="post-tag">AI</div>
+  <div class="post-meta">
+    <span>2026-07-16</span>
+    <span>10 min read</span>
+  </div>
+  <h1>n8n RAG Pipelines: Build AI That Actually Knows Your Business</h1>
+  <p class="post-lead">A generic LLM doesn't know your pricing, your SOPs, or your product quirks. RAG fixes that. Here's how to wire it up in n8n without a single line of Python.</p>
+
+  <p>Every business we work with has the same problem: they want an AI chatbot or support agent, but the moment it's asked something specific — a refund policy, a product spec, an internal process — it either hallucinates or falls back to "I don't have that information." <strong>That's a fine-tuning problem that nobody needs.</strong> What they actually need is RAG.</p>
+
+  <p>Retrieval-Augmented Generation (RAG) is the pattern where, instead of baking knowledge into a model, you pull the right chunks of information at query time and hand them to the LLM as context. The model reasons over real data. No hallucinations about your return policy. No outdated specs. Just accurate answers — updated whenever your source docs change.</p>
+
+  <p>The good news: <strong>n8n has first-class RAG support</strong> via its Vector Store nodes. You don't need LangChain, Python, or a data engineer. You need a Supabase (or Pinecone, or Qdrant) account, an embeddings model, and about 45 minutes.</p>
+
+  <h2>the two flows you're building</h2>
+
+  <p>A RAG pipeline has two distinct workflows. Keep them separate in your head:</p>
+
+  <ul>
+    <li><strong>ingestion</strong> — runs when your knowledge base changes: reads docs, chunks them, embeds chunks, stores vectors</li>
+    <li><strong>query</strong> — runs on every user question: embeds the query, retrieves top-K similar chunks, injects into LLM prompt, returns answer</li>
+  </ul>
+
+  <p>Two workflows. One vector database in the middle. That's the whole architecture.</p>
+
+  <h2>step 1: choose your vector store</h2>
+
+  <p>n8n supports Pinecone, Qdrant, Supabase (pgvector), Weaviate, and others. For most clients, <strong>Supabase is the easiest entry point</strong> — you probably already use Postgres, and pgvector is a one-extension setup. Pinecone makes sense if you're scaling to millions of vectors and want managed infrastructure.</p>
+
+  <div class="code-block">
+<span class="comment">-- run once in your supabase sql editor</span>
+<span class="key">create extension</span> <span class="val">vector</span>;
+
+<span class="key">create table</span> documents (
+  id        bigserial primary key,
+  content   text,
+  metadata  jsonb,
+  embedding vector(1536)
+);
+
+<span class="key">create index</span> on documents
+  <span class="key">using</span> ivfflat (embedding vector_cosine_ops)
+  <span class="key">with</span> (lists = 100);
+  </div>
+
+  <p><code>vector(1536)</code> matches OpenAI's <code>text-embedding-3-small</code>. Change the dimension if you switch models.</p>
+
+  <h2>step 2: ingestion workflow</h2>
+
+  <p>This workflow runs on schedule or webhook trigger when docs change. Node chain:</p>
+
+  <ul>
+    <li><strong>trigger</strong> — schedule (weekly) or webhook (on-demand when a doc is updated)</li>
+    <li><strong>source node</strong> — read from Google Drive, HTTP, local files, Notion, Confluence — wherever your docs live</li>
+    <li><strong>extract from file</strong> — pull raw text from PDFs, DOCX, HTML</li>
+    <li><strong>text splitter</strong> — chunk into 400–600 token segments with ~50 token overlap (n8n has this built in)</li>
+    <li><strong>embeddings openai</strong> — embed each chunk using <code>text-embedding-3-small</code></li>
+    <li><strong>supabase vector store (insert)</strong> — upsert chunks with metadata: filename, page, category, source URL</li>
+  </ul>
+
+  <p>The metadata is underrated. Tag every chunk with its document category — it's what lets you do filtered retrieval later.</p>
+
+  <div class="warn-box">
+    <div class="warn-title">⚠ chunking strategy matters</div>
+    <ul>
+      <li>under 200 tokens: chunks lose context, retrieval gets noisy</li>
+      <li>over 800 tokens: burns context window budget, retrieval precision drops</li>
+      <li>sweet spot: 400–600 tokens with 10–15% overlap</li>
+      <li>for structured docs (FAQs, pricing tables): chunk by section heading, not token count</li>
+    </ul>
+  </div>
+
+  <h2>step 3: query workflow</h2>
+
+  <p>This runs on every user message. Node chain:</p>
+
+  <ul>
+    <li><strong>webhook / chat trigger</strong> — receive the user's question</li>
+    <li><strong>embeddings openai</strong> — embed the question using the same model as ingestion</li>
+    <li><strong>supabase vector store (query)</strong> — top-K cosine similarity search (K=5 to start)</li>
+    <li><strong>aggregate</strong> — concatenate retrieved chunks into a single context string</li>
+    <li><strong>openai chat / ai agent</strong> — pass context + question with a constrained system prompt</li>
+    <li><strong>respond to webhook</strong> — return the answer</li>
+  </ul>
+
+  <p>The system prompt is where most RAG implementations fail. Be explicit:</p>
+
+  <div class="code-block">
+<span class="comment">// system prompt template</span>
+
+You are a support agent for [Company].
+Answer ONLY using the context below.
+If the answer is not in the context, say:
+<span class="val">"I don't have that information — let me connect you with a human."</span>
+
+Do not fabricate. Do not use general knowledge about competitors
+or industry norms. Cite the source document when possible.
+
+<span class="key">Context:</span>
+<span class="val">{{ $json.context }}</span>
+
+<span class="key">Question:</span>
+<span class="val">{{ $json.userMessage }}</span>
+  </div>
+
+  <h2>filtered retrieval (the power move)</h2>
+
+  <p>Once you've tagged chunks with metadata, you can filter retrieval by document category based on query intent. This dramatically cuts noise.</p>
+
+  <p>In n8n's vector store query node, pass a filter JSON. Detect the query category first (via classification step or keyword match), then filter:</p>
+
+  <div class="code-block">
+<span class="comment">// only search pricing docs for pricing questions</span>
+{ <span class="key">"category"</span>: <span class="val">"pricing"</span> }
+
+<span class="comment">// only search support docs for troubleshooting</span>
+{ <span class="key">"category"</span>: <span class="val">"support"</span> }
+  </div>
+
+  <p>A bot searching 50K chunks of product documentation won't accidentally pull warranty text when someone asks about upgrade pricing. The metadata filter is the difference between 70% accuracy and 95% accuracy.</p>
+
+  <h2>keeping it fresh</h2>
+
+  <ul>
+    <li>schedule ingestion weekly minimum — or trigger via webhook on doc update events</li>
+    <li>store a file hash in metadata — only re-embed chunks from files that have actually changed</li>
+    <li>delete before re-insert — filter-delete all chunks with the same <code>source_file</code> before ingesting updated versions</li>
+    <li>monitor retrieved chunks — log what was retrieved alongside each answer; if relevance looks wrong, revisit chunk sizing</li>
+  </ul>
+
+  <h2>real use cases</h2>
+
+  <ul>
+    <li><strong>internal ops FAQ bot</strong> — 200-page company handbook in Supabase; Slack bot answers HR questions. Saved ~3h/week of manager time in month one.</li>
+    <li><strong>e-commerce support agent</strong> — 10K-SKU product catalogue + return policy. Handles 70% of support tickets without escalation.</li>
+    <li><strong>legal Q&A</strong> — contract templates and standard terms; salespeople ask "does our SLA cover this?" and get accurate answers with source references.</li>
+    <li><strong>onboarding assistant</strong> — retrieves from engineering docs, process guides, tool tutorials. Reduces new hire onboarding time by ~2 days.</li>
+  </ul>
+
+  <h2>what it costs</h2>
+
+  <p>RAG is one of the cheapest AI patterns at scale. A 5,000-page knowledge base costs under $2 to embed with <code>text-embedding-3-small</code>. Each query (embed + retrieve + LLM call with 2K context) runs about $0.003–0.008 with GPT-4o-mini. 1,000 queries/day ≈ $3–8/day in API fees.</p>
+
+  <div class="result-box">
+    <div class="result-title">where to start</div>
+    <div class="result-item">pick one high-value knowledge source: FAQ doc, product catalogue, or handbook</div>
+    <div class="result-item">set up supabase pgvector — 10 minutes, free tier is generous</div>
+    <div class="result-item">build ingestion workflow, ingest source, verify chunk quality</div>
+    <div class="result-item">build query workflow, test 10 real questions your team actually asks</div>
+    <div class="result-item">add metadata filtering once you have multiple document categories</div>
+    <div class="result-item">connect to slack, web chat widget, or CRM — wherever questions come in</div>
+  </div>
+
+  <p>See also: <a href="/a/blog/ai-customer-support-automation">ai customer support automation end-to-end</a>, <a href="/a/blog/n8n-ai-agent-workflows">n8n ai agent workflow patterns</a>, and <a href="/a/blog/multi-agent-orchestration">multi-agent orchestration patterns</a>.</p>
+
+  <p>Want this built? <a href="/a/#contact">we build and maintain rag pipelines for clients →</a> from ingestion to monitoring, no python required on your end.</p>
+</div>
+<hr class="full-divider"/>
+<footer>
+  <div class="footer-logo">getmicroservices.com</div>
+  <div class="footer-right">built by humans. run by automations.</div>
+</footer>
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+</script>
+</body>
+</html>
