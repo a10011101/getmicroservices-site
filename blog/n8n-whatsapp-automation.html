@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WhatsApp Business Automation with n8n: Build a 24/7 Messaging Bot (2026)</title>
+  <meta name="description" content="Automate WhatsApp Business with n8n. Learn how to build bots, handle inbound messages, send order updates, and route support tickets — no custom code required."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/n8n-whatsapp-automation"/>
+  <meta property="og:title" content="WhatsApp Business Automation with n8n: Build a 24/7 Messaging Bot (2026) – GetMicroservices Blog"/>
+  <meta property="og:description" content="Automate WhatsApp Business with n8n. Learn how to build bots, handle inbound messages, send order updates, and route support tickets — no custom code required."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/blog/n8n-whatsapp-automation"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "WhatsApp Business Automation with n8n: Build a 24/7 Messaging Bot (2026)",
+    "description": "Automate WhatsApp Business with n8n. Learn how to build bots, handle inbound messages, send order updates, and route support tickets — no custom code required.",
+    "url": "https://getmicroservices.com/blog/n8n-whatsapp-automation",
+    "datePublished": "2026-07-20",
+    "dateModified": "2026-07-20",
+    "author": {
+      "@type": "Organization",
+      "name": "GetMicroservices"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GetMicroservices",
+      "url": "https://getmicroservices.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://getmicroservices.com/blog/n8n-whatsapp-automation"
+    }
+  }
+  </script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav:not(.toc){position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:400;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;line-height:1;}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'< ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body a{color:var(--accent);}
+    .article-body a:hover{text-decoration:underline;}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'>';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .code-block{background:var(--bg3);border:2px solid var(--border);border-left:4px solid var(--accent);padding:16px 20px;margin:24px 0;font-family:'Fira Code',monospace;font-size:0.78rem;color:var(--fg);overflow-x:auto;line-height:1.7;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul li::before{content:'→';}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav:not(.toc){padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">
+    <span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')" aria-label="Toggle theme">◐</button>
+</nav>
+
+<header class="article-header">
+  <a href="/blog" class="back-link">back to blog</a>
+  <div class="article-meta">
+    <span class="meta-date">2026-07-20</span>
+    <span class="meta-tag">automation</span>
+    <span class="meta-readtime">11 min read</span>
+  </div>
+  <h1>WhatsApp Business Automation with n8n: Build a 24/7 Messaging Bot (2026)</h1>
+  <p class="lead">Two billion people use WhatsApp. Most businesses treat it like a personal inbox. With n8n and the WhatsApp Business API, you can automate order confirmations, support routing, lead qualification, and appointment reminders — all without custom code.</p>
+</header>
+
+<article class="article-body">
+
+  <p>WhatsApp isn't just a messaging app anymore. It's the highest-engagement channel most businesses are completely under-using. Open rates above 90%, responses within minutes, no spam filters, no ad budget required. <strong>And yet most businesses are handling WhatsApp messages manually, one at a time.</strong></p>
+
+  <p>That changes when you connect the WhatsApp Business API to n8n. You get a proper automation layer: inbound message parsing, AI classification, CRM sync, conditional routing, and outbound templates — all wired together without a developer on retainer.</p>
+
+  <p>This guide covers the setup and five production workflows we've built for clients ranging from e-commerce brands to professional services firms.</p>
+
+  <h2>Prerequisites: WhatsApp Business API Access</h2>
+
+  <p>The WhatsApp Business API (now called the Cloud API, hosted by Meta) requires an approved Meta Business account. This is different from the regular WhatsApp Business app. Here's what you need before touching n8n:</p>
+
+  <ul>
+    <li><strong>Meta Business Manager account</strong> — verified with a business phone number</li>
+    <li><strong>WhatsApp Business Account (WABA)</strong> — created inside Business Manager</li>
+    <li><strong>Phone number</strong> — must not be registered on regular WhatsApp; a fresh SIM or VoIP number works</li>
+    <li><strong>System User access token</strong> — permanent token for API calls (not the user token that expires)</li>
+    <li><strong>Approved message templates</strong> — for outbound messages to users who haven't messaged you first</li>
+  </ul>
+
+  <p>Meta's review process takes 1–3 business days for most accounts. <strong>Plan for this lead time.</strong> Once approved, you get a phone number ID and WABA ID that you'll use in every n8n node.</p>
+
+  <h2>Setting Up the Webhook in n8n</h2>
+
+  <p>WhatsApp delivers inbound messages via webhook. Every time a user messages your number, Meta POSTs a JSON payload to your webhook URL. n8n handles this natively:</p>
+
+  <div class="code-block">1. Create a new n8n workflow
+2. Add a Webhook node as trigger
+   → Method: POST
+   → Path: /whatsapp-inbound (or any slug)
+   → Authentication: None (we validate manually)
+3. Copy the webhook URL
+4. In Meta Developer Console:
+   → App → WhatsApp → Configuration → Webhook
+   → Paste URL, set Verify Token to any secret string
+   → Subscribe to: messages, message_deliveries, message_reads
+5. Add a Respond to Webhook node (immediately) → returns 200 OK
+   (Meta requires &lt;5 second response or it retries)</div>
+
+  <p>The most common mistake: not responding immediately. Meta retries the webhook if you don't return 200 within 5 seconds. <strong>Always add a Respond to Webhook node right after the trigger</strong>, before any slow operations like LLM calls or CRM lookups.</p>
+
+  <h2>Understanding the Inbound Payload</h2>
+
+  <p>Before building workflows, understand what Meta actually sends. The payload structure is deeply nested and slightly inconsistent across message types:</p>
+
+  <div class="code-block">// simplified inbound message structure
+{
+  "object": "whatsapp_business_account",
+  "entry": [{
+    "changes": [{
+      "value": {
+        "messages": [{
+          "from": "447700900123",   // sender's number
+          "id": "wamid.xxx",        // message ID
+          "timestamp": "1721462400",
+          "type": "text",           // text | image | audio | document | interactive
+          "text": { "body": "Hello, I need help with my order" }
+        }],
+        "contacts": [{
+          "profile": { "name": "Sarah M." },
+          "wa_id": "447700900123"
+        }]
+      }
+    }]
+  }]
+}</div>
+
+  <p>Add a Code node right after the webhook to extract the essentials: sender number, message text, message type, contact name. This normalised object is what flows through the rest of your workflow.</p>
+
+  <div class="code-block">// Code node: extract message data
+const entry = $input.first().json.entry[0];
+const change = entry.changes[0].value;
+const msg = change.messages?.[0];
+const contact = change.contacts?.[0];
+
+if (!msg) return [{ json: { skip: true } }];
+
+return [{
+  json: {
+    from: msg.from,
+    name: contact?.profile?.name || 'Unknown',
+    messageId: msg.id,
+    type: msg.type,
+    text: msg.text?.body || '',
+    timestamp: msg.timestamp
+  }
+}];</div>
+
+  <h2>Workflow 1: Order Status Bot</h2>
+
+  <p>This is the highest-ROI WhatsApp workflow for e-commerce. Customers message "Where is my order?" and get an instant, accurate reply — without a human touching it.</p>
+
+  <div class="code-block">Trigger: Webhook (inbound WhatsApp message)
+↓
+Node: Code → extract sender + text
+↓
+Node: IF → does text match order inquiry? (contains "order", "delivery", "tracking", "where")
+↓ YES
+Node: HTTP Request → Shopify/WooCommerce API → get orders by phone number
+↓
+Node: IF → order found?
+  → YES: Node: Code → format order status message
+  → NO: Node: Set → "We couldn't find an order for this number. Reply with your order ID."
+↓
+Node: HTTP Request → WhatsApp Cloud API → send text reply
+↓
+Node: Respond to Webhook → 200 OK</div>
+
+  <p>The Shopify lookup uses the customer's WhatsApp number (usually matching their phone number) to pull recent orders. Format the response clearly — delivery date, status, tracking link if available. <strong>Customers want three things: what they ordered, where it is, when it arrives.</strong></p>
+
+  <div class="result-box">
+    <div class="result-title">// Measured results from client deployment</div>
+    <ul>
+      <li>Order status queries handled automatically: 73% (up from 0%)</li>
+      <li>First-response time: 45 minutes → under 10 seconds</li>
+      <li>Support agent time freed: ~2.5 hours/day</li>
+      <li>Customer satisfaction score on WhatsApp channel: 4.6/5</li>
+    </ul>
+  </div>
+
+  <h2>Workflow 2: AI-Powered Support Triage</h2>
+
+  <p>Not every message has a template answer. For open-ended support, an OpenAI-backed triage layer classifies intent and either answers from a knowledge base or escalates to a human agent.</p>
+
+  <div class="code-block">Trigger: Webhook → extract message
+↓
+Node: OpenAI → classify intent
+  System: "Classify this WhatsApp message into one of:
+  ORDER_STATUS | RETURN_REQUEST | PRODUCT_QUESTION | COMPLAINT | OTHER
+  Reply with just the category."
+↓
+Node: Switch → route by category
+  → ORDER_STATUS: [Workflow 1 above]
+  → RETURN_REQUEST: lookup order → send return portal link
+  → PRODUCT_QUESTION: RAG lookup → answer from product catalogue
+  → COMPLAINT: flag as priority → create CRM ticket → notify support lead
+  → OTHER: send to human handoff queue</div>
+
+  <p>The RAG lookup for product questions connects to your vector store — the same pattern as our <a href="/blog/n8n-rag-pipelines">n8n RAG pipeline guide</a>. Embed your product docs and FAQs; the bot answers from real data, not hallucinated generalities.</p>
+
+  <p>For complaints and escalations, <strong>don't try to automate the human touch</strong>. The right move is to capture the issue in your CRM (HubSpot, Pipedrive), notify the right person in Slack, and send the customer a holding message promising a real human response within a specific timeframe.</p>
+
+  <h2>Workflow 3: Outbound Order Confirmations &amp; Shipping Updates</h2>
+
+  <p>This workflow is triggered by your e-commerce platform, not by inbound messages. Every time an order is placed, shipped, or delivered, n8n sends a WhatsApp template message to the customer.</p>
+
+  <div class="code-block">Trigger: Webhook from Shopify/WooCommerce (order.fulfilled event)
+↓
+Node: HTTP Request → get customer phone number from order
+↓
+Node: Code → format phone to E.164 (e.g. 447700900123)
+↓
+Node: HTTP Request → WhatsApp Cloud API
+  POST https://graph.facebook.com/v20.0/{PHONE_NUMBER_ID}/messages
+  {
+    "messaging_product": "whatsapp",
+    "to": "{{ phone }}",
+    "type": "template",
+    "template": {
+      "name": "order_shipped",
+      "language": { "code": "en_GB" },
+      "components": [{
+        "type": "body",
+        "parameters": [
+          { "type": "text", "text": "{{ customerName }}" },
+          { "type": "text", "text": "{{ orderNumber }}" },
+          { "type": "text", "text": "{{ trackingUrl }}" }
+        ]
+      }]
+    }
+  }
+↓
+Node: Google Sheets → log send status + timestamp</div>
+
+  <p>Template messages require pre-approval from Meta — submit them through the WhatsApp Manager with the expected variable placeholders. Approval typically takes 30 minutes to 24 hours. <strong>You need a separate approved template for each message type</strong>: order confirmation, shipping update, delivery confirmation, return processed.</p>
+
+  <h2>Workflow 4: Lead Qualification Bot</h2>
+
+  <p>For B2B or high-ticket B2C, WhatsApp is increasingly the channel where interested prospects make first contact. A qualification bot captures intent, budget, and timeline before routing to sales.</p>
+
+  <div class="code-block">Trigger: Webhook → inbound message to business number
+↓
+Node: Code → check if sender is in CRM (HTTP → HubSpot lookup)
+↓ (new contact)
+Node: HTTP Request → WhatsApp API → send greeting + ask question 1
+  "Hi! Thanks for reaching out. What are you looking for help with?"
+↓
+[user replies]
+Node: Webhook → extract reply
+↓
+Node: OpenAI → extract: use_case, company_size, timeline, budget_range
+↓
+Node: HTTP Request → HubSpot → create contact + deal
+  {
+    properties: {
+      phone: "+447700900123",
+      whatsapp_intent: extracted.use_case,
+      hs_lead_status: "NEW",
+      budget_range: extracted.budget_range
+    }
+  }
+↓
+Node: IF → lead score > 60?
+  → YES: Slack → notify sales lead + schedule call via Calendly link
+  → NO: add to nurture sequence</div>
+
+  <p>The conversation state management is the tricky part. You need to track where each user is in the conversation flow — question 1, question 2, or awaiting booking. <strong>Store state in a Google Sheet or Airtable</strong> keyed by the sender's phone number. Check state on every inbound message before deciding what to send next.</p>
+
+  <h2>Workflow 5: Appointment Reminders</h2>
+
+  <p>For service businesses — clinics, consultants, agencies — appointment no-shows are expensive. WhatsApp reminders outperform email and SMS by a significant margin.</p>
+
+  <div class="code-block">Trigger: Schedule → every 15 minutes
+↓
+Node: Google Calendar / Calendly API → get appointments in next 24h
+↓
+Node: Filter → only appointments without "reminder_sent" flag
+↓
+Node: Loop → for each appointment:
+  Node: HTTP Request → WhatsApp API → send reminder template
+    "Hi [Name], just a reminder about your appointment at [time] tomorrow.
+     Reply YES to confirm or RESCHEDULE to pick a new time."
+  Node: Google Sheets → mark reminder_sent = true + timestamp
+↓
+[User replies]
+Trigger: Webhook → parse YES / RESCHEDULE
+  → YES: update CRM → confirmed
+  → RESCHEDULE: send Calendly booking link</div>
+
+  <p>The key metric: no-show rate drops from 15–25% (industry average for email-only reminder) to under 5% with WhatsApp reminders sent 24h and 2h before the appointment. <strong>Two reminders, with confirmation capture, is the sweet spot.</strong></p>
+
+  <h2>Sending Messages via the WhatsApp Cloud API</h2>
+
+  <p>Every outbound message in n8n uses an HTTP Request node pointing to Meta's Cloud API. The base configuration:</p>
+
+  <div class="code-block">// n8n HTTP Request node configuration
+Method: POST
+URL: https://graph.facebook.com/v20.0/{{ PHONE_NUMBER_ID }}/messages
+Headers:
+  Authorization: Bearer {{ SYSTEM_USER_TOKEN }}
+  Content-Type: application/json
+
+// text message body:
+{
+  "messaging_product": "whatsapp",
+  "recipient_type": "individual",
+  "to": "{{ recipient_phone }}",
+  "type": "text",
+  "text": {
+    "preview_url": false,
+    "body": "{{ your_message_here }}"
+  }
+}</div>
+
+  <p>Store your System User Token and Phone Number ID as n8n credentials or environment variables — never hardcode them. The System User Token (not the temporary user token) doesn't expire, which is what you want for a production automation.</p>
+
+  <h2>Gotchas and Rate Limits</h2>
+
+  <ul>
+    <li><strong>24-hour window rule:</strong> You can send free-form text messages only within 24 hours of the customer's last message. After that, you must use an approved template. This is Meta's anti-spam protection — design your flows around it.</li>
+    <li><strong>Phone number format:</strong> Always use E.164 format (country code + number, no spaces, no +). Strip formatting from user inputs before making API calls.</li>
+    <li><strong>Rate limits:</strong> WhatsApp Cloud API allows up to 80 messages per second for standard accounts. For bulk sends (newsletters, campaigns), use the official Broadcasts feature, not individual message API calls.</li>
+    <li><strong>Opt-in requirement:</strong> Users must explicitly opt in before you can send them template messages. Capture opt-in during checkout, form completion, or appointment booking.</li>
+    <li><strong>Webhook deduplication:</strong> Meta occasionally delivers the same webhook twice. Store processed message IDs in a data store and skip duplicates.</li>
+  </ul>
+
+  <h2>Testing Without Real Users</h2>
+
+  <p>Meta's Test Phone Number (available in the WhatsApp Manager) lets you send messages to up to 5 whitelisted numbers for free during development. Use this to test all your templates and inbound flows before going live. <strong>Test every message type</strong>: text, image, document, interactive (buttons and lists).</p>
+
+  <div class="result-box">
+    <div class="result-title">// Where to start</div>
+    <ul>
+      <li>Apply for WhatsApp Cloud API access (do this first — takes 1–3 days)</li>
+      <li>Build the inbound webhook + message extractor (Workflow foundation)</li>
+      <li>Deploy the order status bot for your top support query</li>
+      <li>Submit your first 3 outbound templates for approval</li>
+      <li>Add AI triage once the rule-based flows are stable</li>
+      <li>Track: first-response time, automation rate, escalation rate</li>
+    </ul>
+  </div>
+
+  <p>WhatsApp automation isn't complex — but it does require careful setup to stay inside Meta's policy guardrails. The businesses that get it right turn the highest-engagement channel in their stack into a fully automated customer touchpoint that runs without anyone watching it.</p>
+
+  <p>If you'd rather skip the setup and get straight to working automations, <a href="/#contact">get in touch</a> — WhatsApp automation builds are one of our most common client requests.</p>
+
+  <div id="further-reading" class="result-box" style="border-color:var(--yellow)">
+    <div class="result-title">📚 Further Reading</div>
+    <ul>
+      <li><a href="/blog/n8n-rag-pipelines" style="color:var(--accent);">n8n RAG Pipelines: Build AI That Actually Knows Your Business</a></li>
+      <li><a href="/blog/ai-customer-support-automation" style="color:var(--accent);">AI Customer Support Automation: Build a 24/7 Support System</a></li>
+      <li><a href="/blog/n8n-slack-automation" style="color:var(--accent);">Automate Slack with n8n: 7 Workflows That Save Hours</a></li>
+      <li><a href="/blog/n8n-crm-integration" style="color:var(--accent);">How to Connect Your CRM to n8n: Automate Lead Management</a></li>
+    </ul>
+  </div>
+
+</article>
+
+<footer>
+  <p><a href="https://getmicroservices.com">GetMicroservices</a> · <a href="/blog">Blog</a> · <a href="/#services">Services</a> · <a href="/#contact">Contact</a></p>
+</footer>
+</body>
+</html>
