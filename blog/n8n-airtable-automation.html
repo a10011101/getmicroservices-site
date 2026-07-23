@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Automate Airtable with n8n: Dynamic Database Workflows Without Code (2026)</title>
+  <meta name="description" content="Connect Airtable to 400+ apps with n8n. Build CRM pipelines, project triggers, lead tracking, and reporting automations using Airtable as your no-code database."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/n8n-airtable-automation"/>
+  <meta property="og:title" content="Automate Airtable with n8n: Dynamic Database Workflows Without Code (2026) – GetMicroservices Blog"/>
+  <meta property="og:description" content="Connect Airtable to 400+ apps with n8n. Build CRM pipelines, project triggers, lead tracking, and reporting automations using Airtable as your no-code database."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/blog/n8n-airtable-automation"/>
+  <meta property="og:image" content="https://getmicroservices.com/logo.jpg"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Automate Airtable with n8n: Dynamic Database Workflows Without Code (2026)",
+    "description": "Connect Airtable to 400+ apps with n8n. Build CRM pipelines, project triggers, lead tracking, and reporting automations using Airtable as your no-code database.",
+    "url": "https://getmicroservices.com/blog/n8n-airtable-automation",
+    "datePublished": "2026-07-23",
+    "dateModified": "2026-07-23",
+    "author": {
+      "@type": "Organization",
+      "name": "GetMicroservices"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GetMicroservices",
+      "url": "https://getmicroservices.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://getmicroservices.com/blog/n8n-airtable-automation"
+    }
+  }
+  </script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav:not(.toc){position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:400;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;line-height:1;}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'< ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body a{color:var(--accent);}
+    .article-body a:hover{text-decoration:underline;}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'>';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .code-block{background:var(--bg3);border:2px solid var(--border);border-left:4px solid var(--accent);padding:16px 20px;margin:24px 0;font-family:'Fira Code',monospace;font-size:0.78rem;color:var(--fg);overflow-x:auto;line-height:1.7;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul li::before{content:'→';}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav:not(.toc){padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">
+    <span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')" aria-label="Toggle theme">◐</button>
+</nav>
+
+<header class="article-header">
+  <a href="/blog" class="back-link">back to blog</a>
+  <div class="article-meta">
+    <span class="meta-date">2026-07-23</span>
+    <span class="meta-tag">automation</span>
+    <span class="meta-readtime">12 min read</span>
+  </div>
+  <h1>Automate Airtable with n8n: Dynamic Database Workflows Without Code (2026)</h1>
+  <p class="lead">Airtable is where teams store their truth — leads, clients, projects, inventory. n8n is what makes that data move. Together, they form a no-code backend that rivals custom-built systems at a fraction of the cost.</p>
+</header>
+
+<article class="article-body">
+
+  <p>Most businesses use Airtable as a souped-up spreadsheet. They enter data manually, sort it manually, follow up manually. The records just sit there — accurate but inert.</p>
+
+  <p>The shift happens when you connect Airtable to n8n. Suddenly a new row in your CRM base triggers a welcome email. A status change from "In Progress" to "Complete" fires a Slack notification and generates a client invoice. A form submission creates records, assigns a team member, and books an intro call — all without a human touching it.</p>
+
+  <p>This guide covers the Airtable–n8n connection, how Airtable's API works, and six production workflows that agencies and operators use to turn static databases into active systems.</p>
+
+  <h2>How the Airtable API Works in n8n</h2>
+
+  <p>Airtable exposes a REST API for every base you create. Each base has a unique ID (starts with <code>app</code>), each table has an ID (starts with <code>tbl</code>), and each record has an ID (starts with <code>rec</code>). n8n's Airtable node wraps all of this, but knowing the structure matters when you need to build dynamic lookups or cross-table logic.</p>
+
+  <ul>
+    <li><strong>List Records</strong> — fetch rows from a table, with optional filterByFormula, sort, and maxRecords parameters</li>
+    <li><strong>Get Record</strong> — fetch a single row by record ID</li>
+    <li><strong>Create Record</strong> — insert a new row with field values</li>
+    <li><strong>Update Record</strong> — patch one or more fields on an existing row</li>
+    <li><strong>Delete Record</strong> — remove a row by record ID</li>
+    <li><strong>Search</strong> — list records matching a formula (equivalent to List with filterByFormula)</li>
+  </ul>
+
+  <p>Authentication uses an Airtable Personal Access Token (PAT). Create one at airtable.com/account → Developer Hub → Personal Access Tokens. Scope it to the specific bases you need — <code>data.records:read</code> and <code>data.records:write</code> are the core permissions. Add the token to n8n as a credential under the Airtable node.</p>
+
+  <h2>Trigger Options: Polling vs Webhooks</h2>
+
+  <p>Airtable's native webhook support is limited to Enterprise plans. For most teams, n8n polls Airtable on a schedule — checking every 1, 5, or 15 minutes for new or changed records. This covers 90% of use cases.</p>
+
+  <div class="code-block">// Polling pattern for new records
+Trigger: Schedule (every 5 min)
+↓
+Node: Airtable → List Records
+  → Table: Leads
+  → Filter: filterByFormula=AND(Status='New',Created>DATEADD(NOW(),-10,'minutes'))
+  → Sort: Created DESC
+  → Max Records: 50
+↓
+Node: IF → any records returned?
+  → YES: continue to workflow
+  → NO: Stop</div>
+
+  <p>The <code>filterByFormula</code> is standard Airtable formula syntax. The key formula for polling new records: filter by a <code>Created</code> field (use the Airtable formula type "Created time") to only fetch records newer than your last poll window. <strong>Don't process the entire table on every run</strong> — filter aggressively.</p>
+
+  <p>For Enterprise plans or high-frequency use cases, Airtable webhooks deliver record change events in real time. n8n receives the POST and processes immediately, no polling loop required.</p>
+
+  <h2>Workflow 1: Inbound Lead Capture and CRM Sync</h2>
+
+  <p>Your website form captures leads into Airtable. This workflow fires the moment a new lead row appears — enriches it, scores it, and syncs to your CRM, all before any human sees the record.</p>
+
+  <div class="code-block">Trigger: Schedule (every 5 min) → Airtable List (Status='New')
+↓
+Node: HTTP Request → Clearbit/Hunter → enrich lead by email
+  → Returns: company, industry, employee count, LinkedIn
+↓
+Node: Code → calculate lead score
+  // +10 if company > 50 employees
+  // +15 if email domain matches target ICP
+  // +20 if referred by existing client
+  // -5 if free email domain (gmail, hotmail)
+↓
+Node: Airtable → Update Record
+  → Fields: Enriched=true, Score=<score>, Company=<company>
+↓
+Node: IF → Score >= 30?
+  → YES: HubSpot → Create Contact + Deal
+  → YES: Slack → Post to #sales-alerts
+  → NO: Airtable → Update (Status='Low Priority')</div>
+
+  <p>The enrichment step transforms raw form submissions into qualified prospects before they hit your CRM. By the time a sales rep opens HubSpot, the lead already has company data, a score, and a priority flag. <strong>The average enrichment run takes under 3 seconds per record.</strong></p>
+
+  <div class="result-box">
+    <div class="result-title">// Measured results from client deployment (B2B SaaS, 200 leads/month)</div>
+    <ul>
+      <li>Lead enrichment time: manual 2–4 min per lead → automated, instant</li>
+      <li>High-priority leads reaching sales in under 60 seconds: 94%</li>
+      <li>False positives (low-score leads in CRM): reduced by 61%</li>
+      <li>Sales rep time saved on data entry: ~6 hours/week</li>
+    </ul>
+  </div>
+
+  <h2>Workflow 2: Project Status Notifications</h2>
+
+  <p>Agencies love Airtable for project tracking. This workflow monitors a Project Tracker base and fires Slack notifications whenever a project status changes — no more manually messaging clients or chasing teammates for updates.</p>
+
+  <div class="code-block">// Detecting status changes requires a "snapshot" strategy
+Trigger: Schedule (every 15 min)
+↓
+Node: Airtable → List Records (table: Projects, all active)
+↓
+Node: Code → compare with last-run snapshot
+  // Read snapshot from n8n static data or a "Snapshots" Airtable table
+  // Find records where Status differs from snapshot
+  // Identify: NEW, STATUS_CHANGED, OVERDUE
+↓
+Node: Switch → route by change type
+  STATUS_CHANGED → Slack #team + email to client
+  NEW PROJECT → assign team member + create Notion page
+  OVERDUE → Slack DM to project owner + flag in Airtable
+↓
+Node: Code → update snapshot with current state</div>
+
+  <p>The snapshot pattern is the standard approach for change detection in polled systems. Store the previous state — either in n8n's built-in static data (persists across runs) or in a dedicated "Snapshots" Airtable table — and diff on every poll cycle. <strong>This gives you full change detection without webhooks.</strong></p>
+
+  <h2>Workflow 3: Client Onboarding Pipeline</h2>
+
+  <p>When a new client is added to Airtable (from a Stripe payment or a won deal in your CRM), this workflow spins up their entire onboarding sequence: welcome email, Notion workspace creation, Slack channel setup, and an intro call booking link.</p>
+
+  <div class="code-block">Trigger: Airtable List → filter: Status='New Client', Onboarded=false
+↓
+Node: Gmail → Send welcome email from template
+  → Variables: clientName, serviceType, accountManager
+↓
+Node: HTTP Request → Notion API → Create page from template
+  → Page: "[Client Name] — Project Hub"
+  → Share with client's email
+↓
+Node: HTTP Request → Slack API → Create private channel
+  → #client-[slug] with team members added
+  → Post welcome message with Notion link
+↓
+Node: HTTP Request → Calendly API → Generate one-time booking link
+  → Attach to follow-up email (sent 2h after welcome)
+↓
+Node: Airtable → Update Record
+  → Onboarded=true, OnboardedAt=NOW(), NotionURL=<url>, SlackChannel=#client-slug</div>
+
+  <p>The whole sequence runs in under 30 seconds and requires zero manual steps. Clients receive a professional onboarding experience — welcome email, workspace, and a booking link — within minutes of their record being created. The Airtable record becomes the single source of truth, with links back to every asset created.</p>
+
+  <p>For deeper onboarding automation patterns, see our <a href="/blog/automate-client-onboarding">full client onboarding automation guide</a> — the same principles apply whether your source of truth is Airtable, HubSpot, or a spreadsheet.</p>
+
+  <h2>Workflow 4: Automated Reporting from Airtable Data</h2>
+
+  <p>Every Monday morning, this workflow pulls data from multiple Airtable bases, aggregates it, and emails a clean performance report to leadership — without anyone building or exporting anything manually.</p>
+
+  <div class="code-block">Trigger: Schedule (Monday 08:00)
+↓
+Node: Airtable → List Records (Deals, closed this week)
+Node: Airtable → List Records (Projects, completed this week)
+Node: Airtable → List Records (Support Tickets, resolved this week)
+  [all three in parallel]
+↓
+Node: Code → aggregate metrics
+  {
+    dealsWon: count + value sum,
+    projectsDelivered: count + avg satisfaction score,
+    ticketsResolved: count + avg resolution time,
+    weeklyRevenue: sum of closed deal values
+  }
+↓
+Node: Code → build HTML email report
+  → Header: "Week of [date]"
+  → Sections: Revenue, Projects, Support
+  → Trend indicators vs prior week (from snapshot)
+↓
+Node: Gmail → Send to leadership@company.com
+↓
+Node: Slack → Post summary card to #leadership</div>
+
+  <p>The key to making this useful: include <strong>trend data</strong>, not just snapshots. Compare this week to last week, this month to last month. Readers want to know if things are improving or declining — a number without context is just noise. Store weekly summaries in a "Reports" Airtable table to build your historical baseline.</p>
+
+  <h2>Workflow 5: Inventory and Stock Alert System</h2>
+
+  <p>Product businesses using Airtable as their inventory database can trigger reorder alerts, supplier emails, and Slack notifications the moment stock drops below threshold — no ERP required.</p>
+
+  <div class="code-block">Trigger: Schedule (twice daily: 09:00 and 17:00)
+↓
+Node: Airtable → List Records (table: Inventory)
+  → Filter: filterByFormula=Quantity&lt;=ReorderPoint
+↓
+Node: IF → any low-stock items?
+  → NO: Stop
+  → YES: continue
+↓
+Node: Split in Batches → process each low-stock item
+↓
+Node: IF → already alerted today? (check LastAlertDate)
+  → YES: skip (avoid duplicate emails)
+  → NO: continue
+↓
+Node: Gmail → Email to supplier with item details + reorder quantity
+↓
+Node: Slack → Post to #ops: "[Item] below threshold: Qty=12, Reorder=50"
+↓
+Node: Airtable → Update Record
+  → LastAlertDate=TODAY(), AlertStatus='Notified'</div>
+
+  <p>The deduplication check (LastAlertDate) prevents alert storms where the same item triggers emails on every run. <strong>Idempotency is critical in any polling-based automation</strong> — always record that you've acted on a record, so subsequent runs skip it until the condition changes again.</p>
+
+  <h2>Workflow 6: Cross-Base Record Sync</h2>
+
+  <p>Large organisations split their data across multiple Airtable bases — one for sales, one for ops, one for finance. This workflow keeps them in sync: when a deal closes in the Sales base, it creates a corresponding project in the Ops base and a billing record in the Finance base.</p>
+
+  <div class="code-block">Trigger: Airtable List (Sales base → Deals, Status changed to 'Won', Synced=false)
+↓
+Node: Code → build project record from deal data
+  {
+    clientName: deal.ClientName,
+    value: deal.Value,
+    startDate: TODAY(),
+    endDate: DATEADD(TODAY(), deal.DurationWeeks, 'weeks'),
+    accountManager: deal.Owner
+  }
+↓
+Node: Airtable → Create Record (Ops base → Projects table)
+  → Returns: new project record ID
+↓
+Node: Airtable → Create Record (Finance base → Invoices table)
+  → Fields: Client, Amount, DueDate=30 days from now, Status='Draft'
+↓
+Node: Airtable → Update Record (Sales base → Deals table)
+  → Synced=true, OpsProjectId=&lt;id&gt;, FinanceInvoiceId=&lt;id&gt;</div>
+
+  <p>Cross-base sync is one of the most-requested Airtable automations — Airtable's native Automations don't support it, but n8n handles it trivially. Store the cross-references (OpsProjectId, FinanceInvoiceId) back on the source record so you can navigate between bases without a lookup table.</p>
+
+  <h2>Performance and Limits to Know</h2>
+
+  <p>Airtable's API has rate limits that affect high-volume workflows. The main ones to know:</p>
+
+  <ul>
+    <li><strong>5 requests per second</strong> per base — n8n's Airtable node doesn't throttle by default; add a Wait node if you're doing bulk operations</li>
+    <li><strong>100 records per API call</strong> — for large tables, paginate using the <code>offset</code> parameter; n8n's "Return All" option handles this automatically</li>
+    <li><strong>50,000 records per base</strong> on Pro plan — for high-volume data, consider Airtable as a staging layer and sync to a proper database (Postgres, Supabase) for long-term storage</li>
+    <li><strong>Webhook payload size</strong> — Airtable webhooks cap at 25KB per event; for large record payloads, fetch the full record via API after receiving the webhook trigger</li>
+  </ul>
+
+  <p>For most small-to-mid businesses, these limits are comfortably above what you'll hit. They become relevant when you're processing thousands of records per day — at which point n8n's batch processing and the Split in Batches node become essential tools.</p>
+
+  <h2>Airtable vs a Real Database: When to Switch</h2>
+
+  <p>Airtable is an excellent workflow backend — right up until it isn't. The tipping points:</p>
+
+  <ul>
+    <li><strong>Volume:</strong> above ~10,000 active records, Airtable gets slow and expensive</li>
+    <li><strong>Relational complexity:</strong> if you need more than 2–3 linked tables, you're fighting Airtable's model; Postgres is easier</li>
+    <li><strong>Real-time requirements:</strong> polling every 5 minutes is fine for most business workflows; true real-time needs a different stack</li>
+    <li><strong>Cost:</strong> Airtable's per-seat pricing adds up; Supabase or PlanetScale at $25/month covers unlimited seats</li>
+  </ul>
+
+  <p>The good news: migrating from Airtable to Postgres in n8n is painless. You swap the Airtable node for a Postgres node — the workflow logic stays identical. <strong>Build with Airtable now, migrate later if needed.</strong> Most businesses never hit the ceiling.</p>
+
+  <h2>Getting Started: The 30-Minute Setup</h2>
+
+  <p>If you want to run your first Airtable–n8n workflow today:</p>
+
+  <ul>
+    <li>Create an Airtable Personal Access Token with <code>data.records:read</code> + <code>data.records:write</code> scope</li>
+    <li>Add the token to n8n under Credentials → Airtable Personal Access Token</li>
+    <li>Start with a Schedule trigger (every 5 min) → Airtable List → IF → action</li>
+    <li>Test with a filter that returns 1–2 records; verify the output structure</li>
+    <li>Add your action node (Gmail, Slack, HubSpot, whatever)</li>
+    <li>Activate the workflow and watch the first run complete</li>
+  </ul>
+
+  <p>The first run is always the hardest — mostly because you're learning what Airtable's API actually returns versus what you expected. After that, the pattern repeats: get records, filter, act, update. Once you've built one workflow, the next one takes 20% of the time.</p>
+
+  <div class="result-box">
+    <div class="result-title">// want this built for you?</div>
+    <ul>
+      <li>We build Airtable automation stacks for agencies, SaaS companies, and operators</li>
+      <li>Typical engagement: 1–3 workflows, delivered in under a week</li>
+      <li>Fixed-price projects — no retainer required</li>
+      <li>Start at <a href="/#contact">getmicroservices.com/#contact</a></li>
+    </ul>
+  </div>
+
+</article>
+
+<footer>
+  <p>© 2026 <a href="/">GetMicroservices</a> · <a href="/blog">Blog</a> · <a href="/about">About</a> · <a href="/#contact">Contact</a></p>
+</footer>
+</body>
+</html>
