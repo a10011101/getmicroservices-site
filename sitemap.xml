@@ -79,6 +79,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://getmicroservices.com/blog/n8n-telegram-automation</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://getmicroservices.com/a/blog/n8n-telegram-automation</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://getmicroservices.com/blog/n8n-airtable-automation</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>

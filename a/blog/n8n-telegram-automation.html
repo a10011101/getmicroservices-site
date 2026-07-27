@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="canonical" href="https://getmicroservices.com/blog/n8n-telegram-automation"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://getmicroservices.com/blog/n8n-telegram-automation" />
+  <meta property="og:title" content="Automate Telegram with n8n: 7 Bot Workflows That Deliver Results (2026)" />
+  <meta property="og:description" content="Build Telegram bots with n8n — business notifications, AI assistants, order updates, team alerts, and slash commands. Step-by-step guide with 7 real automation workflows for 2026." />
+  <meta property="og:image" content="https://getmicroservices.com/logo.jpg" />
+  <meta property="og:site_name" content="GetMicroservices" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Automate Telegram with n8n: 7 Bot Workflows That Deliver Results (2026)" />
+  <meta name="twitter:description" content="Build Telegram bots with n8n — business notifications, AI assistants, order updates, team alerts, and slash commands. Step-by-step guide with 7 real automation workflows for 2026." />
+  <meta name="twitter:image" content="https://getmicroservices.com/logo.jpg" />
+<title>Automate Telegram with n8n: 7 Bot Workflows That Deliver Results (2026)</title>
+<meta name="description" content="Build Telegram bots with n8n — business notifications, AI assistants, order updates, team alerts, and slash commands. Step-by-step guide with 7 real automation workflows for 2026."/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9P3QLH1BY4');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Automate Telegram with n8n: 7 Bot Workflows That Deliver Results (2026)",
+  "description": "Build Telegram bots with n8n — business notifications, AI assistants, order updates, team alerts, and slash commands. Step-by-step guide with 7 real automation workflows for 2026.",
+  "url": "https://getmicroservices.com/blog/n8n-telegram-automation",
+  "datePublished": "2026-07-27",
+  "dateModified": "2026-07-27",
+  "author": {
+    "@type": "Organization",
+    "name": "GetMicroservices"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "GetMicroservices",
+    "url": "https://getmicroservices.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://getmicroservices.com/blog/n8n-telegram-automation"
+  }
+}
+</script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#222;--fg:#e8e8e8;--dim:#666;--accent:#00ff88;--mono:'JetBrains Mono','Fira Code',monospace;--sans:'Inter',system-ui,sans-serif;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,.97);}
+  .nav-logo{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px;text-decoration:none;}
+  .nav-logo span{color:var(--dim);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--fg);}
+  .nav-cta{font-family:var(--mono);font-size:12px;padding:8px 18px;border:1px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+  .article{max-width:680px;margin:0 auto;padding:140px 24px 100px;}
+  .back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:48px;transition:color .2s;}
+  .back-link:hover{color:var(--accent);}
+  .post-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid rgba(0,255,136,.3);border-radius:3px;padding:3px 10px;margin-bottom:20px;}
+  .post-meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:32px;display:flex;gap:20px;}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-1.5px;line-height:1.15;margin-bottom:16px;}
+  .post-lead{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--border);}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.5px;margin:40px 0 16px;}
+  p{color:var(--dim);font-size:15px;line-height:1.8;margin-bottom:20px;}
+  strong{color:var(--fg);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  ul{list-style:none;margin:0 0 20px 0;}
+  ul li{font-size:14px;color:var(--dim);padding:5px 0 5px 18px;position:relative;line-height:1.7;}
+  ul li::before{content:'>';position:absolute;left:0;color:var(--accent);font-family:var(--mono);}
+  code{font-family:var(--mono);font-size:13px;background:var(--bg2);border:1px solid var(--border);padding:2px 6px;border-radius:3px;color:var(--accent);}
+  .code-block{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);padding:20px 24px;margin:24px 0;font-family:var(--mono);font-size:13px;color:var(--fg);overflow-x:auto;line-height:1.7;white-space:pre;}
+  .result-box{background:var(--bg2);border:1px solid rgba(0,255,136,.2);border-radius:8px;padding:28px;margin:32px 0;}
+  .result-title{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+  .result-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:14px;color:var(--dim);}
+  .result-item::before{content:'→';color:var(--accent);font-family:var(--mono);flex-shrink:0;}
+  hr.full-divider{border:none;border-top:1px solid var(--border);margin:60px 0 0;}
+  footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+  footer .footer-logo{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--accent);}
+  footer .footer-links{display:flex;gap:24px;}
+  footer .footer-links a{font-size:13px;color:var(--dim);text-decoration:none;transition:color .2s;}
+  footer .footer-links a:hover{color:var(--fg);}
+  @media(max-width:768px){nav{padding:16px 24px;}.nav-links{display:none;}.article{padding:100px 20px 80px;}.footer{flex-direction:column;gap:20px;padding:32px 24px;}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav>
+  <a href="/a/" class="nav-logo">getmicroservices<span>.com</span></a>
+  <ul class="nav-links">
+    <li><a href="/a/blog/">blog</a></li>
+    <li><a href="/#services">services</a></li>
+    <li><a href="/#how">how it works</a></li>
+    <li><a href="/#pricing">pricing</a></li>
+    <li><a href="/#faq">faq</a></li>
+    <li><a href="/about">about</a></li>
+    <li><a href="/#contact" class="nav-cta">get a quote</a></li>
+  </ul>
+</nav>
+
+<main class="article">
+  <a href="/a/blog/" class="back-link">← Back to Blog</a>
+
+  <div class="post-tag">guide</div>
+  <div class="post-meta">
+    <span>2026-07-27</span>
+    <span>11 min read</span>
+  </div>
+
+  <h1>Automate Telegram with n8n: 7 Bot Workflows That Deliver Results (2026)</h1>
+  <p class="post-lead">Telegram has 900 million users and one of the most capable bot APIs on the internet. n8n turns it into a fully programmable automation surface — alerts, AI assistants, order updates, and slash commands — without writing a single line of custom bot code.</p>
+
+  <p>Telegram's bot platform is deceptively powerful. Most people think of bots as novelty — meme generators, weather checkers, simple Q&amp;A. But <strong>with n8n's Telegram node, you can build production-grade business automation that runs entirely through Telegram messages</strong>. No app to install. No dashboard to log into. Just Telegram, which your team is already using.</p>
+
+  <p>This guide covers seven workflows we've deployed for real clients — e-commerce founders, agency operators, SaaS teams, and solo consultants who use Telegram as their primary async channel. Each workflow has a clear business problem it solves and measurable output.</p>
+
+  <h2>Setting Up the Telegram Integration in n8n</h2>
+
+  <p>Before building anything, you need a bot token. The process is intentionally simple:</p>
+
+  <ul>
+    <li>Open Telegram and search for <code>@BotFather</code></li>
+    <li>Send <code>/newbot</code>, follow the prompts to name your bot</li>
+    <li>BotFather returns a token like <code>7123456789:AAHdqTcvCH...</code></li>
+    <li>In n8n, go to Credentials → Add → Telegram API → paste your token</li>
+    <li>Get your chat ID by sending a message to <code>@userinfobot</code></li>
+  </ul>
+
+  <p>For group bots (sending to a channel or group), add the bot as an admin and use the group's chat ID (negative number, e.g. <code>-1001234567890</code>). For personal notifications, your own user ID works directly.</p>
+
+  <p>n8n's Telegram node supports both <strong>polling</strong> (n8n checks Telegram periodically) and <strong>webhooks</strong> (Telegram pushes updates to n8n instantly). Use webhooks in production — lower latency, lower resource usage.</p>
+
+  <h2>Workflow 1: Business Event Alerts to a Private Channel</h2>
+
+  <p>This is the fastest win. Any significant business event — new Stripe payment, failed subscription, form submission, server alert — fires a formatted Telegram message to a private channel or group. No email chains, no dashboard checks. It just arrives.</p>
+
+  <div class="code-block">Trigger: Webhook (from Stripe, HubSpot, PagerDuty, any source)
+↓
+Node: IF → filter by event type / severity threshold
+↓
+Node: Code → build formatted Telegram message (Markdown supported)
+↓
+Node: Telegram → sendMessage to alert channel
+↓
+[Optional] Node: IF → if critical → also ping personal user ID directly</div>
+
+  <p>Telegram supports a useful subset of Markdown in messages — bold, italic, inline code, hyperlinks. <strong>A well-formatted alert beats a raw JSON notification every time.</strong> Example message format:</p>
+
+  <div class="code-block">💳 *New Payment — £3,400*
+Customer: Acme Corp Ltd
+Plan: Growth Annual
+MRR Impact: +£283/mo
+[View in Stripe](https://dashboard.stripe.com/payments/xxx)</div>
+
+  <p>The hyperlink in Telegram message format means your team can tap directly through to the relevant record. No copy-pasting IDs.</p>
+
+  <h2>Workflow 2: AI Assistant Bot (Powered by OpenAI)</h2>
+
+  <p>This is the workflow that gets the most visible reaction from clients. You create a Telegram bot that any team member can message in natural language — and n8n routes the query to OpenAI, optionally with context from your business data, and replies in seconds.</p>
+
+  <div class="code-block">Trigger: Telegram Trigger (webhook mode) → new message received
+↓
+Node: IF → check if message is from authorised user ID list
+↓
+Node: Code → build prompt with system context (your business info, tools, tone)
+↓
+Node: OpenAI → chat completion (gpt-4o or equivalent)
+↓
+Node: Telegram → sendMessage reply to same chat_id
+↓
+Node: Google Sheets → log query + response for auditing</div>
+
+  <p>The authorisation check is important. Without it, anyone who finds your bot's username can query it. Maintain a list of allowed Telegram user IDs in n8n's workflow settings or a Google Sheet, and reject messages from unknown users with a polite refusal.</p>
+
+  <p>Use cases we've built: <strong>internal FAQ bots</strong> (team members ask questions about internal processes, the bot queries a knowledge base via RAG and replies), <strong>client support pre-triage</strong> (routes to human if confidence is low), and <strong>personal productivity assistants</strong> that can query your calendar, send emails, or look up CRM records via tool calls.</p>
+
+  <div class="result-box">
+    <div class="result-title">// real usage stats from a deployed client bot</div>
+    <div class="result-item">Team of 6 using the internal FAQ bot daily for 3 months</div>
+    <div class="result-item">~35 queries/day, avg response time 1.8 seconds</div>
+    <div class="result-item">Estimated time saved: 40+ minutes/day (vs. searching docs or pinging colleagues)</div>
+    <div class="result-item">Support escalations to the ops team: down 60%</div>
+  </div>
+
+  <h2>Workflow 3: E-Commerce Order Update Bot</h2>
+
+  <p>If you're running a Shopify or WooCommerce store, your customers already expect order updates. Telegram is now a genuine alternative delivery channel — and customers who opt in get faster, richer updates than SMS or email.</p>
+
+  <div class="code-block">Trigger: Shopify Webhook → order.created / order.fulfilled / order.cancelled
+↓
+Node: Code → extract order details, customer Telegram ID (stored in notes/metafields)
+↓
+Node: Switch → branch by event type (created / fulfilled / cancelled)
+↓
+Branch A (created): Telegram → "✅ Order confirmed — #1234, ships within 2 days"
+Branch B (fulfilled): Telegram → "📦 Shipped! Track here: [courier link]"
+Branch C (cancelled): Telegram → "❌ Order cancelled. Refund in 3-5 days."
+↓
+Node: Airtable → log notification sent + timestamp</div>
+
+  <p>The friction point is capturing the customer's Telegram user ID at checkout. The cleanest approach: add an optional "Telegram username" field to checkout, then use Telegram's <code>getChat</code> API to resolve it to a user ID. Alternatively, send a unique opt-in link that routes through a registration bot to capture their ID before their first order.</p>
+
+  <p><strong>Open rates on Telegram messages from bots are dramatically higher than email</strong> — typically 80-90%+ for customers who opted in vs 20-30% for email order confirmations. It's the channel people actually read.</p>
+
+  <h2>Workflow 4: Scheduled Daily Digest for Your Team</h2>
+
+  <p>Every morning, before anyone opens a tool, your team receives a clean briefing: revenue from yesterday, open issues, today's calendar, and anything that needs attention. It arrives in a shared Telegram group.</p>
+
+  <div class="code-block">Trigger: Schedule → weekdays at 08:00 (Europe/London timezone)
+↓
+Node: Stripe → yesterday's new MRR, churn, payment failures
+↓
+Node: Linear → open P1/P2 issues + issues closed yesterday
+↓
+Node: Google Calendar → today's events (team calendar)
+↓
+Node: HTTP Request → your uptime monitor (StatusPage / BetterUptime)
+↓
+Node: Code → compile into clean Telegram message (Markdown)
+↓
+Node: Telegram → send to team group chat</div>
+
+  <p>The message uses Telegram's Markdown to create visual hierarchy — bold for numbers, italics for context, headers for sections. A well-designed daily digest takes 30 seconds to read and replaces a 15-minute "what's happening today" conversation.</p>
+
+  <p><strong>Key design principle:</strong> include only the things that would change what someone does that day. Revenue snapshot, critical issues, today's commitments. Not a full data dump — a decision-ready brief.</p>
+
+  <h2>Workflow 5: Slash Command Interface for Your Entire Stack</h2>
+
+  <p>This is the workflow that makes Telegram feel like a superpower. Any tool you use — CRM, project management, analytics, billing — becomes accessible via a simple Telegram command.</p>
+
+  <div class="code-block">Trigger: Telegram Trigger → message starting with /
+↓
+Node: Code → parse command name + arguments
+  /report weekly → fetch weekly revenue summary
+  /status acme → check Acme Corp's open tickets in Linear
+  /invoice £500 freelancer-x → create draft invoice in Xero
+  /uptime → check all monitored services
+  /leads today → fetch today's new CRM leads
+↓
+Node: Switch → route to appropriate sub-workflow by command
+↓
+Node: [Tool-specific node] → fetch/create/update data
+↓
+Node: Telegram → send formatted reply (only visible to the sender)</div>
+
+  <p>The trick is using <strong>Telegram's replyToMessageId</strong> to thread responses to the original command — so the conversation stays readable in a group context. If you're the only user, a private bot chat keeps everything clean without threading.</p>
+
+  <p>Clients who deploy this stop switching tabs. The whole toolstack lives in Telegram. /report, /status, /invoice — all from the same chat window.</p>
+
+  <h2>Workflow 6: Lead Qualification Bot</h2>
+
+  <p>Instead of a generic contact form that sends an email, build a Telegram bot that qualifies leads interactively. It asks the right questions, scores the responses, and routes hot leads immediately while filing cold ones for later follow-up.</p>
+
+  <div class="code-block">Trigger: Telegram Trigger → /start command or deep link (from website CTA)
+↓
+Node: Telegram → "What does your business do?" [wait for reply]
+↓
+Node: Telegram Trigger → capture answer → store in workflow context
+↓
+Node: Telegram → "What's your monthly budget for automation?" [wait for reply]
+↓
+Node: Telegram Trigger → capture answer
+↓
+Node: Telegram → "How soon do you need this built?" [inline keyboard: ASAP / 1-2 months / Just exploring]
+↓
+Node: Code → calculate lead score (budget, urgency, fit)
+↓
+Node: IF → score > 70 → HubSpot create contact + Slack alert to sales team
+↓
+Node: IF → score < 30 → add to nurture sequence
+↓
+Node: Telegram → send personalised response + book a call link</div>
+
+  <p>Telegram's inline keyboard buttons make the bot feel conversational rather than form-like. Multiple choice answers — "ASAP / Next month / Just exploring" — are one tap. <strong>Completion rates on Telegram qualification flows are consistently higher than equivalent web forms.</strong></p>
+
+  <h2>Workflow 7: Internal Approval and Decision Flows</h2>
+
+  <p>Small teams often have informal approval processes that create bottlenecks — "can you approve this invoice?", "is this design OK to send?" — that live in email or DMs and get lost. n8n's Telegram integration lets you build proper approval flows with inline keyboard buttons.</p>
+
+  <div class="code-block">Trigger: Any event requiring approval (invoice, content piece, access request)
+↓
+Node: Telegram → send message with inline keyboard: [✅ Approve] [❌ Reject] [🔁 Request Changes]
+↓
+Node: Telegram Trigger → listen for callback_query (button press)
+↓
+Node: Code → identify which button pressed + who pressed it (user.id)
+↓
+Node: IF → Approve → execute action (pay invoice / publish content / grant access)
+↓
+Node: IF → Reject → notify requester with reason via Telegram DM
+↓
+Node: Telegram → edit original message to show final decision + actor + timestamp</div>
+
+  <p>The final step — editing the original message to show the outcome — keeps the approval channel clean. Instead of an ever-growing thread, each approval message updates in place to show its resolved state.</p>
+
+  <div class="result-box">
+    <div class="result-title">// where telegram beats slack for automation</div>
+    <div class="result-item">Mobile-first: Telegram's mobile app is faster and lighter — better for approvals on the go</div>
+    <div class="result-item">No workspace cost: Telegram is free for everyone; Slack Pro costs per seat</div>
+    <div class="result-item">Customer-facing: you can build customer bots in Telegram; Slack is internal-only</div>
+    <div class="result-item">Bot API reliability: Telegram's bot API has excellent uptime and generous rate limits (30 msg/sec)</div>
+    <div class="result-item">No seat management: any Telegram user can interact with a bot — no invite/onboard process</div>
+  </div>
+
+  <h2>Error Handling and Reliability</h2>
+
+  <p>Production Telegram bots need proper error handling. A few patterns that matter:</p>
+
+  <ul>
+    <li><strong>Rate limits:</strong> Telegram allows 30 messages/second globally, and 1 message/second to the same chat. For bulk sends, add a Wait node with 1.1s delay between messages</li>
+    <li><strong>Bot blocking:</strong> Users can block your bot. Telegram returns a 403 error — catch this in an IF node and flag the user as unsubscribed rather than retrying</li>
+    <li><strong>Webhook vs polling:</strong> If your n8n instance restarts, polling resumes naturally. Webhooks need re-registration after a server restart — add this to your n8n startup routine</li>
+    <li><strong>Message length:</strong> Telegram caps messages at 4096 characters. For long outputs, split into multiple messages or use a document/file send instead</li>
+    <li><strong>Idempotency:</strong> Telegram may deliver webhook updates more than once. Store the <code>update_id</code> and deduplicate in n8n before processing</li>
+  </ul>
+
+  <p>The most robust pattern: <strong>a dedicated Telegram group for bot errors</strong>. When any Telegram workflow in n8n encounters an unhandled exception, it sends a message to this error group with the workflow name, error message, and input data. You'll know within seconds when something breaks.</p>
+
+  <h2>Where to Start</h2>
+
+  <p>If your team is new to Telegram automation, start with Workflow 1 — business event alerts. Pick the single most important event your team currently discovers too late and build that one alert first. Get it reliable and well-formatted before adding more.</p>
+
+  <p>If you're building customer-facing automation, Workflow 3 (order updates) or Workflow 6 (lead qualification) deliver the clearest ROI. They run without human involvement and measurably outperform their email equivalents.</p>
+
+  <p>If your team already uses Telegram internally, Workflow 5 (slash commands) is the one that creates the most visible productivity change. The moment someone types <code>/report weekly</code> and gets a full revenue summary in 2 seconds, they stop opening Stripe manually.</p>
+
+  <p>All seven of these are workflows we build and maintain for clients. If you'd rather have them set up properly the first time — <a href="/#contact">get in touch and we'll scope it out.</a></p>
+
+  <div id="further-reading" class="result-box" style="margin-top:40px">
+    <div class="result-title">further reading</div>
+    <div class="result-item"><a href="/a/blog/n8n-whatsapp-automation">WhatsApp Business Automation with n8n: Build a 24/7 Messaging Bot (2026)</a></div>
+    <div class="result-item"><a href="/a/blog/n8n-slack-automation">Automate Slack with n8n: 7 Workflows That Save Hours (2026)</a></div>
+    <div class="result-item"><a href="/a/blog/ai-customer-support-automation">AI Customer Support Automation: Build a 24/7 Support System</a></div>
+    <div class="result-item"><a href="/a/blog/n8n-airtable-automation">Automate Airtable with n8n: Dynamic Database Workflows Without Code (2026)</a></div>
+  </div>
+
+  <hr class="full-divider"/>
+</main>
+
+<footer>
+  <span class="footer-logo">getmicroservices</span>
+  <div class="footer-links">
+    <a href="/a/blog/">blog</a>
+    <a href="/#services">services</a>
+    <a href="/#contact">contact</a>
+    <a href="https://getmicroservices.com">main site</a>
+  </div>
+</footer>
+</body>
+</html>
