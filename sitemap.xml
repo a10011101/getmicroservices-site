@@ -529,4 +529,17 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://getmicroservices.com/blog/no-code-automation-tools</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://getmicroservices.com/a/blog/no-code-automation-tools</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
