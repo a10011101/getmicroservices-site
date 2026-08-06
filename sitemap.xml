@@ -568,4 +568,17 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://getmicroservices.com/blog/business-process-automation-service</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://getmicroservices.com/a/blog/business-process-automation-service</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
