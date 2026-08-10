@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="canonical" href="https://getmicroservices.com/a/blog/n8n-workflow-examples"/>
-<title>n8n Workflow Examples: 12 Real Automations You Can Copy — getmicroservices</title>
+<title>n8n Workflow Examples: 12 Real Automations You Can Copy</title>
 <meta name="description" content="12 real n8n workflow examples for lead capture, invoice processing, Slack alerts, CRM updates and content pipelines. With JSON templates."/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
 <script>
@@ -80,38 +80,65 @@
   <h1>n8n Workflow Examples: 12 Real Automations You Can Copy</h1>
   <p class="post-lead">12 real n8n workflow examples for lead capture, invoice processing, Slack alerts, CRM updates and content pipelines. With JSON templates.</p>
 
-  <p>Real-world breakdown of <strong>n8n workflow examples: 12 real automations you can copy</strong>. No fluff — just what works, based on actual client projects.</p>
+  <p>12 <strong>n8n workflow examples</strong> from real client builds. Trigger, key nodes, what it replaces. Pair with our <a href="/a/blog/n8n-workflow-template">workflow templates guide</a> for importable JSON.</p>
 
-  <h2>why it matters now</h2>
-  <p>The automation landscape has shifted. Tools that were niche two years ago are table stakes today. Teams not using them are leaving significant time and money on the table.</p>
-  <p>The barrier to entry has never been lower. No developer needed. No large budget. Just the right knowledge applied consistently.</p>
+  <h2>1. lead capture → crm + slack alert</h2>
+  <p><strong>trigger:</strong> webhook from site form. <strong>nodes:</strong> Webhook → Set → CRM → Slack.</p>
+  <p>Form submissions land in the CRM with an owner assigned, sales gets pinged in seconds. Full build in the <a href="/a/blog/n8n-crm-integration">crm integration guide</a>.</p>
 
-  <h2>core principles</h2>
-  <ul>
-    <li>start with the highest-leverage repetitive task</li>
-    <li>build incrementally — one step at a time</li>
-    <li>test before relying on anything in production</li>
-    <li>monitor continuously — apis change and break things</li>
-  </ul>
+  <h2>2. invoice processing, inbox → accounting</h2>
+  <p><strong>trigger:</strong> email with pdf. <strong>nodes:</strong> IMAP → extract text → AI parse → Sheets/Xero → Slack approval.</p>
+  <p>Minutes per invoice down to seconds. Human approval above a set amount.</p>
 
-  <h2>implementation</h2>
-  <p>The teams that get real ROI from automation treat it as a process, not a one-time project. It's an ongoing habit: identify repetitive work, eliminate it, repeat.</p>
-  <p>Start simple. A workflow that runs reliably beats a complex one that fails. Build the minimum viable automation first, then layer on complexity once it's proven.</p>
+  <h2>3. daily metrics → slack</h2>
+  <p><strong>trigger:</strong> cron 8am weekdays. <strong>nodes:</strong> Schedule → HTTP (Stripe, GA4, DB) → Code → Slack.</p>
+  <p>Revenue, signups, traffic in one message. No dashboard-hopping before standup.</p>
 
-  <h2>what goes wrong</h2>
-  <ul>
-    <li>automating a broken process instead of fixing it first</li>
-    <li>building edge cases before core flow works</li>
-    <li>no error handling — when it fails, you need to know</li>
-    <li>not documenting what you built</li>
-  </ul>
+  <h2>4. contact enrichment</h2>
+  <p><strong>trigger:</strong> new crm contact. <strong>nodes:</strong> CRM Trigger → Clearbit/Apollo → Merge → CRM update.</p>
+  <p>Company size, industry, LinkedIn filled automatically.</p>
+
+  <h2>5. abandoned cart recovery</h2>
+  <p><strong>trigger:</strong> shopify abandoned checkout. <strong>nodes:</strong> Shopify Trigger → Wait 1h → IF unpaid → email with code.</p>
+  <p>Recovers lost checkouts on autopilot.</p>
+
+  <h2>6. content pipeline: rss → social drafts</h2>
+  <p><strong>trigger:</strong> new rss item. <strong>nodes:</strong> RSS → AI summarise → Airtable queue → approve → post.</p>
+  <p>Steady social queue, human review stays in the loop.</p>
+
+  <h2>7. support triage with ai</h2>
+  <p><strong>trigger:</strong> new support email. <strong>nodes:</strong> IMAP → AI classify → Switch → route or auto-reply.</p>
+  <p>Production build documented in the <a href="/a/blog/ai-customer-support-bot-n8n">support bot guide</a>.</p>
+
+  <h2>8. meeting notes → crm</h2>
+  <p><strong>trigger:</strong> calendar event ends. <strong>nodes:</strong> Calendar → transcript → AI summary → CRM log → recap email.</p>
+  <p>Every call logged with action items, zero manual notes.</p>
+
+  <h2>9. nightly database sync</h2>
+  <p><strong>trigger:</strong> cron 2am. <strong>nodes:</strong> Postgres → Compare Datasets → Airtable/Sheets.</p>
+  <p>Ops gets an always-current spreadsheet view. Nobody exports CSVs.</p>
+
+  <h2>10. error alerts → telegram</h2>
+  <p><strong>trigger:</strong> app webhook or Error Trigger. <strong>nodes:</strong> Error Trigger → Filter dedupe → Telegram.</p>
+  <p>Know about failures before customers do.</p>
+
+  <h2>11. client onboarding sequence</h2>
+  <p><strong>trigger:</strong> deal won. <strong>nodes:</strong> CRM → Drive folders → DocuSign → welcome emails → Slack channel.</p>
+  <p>Consistent first week for every new client.</p>
+
+  <h2>12. social scheduler from airtable</h2>
+  <p><strong>trigger:</strong> cron checks queue. <strong>nodes:</strong> Schedule → Airtable (ready) → LinkedIn/X → mark posted.</p>
+  <p>Free replacement for paid scheduling tools.</p>
+
+  <h2>which platform</h2>
+  <p>All 12 run on n8n cloud or self-hosted. Choosing a platform first? Read <a href="/a/blog/n8n-vs-zapier-2026">n8n vs zapier</a>. Self-hosting slashes cost at volume.</p>
 
   <div class="result-box">
     <div class="result-title">key takeaways</div>
-    <div class="result-item">identify your highest-roi automation opportunity first</div>
-    <div class="result-item">build the simplest version that works, then iterate</div>
-    <div class="result-item">always include error handling and monitoring</div>
-    <div class="result-item">document your workflows as you build them</div>
+    <div class="result-item">start with revenue-touching workflows: leads, carts</div>
+    <div class="result-item">every workflow needs an error path</div>
+    <div class="result-item">keep humans in the loop for approvals and content</div>
+    <div class="result-item">build one, prove it, copy the pattern</div>
   </div>
 
   <p>Need this implemented? <a href="/a/#contact">we build these workflows for clients →</a></p>

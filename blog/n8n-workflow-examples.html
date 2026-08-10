@@ -93,37 +93,69 @@
   <p class="lead">12 real n8n workflow examples for lead capture, invoice processing, Slack alerts, CRM updates and content pipelines. With JSON templates.</p>
 </div>
 <div class="article-body">
-  <p>This guide covers everything you need to know about <strong>n8n workflow examples: 12 real automations you can copy</strong>. We've distilled real-world experience from dozens of client projects into a practical, actionable breakdown.</p>
-  <h2>Why This Matters in 2026</h2>
-  <p>The automation landscape has shifted significantly. Tools that were niche two years ago are now table stakes. If you're not taking advantage of them, your competitors are.</p>
-  <p>The good news: the barrier to entry has never been lower. You don't need a developer. You don't need a big budget. You need the right knowledge — and the discipline to implement it.</p>
-  <h2>The Core Concepts</h2>
-  <ul>
-    <li>Start with the highest-leverage, most repetitive task in your workflow</li>
-    <li>Build incrementally — automate one step at a time</li>
-    <li>Test thoroughly before relying on any automation in production</li>
-    <li>Monitor and maintain — automations break when APIs change</li>
-  </ul>
-  <h2>Implementation Approach</h2>
-  <p>The teams we work with that get the most value from automation share one trait: they treat automation as a process, not a project. It's not a one-time setup — it's an ongoing habit of identifying repetitive work and eliminating it.</p>
-  <p>That means starting simple. A workflow that runs reliably is worth more than a complex one that breaks. Build the simplest version first, validate it works, then add complexity.</p>
-  <h2>Common Mistakes to Avoid</h2>
-  <ul>
-    <li>Automating a broken process instead of fixing it first</li>
-    <li>Building for edge cases before the core flow works</li>
-    <li>No error handling — when something fails, you need to know about it</li>
-    <li>Not documenting what you built — future-you will thank present-you</li>
-  </ul>
+  <p>These are 12 <strong>n8n workflow examples</strong> pulled from real client projects. Each one lists the trigger, the key nodes, and what it replaces. If you want ready-made JSON to import, our <a href="/blog/n8n-workflow-template">n8n workflow templates guide</a> pairs with this list.</p>
+
+  <h2>1. Lead Capture to CRM with Instant Slack Alert</h2>
+  <p><strong>Trigger:</strong> Webhook from your website form. <strong>Nodes:</strong> Webhook → Set → HubSpot/Pipedrive → Slack.</p>
+  <p>Every form submission lands in the CRM with the right owner assigned, and sales gets a Slack ping within seconds. Replaces manual copy-paste and the "we lost that lead" problem. Full setup details in our <a href="/blog/n8n-crm-integration">n8n CRM integration guide</a>.</p>
+
+  <h2>2. Invoice Processing from Inbox to Accounting</h2>
+  <p><strong>Trigger:</strong> Email with PDF attachment. <strong>Nodes:</strong> IMAP Email → Extract PDF text → AI parse (amount, vendor, due date) → Google Sheets or Xero → Slack approval.</p>
+  <p>Cuts invoice handling from minutes to seconds per document. Add a human approval step for anything above a set amount.</p>
+
+  <h2>3. Daily Metrics Report to Slack</h2>
+  <p><strong>Trigger:</strong> Cron, 8am weekdays. <strong>Nodes:</strong> Schedule → HTTP Request (Stripe, GA4, your DB) → Code (aggregate) → Slack.</p>
+  <p>One message every morning with revenue, signups, and traffic. Nobody opens five dashboards before standup anymore.</p>
+
+  <h2>4. New Contact Enrichment</h2>
+  <p><strong>Trigger:</strong> New CRM contact. <strong>Nodes:</strong> CRM Trigger → Clearbit/Apollo HTTP request → Merge → CRM update.</p>
+  <p>Company size, industry, and LinkedIn URL filled in automatically so reps qualify faster.</p>
+
+  <h2>5. Abandoned Cart Recovery</h2>
+  <p><strong>Trigger:</strong> Shopify abandoned checkout. <strong>Nodes:</strong> Shopify Trigger → Wait (1 hour) → IF (still unpaid) → Email with discount code.</p>
+  <p>Recovers a meaningful slice of lost checkouts with zero ongoing effort. Works with any store platform that exposes checkout webhooks.</p>
+
+  <h2>6. Content Pipeline: RSS to Social Drafts</h2>
+  <p><strong>Trigger:</strong> New RSS item. <strong>Nodes:</strong> RSS Trigger → AI summarise → Airtable (draft queue) → manual approve → post.</p>
+  <p>Keeps a steady social queue without hiring a content team. Human review stays in the loop.</p>
+
+  <h2>7. Support Inbox Triage with AI</h2>
+  <p><strong>Trigger:</strong> New support email. <strong>Nodes:</strong> IMAP → AI classify (billing, bug, sales, spam) → Switch → route to the right person or auto-reply.</p>
+  <p>We covered a full production build in our <a href="/blog/ai-customer-support-bot-n8n">AI customer support bot guide</a>.</p>
+
+  <h2>8. Meeting Notes to CRM</h2>
+  <p><strong>Trigger:</strong> Calendar event ends. <strong>Nodes:</strong> Google Calendar → transcript fetch → AI summary → CRM activity log → email recap to attendees.</p>
+  <p>Every client call is logged with action items. Nothing depends on someone remembering to write notes.</p>
+
+  <h2>9. Nightly Database Sync</h2>
+  <p><strong>Trigger:</strong> Cron, 2am. <strong>Nodes:</strong> Postgres → Compare Datasets → Airtable/Google Sheets update.</p>
+  <p>Ops teams get a spreadsheet view of production data that is always current, without anyone exporting CSVs.</p>
+
+  <h2>10. Error Alerts to Telegram</h2>
+  <p><strong>Trigger:</strong> Webhook from your app or n8n Error Trigger. <strong>Nodes:</strong> Error Trigger → Filter (dedupe) → Telegram.</p>
+  <p>You find out about failures before your customers do. Deduplication stops alert fatigue.</p>
+
+  <h2>11. Client Onboarding Sequence</h2>
+  <p><strong>Trigger:</strong> Deal marked won. <strong>Nodes:</strong> CRM Trigger → Google Drive (create folder structure) → DocuSign send → Gmail welcome sequence → Slack channel create.</p>
+  <p>New clients get a consistent first week, and nothing falls through the cracks during handoff.</p>
+
+  <h2>12. Social Media Scheduler from Airtable</h2>
+  <p><strong>Trigger:</strong> Cron checks an Airtable queue. <strong>Nodes:</strong> Schedule → Airtable (status = ready) → LinkedIn/X post → Airtable update (posted).</p>
+  <p>A free alternative to paid scheduling tools, with full control over timing and formatting.</p>
+
+  <h2>Which Tool Should Run These?</h2>
+  <p>All 12 run on n8n cloud or self-hosted. If you are weighing platforms first, read our <a href="/blog/n8n-vs-zapier-2026">n8n vs Zapier comparison</a>. Self-hosting cuts costs dramatically at volume; our <a href="/blog/n8n-self-hosted-guide">self-hosted n8n guide</a> covers the setup.</p>
+
   <div class="result-box">
     <div class="result-title">⚡ Key Takeaways</div>
     <ul>
-      <li>Identify your highest-ROI automation opportunity first</li>
-      <li>Build the simplest version that works, then iterate</li>
-      <li>Always include error handling and monitoring</li>
-      <li>Document your workflows as you build them</li>
+      <li>Start with the workflow that touches revenue: lead capture or cart recovery</li>
+      <li>Every workflow needs an error path, not just a happy path</li>
+      <li>Keep humans in the loop for approvals and content</li>
+      <li>Build one, prove it, then copy the pattern to the next process</li>
     </ul>
   </div>
-  <p>Ready to get started? <a href="/#contact" style="color:var(--accent);">We help teams implement this</a> without the learning curve — get in touch if you want it done right the first time.</p>
+  <p>Want these running in your business without the learning curve? <a href="/#contact" style="color:var(--accent);">We build and maintain n8n workflows for clients.</a> Get in touch and we'll scope it in one call.</p>
 </div>
 <footer>
   <p>© 2026 <a href="/">GetMicroservices</a> · <a href="/blog/">Blog</a> · <a href="/#contact">Contact</a></p>
