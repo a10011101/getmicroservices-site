@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Self-Hosted LLM: Complete Setup Guide for 2026 (Ollama + Best Models)</title>
+  <meta name="description" content="Run a self-hosted LLM on your own hardware or VPS. Best models, setup with Ollama, hardware requirements, and real automation use cases for 2026."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/self-hosted-llm"/>
+  <meta property="og:title" content="Self-Hosted LLM: Complete Setup Guide for 2026"/>
+  <meta property="og:description" content="Run a self-hosted LLM on your own hardware or VPS. Best models, Ollama setup, hardware requirements, and real automation use cases for 2026."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/blog/self-hosted-llm"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Self-Hosted LLM: Complete Setup Guide for 2026 (Ollama + Best Models)",
+    "description": "Run a self-hosted LLM on your own hardware or VPS. Best models, setup with Ollama, hardware requirements, and real automation use cases for 2026.",
+    "url": "https://getmicroservices.com/blog/self-hosted-llm",
+    "datePublished": "2026-08-27",
+    "dateModified": "2026-08-27",
+    "author": {
+      "@type": "Organization",
+      "name": "GetMicroservices"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GetMicroservices",
+      "url": "https://getmicroservices.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://getmicroservices.com/blog/self-hosted-llm"
+    }
+  }
+  </script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav:not(.toc){position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:400;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;line-height:1;}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'< ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body h3{font-family:'Space Grotesk',sans-serif;font-size:0.95rem;margin:28px 0 10px;color:var(--fg);}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body a{color:var(--accent);}
+    .article-body a:hover{text-decoration:underline;}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'>';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .code-block{background:var(--bg3);border:2px solid var(--border);border-left:4px solid var(--accent);padding:16px 20px;margin:24px 0;font-family:'Fira Code',monospace;font-size:0.78rem;color:var(--fg);overflow-x:auto;line-height:1.7;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul li::before{content:'>';}
+    .model-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:0.82rem;}
+    .model-table th{background:var(--fg);color:var(--bg);padding:10px 12px;text-align:left;font-family:'Space Grotesk',sans-serif;}
+    .model-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--muted);}
+    .model-table tr:hover td{background:var(--bg3);}
+    .model-table .highlight{color:var(--fg);font-weight:600;}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav:not(.toc){padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">
+    <span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')" aria-label="Toggle theme">&#9680;</button>
+</nav>
+
+<header class="article-header">
+  <a href="/blog" class="back-link">back to blog</a>
+  <div class="article-meta">
+    <span class="meta-date">2026-08-27</span>
+    <span class="meta-tag">guide</span>
+    <span class="meta-readtime">9 min read</span>
+  </div>
+  <h1>Self-Hosted LLM: Complete Setup Guide for 2026 (Ollama + Best Models)</h1>
+  <p class="lead">Running a self-hosted LLM gives you full data control, zero API costs, and sub-100ms response times. Here is how to do it right, which models to pick, and where it fits inside automation workflows.</p>
+</header>
+
+<article class="article-body">
+
+  <p>The case for a <strong>self-hosted LLM</strong> has never been stronger. API costs are climbing. Data privacy regulations are tightening. And latency matters when an LLM sits inside a live customer-facing workflow. Hosting your own model resolves all three problems at once.</p>
+
+  <p>This guide covers everything: what a self-hosted LLM actually is, which hardware you need, the best models available in 2026, how to run local LLM instances with Ollama, and how it connects to real business automation pipelines.</p>
+
+  <h2>What Is a Self-Hosted LLM?</h2>
+
+  <p>A <strong>self-hosted LLM</strong> is a large language model that runs on infrastructure you control rather than on a third-party provider's servers. Instead of sending prompts to OpenAI or Anthropic, your requests go to a process running on your own machine, a VPS, or a private cloud instance. The model weights live on your hardware. The data never leaves your environment.</p>
+
+  <p>This is different from paying for a managed model API, where the provider holds the weights and you pay per token. With self-hosting, you pay for compute once (or monthly for a VPS), and run as many tokens as you like.</p>
+
+  <h2>Why Run a Self-Hosted LLM in 2026</h2>
+
+  <p>There are four reasons most agencies and operators make the switch:</p>
+
+  <ul>
+    <li><strong>Data privacy.</strong> Client data, internal documents, and PII stay on your own servers. No third-party logs. No training on your data. GDPR and HIPAA compliance becomes significantly simpler.</li>
+    <li><strong>Cost at scale.</strong> Once your workflows hit a few million tokens per month, OpenAI or Claude API costs become a serious line item. Self-hosting cuts that to near zero beyond electricity and hosting.</li>
+    <li><strong>Latency.</strong> A self-hosted model on a local network or nearby VPS delivers responses in 50 to 300ms. Cloud APIs regularly add 800ms to 2 seconds of latency, which compounds badly inside multi-step agent workflows.</li>
+    <li><strong>Full control.</strong> You choose the model, fine-tune it on your data, set system prompts permanently, and update on your own schedule. No breaking changes pushed by a vendor overnight.</li>
+  </ul>
+
+  <h2>Hardware Requirements for Self-Hosted LLMs</h2>
+
+  <p>The compute requirement depends almost entirely on model size. A rule of thumb: you need roughly 1 GB of VRAM per billion parameters for 4-bit quantized models. For float16, double that.</p>
+
+  <table class="model-table">
+    <thead>
+      <tr><th>Model Size</th><th>Quantization</th><th>Min VRAM</th><th>Good For</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="highlight">3B to 7B</td><td>Q4</td><td>4 to 6 GB</td><td>Fast tasks, classification, simple extraction</td></tr>
+      <tr><td class="highlight">8B to 14B</td><td>Q4</td><td>8 to 10 GB</td><td>Reasoning, summarization, chat, agents</td></tr>
+      <tr><td class="highlight">30B to 34B</td><td>Q4</td><td>20 to 24 GB</td><td>Complex reasoning, coding, long-context tasks</td></tr>
+      <tr><td class="highlight">70B</td><td>Q4</td><td>40 to 48 GB</td><td>Near-GPT-4 quality for critical workflows</td></tr>
+    </tbody>
+  </table>
+
+  <p>For most automation agency use cases, a <strong>14B model at Q4 quantization</strong> hits the right balance. A single RTX 4090 (24 GB VRAM) or a Mac with 32 GB unified memory runs it comfortably. For a VPS setup, look at providers offering A100 or H100 instances with hourly billing.</p>
+
+  <p>If you want to run local LLM inference on CPU only, it is possible but slow. A modern Apple Silicon Mac (M3 Pro or better) with unified memory is the best CPU-based option available today, leveraging Metal for GPU acceleration without discrete VRAM.</p>
+
+  <h2>Best Self-Hosted LLMs in 2026</h2>
+
+  <p>The open-weight model landscape has matured considerably. These are the models worth running:</p>
+
+  <ul>
+    <li><strong>Llama 3.3 70B.</strong> Meta's flagship open-weight model. Best all-around performance for instruction following, coding, and complex reasoning. Requires significant VRAM but worth it for production workloads.</li>
+    <li><strong>Qwen2.5 14B / 32B.</strong> Alibaba's Qwen series punches well above its weight class. The 14B version fits on a single consumer GPU and handles multilingual workloads, structured output, and tool use reliably.</li>
+    <li><strong>Mistral Small 3.1.</strong> Mistral's efficient architecture delivers strong results at smaller sizes. The 22B variant is an excellent default for agencies that need good quality without heavy hardware.</li>
+    <li><strong>Gemma 3 27B.</strong> Google's open model, well-optimized for instruction tasks and retrieval-augmented generation. Long context window support makes it practical for document-heavy workflows.</li>
+    <li><strong>DeepSeek R2 Lite.</strong> Strong reasoning and coding model from DeepSeek. Particularly good for agent tasks where multi-step planning matters.</li>
+  </ul>
+
+  <p>For most self-hosted AI workflows, <strong>Qwen2.5 14B or Mistral Small 3.1</strong> is the starting point. They run on affordable hardware, respond quickly, and handle tool-use schemas well enough for n8n agent nodes.</p>
+
+  <h2>How to Run a Self-Hosted LLM with Ollama</h2>
+
+  <p>Ollama is the standard tool for running local LLM inference. It handles model downloads, quantization, serving an OpenAI-compatible HTTP API, and GPU acceleration automatically. Setup takes under five minutes.</p>
+
+  <h3>Step 1: Install Ollama</h3>
+
+  <div class="code-block"># Linux / WSL2
+curl -fsSL https://ollama.com/install.sh | sh
+
+# macOS (Homebrew)
+brew install ollama
+
+# Windows: download installer from ollama.com</div>
+
+  <h3>Step 2: Pull and Run a Model</h3>
+
+  <div class="code-block"># Pull the model (downloads weights)
+ollama pull qwen2.5:14b
+
+# Run interactively
+ollama run qwen2.5:14b
+
+# Or start the API server (runs on port 11434)
+ollama serve</div>
+
+  <h3>Step 3: Call the API</h3>
+
+  <p>Ollama exposes an OpenAI-compatible endpoint. Any tool that supports the OpenAI API format works out of the box, including n8n's AI nodes.</p>
+
+  <div class="code-block">curl http://localhost:11434/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "qwen2.5:14b",
+    "messages": [
+      {"role": "system", "content": "You are a helpful assistant."},
+      {"role": "user", "content": "Summarize this invoice in 3 bullet points."}
+    ]
+  }'</div>
+
+  <div class="result-box">
+    <div class="result-title">// What you get from Ollama's API</div>
+    <ul>
+      <li>OpenAI-compatible JSON response format</li>
+      <li>Streaming support via <code>stream: true</code></li>
+      <li>Model loaded into memory after first call, stays warm</li>
+      <li>No API keys, no usage tracking, no rate limits</li>
+    </ul>
+  </div>
+
+  <h2>Connecting a Self-Hosted LLM to n8n</h2>
+
+  <p>Once Ollama is running, connecting it to n8n is straightforward. In n8n's credential manager, add a new "OpenAI API" credential with the base URL set to your Ollama instance and a dummy API key (Ollama does not require one).</p>
+
+  <div class="code-block">Base URL: http://your-server-ip:11434/v1
+API Key: ollama
+Model: qwen2.5:14b</div>
+
+  <p>From there, every n8n AI Agent node, Basic LLM Chain node, and Summarization node works with your <strong>self-hosted LLM</strong> exactly as it would with OpenAI. The same structured output, tool use, and memory patterns all apply.</p>
+
+  <p>This is particularly powerful for automation workflows that process sensitive data. Invoice extraction, HR document parsing, customer support triage, and internal knowledge base queries can all run entirely within your network. No data leaves the building.</p>
+
+  <h2>Self-Hosted LLM vs Cloud API: When to Use Which</h2>
+
+  <p>Self-hosting is not always the right call. Here is a clear breakdown:</p>
+
+  <ul>
+    <li><strong>Use self-hosted when:</strong> you process sensitive client data, your token volume exceeds 5M per month, latency inside agent loops matters, or you want fine-tuning control.</li>
+    <li><strong>Use cloud API when:</strong> you need the absolute frontier model (GPT-4.5, Claude Opus), you have irregular/burst workloads that do not justify always-on compute, or you are prototyping and do not want to manage infrastructure.</li>
+    <li><strong>Use both:</strong> route sensitive tasks to self-hosted, complex reasoning to cloud. n8n's Router node makes this trivial to implement.</li>
+  </ul>
+
+  <h2>Running a Self-Hosted LLM on a VPS</h2>
+
+  <p>If local hardware is not an option, a GPU-enabled VPS delivers the same privacy and cost benefits. Providers worth knowing:</p>
+
+  <ul>
+    <li><strong>RunPod.</strong> Hourly GPU rentals from $0.20/hr for consumer GPUs to $2/hr for A100s. Good for burst workloads and experimentation.</li>
+    <li><strong>Lambda Labs.</strong> Reserved GPU instances, predictable pricing, strong for steady-state production workloads.</li>
+    <li><strong>Hetzner.</strong> European data centers for GDPR-conscious deployments. Their dedicated GPU server plans are cost-effective for 24/7 inference.</li>
+    <li><strong>Vast.ai.</strong> Marketplace model for renting community GPUs. Cheapest option but with variable reliability.</li>
+  </ul>
+
+  <p>For a production self-hosted AI setup, pair Ollama with a reverse proxy (nginx or Caddy), add basic auth on the endpoint, and point your n8n instance at the secure URL. The entire stack costs under $200/month for a solid A10G instance capable of running 30B models at full speed.</p>
+
+  <h2>Common Self-Hosted LLM Pitfalls</h2>
+
+  <ul>
+    <li><strong>Model too large for available VRAM.</strong> The model falls back to CPU offloading, which drops tokens-per-second by 10x. Size down or quantize further.</li>
+    <li><strong>Context window exceeded.</strong> Most 7B to 14B models support 8K to 32K token contexts. Chunk large documents before sending, or use a RAG pipeline.</li>
+    <li><strong>Cold start latency.</strong> Ollama unloads idle models to free memory. Set <code>OLLAMA_KEEP_ALIVE=-1</code> to keep your model warm permanently.</li>
+    <li><strong>Structured output failures.</strong> Smaller models sometimes break JSON schemas. Use grammar-constrained generation or add retry logic in your n8n workflow.</li>
+  </ul>
+
+  <h2>Ready to Add a Self-Hosted LLM to Your Stack?</h2>
+
+  <p>Setting up the model is the easy part. Integrating it properly into existing workflows, handling failures gracefully, routing tasks to the right model, and keeping everything observable takes more thought. That is what we build for clients at GetMicroservices.</p>
+
+  <p>If you want a production-grade self-hosted AI setup built into your existing automation stack, <a href="/#contact">reach out and we will scope it out</a>. Most setups go live within a week.</p>
+
+</article>
+
+<footer>
+  <p>
+    <a href="/">GetMicroservices</a> |
+    <a href="/blog">Blog</a> |
+    <a href="/#contact">Contact</a>
+  </p>
+  <p style="margin-top:8px;">Practical automation for growing businesses.</p>
+</footer>
+</body>
+</html>
