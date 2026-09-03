@@ -93,38 +93,61 @@
   <p class="lead">What LLM agents are, how they differ from plain LLMs, the core components (tools, memory, planning), and how to build one that works in production.</p>
 </div>
 <div class="article-body">
-  <!-- TEMPLATE_DRAFT: generic body. Rewrite with real content before the publish counts as done. -->
-  <p>This guide covers everything you need to know about <strong>what is an llm agent? a practical guide for 2026</strong>. We've distilled real-world experience from dozens of client projects into a practical, actionable breakdown.</p>
-  <h2>Why This Matters in 2026</h2>
-  <p>The automation landscape has shifted significantly. Tools that were niche two years ago are now table stakes. If you're not taking advantage of them, your competitors are.</p>
-  <p>The good news: the barrier to entry has never been lower. You don't need a developer. You don't need a big budget. You need the right knowledge, and the discipline to implement it.</p>
-  <h2>The Core Concepts</h2>
+  <p>An <strong>LLM agent</strong> is a large language model wrapped in a loop that lets it take actions, observe results, and decide what to do next. A plain LLM answers a question once. An agent works toward a goal: it calls tools, reads the output, adjusts, and keeps going until the job is done or it hits a stop condition.</p>
+  <p>That one difference, acting versus answering, is why agents are showing up in every serious automation stack in 2026, and also why they fail in ways plain LLM calls never do. This guide covers what an LLM agent actually is, the components that matter, and what we've learned shipping them for client projects.</p>
+
+  <h2>LLM vs LLM Agent: The Real Difference</h2>
+  <p>A plain LLM call is a pure function: text in, text out. It has no memory of previous calls, no ability to check facts, no way to affect the world. Great for drafting, summarising, classifying.</p>
+  <p>An LLM agent adds four things around the model:</p>
   <ul>
-    <li>Start with the highest-leverage, most repetitive task in your workflow</li>
-    <li>Build incrementally: automate one step at a time</li>
-    <li>Test thoroughly before relying on any automation in production</li>
-    <li>Monitor and maintain. Automations break when APIs change</li>
+    <li><strong>Tools</strong>: functions the model can call, like search, database queries, sending email, running code</li>
+    <li><strong>A loop</strong>: the model sees tool results and decides the next step, repeatedly</li>
+    <li><strong>Memory</strong>: context that persists across steps, and sometimes across sessions</li>
+    <li><strong>A goal</strong>: a task definition with success criteria and stop conditions</li>
   </ul>
-  <h2>Implementation Approach</h2>
-  <p>The teams we work with that get the most value from automation share one trait: they treat automation as a process, not a project. It's not a one-time setup. It's an ongoing habit of identifying repetitive work and eliminating it.</p>
-  <p>That means starting simple. A workflow that runs reliably is worth more than a complex one that breaks. Build the simplest version first, validate it works, then add complexity.</p>
-  <h2>Common Mistakes to Avoid</h2>
+  <p>If you're deciding between the two for a specific use case, we wrote a full comparison in our guide to <a href="/blog/autonomous-agents-reality">what actually works with autonomous agents</a>. Short version: if the task has a fixed sequence of steps, you want a workflow, not an agent.</p>
+
+  <h2>The Core Components</h2>
+  <h3>1. The model</h3>
+  <p>The reasoning engine. In production we mostly see GPT-class and Claude-class models for agent loops because tool-calling reliability matters more than raw benchmark scores. Smaller local models work for narrow, well-scoped agents but degrade fast when the tool count grows.</p>
+  <h3>2. Tools</h3>
+  <p>Tools are where agents earn their keep. A tool is a typed function with a description the model can read: <code>get_invoice(id)</code>, <code>search_crm(query)</code>, <code>send_slack(channel, message)</code>. The model picks tools by reading those descriptions, so vague descriptions produce vague agents. Standards like MCP have made this dramatically easier; see our breakdown of <a href="/blog/mcp-ai-agents-n8n">MCP-powered agents in n8n</a> for working examples.</p>
+  <h3>3. Memory</h3>
+  <p>The context window is short-term memory and it runs out fast in long agent loops. Production agents need a strategy for what to keep, what to summarise, and what to push into external storage. We covered the five patterns that survive real use in <a href="/blog/ai-agent-memory-2026">AI agent memory patterns that actually work</a>.</p>
+  <h3>4. Planning and the loop</h3>
+  <p>Most production agents use a simple ReAct-style loop: reason about the state, pick an action, observe the result, repeat. Elaborate planning frameworks demo well but add failure modes. The loop needs hard limits: max steps, max cost, max time. Every runaway agent bill we've seen came from a missing stop condition.</p>
+  <h3>5. Guardrails</h3>
+  <p>Anything that touches customers or money needs approval gates. The pattern that works: agent does the research and drafts the action, a human approves, the workflow executes. You keep 90% of the time savings and lose almost none of the control.</p>
+
+  <h2>A Concrete Example</h2>
+  <p>Here's an agent we run in production for invoice triage. The goal: match incoming supplier invoices to purchase orders and flag mismatches.</p>
   <ul>
-    <li>Automating a broken process instead of fixing it first</li>
-    <li>Building for edge cases before the core flow works</li>
-    <li>No error handling. When something fails, you need to know about it</li>
-    <li>Not documenting what you built. Future-you will thank present-you</li>
+    <li>Trigger: new invoice PDF lands in a mailbox</li>
+    <li>Agent extracts the supplier, amount and line items</li>
+    <li>Calls <code>search_purchase_orders</code> to find candidate POs</li>
+    <li>Compares line items, prices and totals against the best match</li>
+    <li>Clean match: posts to the accounting system. Mismatch: writes a summary of exactly what differs and asks a human</li>
   </ul>
+  <p>The agent part is genuinely needed here because invoices are messy: partial deliveries, price changes, bundled lines. A fixed workflow would need hundreds of branches. The agent reasons through each case and shows its work.</p>
+
+  <h2>When You Don't Need an Agent</h2>
+  <p>The most expensive mistake in 2026 is building an agent where a workflow would do. Use a plain workflow when the steps are known in advance: form submission to CRM, scheduled reports, data syncs. Use a single LLM call when you need one transformation: classify, extract, draft. Use an agent only when the path to the goal genuinely varies per case and can't be enumerated.</p>
+  <p>And if one agent isn't enough, be careful before jumping to several. Multi-agent setups introduce coordination failures that are hard to debug; we covered the patterns that hold up in <a href="/blog/multi-agent-orchestration">multi-agent orchestration with n8n</a>.</p>
+
+  <h2>Building One in Practice</h2>
+  <p>You don't need a framework to start. n8n's agent node plus two or three well-described tools gets you a working agent in an afternoon; our guide to <a href="/blog/n8n-ai-agent-workflows">AI agent workflows in n8n</a> walks through the full setup including approvals and error handling. Start with one narrow task, log every step the agent takes, and only widen the scope once you've watched it handle a week of real inputs.</p>
+
   <div class="result-box">
     <div class="result-title">⚡ Key Takeaways</div>
     <ul>
-      <li>Identify your highest-ROI automation opportunity first</li>
-      <li>Build the simplest version that works, then iterate</li>
-      <li>Always include error handling and monitoring</li>
-      <li>Document your workflows as you build them</li>
+      <li>An LLM agent = model + tools + memory + loop + goal. The loop is what makes it an agent</li>
+      <li>Tool descriptions are the real prompt engineering. Vague tools produce vague agents</li>
+      <li>Hard stop conditions are non-negotiable: max steps, max cost, max time</li>
+      <li>Use agents only when the path varies per case. Otherwise build a workflow</li>
+      <li>Human approval gates keep agents safe around customers and money</li>
     </ul>
   </div>
-  <p>Ready to get started? <a href="/#contact" style="color:var(--accent);">We help teams implement this</a> without the learning curve. Get in touch if you want it done right the first time.</p>
+  <p>Want an agent that actually ships? <a href="/#contact" style="color:var(--accent);">We build production LLM agents for clients</a>, from scoping to monitoring. Get in touch if you want it done right the first time.</p>
 </div>
 <footer>
   <p>© 2026 <a href="/">GetMicroservices</a> · <a href="/blog/">Blog</a> · <a href="/#contact">Contact</a></p>
