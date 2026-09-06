@@ -80,42 +80,58 @@
   <h1>Low-Code vs No-Code Automation: Which Is Right for Your Team?</h1>
   <p class="post-lead">Low-code vs no-code automation compared for business users, developers and agencies. When to use each, and what the best tools are in 2026.</p>
 
-  <!-- TEMPLATE_DRAFT: generic body. Rewrite with real content before the publish counts as done. -->
-  <p>Real-world breakdown of <strong>low-code vs no-code automation: which is right for your team?</strong>. No fluff, just what works, based on actual client projects.</p>
+  <p>"Low-code" and "no-code" get thrown around as synonyms. They aren't, and picking wrong gets expensive. We've built client automations both ways. Here's the real difference and how to choose.</p>
 
-  <h2>why it matters now</h2>
-  <p>The automation landscape has shifted. Tools that were niche two years ago are table stakes today. Teams not using them are leaving significant time and money on the table.</p>
-  <p>The barrier to entry has never been lower. No developer needed. No large budget. Just the right knowledge applied consistently.</p>
+  <h2>the actual difference</h2>
+  <p><strong>No-code</strong>: visual builders a non-developer can ship with. Zapier is the canonical example. Trigger, action, done. Make and most CRM built-in workflows live here too.</p>
+  <p><strong>Low-code</strong>: visual builders with escape hatches. Drag nodes around, but drop into JavaScript when the visual layer runs out. Call any API. Transform data however you want. n8n, Retool, Power Automate.</p>
+  <p>The distinction that matters is not how much code you write. It's <strong>what happens when you hit the ceiling</strong>. In no-code, the ceiling is a wall. In low-code, it's a door with some assembly required.</p>
 
-  <h2>core principles</h2>
+  <h2>where no-code wins</h2>
   <ul>
-    <li>start with the highest-leverage repetitive task</li>
-    <li>build incrementally, one step at a time</li>
-    <li>test before relying on anything in production</li>
-    <li>monitor continuously, apis change and break things</li>
+    <li>speed to first value. a zap takes 10 minutes, zero training</li>
+    <li>simple linear flows: form → crm → slack ping</li>
+    <li>teams with no technical staff and no plans to hire any</li>
+    <li>low volume. under a few thousand tasks/month, per-task pricing doesn't hurt yet</li>
+  </ul>
+  <p>If that's you, use Zapier or Make and move on. We compared them in <a href="/a/blog/make-vs-zapier.html">make vs zapier</a>. The best automation is the one that ships.</p>
+
+  <h2>where no-code breaks</h2>
+  <ul>
+    <li><strong>cost at scale.</strong> per-task pricing is fine at 500 tasks and brutal at 50,000. we've moved clients off £400/month zapier bills onto self-hosted n8n running the same flows on a £20 vps</li>
+    <li><strong>logic ceilings.</strong> branching, retries, dedupe, batching, custom error handling. no-code either can't, or forces rube goldberg chains of five extra zaps</li>
+    <li><strong>data control.</strong> every record transits a third-party cloud. fintech and healthcare clients can't have that conversation</li>
   </ul>
 
-  <h2>implementation</h2>
-  <p>The teams that get real ROI from automation treat it as a process, not a one-time project. It's an ongoing habit: identify repetitive work, eliminate it, repeat.</p>
-  <p>Start simple. A workflow that runs reliably beats a complex one that fails. Build the minimum viable automation first, then layer on complexity once it's proven.</p>
-
-  <h2>what goes wrong</h2>
+  <h2>where low-code wins</h2>
+  <p>We build almost everything on n8n. Practical reasons, not ideology:</p>
   <ul>
-    <li>automating a broken process instead of fixing it first</li>
-    <li>building edge cases before core flow works</li>
-    <li>no error handling. when it fails, you need to know</li>
-    <li>not documenting what you built</li>
+    <li>one javascript node replaces five chained no-code steps</li>
+    <li>self-hosting: flat costs, full data ownership, no vendor rate limits</li>
+    <li>any api that speaks http, not just an app directory</li>
+    <li>workflows get version control, testing, staged rollout, like real software</li>
+    <li>ai agent steps slot in natively. see <a href="/a/blog/mcp-ai-agents-n8n.html">mcp + ai agents in n8n</a></li>
   </ul>
+  <p>The tradeoff: someone must be comfortable debugging a webhook and writing ten lines of code occasionally. Not a full-time developer, but that person has to exist.</p>
+
+  <h2>the decision framework</h2>
+  <ul>
+    <li><strong>solo founder, simple flows, no tech staff:</strong> no-code. zapier or make</li>
+    <li><strong>growing team, climbing volume, conditional logic:</strong> low-code. n8n is the default; more options in <a href="/a/blog/best-zapier-alternatives-agencies.html">zapier alternatives for agencies</a></li>
+    <li><strong>regulated data or 10k+ tasks/month:</strong> self-hosted low-code, no contest</li>
+    <li><strong>truly custom product logic:</strong> neither. that's software. hire for it</li>
+  </ul>
+  <p>One rule overrides everything: fix the process before automating it. An automated broken process is a broken process running at 3am. Start with <a href="/a/blog/how-to-automate-your-business.html">how to automate your business</a>.</p>
 
   <div class="result-box">
     <div class="result-title">key takeaways</div>
-    <div class="result-item">identify your highest-roi automation opportunity first</div>
-    <div class="result-item">build the simplest version that works, then iterate</div>
-    <div class="result-item">always include error handling and monitoring</div>
-    <div class="result-item">document your workflows as you build them</div>
+    <div class="result-item">no-code = speed and simplicity, low-code = power and ownership</div>
+    <div class="result-item">the real question is what happens at the tool's ceiling</div>
+    <div class="result-item">per-task pricing punishes success; self-hosted n8n scales flat</div>
+    <div class="result-item">match the tool to your team and volume, not the hype cycle</div>
   </div>
 
-  <p>Need this implemented? <a href="/a/#contact">we build these workflows for clients →</a></p>
+  <p>Not sure which side of the line you're on? <a href="/a/#contact">we build on both, and we'll tell you honestly if £20/month zapier is all you need →</a></p>
 </div>
 <hr class="full-divider"/>
 <footer>
