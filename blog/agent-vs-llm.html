@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agent vs LLM: What Is the Real Difference? (2026 Guide)</title>
+  <meta name="description" content="Agent vs LLM: understand the core difference, when to use each, and how to combine them for real automation. Practical guide for builders and business owners."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href="https://getmicroservices.com/blog/agent-vs-llm"/>
+  <meta property="og:title" content="Agent vs LLM: What Is the Real Difference? (2026 Guide) - GetMicroservices Blog"/>
+  <meta property="og:description" content="Agent vs LLM: understand the core difference, when to use each, and how to combine them for real automation. Practical guide for builders and business owners."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://getmicroservices.com/blog/agent-vs-llm"/>
+  <meta property="og:site_name" content="GetMicroservices"/>
+  <meta name="twitter:card" content="summary"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Agent vs LLM: What Is the Real Difference? (2026 Guide)",
+    "description": "Agent vs LLM: understand the core difference, when to use each, and how to combine them for real automation. Practical guide for builders and business owners.",
+    "url": "https://getmicroservices.com/blog/agent-vs-llm",
+    "datePublished": "2026-09-14",
+    "dateModified": "2026-09-14",
+    "author": {
+      "@type": "Organization",
+      "name": "GetMicroservices"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GetMicroservices",
+      "url": "https://getmicroservices.com"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://getmicroservices.com/blog/agent-vs-llm"
+    }
+  }
+  </script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f5f3ee;--bg2:#edeae2;--bg3:#e5e1d8;--fg:#1a170f;--muted:#6b6757;--accent:#b5006a;--yellow:#a07200;--blue:#0066cc;--blue-hover:#0052a3;--green:#3a7a00;--border:#ccc9bc;--border-bright:#a8a493;}
+    [data-theme="dark"]{--bg:#1a170f;--bg2:#1f1c13;--bg3:#252018;--fg:#eceae5;--muted:#9b9888;--accent:#ee82cf;--yellow:#f7d51d;--blue:#209cee;--blue-hover:#108de0;--green:#92cc41;--border:#3a3628;--border-bright:#5a5540;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);font-size:1rem;line-height:1.6;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.015) 3px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9999;}
+    nav:not(.toc){position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--yellow);padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;}
+    .nav-logo{padding:10px 0;display:flex;flex-direction:column;}
+    .nav-logo span{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:400;color:var(--fg);letter-spacing:-0.01em;line-height:1;}
+    .nav-logo span .accent{color:var(--accent);}
+    .nav-logo span .yellow{color:var(--yellow);}
+    .nav-links{display:flex;gap:8px;list-style:none;flex-wrap:wrap;padding:10px 0;}
+    .nav-links a{color:#fff;text-decoration:none;font-size:0.82rem;font-weight:600;padding:6px 12px;border:3px solid var(--fg);background:var(--blue);display:inline-block;transition:background 0.15s;font-family:'Space Grotesk',sans-serif;}
+    .nav-links a:hover{background:var(--blue-hover);text-decoration:underline;}
+    .nav-links .nav-cta{background:var(--accent);border-color:var(--fg);color:#fff;}
+    .nav-links .nav-cta:hover{background:#8c0052;}
+    .theme-toggle{background:none;border:2px solid var(--border-bright);color:var(--fg);font-size:1rem;padding:4px 8px;cursor:pointer;line-height:1;}
+    .article-header{padding:60px 5% 48px;border-bottom:2px solid var(--border);background:var(--bg2);}
+    .back-link{display:inline-block;font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--muted);text-decoration:none;margin-bottom:24px;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'< ';}
+    .article-meta{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .meta-date{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--muted);}
+    .meta-tag{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;color:var(--bg);background:var(--accent);padding:3px 8px;}
+    .meta-readtime{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--bg);background:var(--green);padding:3px 8px;}
+    .article-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);line-height:1.4;margin-bottom:16px;}
+    .article-header .lead{color:var(--muted);font-size:0.92rem;line-height:1.75;max-width:640px;border-left:3px solid var(--yellow);padding-left:16px;}
+    .article-body{max-width:720px;margin:0 auto;padding:60px 5%;}
+    .article-body h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin:40px 0 14px;color:var(--fg);}
+    .article-body h2::before{content:'## ';color:var(--muted);font-family:'Fira Code',monospace;font-size:0.85rem;}
+    .article-body h3{font-family:'Space Grotesk',sans-serif;font-size:0.95rem;margin:28px 0 10px;color:var(--fg);}
+    .article-body p{color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:18px;}
+    .article-body p strong{color:var(--fg);}
+    .article-body a{color:var(--accent);}
+    .article-body a:hover{text-decoration:underline;}
+    .article-body ul{list-style:none;margin:0 0 18px 0;}
+    .article-body ul li{font-size:0.88rem;color:var(--muted);padding:6px 0 6px 20px;position:relative;line-height:1.7;}
+    .article-body ul li::before{content:'>';position:absolute;left:0;color:var(--green);font-weight:700;font-family:monospace;}
+    .code-block{background:var(--bg3);border:2px solid var(--border);border-left:4px solid var(--accent);padding:16px 20px;margin:24px 0;font-family:'Fira Code',monospace;font-size:0.78rem;color:var(--fg);overflow-x:auto;line-height:1.7;}
+    .result-box{background:var(--bg2);border:2px solid var(--green);padding:24px;margin:32px 0;}
+    .result-box .result-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+    .result-box ul li::before{content:'+';}
+    .warn-box{background:var(--bg2);border:2px solid var(--yellow);padding:20px 24px;margin:28px 0;}
+    .warn-box .warn-title{font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--yellow);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+    .warn-box p{margin-bottom:0;font-size:0.85rem;}
+    table{width:100%;border-collapse:collapse;margin:28px 0;font-size:0.83rem;}
+    th{background:var(--bg3);color:var(--fg);font-family:'Space Grotesk',sans-serif;font-size:0.75rem;padding:10px 14px;text-align:left;border:1px solid var(--border);}
+    td{padding:10px 14px;border:1px solid var(--border);color:var(--muted);vertical-align:top;}
+    tr:hover td{background:var(--bg2);}
+    footer{background:var(--bg);border-top:3px solid var(--yellow);padding:40px 5% 24px;text-align:center;}
+    footer p{color:var(--muted);font-size:0.78rem;}
+    footer a{color:var(--accent);text-decoration:none;}
+    @media(max-width:768px){nav:not(.toc){padding:0 4%;}.article-header,.article-body{padding-left:4%;padding-right:4%;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">
+    <span>Get<span class="accent">Micro</span><span class="yellow">Services</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="document.documentElement.toggleAttribute('data-theme')" aria-label="Toggle theme">&#9680;</button>
+</nav>
+
+<header class="article-header">
+  <a href="/blog" class="back-link">back to blog</a>
+  <div class="article-meta">
+    <span class="meta-date">2026-09-14</span>
+    <span class="meta-tag">AI</span>
+    <span class="meta-readtime">8 min read</span>
+  </div>
+  <h1>Agent vs LLM: What Is the Real Difference? (2026 Guide)</h1>
+  <p class="lead">Everyone talks about AI agents and LLMs as if they are the same thing. They are not. One answers questions. The other takes actions. Getting the distinction right changes what you build and how much it costs.</p>
+</header>
+
+<article class="article-body">
+
+  <p>The terms "agent" and "LLM" get used interchangeably in product announcements, funding decks, and client briefs. That confusion costs real money. Teams build LLM pipelines where they need agents, and build agents where a simple LLM call would do. <strong>Both mistakes are expensive.</strong></p>
+
+  <p>This guide draws the line clearly, gives you a decision framework for choosing between them, and walks through the practical architecture of each.</p>
+
+  <h2>What an LLM Actually Is</h2>
+
+  <p>A large language model is a function. You give it text, it gives you text back. That is the complete model. Everything else, tool calling, memory, multi-step reasoning, is either layered on top by the platform or handled by external code you write yourself.</p>
+
+  <p>When you call GPT-4o via API, you get a stateless request-response cycle. The model has no memory of your last call. It cannot browse the web, run code, or update a database on its own. It reads the input you provide and generates the most probable continuation based on its training.</p>
+
+  <div class="code-block">// LLM request lifecycle:
+Input prompt (text, images, files)
+  -> LLM inference
+  -> Output text (or structured JSON)
+
+// What it cannot do on its own:
+- Remember previous conversations
+- Fetch live data
+- Write to any external system
+- Decide to run multiple steps
+- Handle errors and retry</div>
+
+  <p>This is not a criticism. Stateless, deterministic text generation is enormously powerful and covers the majority of business automation use cases when applied correctly. The problem is assuming the model does more than it does.</p>
+
+  <h2>What an AI Agent Actually Is</h2>
+
+  <p>An AI agent is a system that uses an LLM as its reasoning engine, but wraps it in infrastructure that enables goal-directed, multi-step behaviour. The agent loop looks roughly like this: observe the current state, decide what to do next, call a tool or take an action, observe the result, and repeat until the goal is achieved.</p>
+
+  <div class="code-block">// Agent loop:
+Goal: "Research three suppliers for this component and return a ranked comparison"
+
+Step 1: Plan subtasks (search, compare, format)
+Step 2: Run web_search("supplier A pricing lead time")
+Step 3: Observe result, store in memory
+Step 4: Run web_search("supplier B pricing lead time")
+Step 5: Observe result, store in memory
+Step 6: Compare data, generate ranked table
+Step 7: Return final output
+
+// Every "step" involves one or more LLM calls
+// The agent is the wrapper; the LLM is the brain</div>
+
+  <p>The key properties that make something an agent rather than a pipeline: <strong>autonomy</strong> (it decides the next action without a human in the loop), <strong>tool use</strong> (it can call external APIs, run code, write to databases), <strong>memory</strong> (it retains information across steps), and <strong>goal orientation</strong> (it persists toward an objective rather than answering a single question).</p>
+
+  <h2>The Core Difference in One Sentence</h2>
+
+  <p>An LLM responds to a prompt. An agent pursues a goal. The distinction is not about model size or capability. It is about architecture and control flow.</p>
+
+  <table>
+    <thead>
+      <tr><th>Dimension</th><th>LLM (standalone)</th><th>AI Agent</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Control flow</td><td>Single request-response</td><td>Multi-step loop with decisions</td></tr>
+      <tr><td>State</td><td>Stateless per call</td><td>Maintains state across steps</td></tr>
+      <tr><td>Tool use</td><td>Only if explicitly built in</td><td>Core capability</td></tr>
+      <tr><td>Memory</td><td>Only what fits in context</td><td>External store, retrieval</td></tr>
+      <tr><td>Error handling</td><td>Caller's responsibility</td><td>Can observe and retry</td></tr>
+      <tr><td>Cost per task</td><td>Low (one call)</td><td>Higher (multiple calls)</td></tr>
+      <tr><td>Latency</td><td>Seconds</td><td>Seconds to minutes</td></tr>
+      <tr><td>Failure surface</td><td>Small</td><td>Much larger</td></tr>
+    </tbody>
+  </table>
+
+  <h2>When to Use an LLM (Not an Agent)</h2>
+
+  <p>The default should always be the simpler option. Reach for a standalone LLM call when:</p>
+
+  <ul>
+    <li><strong>The task is a single transformation.</strong> Classify this support ticket. Summarise this document. Extract these fields from this invoice. Generate a first draft from this brief. All of these are one-shot operations. An agent adds complexity with no benefit.</li>
+    <li><strong>You control all the inputs.</strong> If you are passing structured data to the model and want a structured response back, you do not need an agent. You need a good prompt and a reliable parser.</li>
+    <li><strong>Latency matters.</strong> Agents are slower. If you are generating real-time autocomplete or live chat responses, every extra LLM call is a problem. Keep it single-step.</li>
+    <li><strong>Cost is constrained.</strong> A single LLM call might cost $0.01. An agent completing the same task across five steps costs $0.05 to $0.50 depending on model and context. Multiply that across thousands of runs and the difference matters.</li>
+    <li><strong>You can write the logic yourself.</strong> If you know the exact steps required to complete a task, just code them. Use the LLM only for the parts that require language understanding. Do not delegate the control flow to an agent when you can express it as a simple script.</li>
+  </ul>
+
+  <div class="result-box">
+    <div class="result-title">// good LLM-only use cases</div>
+    <ul>
+      <li>Classify inbound emails by intent (sales/support/spam)</li>
+      <li>Extract structured data from unstructured invoice text</li>
+      <li>Generate personalised proposal sections from a template + CRM data</li>
+      <li>Translate customer feedback into a standardised format</li>
+      <li>Score leads based on a description against defined criteria</li>
+    </ul>
+  </div>
+
+  <h2>When to Use an Agent</h2>
+
+  <p>Agents are justified when the task has properties that a single LLM call structurally cannot handle. Specifically:</p>
+
+  <ul>
+    <li><strong>The goal requires live data.</strong> If completing the task requires fetching information that changes, an LLM alone cannot do it. You need an agent with a search or API tool. Research tasks, price monitoring, and competitor tracking all fall here.</li>
+    <li><strong>The number of steps is variable.</strong> When you cannot know in advance how many operations are needed, an agent's dynamic loop handles it where a fixed pipeline breaks. Deep research with an unknown number of sources is a clean example.</li>
+    <li><strong>The task involves writing to external systems.</strong> Creating a CRM record, sending an email, updating a spreadsheet, submitting a form. These require tool calls that go beyond text generation. Agents execute them as part of goal completion.</li>
+    <li><strong>You need error recovery.</strong> A pipeline that fails silently is dangerous in production. An agent can observe that a tool call failed, decide whether to retry with different parameters, fall back to an alternative approach, or escalate to a human approval gate.</li>
+    <li><strong>The task spans multiple domains.</strong> A workflow that searches the web, reads a PDF, cross-references a spreadsheet, and sends a formatted Slack message cannot be a single LLM prompt. It needs coordinated tool use across multiple systems.</li>
+  </ul>
+
+  <div class="result-box">
+    <div class="result-title">// good agent use cases</div>
+    <ul>
+      <li>Research three competitors, pull pricing pages, summarise into a comparison doc</li>
+      <li>Monitor job boards daily, score new postings against criteria, add matches to a tracker</li>
+      <li>Triage a support inbox, look up order history in CRM, draft personalised responses</li>
+      <li>Pull last week's ad spend from Google Ads API, compare to targets, email report</li>
+      <li>Watch for new mentions of your brand, analyse sentiment, create tickets for negatives</li>
+    </ul>
+  </div>
+
+  <h2>The Architecture Is the Decision</h2>
+
+  <p>In practice, most production systems combine both. An LLM handles language tasks. An agent (or simple orchestration code) handles sequencing and tool use. The mistake is conflating the two and assuming that calling a capable LLM automatically gives you agentic behaviour.</p>
+
+  <div class="code-block">// Common hybrid pattern (n8n, LangChain, etc.):
+
+Trigger: New support email arrives
+  -> LLM call 1: classify intent (billing/technical/general) [plain LLM]
+  -> Branch on classification
+  -> [If billing] Agent: look up customer in Stripe, fetch invoice history
+  -> LLM call 2: draft reply using customer context [plain LLM]
+  -> Human review gate (optional)
+  -> Send reply
+
+// LLMs do the language work.
+// The agent/workflow does the sequencing and tool use.</div>
+
+  <p>This pattern is clean and predictable. The LLM calls are isolated and testable. The agent logic is explicit and auditable. Neither part is doing the job of the other.</p>
+
+  <h2>The Hidden Cost of Over-Agentification</h2>
+
+  <p>There is a real tendency to reach for agents too early. It is exciting to watch an AI system autonomously browse the web, open browser tabs, and complete tasks without guidance. In demos, it looks impressive. In production, it is expensive, slow, and fragile.</p>
+
+  <p><strong>Every additional agent step is another opportunity to go wrong.</strong> More LLM calls means more token cost. More tool calls means more potential for timeouts, schema mismatches, and unexpected API behaviour. More autonomous decision points means more ways for the model to satisfy a proxy goal rather than your actual goal.</p>
+
+  <div class="warn-box">
+    <div class="warn-title">// rule of thumb</div>
+    <p>If you can express the task as a fixed sequence of steps where you know the inputs and outputs of each step, write code. Use an LLM for the language parts. Only reach for an agent when the number or type of steps genuinely cannot be determined in advance.</p>
+  </div>
+
+  <h2>Choosing Your Framework</h2>
+
+  <p>If you decide an agent is the right choice, the framework selection comes down to your existing stack and how much control you want:</p>
+
+  <ul>
+    <li><strong>n8n:</strong> Best for teams that already use n8n for automation. The AI Agent node gives you a full ReAct loop with any tool you can build as an n8n node. Visual workflow is easy to debug and hand off to non-developers. Self-hostable.</li>
+    <li><strong>LangChain / LangGraph:</strong> Best for Python developers who need fine-grained control over agent behaviour. LangGraph in particular gives you explicit state machines rather than implicit loops. Good for complex, multi-agent orchestration.</li>
+    <li><strong>OpenAI Assistants API:</strong> Good for simple use cases where you want managed storage and thread handling. Less flexible but lower ops overhead. Vendor lock-in is a real consideration.</li>
+    <li><strong>Bare code:</strong> For simple tool-use scenarios, you may not need a framework at all. A Python script with a few API calls and a structured LLM call in the middle is often more reliable and faster than a full agent framework.</li>
+  </ul>
+
+  <h2>The Practical Test</h2>
+
+  <p>Before deciding whether you need an agent, run through these four questions:</p>
+
+  <ul>
+    <li>Do you know every step required to complete this task? If yes, code it. Use LLM only for the language parts.</li>
+    <li>Does the task require live data or writes to external systems? If yes, you need tool use. That implies at minimum a structured pipeline, and probably an agent if the steps are variable.</li>
+    <li>What happens when something fails midway? If silent failure is acceptable, a pipeline is fine. If the system needs to recover, retry, or escalate, you need agent-style error handling.</li>
+    <li>Can you establish a single-agent baseline before adding complexity? Always start with the simplest version that could work. Agents add cost and failure surface. Only pay for that if the simpler version genuinely cannot do the job.</li>
+  </ul>
+
+  <p>The agent vs LLM question is really a question about control flow, state, and tool use. Get those three things right and the architecture follows naturally.</p>
+
+  <p>If you are building automation workflows and are not sure which approach fits your use case, <a href="/#contact">we scope these projects regularly</a> and can usually tell you in a short conversation whether your goal needs an agent, a pipeline, or a handful of LLM calls wired into your existing tools.</p>
+
+</article>
+
+<footer>
+  <p>&copy; 2026 <a href="/">GetMicroservices</a>. Done-for-you automation for growing businesses. <a href="/blog">Blog</a> &middot; <a href="/about">About</a> &middot; <a href="/#contact">Contact</a></p>
+</footer>
+</body>
+</html>
