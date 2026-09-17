@@ -1,11 +1,321 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Agentic Workflow: How to Build AI Workflow Automation (2026)</title><meta name="description" content="Learn how an agentic workflow differs from a traditional LLM workflow, how to design AI workflow automation, and where human approval belongs."><link rel="canonical" href="https://getmicroservices.com/blog/llm-workflow"><link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet"><script async src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-9P3QLH1BY4');</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Agentic Workflow: How to Build AI Workflow Automation (2026)","description":"Learn how an agentic workflow differs from a traditional LLM workflow, how to design AI workflow automation, and where human approval belongs.","url":"https://getmicroservices.com/blog/llm-workflow","datePublished":"2026-09-17","dateModified":"2026-09-17","author":{"@type":"Organization","name":"GetMicroservices"},"publisher":{"@type":"Organization","name":"GetMicroservices","url":"https://getmicroservices.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://getmicroservices.com/blog/llm-workflow"}}</script><style>*{box-sizing:border-box}body{margin:0;background:#f5f3ee;color:#1a170f;font:16px/1.7 system-ui,sans-serif}nav{padding:18px 5%;border-bottom:3px solid #a07200;display:flex;justify-content:space-between;gap:20px;align-items:center}.logo{font:700 1.3rem 'Space Grotesk';color:#1a170f;text-decoration:none}.logo b{color:#b5006a}.links{display:flex;gap:8px;list-style:none;margin:0;padding:0;flex-wrap:wrap}.links a{background:#06c;color:#fff;border:2px solid #1a170f;padding:5px 9px;text-decoration:none;font-size:.75rem}.links .cta{background:#b5006a}.hero,.article{max-width:780px;margin:auto}.hero{padding:58px 5% 42px;background:#edeae2}.back{font:.75rem 'Fira Code';color:#6b6757}.meta{font:.72rem 'Fira Code';color:#6b6757;margin:22px 0 12px}.tag{color:#f5f3ee;background:#b5006a;padding:3px 8px;margin-left:12px}.hero h1{font:700 clamp(2rem,5vw,3.4rem)/1.15 'Space Grotesk';margin:0}.lead{color:#6b6757;font-size:1.05rem}.article{padding:48px 5% 80px}.article h2{font:700 1.45rem 'Space Grotesk';margin:42px 0 12px}.article h2:before{content:'## ';font:.85rem 'Fira Code';color:#b5006a}.article p,.article li{color:#5d594d}.article strong{color:#1a170f}.article a{color:#b5006a}.code{background:#e5e1d8;border:2px solid #ccc9bc;border-left:4px solid #b5006a;padding:16px;font:.8rem/1.7 'Fira Code';white-space:pre-wrap}.box{border:2px solid #3a7a00;background:#edeae2;padding:18px}.box b{color:#3a7a00}footer{border-top:3px solid #a07200;padding:28px;text-align:center;color:#6b6757;font-size:.8rem}</style></head><body><nav><a class="logo" href="/">Get<b>Micro</b>Services</a><ul class="links"><li><a href="/#services">Services</a></li><li><a href="/#how">How</a></li><li><a href="/#pricing">Pricing</a></li><li><a href="/#faq">FAQ</a></li><li><a href="/about">About</a></li><li><a href="/blog">Blog</a></li><li><a class="cta" href="/#contact">Get a Quote</a></li></ul></nav><header class="hero"><a class="back" href="/blog">&lt; back to blog</a><div class="meta">2026-09-17 <span class="tag">guide</span> · 9 min read</div><h1>Agentic Workflow: How to Build AI Workflow Automation</h1><p class="lead">An LLM workflow follows a script. An agentic workflow can choose its next step. That distinction matters when you automate real business processes.</p></header><main class="article"><p>AI workflow automation is moving from simple text generation to software that can inspect a situation, use tools, and complete a task. An <strong>agentic workflow</strong> is a bounded process where an LLM makes decisions inside reliable workflow steps.</p><h2>What is an LLM workflow?</h2><p>An LLM workflow connects a language model to a sequence of inputs, prompts, tools, and outputs. A webhook can receive a support ticket, an LLM workflow can classify it, and a CRM node can update the record. The model handles language while the workflow handles control. This pattern is easier to test, cheaper to run, and simpler to explain.</p><h2>Agentic workflow vs a traditional LLM workflow</h2><p>An agentic workflow adds a decision loop. The model can select a tool, inspect the result, decide whether the goal is complete, and ask for approval when risk is high. It still needs boundaries. Autonomous should describe the decision space, not imply unlimited access.</p><ul><li><strong>LLM workflow:</strong> fixed steps with an LLM in one or more steps.</li><li><strong>Agentic workflow:</strong> a goal, tools, state, and controlled decisions about the next step.</li><li><strong>AI workflow automation:</strong> the business outcome, which can use either design.</li></ul><h2>How to design AI workflow automation</h2><p>Start with the outcome rather than the model. Write the trigger, accepted inputs, systems the process may touch, and exact definition of done. Then build the smallest reliable workflow.</p><div class="code">Trigger: New qualified lead enters CRM
-↓
-Retrieve: Company record and recent conversations
-↓
-Decide: Score fit and choose follow-up path
-↓
-Act: Draft email and create a task
-↓
-Guardrail: Human approves external send
-↓
-Log: Store decision, evidence, and outcome</div><p>Keep retrieval, business rules, and side effects visible as separate steps. This makes failures diagnosable and lets you replace a model without redesigning the automation.</p><h2>Three practical LLM workflow patterns</h2><p><strong>Classify and route.</strong> Use an LLM to label an inbound request, then use deterministic branches to route it. <strong>Extract and validate.</strong> Convert invoices, forms, or emails into fields, validate them, and send uncertain records to review. <strong>Research and draft.</strong> Let an agent gather approved sources and prepare a draft. Keep publishing, sending, and financial actions behind approval gates.</p><h2>Where agentic workflows fail</h2><p>Common failures are vague goals, excessive tool access, missing timeouts, and no audit trail. Add a maximum step count, tool permissions, structured outputs, retries for transient errors, and a clear escalation path.</p><div class="box"><b>Production checklist</b><ul><li>Define success and failure states.</li><li>Limit tools and data by task.</li><li>Require approval for irreversible actions.</li><li>Log prompts, tool calls, decisions, and costs.</li><li>Test ordinary, ambiguous, and adversarial inputs.</li></ul></div><h2>When to use an agentic workflow</h2><p>Choose an agentic design when the path varies and inputs need interpretation. Choose a fixed LLM workflow when the process is predictable. The best systems combine both: deterministic automation around a small decision-making step.</p><p>This hybrid approach delivers the benefits of an <strong>agentic workflow</strong> without making operations opaque. If you need help mapping a process, <a href="/#contact">talk to our automation team</a>.</p></main><footer>GetMicroServices · AI automation for practical teams · <a href="/blog">More field notes</a></footer></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Agentic Workflow: How to Build AI Workflow Automation (2026)</title>
+    <meta
+      name="description"
+      content="Learn how an agentic workflow differs from a traditional LLM workflow, how to design AI workflow automation, and where human approval belongs."
+    />
+    <link
+      rel="canonical"
+      href="https://getmicroservices.com/blog/llm-workflow"
+    />
+    <meta
+      property="og:title"
+      content="Agentic Workflow: How to Build AI Workflow Automation (2026) - GetMicroservices Blog"
+    />
+    <meta
+      property="og:description"
+      content="Learn how an agentic workflow differs from a traditional LLM workflow, how to design AI workflow automation, and where human approval belongs."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://getmicroservices.com/blog/llm-workflow"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-9P3QLH1BY4"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-9P3QLH1BY4");
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Agentic Workflow: How to Build AI Workflow Automation (2026)",
+        "description": "Learn how an agentic workflow differs from a traditional LLM workflow, how to design AI workflow automation, and where human approval belongs.",
+        "url": "https://getmicroservices.com/blog/llm-workflow",
+        "datePublished": "2026-09-17",
+        "dateModified": "2026-09-17",
+        "author": { "@type": "Organization", "name": "GetMicroservices" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "GetMicroservices",
+          "url": "https://getmicroservices.com"
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://getmicroservices.com/blog/llm-workflow"
+        }
+      }
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f5f3ee;
+        color: #1a170f;
+        font:
+          16px/1.7 system-ui,
+          sans-serif;
+      }
+      nav {
+        padding: 18px 5%;
+        border-bottom: 3px solid #a07200;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: center;
+      }
+      .logo {
+        font: 700 1.3rem "Space Grotesk";
+        color: #1a170f;
+        text-decoration: none;
+      }
+      .logo b {
+        color: #b5006a;
+      }
+      .links {
+        display: flex;
+        gap: 8px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        flex-wrap: wrap;
+      }
+      .links a {
+        background: #06c;
+        color: #fff;
+        border: 2px solid #1a170f;
+        padding: 5px 9px;
+        text-decoration: none;
+        font-size: 0.75rem;
+      }
+      .links .cta {
+        background: #b5006a;
+      }
+      .hero,
+      .article {
+        max-width: 780px;
+        margin: auto;
+      }
+      .hero {
+        padding: 58px 5% 42px;
+        background: #edeae2;
+      }
+      .back,
+      .back-link {
+        font: 0.75rem "Fira Code";
+        color: #6b6757;
+      }
+      .meta {
+        font: 0.72rem "Fira Code";
+        color: #6b6757;
+        margin: 22px 0 12px;
+      }
+      .tag {
+        color: #f5f3ee;
+        background: #b5006a;
+        padding: 3px 8px;
+        margin-left: 12px;
+      }
+      .hero h1 {
+        font: 700 clamp(2rem, 5vw, 3.4rem)/1.15 "Space Grotesk";
+        margin: 0;
+      }
+      .lead {
+        color: #6b6757;
+        font-size: 1.05rem;
+      }
+      .article {
+        padding: 48px 5% 80px;
+      }
+      .article h2 {
+        font: 700 1.45rem "Space Grotesk";
+        margin: 42px 0 12px;
+      }
+      .article h2:before {
+        content: "## ";
+        font: 0.85rem "Fira Code";
+        color: #b5006a;
+      }
+      .article p,
+      .article li {
+        color: #5d594d;
+      }
+      .article strong {
+        color: #1a170f;
+      }
+      .article a {
+        color: #b5006a;
+      }
+      .code {
+        background: #e5e1d8;
+        border: 2px solid #ccc9bc;
+        border-left: 4px solid #b5006a;
+        padding: 16px;
+        font: 0.8rem/1.7 "Fira Code";
+        white-space: pre-wrap;
+      }
+      .box {
+        border: 2px solid #3a7a00;
+        background: #edeae2;
+        padding: 18px;
+      }
+      .box b {
+        color: #3a7a00;
+      }
+      footer {
+        border-top: 3px solid #a07200;
+        padding: 28px;
+        text-align: center;
+        color: #6b6757;
+        font-size: 0.8rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="/">Get<b>Micro</b>Services</a>
+      <ul class="links">
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/#how">How</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a class="cta" href="/#contact">Get a Quote</a></li>
+      </ul>
+    </nav>
+    <header class="hero">
+      <a class="back-link" href="/blog">&lt; back to blog</a>
+      <div class="meta">
+        2026-09-17 <span class="tag">guide</span> · 9 min read
+      </div>
+      <h1>Agentic Workflow: How to Build AI Workflow Automation</h1>
+      <p class="lead">
+        An LLM workflow follows a script. An agentic workflow can choose its
+        next step. That distinction matters when you automate real business
+        processes.
+      </p>
+    </header>
+    <main class="article">
+      <p>
+        AI workflow automation is moving from simple text generation to software
+        that can inspect a situation, use tools, and complete a task. An
+        <strong>agentic workflow</strong> is a bounded process where an LLM
+        makes decisions inside reliable workflow steps.
+      </p>
+      <h2>What is an LLM workflow?</h2>
+      <p>
+        An LLM workflow connects a language model to a sequence of inputs,
+        prompts, tools, and outputs. A webhook can receive a support ticket, an
+        LLM workflow can classify it, and a CRM node can update the record. The
+        model handles language while the workflow handles control. This pattern
+        is easier to test, cheaper to run, and simpler to explain.
+      </p>
+      <h2>Agentic workflow vs a traditional LLM workflow</h2>
+      <p>
+        An agentic workflow adds a decision loop. The model can select a tool,
+        inspect the result, decide whether the goal is complete, and ask for
+        approval when risk is high. It still needs boundaries. Autonomous should
+        describe the decision space, not imply unlimited access.
+      </p>
+      <ul>
+        <li>
+          <strong>LLM workflow:</strong> fixed steps with an LLM in one or more
+          steps.
+        </li>
+        <li>
+          <strong>Agentic workflow:</strong> a goal, tools, state, and
+          controlled decisions about the next step.
+        </li>
+        <li>
+          <strong>AI workflow automation:</strong> the business outcome, which
+          can use either design.
+        </li>
+      </ul>
+      <h2>How to design AI workflow automation</h2>
+      <p>
+        Start with the outcome rather than the model. Write the trigger,
+        accepted inputs, systems the process may touch, and exact definition of
+        done. Then build the smallest reliable workflow.
+      </p>
+      <div class="code">
+        Trigger: New qualified lead enters CRM ↓ Retrieve: Company record and
+        recent conversations ↓ Decide: Score fit and choose follow-up path ↓
+        Act: Draft email and create a task ↓ Guardrail: Human approves external
+        send ↓ Log: Store decision, evidence, and outcome
+      </div>
+      <p>
+        Keep retrieval, business rules, and side effects visible as separate
+        steps. This makes failures diagnosable and lets you replace a model
+        without redesigning the automation.
+      </p>
+      <h2>Three practical LLM workflow patterns</h2>
+      <p>
+        <strong>Classify and route.</strong> Use an LLM to label an inbound
+        request, then use deterministic branches to route it.
+        <strong>Extract and validate.</strong> Convert invoices, forms, or
+        emails into fields, validate them, and send uncertain records to review.
+        <strong>Research and draft.</strong> Let an agent gather approved
+        sources and prepare a draft. Keep publishing, sending, and financial
+        actions behind approval gates.
+      </p>
+      <h2>Where agentic workflows fail</h2>
+      <p>
+        Common failures are vague goals, excessive tool access, missing
+        timeouts, and no audit trail. Add a maximum step count, tool
+        permissions, structured outputs, retries for transient errors, and a
+        clear escalation path.
+      </p>
+      <div class="box">
+        <b>Production checklist</b>
+        <ul>
+          <li>Define success and failure states.</li>
+          <li>Limit tools and data by task.</li>
+          <li>Require approval for irreversible actions.</li>
+          <li>Log prompts, tool calls, decisions, and costs.</li>
+          <li>Test ordinary, ambiguous, and adversarial inputs.</li>
+        </ul>
+      </div>
+      <h2>When to use an agentic workflow</h2>
+      <p>
+        Choose an agentic design when the path varies and inputs need
+        interpretation. Choose a fixed LLM workflow when the process is
+        predictable. The best systems combine both: deterministic automation
+        around a small decision-making step.
+      </p>
+      <p>
+        This hybrid approach delivers the benefits of an
+        <strong>agentic workflow</strong> without making operations opaque. If
+        you need help mapping a process,
+        <a href="/#contact">talk to our automation team</a>.
+      </p>
+      <p>
+        Related reading: <a href="/blog/agent-vs-llm">agent vs LLM</a>,
+        <a href="/blog/n8n-ai-agent-workflows">n8n AI agent workflows</a>, and
+        <a href="/blog/mcp-ai-agents-n8n">MCP-powered agents in n8n</a>.
+      </p>
+    </main>
+    <footer>
+      GetMicroServices · AI automation for practical teams ·
+      <a href="/blog">More field notes</a>
+    </footer>
+  </body>
+</html>
