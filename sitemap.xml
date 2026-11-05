@@ -705,4 +705,6 @@
     <priority>0.8</priority>
   </url>
 
+  <url><loc>https://getmicroservices.com/blog/zapier-ai-automation</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://getmicroservices.com/a/blog/zapier-ai-automation</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
