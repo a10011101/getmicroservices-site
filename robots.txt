@@ -2,3 +2,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://getmicroservices.com/sitemap.xml
+
+# Prototype demo (noindex)
+User-agent: *
+Disallow: /bgdemo/

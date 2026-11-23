@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="/bgdemo/"><meta name="robots" content="noindex, nofollow, noarchive"><title>Babylon Girls — Listings (Prototype)</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#c9a24b;--bg:#360808;--panel:#2c0b0b;--green:#1db954;--text:#eceae6}
+body{background:linear-gradient(180deg,#4a0d0d 0%,#230505 100%) fixed;color:var(--text);font-family:'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+header{position:sticky;top:0;z-index:50;background:rgba(44,10,10,.94);backdrop-filter:blur(8px);border-bottom:1px solid #5a1c1c;padding:14px 5%;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.brand{font-family:Georgia,'Times New Roman',serif;font-size:1.5rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.brand span{color:#fff}
+.proto{font-size:.62rem;letter-spacing:.12em;background:#3a2b00;color:var(--gold);border:1px solid var(--gold);padding:3px 8px;border-radius:3px;text-transform:uppercase}
+.spacer{flex:1}
+.toggle{display:flex;align-items:center;gap:9px;font-size:.82rem;color:#cfcacccc;cursor:pointer;user-select:none}
+.switch{width:44px;height:24px;background:#2c2a31;border-radius:20px;position:relative;transition:.2s}
+.switch::after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.2s}
+.toggle.on .switch{background:var(--green)}
+.toggle.on .switch::after{left:23px}
+.count{font-size:.8rem;color:#8a8690}
+.hero{text-align:center;padding:48px 5% 10px}
+.hero h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(1.8rem,4vw,2.9rem);letter-spacing:.04em}
+.hero h1 b{color:var(--gold);font-weight:400}
+.hero p{color:#9b97a1;margin-top:10px;font-size:.95rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px;padding:26px 5% 70px}
+.card{background:var(--panel);border:1px solid #5a1c1c;border-radius:12px;overflow:hidden;transition:.22s;position:relative}
+.card:hover{transform:translateY(-4px);border-color:#742626}
+.card.is-avail{border-color:rgba(29,185,84,.55);box-shadow:0 0 0 1px rgba(29,185,84,.25),0 8px 26px rgba(29,185,84,.10)}
+.imgwrap{position:relative;aspect-ratio:2/3;background:#3a0e0e;overflow:hidden}
+.imgwrap img{width:100%;height:100%;object-fit:cover;display:block;transition:.4s}
+.card:hover .imgwrap img{transform:scale(1.05)}
+.avail-win{position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:7px;background:var(--green);color:#042b12;font-weight:700;font-size:.72rem;letter-spacing:.04em;padding:6px 11px;border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.35);text-transform:uppercase}
+.avail-win .dot{width:8px;height:8px;border-radius:50%;background:#042b12;box-shadow:0 0 0 0 rgba(4,43,18,.7);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.7)}70%{box-shadow:0 0 0 7px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+.meta{padding:13px 14px 16px}
+.meta h3{font-family:Georgia,serif;font-weight:400;font-size:1.12rem;color:#fff}
+.meta p{color:#9b97a1;font-size:.82rem;margin:5px 0 12px}
+.view{display:inline-block;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:1px solid #742626;padding:7px 14px;border-radius:5px;transition:.2s}
+.view:hover{background:var(--gold);color:#101014;border-color:var(--gold)}
+.empty{grid-column:1/-1;text-align:center;color:#8a8690;padding:40px}
+footer{border-top:1px solid #5a1c1c;padding:26px 5%;text-align:center;color:#6f6b76;font-size:.76rem}
+</style></head>
+<body>
+<header>
+  <div class="brand">Babylon<span>Girls</span></div>
+  <span class="proto">Prototype Demo</span>
+  <div class="spacer"></div>
+  <span class="count" id="count"></span>
+  <div class="toggle" id="toggle"><span class="switch"></span><span>Available now only</span></div>
+</header>
+<section class="hero">
+  <h1>London <b>Companions</b></h1>
+  <p>Browse our gallery — now showing real-time <b style="color:var(--green)">Available Now</b> status on every listing.</p>
+</section>
+<main class="grid" id="grid">
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/0.webp" alt="Ruri">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Ruri</h3>
+        <p>5ft 5 · 34C</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/1.webp" alt="Star">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Star</h3>
+        <p>5ft 9 · 36B</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card" data-avail="false">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/2.webp" alt="Emmy">
+        
+      </div>
+      <div class="meta">
+        <h3>Emmy</h3>
+        <p>34C · 20 yrs</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/3.webp" alt="Edna">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Edna</h3>
+        <p>36C · 26 yrs</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/4.webp" alt="Endelone">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Endelone</h3>
+        <p>5ft 5 · 32A</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card" data-avail="false">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/5.webp" alt="Miranda">
+        
+      </div>
+      <div class="meta">
+        <h3>Miranda</h3>
+        <p>36DD · 24 yrs</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/6.webp" alt="Kendra">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Kendra</h3>
+        <p>32B</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/7.webp" alt="Alma">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Alma</h3>
+        <p>34B</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card" data-avail="false">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/8.webp" alt="Wundeba">
+        
+      </div>
+      <div class="meta">
+        <h3>Wundeba</h3>
+        <p>34C · 19 yrs</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card" data-avail="false">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/9.webp" alt="Melanie">
+        
+      </div>
+      <div class="meta">
+        <h3>Melanie</h3>
+        <p>5ft 5 · 34A</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/10.webp" alt="Malinka">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Malinka</h3>
+        <p>5ft 6 · 32A</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/11.webp" alt="Mizona">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Mizona</h3>
+        <p>34C</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card" data-avail="false">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/12.webp" alt="Damita">
+        
+      </div>
+      <div class="meta">
+        <h3>Damita</h3>
+        <p>London</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/13.webp" alt="Lexxi">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Lexxi</h3>
+        <p>36B · 19 yrs</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/14.webp" alt="Manifesta">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Manifesta</h3>
+        <p>36C · 24 yrs</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card" data-avail="false">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/15.webp" alt="Cherry">
+        
+      </div>
+      <div class="meta">
+        <h3>Cherry</h3>
+        <p>5ft 9 · 34C</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/16.webp" alt="Ambiona">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Ambiona</h3>
+        <p>5ft 2 · 34B</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/17.webp" alt="Deepika">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Deepika</h3>
+        <p>5ft 5 · 34C</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card" data-avail="false">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/18.webp" alt="Clody">
+        
+      </div>
+      <div class="meta">
+        <h3>Clody</h3>
+        <p>5ft 3 · 32A</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card" data-avail="false">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/19.webp" alt="Savia">
+        
+      </div>
+      <div class="meta">
+        <h3>Savia</h3>
+        <p>34C</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/20.webp" alt="Alesia">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Alesia</h3>
+        <p>5ft 4 · 34C</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/21.webp" alt="Delina">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Delina</h3>
+        <p>34B</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card" data-avail="false">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/22.webp" alt="Lina">
+        
+      </div>
+      <div class="meta">
+        <h3>Lina</h3>
+        <p>34C · 24 yrs</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/23.webp" alt="Shara">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Shara</h3>
+        <p>34C · 24 yrs</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/24.webp" alt="Natasha">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Natasha</h3>
+        <p>5ft 5 · 32D</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card" data-avail="false">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/25.webp" alt="Selestia">
+        
+      </div>
+      <div class="meta">
+        <h3>Selestia</h3>
+        <p>5ft 5 · 38D</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/26.webp" alt="Charismatic">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Charismatic</h3>
+        <p>5ft 8 · 36B</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card is-avail" data-avail="true">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/27.webp" alt="Exquisite">
+        <span class="avail-win"><span class="dot"></span>Available Now</span>
+      </div>
+      <div class="meta">
+        <h3>Exquisite</h3>
+        <p>5ft 4 · 34C</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card" data-avail="false">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/28.webp" alt="Kissable">
+        
+      </div>
+      <div class="meta">
+        <h3>Kissable</h3>
+        <p>5ft 7 · 34D</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+    <article class="card" data-avail="false">
+      <div class="imgwrap">
+        <img loading="lazy" src="img/29.webp" alt="Iskra">
+        
+      </div>
+      <div class="meta">
+        <h3>Iskra</h3>
+        <p>34C · 22 yrs</p>
+        <a class="view" href="#">View profile</a>
+      </div>
+    </article>
+  <div class="empty" id="empty" style="display:none">No companions marked available right now.</div>
+</main>
+<footer>Prototype for client demonstration. Imagery &amp; names from babylongirls.co.uk, used for preview purposes only. Not the live site.</footer>
+<script>
+var grid=document.getElementById('grid'),toggle=document.getElementById('toggle'),countEl=document.getElementById('count'),empty=document.getElementById('empty');
+var cards=[].slice.call(document.querySelectorAll('.card'));
+function refresh(){
+  var only=toggle.classList.contains('on');var shown=0;
+  cards.forEach(function(c){var a=c.getAttribute('data-avail')==='true';var vis=!only||a;c.style.display=vis?'':'none';if(vis)shown++;});
+  empty.style.display=(only&&shown===0)?'':'none';
+  var avail=cards.filter(function(c){return c.getAttribute('data-avail')==='true'}).length;
+  countEl.textContent=avail+' available now · '+cards.length+' total';
+}
+toggle.addEventListener('click',function(){toggle.classList.toggle('on');refresh();});
+refresh();
+</script>
+</body></html>
